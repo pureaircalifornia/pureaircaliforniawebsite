@@ -30,7 +30,12 @@ const NavBar = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-4">
-        <Link to="/" className="flex items-center">
+        <Link to="/" className="flex items-center gap-3">
+          <img 
+            src="/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png" 
+            alt="Pure Air California Logo" 
+            className="h-10 w-auto" 
+          />
           <span className={`text-2xl font-bold font-heading ${isScrolled ? 'text-brand-700' : 'text-white'}`}>
             Pure Air California
           </span>

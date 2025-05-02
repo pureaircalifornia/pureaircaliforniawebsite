@@ -181,7 +181,7 @@ const ResidentialElectrostaticFilter = () => {
                   <span>Inspection for damage or wear</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <ArrowRight size={14} className "text-brand-600" />
+                  <ArrowRight size={14} className="text-brand-600" />
                   <span>Performance optimization</span>
                 </li>
               </ul>

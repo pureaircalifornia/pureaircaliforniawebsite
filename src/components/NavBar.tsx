@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -51,7 +52,7 @@ const NavBar = () => {
           <Button variant="ghost" className="flex items-center gap-2">
             <Phone size={18} />
             <span className={isScrolled ? "text-gray-800" : "text-white"}>
-              (310) 555-1234
+              (213) 792-4145
             </span>
           </Button>
           <Button variant="default" className="bg-brand-600 hover:bg-brand-700">
@@ -100,7 +101,7 @@ const NavBar = () => {
             <div className="flex justify-center pt-2">
               <Button variant="outline" className="flex items-center gap-2 w-full">
                 <Phone size={18} />
-                <span className="text-gray-800">(310) 555-1234</span>
+                <span className="text-gray-800">(213) 792-4145</span>
               </Button>
             </div>
           </div>

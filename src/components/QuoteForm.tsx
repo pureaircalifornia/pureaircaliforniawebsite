@@ -96,7 +96,7 @@ const QuoteForm = () => {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              placeholder="(310) 555-1234"
+              placeholder="(213) 792-4145"
               required
             />
           </div>

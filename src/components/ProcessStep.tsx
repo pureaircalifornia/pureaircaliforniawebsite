@@ -14,11 +14,11 @@ const ProcessStep = ({ number, title, description, isLast = false, className }: 
     <div className={cn("relative", className)}>
       <div className="flex">
         <div className="flex flex-col items-center mr-6">
-          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-brand-600 text-white font-bold">
+          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0A3D7C] text-white font-bold">
             {number}
           </div>
           {!isLast && (
-            <div className="w-0.5 h-full bg-brand-200 mt-3"></div>
+            <div className="w-0.5 h-full bg-[#5BBDE4]/30 mt-3"></div>
           )}
         </div>
         

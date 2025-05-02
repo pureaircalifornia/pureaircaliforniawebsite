@@ -16,10 +16,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 199 89% 48%;
+    --primary: 217 71% 30%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 142 71% 45%;
+    --secondary: 195 81% 60%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 210 40% 96.1%;
@@ -33,7 +33,7 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 199 89% 48%;
+    --ring: 217 71% 30%;
 
     --radius: 0.5rem;
   }
@@ -81,6 +81,14 @@
 
   .section-padding {
     @apply py-16 md:py-24;
+  }
+  
+  .blog-card {
+    @apply bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300;
+  }
+  
+  .location-card {
+    @apply bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100;
   }
 }
 

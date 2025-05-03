@@ -4,7 +4,7 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Check, Users, Trophy, Building, Home, Shield, Star, Briefcase, HandShake } from 'lucide-react';
+import { Check, Users, Trophy, Building, Home, Shield, Star, Briefcase, Handshake } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const About = () => {

@@ -4,8 +4,20 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 const Contact = () => {
+  const { toast } = useToast();
+  
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // In a real app, you'd send the form data to a server here
+    toast({
+      title: "Message Sent",
+      description: "Thank you for contacting us. We'll get back to you shortly.",
+    });
+  };
+  
   return (
     <div className="min-h-screen flex flex-col">
       <NavBar />
@@ -93,7 +105,7 @@ const Contact = () => {
             
             <div className="bg-white p-8 rounded-lg shadow-lg">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">Send Us a Message</h2>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
@@ -102,6 +114,7 @@ const Contact = () => {
                         type="text"
                         id="firstName"
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+                        required
                       />
                     </div>
                     
@@ -111,6 +124,7 @@ const Contact = () => {
                         type="text"
                         id="lastName"
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+                        required
                       />
                     </div>
                   </div>
@@ -121,6 +135,7 @@ const Contact = () => {
                       type="email"
                       id="email"
                       className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      required
                     />
                   </div>
                   
@@ -130,6 +145,7 @@ const Contact = () => {
                       type="tel"
                       id="phone"
                       className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      required
                     />
                   </div>
                   
@@ -139,6 +155,7 @@ const Contact = () => {
                       id="message"
                       rows={5}
                       className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      required
                     ></textarea>
                   </div>
                   

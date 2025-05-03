@@ -151,9 +151,11 @@ const Services = () => {
             Contact us today for a free consultation and quote on our professional air quality services.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" variant="secondary">Get a Free Quote</Button>
-            <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white hover:text-brand-600">
-              Call (310) 555-1234
+            <Button size="lg" variant="secondary" asChild>
+              <Link to="/quote">Get a Free Quote</Link>
+            </Button>
+            <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white hover:text-brand-600" asChild>
+              <a href="tel:2137924145">Call (213) 792-4145</a>
             </Button>
           </div>
         </div>

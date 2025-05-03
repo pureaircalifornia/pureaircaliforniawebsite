@@ -24,6 +24,12 @@ import ResidentialElectrostaticFilter from "./pages/services/ResidentialElectros
 import CommercialAirDuctCleaning from "./pages/services/CommercialAirDuctCleaning";
 import CommercialDryerVentCleaning from "./pages/services/CommercialDryerVentCleaning";
 import CommercialElectrostaticFilter from "./pages/services/CommercialElectrostaticFilter";
+import HealthcareFacilities from "./pages/industries/HealthcareFacilities";
+import Hospitality from "./pages/industries/Hospitality";
+import Restaurants from "./pages/industries/Restaurants";
+import Education from "./pages/industries/Education";
+import Retail from "./pages/industries/Retail";
+import Manufacturing from "./pages/industries/Manufacturing";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +59,12 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/health-benefits" element={<HealthBenefits />} />
+          <Route path="/industries/healthcare" element={<HealthcareFacilities />} />
+          <Route path="/industries/hospitality" element={<Hospitality />} />
+          <Route path="/industries/restaurants" element={<Restaurants />} />
+          <Route path="/industries/education" element={<Education />} />
+          <Route path="/industries/retail" element={<Retail />} />
+          <Route path="/industries/manufacturing" element={<Manufacturing />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

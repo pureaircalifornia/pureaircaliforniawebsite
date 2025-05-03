@@ -4,7 +4,8 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Check, Users, Trophy, Building, Home } from 'lucide-react';
+import { Check, Users, Trophy, Building, Home, Shield, Star, Briefcase, HandShake } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const About = () => {
   return (
@@ -17,7 +18,7 @@ const About = () => {
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">About Pure Air California</h1>
             <p className="text-xl mb-8">
-              Los Angeles' trusted air quality specialists since 2010, dedicated to creating healthier indoor environments.
+              Los Angeles' trusted air quality specialists since 1995, dedicated to creating healthier indoor environments.
             </p>
           </div>
         </div>
@@ -30,7 +31,7 @@ const About = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6">Our Story</h2>
               <p className="text-lg text-gray-600 mb-4">
-                Pure Air California was founded in 2010 by Daniel Martinez, a former HVAC technician who recognized 
+                Pure Air California was founded in 1995 by Daniel Martinez, a former HVAC technician who recognized 
                 the critical importance of air duct cleaning for both system efficiency and indoor air quality.
               </p>
               <p className="text-lg text-gray-600 mb-4">
@@ -57,8 +58,55 @@ const About = () => {
         </div>
       </section>
 
-      {/* Mission & Values */}
+      {/* Discretion & High-Profile Clients Section */}
       <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold mb-4">Discretion & Professionalism</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              We understand that privacy and professionalism are essential, especially for our high-profile clients.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+            <div className="bg-white p-8 rounded-lg shadow-sm">
+              <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mb-6">
+                <Shield size={28} className="text-brand-600" />
+              </div>
+              <h3 className="text-2xl font-semibold mb-4">Discrete Service</h3>
+              <p className="text-gray-600 mb-4">
+                We pride ourselves on providing discrete, unobtrusive service for all our clients. Our team understands the importance of 
+                privacy, particularly for high-profile residential and commercial properties throughout Los Angeles and Southern California.
+              </p>
+              <p className="text-gray-600">
+                From Hollywood celebrities to Fortune 500 executives, we've earned the trust of discerning clients who value both quality 
+                service and complete confidentiality. Our technicians are trained to maintain the utmost professionalism and discretion 
+                at all times.
+              </p>
+            </div>
+            
+            <div className="bg-white p-8 rounded-lg shadow-sm">
+              <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mb-6">
+                <Star size={28} className="text-brand-600" />
+              </div>
+              <h3 className="text-2xl font-semibold mb-4">High-Profile Clientele</h3>
+              <p className="text-gray-600 mb-4">
+                For over two decades, we've been the trusted air quality partner for many of Southern California's most prestigious 
+                residences, businesses, and institutions. Our client list includes luxury hotels, private estates in Beverly Hills and 
+                Malibu, major studios, and corporate headquarters.
+              </p>
+              <p className="text-gray-600">
+                We understand the unique needs of high-profile properties, from enhanced security protocols to flexible scheduling 
+                that minimizes disruption. No matter how prominent the client, we deliver the same exceptional service with the 
+                confidentiality and respect that every customer deserves.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission & Values */}
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Our Mission & Values</h2>
@@ -112,7 +160,7 @@ const About = () => {
       </section>
 
       {/* Our Team */}
-      <section className="py-16">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Meet Our Leadership Team</h2>
@@ -133,7 +181,7 @@ const About = () => {
               <h3 className="text-xl font-semibold mb-1">Daniel Martinez</h3>
               <p className="text-brand-600 font-medium mb-3">Founder & CEO</p>
               <p className="text-gray-600 text-sm">
-                Former HVAC technician with over 20 years of industry experience. Certified Air Systems Cleaning Specialist.
+                Former HVAC technician with over 30 years of industry experience. Certified Air Systems Cleaning Specialist.
               </p>
             </div>
             
@@ -186,7 +234,7 @@ const About = () => {
       </section>
 
       {/* Certifications */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Our Certifications & Memberships</h2>
@@ -229,6 +277,50 @@ const About = () => {
         </div>
       </section>
 
+      {/* Trust Indicators Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Why Our Clients Trust Us</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Pure Air California has built a reputation based on reliability, expertise, and results.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mx-auto mb-4">
+                <Users size={28} className="text-brand-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">25,000+ Satisfied Clients</h3>
+              <p className="text-gray-600">
+                Over our 30-year history, we've successfully served more than 25,000 residential and commercial clients across Southern California.
+              </p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mx-auto mb-4">
+                <Trophy size={28} className="text-brand-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">30 Years of Excellence</h3>
+              <p className="text-gray-600">
+                Three decades of experience has refined our expertise and established us as industry leaders in indoor air quality services.
+              </p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mx-auto mb-4">
+                <Shield size={28} className="text-brand-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Fully Insured & Bonded</h3>
+              <p className="text-gray-600">
+                We maintain comprehensive insurance coverage, providing complete peace of mind for our clients during every service we provide.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Why Choose Us */}
       <section className="py-16">
         <div className="container mx-auto px-4">
@@ -249,7 +341,7 @@ const About = () => {
               <div>
                 <h3 className="text-xl font-semibold mb-2">Proven Track Record</h3>
                 <p className="text-gray-600">
-                  Over a decade of experience serving thousands of satisfied customers across Los Angeles County.
+                  Three decades of experience serving thousands of satisfied customers across Los Angeles County.
                 </p>
               </div>
             </div>
@@ -327,8 +419,88 @@ const About = () => {
         </div>
       </section>
 
-      {/* Community Involvement */}
+      {/* Commercial Sectors */}
       <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Industries We Serve</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              We provide specialized air quality solutions for a wide range of commercial and industrial sectors.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <Link to="/industries/healthcare" className="group">
+              <div className="bg-white p-6 rounded-lg shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:-translate-y-1">
+                <Building size={32} className="text-brand-600 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Healthcare Facilities</h3>
+                <p className="text-gray-600 mb-4">
+                  Specialized air quality services for hospitals, clinics, and medical offices.
+                </p>
+                <span className="text-brand-600 font-medium group-hover:underline">Learn more →</span>
+              </div>
+            </Link>
+            
+            <Link to="/industries/hospitality" className="group">
+              <div className="bg-white p-6 rounded-lg shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:-translate-y-1">
+                <Building size={32} className="text-brand-600 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Hospitality</h3>
+                <p className="text-gray-600 mb-4">
+                  Enhanced air quality solutions for hotels, resorts, and conference centers.
+                </p>
+                <span className="text-brand-600 font-medium group-hover:underline">Learn more →</span>
+              </div>
+            </Link>
+            
+            <Link to="/industries/restaurants" className="group">
+              <div className="bg-white p-6 rounded-lg shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:-translate-y-1">
+                <Building size={32} className="text-brand-600 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Restaurants</h3>
+                <p className="text-gray-600 mb-4">
+                  Commercial kitchen exhaust and ventilation cleaning services.
+                </p>
+                <span className="text-brand-600 font-medium group-hover:underline">Learn more →</span>
+              </div>
+            </Link>
+            
+            <Link to="/industries/education" className="group">
+              <div className="bg-white p-6 rounded-lg shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:-translate-y-1">
+                <Building size={32} className="text-brand-600 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Educational Institutions</h3>
+                <p className="text-gray-600 mb-4">
+                  Creating healthier learning environments in schools, colleges, and universities.
+                </p>
+                <span className="text-brand-600 font-medium group-hover:underline">Learn more →</span>
+              </div>
+            </Link>
+            
+            <Link to="/industries/retail" className="group">
+              <div className="bg-white p-6 rounded-lg shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:-translate-y-1">
+                <Building size={32} className="text-brand-600 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Retail Spaces</h3>
+                <p className="text-gray-600 mb-4">
+                  Indoor air quality solutions for shopping centers and retail environments.
+                </p>
+                <span className="text-brand-600 font-medium group-hover:underline">Learn more →</span>
+              </div>
+            </Link>
+            
+            <Link to="/industries/manufacturing" className="group">
+              <div className="bg-white p-6 rounded-lg shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:-translate-y-1">
+                <Building size={32} className="text-brand-600 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Manufacturing</h3>
+                <p className="text-gray-600 mb-4">
+                  Industrial air quality solutions for manufacturing facilities and warehouses.
+                </p>
+                <span className="text-brand-600 font-medium group-hover:underline">Learn more →</span>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Community Involvement */}
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-10">
@@ -371,7 +543,7 @@ const About = () => {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" variant="secondary">Get a Free Quote</Button>
             <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white hover:text-brand-600">
-              Call (310) 555-1234
+              Call (213) 792-4145
             </Button>
           </div>
         </div>

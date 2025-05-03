@@ -37,12 +37,12 @@ const Hero = () => {
           </div>
           <div className="mt-8 flex flex-col sm:flex-row items-center gap-6 bg-white/10 backdrop-blur-sm p-4 rounded-lg max-w-xl">
             <div className="flex items-center gap-2">
-              <div className="text-brand-400 text-4xl font-bold">2K+</div>
+              <div className="text-brand-400 text-4xl font-bold">25K+</div>
               <div className="text-white">Happy<br />Customers</div>
             </div>
             <div className="w-px h-12 bg-white/20 hidden sm:block"></div>
             <div className="flex items-center gap-2">
-              <div className="text-brand-400 text-4xl font-bold">10+</div>
+              <div className="text-brand-400 text-4xl font-bold">30+</div>
               <div className="text-white">Years of<br />Experience</div>
             </div>
             <div className="w-px h-12 bg-white/20 hidden sm:block"></div>

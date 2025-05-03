@@ -12,6 +12,14 @@ import TrustedBy from '@/components/TrustedBy';
 import { useState } from 'react';
 import './index.css';
 import TrustBadges from '@/components/TrustBadges';
+import Gallery from '@/components/Gallery';
+import ServiceAreaMap from '@/components/ServiceAreaMap';
+import PricingCalculator from '@/components/PricingCalculator';
+import BlogSection from '@/components/BlogSection';
+import EmergencyServices from '@/components/EmergencyServices';
+import AppointmentScheduling from '@/components/AppointmentScheduling';
+import EnvironmentalImpact from '@/components/EnvironmentalImpact';
+import TeamSection from '@/components/TeamSection';
 
 const Index = () => {
   return (
@@ -53,6 +61,7 @@ const Index = () => {
       </section>
 
       <TrustedBy />
+      <Gallery />
       
       {/* Why Choose Us Section */}
       <section className="section-padding bg-white fade-in">
@@ -136,6 +145,13 @@ const Index = () => {
           </div>
         </div>
       </section>
+      <ServiceAreaMap />
+      <PricingCalculator />
+      <BlogSection />
+      <EmergencyServices />
+      <AppointmentScheduling />
+      <EnvironmentalImpact />
+      <TeamSection />
       <div className="border-t border-gray-100 my-8" />
       
       {/* Benefits Section with enhanced visuals */}

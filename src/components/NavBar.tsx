@@ -52,9 +52,55 @@ const NavBar = () => {
     setDropdownTimeout(timeout);
   };
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const headerOffset = 100; // Adjust this value based on your header height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId?: string) => {
+    e.preventDefault();
+    if (sectionId) {
+      // If we're on a different page, navigate first then scroll
+      const currentPath = window.location.pathname;
+      const targetPath = e.currentTarget.getAttribute('href');
+      
+      if (currentPath !== targetPath) {
+        // Navigate to the new page
+        window.location.href = `${targetPath}#${sectionId}`;
+      } else {
+        // We're already on the right page, just scroll
+        scrollToSection(sectionId);
+      }
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Handle hash changes for direct URL navigation
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1);
+      if (hash) {
+        scrollToSection(hash);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-gradient-to-b from-black/60 to-transparent py-4'}`}>
       <div className="container mx-auto flex items-center justify-between px-4">
-        <Link to="/" className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3" onClick={(e) => handleLinkClick(e)}>
           <div className={`p-1 rounded ${isScrolled ? 'bg-white' : 'bg-transparent'}`}>
             <img 
               src="/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png" 
@@ -66,13 +112,13 @@ const NavBar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          <Link to="/" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
+          <Link to="/" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e)}>
             Home
           </Link>
-          <Link to="/services" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
+          <Link to="/services" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'services')}>
             Services
           </Link>
-          <Link to="/locations" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
+          <Link to="/locations" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'locations')}>
             Locations
           </Link>
           <div 
@@ -114,13 +160,13 @@ const NavBar = () => {
               </div>
             )}
           </div>
-          <Link to="/health-benefits" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
+          <Link to="/health-benefits" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'health-benefits')}>
             Health Benefits
           </Link>
-          <Link to="/about" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
+          <Link to="/about" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'about')}>
             About Us
           </Link>
-          <Link to="/contact" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
+          <Link to="/contact" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'contact')}>
             Contact
           </Link>
         </nav>

@@ -22,7 +22,7 @@ const Contact = () => {
       <NavBar />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white">
+      <section id="contact-hero" className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
@@ -35,7 +35,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Info Section */}
-      <section className="py-16">
+      <section id="contact-info" className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
@@ -104,7 +104,7 @@ const Contact = () => {
             
             <div className="bg-white p-8 rounded-lg shadow-lg">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">Send Us a Message</h2>
-              <form onSubmit={handleSubmit}>
+              <form id="contact-form" onSubmit={handleSubmit}>
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">

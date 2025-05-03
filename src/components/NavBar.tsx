@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -8,6 +7,7 @@ const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isIndustriesDropdownOpen, setIsIndustriesDropdownOpen] = useState(false);
+  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,18 +24,43 @@ const NavBar = () => {
   }, []);
 
   const handleIndustriesMouseEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
     setIsIndustriesDropdownOpen(true);
   };
 
   const handleIndustriesMouseLeave = () => {
-    setIsIndustriesDropdownOpen(false);
+    const timeout = setTimeout(() => {
+      setIsIndustriesDropdownOpen(false);
+    }, 300); // 300ms delay before closing
+    setDropdownTimeout(timeout);
+  };
+
+  const handleDropdownMouseEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+  };
+
+  const handleDropdownMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setIsIndustriesDropdownOpen(false);
+    }, 300);
+    setDropdownTimeout(timeout);
   };
 
   return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-gradient-to-b from-black/60 to-transparent py-4'}`}>
       <div className="container mx-auto flex items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-3">
-          <div className={`p-1 rounded ${isScrolled ? 'bg-white' : 'bg-white/40 backdrop-blur-sm'}`}>
-            <img src="/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png" alt="Pure Air California Logo" className="h-10 w-auto drop-shadow-md" />
+          <div className={`p-1 rounded ${isScrolled ? 'bg-white' : 'bg-transparent'}`}>
+            <img 
+              src="/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png" 
+              alt="Pure Air California Logo" 
+              className={`h-10 w-auto ${isScrolled ? '' : 'brightness-0 invert'}`} 
+            />
           </div>
         </Link>
 
@@ -61,7 +86,11 @@ const NavBar = () => {
             </button>
             
             {isIndustriesDropdownOpen && (
-              <div className="absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+              <div 
+                className="absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+                onMouseEnter={handleDropdownMouseEnter}
+                onMouseLeave={handleDropdownMouseLeave}
+              >
                 <div className="py-1" role="menu" aria-orientation="vertical">
                   <Link to="/industries/healthcare" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={() => setIsIndustriesDropdownOpen(false)}>
                     Healthcare Facilities

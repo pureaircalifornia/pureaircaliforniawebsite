@@ -1,4 +1,3 @@
-
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
@@ -86,7 +85,7 @@ const Contact = () => {
                   <div>
                     <h3 className="text-xl font-semibold mb-1">Location</h3>
                     <p className="text-gray-600 mb-1">Serving all of Los Angeles</p>
-                    <p className="text-lg font-medium">Los Angeles, CA</p>
+                    <p className="text-lg font-medium">1550 N Poinsettia Pl, Los Angeles, CA 90046</p>
                   </div>
                 </div>
                 

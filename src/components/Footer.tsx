@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock, Home, AirVent } from "lucide-react";
 
@@ -18,7 +17,7 @@ const Footer = () => {
             </p>
             <div className="flex items-center gap-2 mb-2">
               <MapPin size={18} className="text-brand-400" />
-              <span className="text-gray-300">Los Angeles, CA</span>
+              <span className="text-gray-300">1550 N Poinsettia Pl, Los Angeles, CA 90046</span>
             </div>
             <div className="flex items-center gap-2 mb-2">
               <Phone size={18} className="text-brand-400" />

@@ -1,154 +1,166 @@
-import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Clock, Home, AirVent } from "lucide-react";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin, Clock, Shield, Award, Star } from 'lucide-react';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-  
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Add newsletter signup logic here
+  };
+
   return (
-    <footer className="bg-gray-900 text-white pt-16 pb-8">
-      <div className="container mx-auto px-4">
+    <footer className="bg-gray-900 text-gray-300">
+      {/* Main Footer */}
+      <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-heading font-semibold mb-4">Pure Air California</h3>
-            <p className="mb-6 text-gray-300 max-w-xs">
-              Professional air duct and dryer vent cleaning services in Los Angeles, 
-              helping you breathe better and live healthier.
-            </p>
-            <div className="flex items-center gap-2 mb-2">
-              <MapPin size={18} className="text-brand-400" />
-              <span className="text-gray-300">1550 N Poinsettia Pl, Los Angeles, CA 90046</span>
-            </div>
-            <div className="flex items-center gap-2 mb-2">
-              <Phone size={18} className="text-brand-400" />
-              <a href="tel:2137924145" className="text-gray-300 hover:text-brand-400">(213) 792-4145</a>
-            </div>
-            <div className="flex items-center gap-2 mb-2">
-              <Mail size={18} className="text-brand-400" />
-              <a href="mailto:info@pureaircalifornia.com" className="text-gray-300 hover:text-brand-400">info@pureaircalifornia.com</a>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock size={18} className="text-brand-400" />
-              <span className="text-gray-300">Mon-Sat: 8AM - 6PM</span>
+            <h3 className="text-white font-bold text-lg mb-4">Pure Air California</h3>
+            <div className="space-y-3">
+              <p className="flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-brand-500" />
+                1550 N Poinsettia Pl, Los Angeles, CA 90046
+              </p>
+              <p className="flex items-center gap-2">
+                <Phone className="h-5 w-5 text-brand-500" />
+                <a href="tel:2137924145" className="hover:text-white">(213) 792-4145</a>
+              </p>
+              <p className="flex items-center gap-2">
+                <Mail className="h-5 w-5 text-brand-500" />
+                <a href="mailto:info@pureaircalifornia.com" className="hover:text-white">
+                  info@pureaircalifornia.com
+                </a>
+              </p>
+              <p className="flex items-center gap-2">
+                <Clock className="h-5 w-5 text-brand-500" />
+                Mon-Sat: 8AM - 6PM
+              </p>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-heading font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-white font-bold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-300 hover:text-brand-400 transition-colors">
-                  Home
-                </Link>
+                <Link to="/services" className="hover:text-white">Services</Link>
               </li>
               <li>
-                <Link to="/services" className="text-gray-300 hover:text-brand-400 transition-colors">
-                  Services
-                </Link>
+                <Link to="/locations" className="hover:text-white">Service Areas</Link>
               </li>
               <li>
-                <Link to="/locations" className="text-gray-300 hover:text-brand-400 transition-colors">
-                  Service Areas
-                </Link>
+                <Link to="/about" className="hover:text-white">About Us</Link>
               </li>
               <li>
-                <Link to="/health-benefits" className="text-gray-300 hover:text-brand-400 transition-colors">
-                  Health Benefits
-                </Link>
+                <Link to="/contact" className="hover:text-white">Contact</Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-300 hover:text-brand-400 transition-colors">
-                  About Us
-                </Link>
+                <Link to="/quote" className="hover:text-white">Get a Quote</Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-300 hover:text-brand-400 transition-colors">
-                  Contact Us
-                </Link>
+                <Link to="/blog" className="hover:text-white">Blog</Link>
               </li>
             </ul>
           </div>
 
           {/* Services */}
           <div>
-            <h3 className="text-xl font-heading font-semibold mb-4">Our Services</h3>
+            <h3 className="text-white font-bold text-lg mb-4">Our Services</h3>
             <ul className="space-y-2">
-              <li className="flex items-center gap-2">
-                <AirVent size={16} className="text-brand-400" />
-                <Link to="/services/residential" className="text-gray-300 hover:text-brand-400 transition-colors">
-                  Residential Duct Cleaning
+              <li>
+                <Link to="/services/residential-air-duct-cleaning" className="hover:text-white">
+                  Residential Air Duct Cleaning
                 </Link>
               </li>
-              <li className="flex items-center gap-2">
-                <Home size={16} className="text-brand-400" />
-                <Link to="/services/commercial" className="text-gray-300 hover:text-brand-400 transition-colors">
-                  Commercial Duct Cleaning
+              <li>
+                <Link to="/services/commercial-air-duct-cleaning" className="hover:text-white">
+                  Commercial Air Duct Cleaning
                 </Link>
               </li>
-              <li className="flex items-center gap-2">
-                <AirVent size={16} className="text-brand-400" />
-                <Link to="/services/dryer-vent" className="text-gray-300 hover:text-brand-400 transition-colors">
+              <li>
+                <Link to="/services/dryer-vent-cleaning" className="hover:text-white">
                   Dryer Vent Cleaning
                 </Link>
               </li>
-              <li className="flex items-center gap-2">
-                <Home size={16} className="text-brand-400" />
-                <Link to="/services/hvac" className="text-gray-300 hover:text-brand-400 transition-colors">
-                  HVAC System Cleaning
+              <li>
+                <Link to="/services/electrostatic-filter" className="hover:text-white">
+                  Electrostatic Filter Service
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Service Areas */}
+          {/* Newsletter */}
           <div>
-            <h3 className="text-xl font-heading font-semibold mb-4">Service Areas</h3>
-            <div className="grid grid-cols-2 gap-2">
-              <Link to="/locations/beverly-hills" className="text-gray-300 hover:text-brand-400 transition-colors">
-                Beverly Hills
-              </Link>
-              <Link to="/locations/malibu" className="text-gray-300 hover:text-brand-400 transition-colors">
-                Malibu
-              </Link>
-              <Link to="/locations/hollywood" className="text-gray-300 hover:text-brand-400 transition-colors">
-                Hollywood
-              </Link>
-              <Link to="/locations/downtown-la" className="text-gray-300 hover:text-brand-400 transition-colors">
-                Downtown LA
-              </Link>
-              <Link to="/locations/santa-monica" className="text-gray-300 hover:text-brand-400 transition-colors">
-                Santa Monica
-              </Link>
-              <Link to="/locations/ventura" className="text-gray-300 hover:text-brand-400 transition-colors">
-                Ventura
-              </Link>
-              <Link to="/locations/century-city" className="text-gray-300 hover:text-brand-400 transition-colors">
-                Century City
-              </Link>
-              <Link to="/locations" className="text-brand-400 hover:text-brand-300 transition-colors">
-                View All →
-              </Link>
+            <h3 className="text-white font-bold text-lg mb-4">Stay Updated</h3>
+            <p className="mb-4">Subscribe to our newsletter for tips, news, and special offers.</p>
+            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+              />
+              <Button type="submit" className="w-full bg-brand-600 hover:bg-brand-700">
+                Subscribe
+              </Button>
+            </form>
+
+            {/* Social Links */}
+            <div className="mt-6">
+              <div className="flex space-x-4">
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <Facebook className="h-6 w-6" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <Instagram className="h-6 w-6" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <Twitter className="h-6 w-6" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <Linkedin className="h-6 w-6" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom section */}
+        {/* Trust Badges */}
         <div className="mt-12 pt-8 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              © {currentYear} Pure Air California. All rights reserved.
-            </p>
-            <div className="flex space-x-6">
-              <a href="#" className="text-gray-400 hover:text-brand-400">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-brand-400">
-                Terms of Service
-              </a>
-              <a href="#" className="text-gray-400 hover:text-brand-400">
-                Sitemap
-              </a>
+          <div className="flex flex-wrap justify-center gap-6 md:gap-12">
+            <div className="flex items-center gap-2">
+              <Shield className="h-5 w-5 text-brand-500" />
+              <span>Licensed & Insured</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Award className="h-5 w-5 text-brand-500" />
+              <span>NADCA Certified</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Star className="h-5 w-5 text-brand-500" />
+              <span>5-Star Rated Service</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-brand-500" />
+              <span>24/7 Emergency Service</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="bg-gray-950 py-4">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center text-sm">
+            <div className="mb-4 md:mb-0">
+              © {new Date().getFullYear()} Pure Air California. All rights reserved.
+            </div>
+            <div className="flex gap-4">
+              <Link to="/privacy-policy" className="hover:text-white">Privacy Policy</Link>
+              <Link to="/terms-of-service" className="hover:text-white">Terms of Service</Link>
+              <Link to="/sitemap" className="hover:text-white">Sitemap</Link>
             </div>
           </div>
         </div>

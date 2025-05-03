@@ -6,7 +6,7 @@ import ServiceCard from '@/components/ServiceCard';
 import TestimonialCard from '@/components/TestimonialCard';
 import ProcessStep from '@/components/ProcessStep';
 import { Button } from '@/components/ui/button';
-import { AirVent, Home, Check, Star, ArrowRight, ShieldCheck, MapPin, ThumbsUp, Zap, BadgeDollarSign } from 'lucide-react';
+import { AirVent, Home, Check, Star, ArrowRight, ShieldCheck, MapPin, ThumbsUp, Zap, BadgeDollarSign, Shield, Award, Clock, Users, BadgeCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TrustedBy from '@/components/TrustedBy';
 import { useState } from 'react';
@@ -19,9 +19,39 @@ const Index = () => {
       
       {/* Hero Section */}
       <Hero />
+      
+      {/* Trust Badges */}
+      <section className="py-8 bg-white border-b">
+        <div className="container mx-auto">
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+            <div className="flex items-center gap-2 text-gray-600">
+              <Shield className="w-5 h-5 text-brand-600" />
+              <span className="text-sm font-medium">Licensed & Insured</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-600">
+              <Award className="w-5 h-5 text-brand-600" />
+              <span className="text-sm font-medium">NADCA Certified</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-600">
+              <Clock className="w-5 h-5 text-brand-600" />
+              <span className="text-sm font-medium">24/7 Emergency Service</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-600">
+              <Users className="w-5 h-5 text-brand-600" />
+              <span className="text-sm font-medium">500+ Happy Customers</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-600">
+              <BadgeCheck className="w-5 h-5 text-brand-600" />
+              <span className="text-sm font-medium">100% Satisfaction Guarantee</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <TrustedBy />
+      
       {/* Why Choose Us Section */}
-      <section className="py-12 bg-white fade-in">
+      <section className="section-padding bg-white fade-in">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 font-heading">Why Choose Pure Air California?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
@@ -64,14 +94,12 @@ const Index = () => {
       
       {/* Services Section */}
       <section className="section-padding bg-gray-50 fade-in">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">Our Professional Services</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Pure Air California provides comprehensive air duct and ventilation cleaning services for 
-              both residential and commercial properties throughout Los Angeles.
-            </p>
-          </div>
+        <div className="container mx-auto">
+          <h2 className="section-title text-center">Our Professional Services</h2>
+          <p className="section-subtitle text-center">
+            Pure Air California provides comprehensive air duct and ventilation cleaning services for 
+            both residential and commercial properties throughout Los Angeles.
+          </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <ServiceCard 
@@ -95,7 +123,7 @@ const Index = () => {
           </div>
           
           <div className="mt-12 text-center">
-            <Button asChild variant="outline" className="group transition-all duration-200 hover:bg-brand-600 hover:text-white border-brand-600">
+            <Button asChild variant="outline" className="group transition-all duration-300 hover:bg-brand-600 hover:text-white border-brand-600 transform hover:-translate-y-0.5">
               <Link to="/services" className="flex items-center gap-2">
                 View All Services 
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -106,7 +134,7 @@ const Index = () => {
       </section>
       <div className="border-t border-gray-100 my-8" />
       
-      {/* Benefits Section */}
+      {/* Benefits Section with enhanced visuals */}
       <section className="section-padding fade-in">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -185,7 +213,7 @@ const Index = () => {
       </section>
       <div className="border-t border-gray-100 my-8" />
       
-      {/* Quote Form Section */}
+      {/* Quote Form Section with trust indicators */}
       <section className="section-padding bg-gradient-to-r from-brand-50 to-secondary_brand-50 fade-in">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -229,19 +257,27 @@ const Index = () => {
               <p className="text-xs text-gray-500 mt-2 text-center">We never share your information. Your privacy is protected.</p>
             </div>
           </div>
+          <div className="flex justify-center mt-8">
+            <div className="flex items-center gap-3 bg-white/80 backdrop-blur rounded-full px-6 py-3 shadow-sm">
+              <Shield className="w-5 h-5 text-green-600" />
+              <span className="text-sm font-medium text-green-700">Your information is secure & confidential</span>
+            </div>
+          </div>
         </div>
       </section>
       <div className="border-t border-gray-100 my-8" />
       
-      {/* Testimonials Section */}
+      {/* Enhanced Testimonials Section */}
       <section className="section-padding bg-white fade-in">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              What Our Customers Say
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Hear from our satisfied customers across Los Angeles who have experienced the Pure Air California difference.
+            <div className="flex justify-center items-center gap-2 mb-4">
+              <Star className="w-6 h-6 text-yellow-400 fill-yellow-400" />
+              <span className="text-xl font-semibold">4.9/5 Rating</span>
+            </div>
+            <h2 className="section-title">What Our Customers Say</h2>
+            <p className="section-subtitle">
+              Join hundreds of satisfied customers who trust Pure Air California with their air quality needs.
             </p>
           </div>
           
@@ -265,10 +301,17 @@ const Index = () => {
               rating={5}
             />
           </div>
+          
+          <div className="mt-12 text-center">
+            <Link to="/testimonials" className="text-brand-600 hover:text-brand-700 font-medium inline-flex items-center gap-2">
+              Read More Reviews
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
         </div>
       </section>
-      <div className="border-t border-gray-100 my-8" />
-      {/* FAQ Section */}
+      
+      {/* FAQ Section with enhanced styling */}
       <section className="py-16 bg-gray-50 fade-in">
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Frequently Asked Questions</h2>
@@ -277,28 +320,42 @@ const Index = () => {
       </section>
       <div className="border-t border-gray-100 my-8" />
       
-      {/* CTA Section */}
+      {/* CTA Section with trust badges */}
       <section className="py-16 bg-cta-pattern fade-in">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6">
-              Ready to Experience Cleaner, Healthier Air?
-            </h2>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Schedule your professional air duct or dryer vent cleaning today and breathe easier tomorrow. 
-              Our expert technicians serve all areas of Los Angeles.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" className="bg-brand-600 hover:bg-brand-700" asChild>
-                <Link to="/quote">Get a Free Quote</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="border-brand-500 text-brand-700 hover:bg-brand-50" asChild>
-                <a href="tel:2137924145">Call (213) 792-4145</a>
-              </Button>
+        <div className="container mx-auto text-center">
+          <h2 className="section-title text-white">Ready to Experience Cleaner, Healthier Air?</h2>
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            Schedule your professional air duct or dryer vent cleaning today and breathe easier tomorrow.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button size="lg" className="bg-white text-brand-600 hover:bg-gray-100 transform hover:-translate-y-0.5 transition-all duration-300" asChild>
+              <Link to="/quote">Get a Free Quote</Link>
+            </Button>
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-600 transform hover:-translate-y-0.5 transition-all duration-300" asChild>
+              <a href="tel:2137924145">Call (213) 792-4145</a>
+            </Button>
+          </div>
+          
+          <div className="flex justify-center mt-8">
+            <div className="flex items-center gap-2 text-white/90">
+              <BadgeCheck className="w-5 h-5" />
+              <span className="text-sm">100% Satisfaction Guaranteed</span>
             </div>
           </div>
         </div>
       </section>
+      
+      {/* Sticky Mobile CTA */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 md:hidden z-50">
+        <div className="flex justify-between gap-4">
+          <Button className="w-1/2 bg-brand-600" asChild>
+            <Link to="/quote">Get Quote</Link>
+          </Button>
+          <Button variant="outline" className="w-1/2" asChild>
+            <a href="tel:2137924145">Call Now</a>
+          </Button>
+        </div>
+      </div>
       
       <Footer />
     </div>

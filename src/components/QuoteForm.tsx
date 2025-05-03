@@ -1,187 +1,303 @@
-
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import { Shield, BadgeCheck, Clock } from 'lucide-react';
 
 const QuoteForm = () => {
   const { toast } = useToast();
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    name: '',
+    serviceType: '',
+    propertyType: '',
+    propertySize: '',
+    concerns: [],
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
     address: '',
-    propertyType: '',
-    serviceType: '',
-    message: '',
+    preferredDate: '',
+    preferredTime: '',
+    message: ''
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (name: string, value: string) => {
-    setFormData(prev => ({ ...prev, [name]: value }));
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      concerns: checked 
+        ? [...prev.concerns, value]
+        : prev.concerns.filter(concern => concern !== value)
+    }));
+  };
+
+  const validateStep = (currentStep: number) => {
+    switch (currentStep) {
+      case 1:
+        return formData.serviceType && formData.propertyType;
+      case 2:
+        return formData.firstName && formData.lastName && formData.email && formData.phone;
+      default:
+        return true;
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    
-    // In a real app, you'd send this data to your backend
-    // For now, we'll just show a success message
     toast({
-      title: "Quote request submitted!",
-      description: "We'll contact you shortly with your personalized quote.",
-    });
-
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      address: '',
-      propertyType: '',
-      serviceType: '',
-      message: '',
+      title: "Quote Request Received!",
+      description: "We'll contact you shortly to discuss your needs.",
     });
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 animate-fade-in">
-      <h3 className="text-2xl font-heading font-semibold mb-6">Get Your Free Quote</h3>
-      
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label htmlFor="name" className="text-sm font-medium">
-              Full Name*
-            </label>
-            <Input
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="John Doe"
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium">
-              Email Address*
-            </label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="your@email.com"
-              required
+    <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
+      {/* Progress Steps */}
+      <div className="mb-8">
+        <div className="flex justify-between">
+          {[1, 2, 3].map((num) => (
+            <div key={num} className="flex flex-col items-center">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                step >= num ? 'bg-brand-600 text-white' : 'bg-gray-200 text-gray-600'
+              }`}>
+                {num}
+              </div>
+              <span className="text-xs mt-1 text-gray-600">
+                {num === 1 ? 'Service' : num === 2 ? 'Details' : 'Contact'}
+              </span>
+            </div>
+          ))}
+        </div>
+        <div className="relative mt-2">
+          <div className="absolute top-0 left-0 h-1 bg-gray-200 w-full rounded">
+            <div 
+              className="absolute top-0 left-0 h-full bg-brand-600 rounded transition-all duration-300"
+              style={{ width: `${((step - 1) / 2) * 100}%` }}
             />
           </div>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label htmlFor="phone" className="text-sm font-medium">
-              Phone Number*
-            </label>
-            <Input
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="(213) 792-4145"
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <label htmlFor="address" className="text-sm font-medium">
-              Address*
-            </label>
-            <Input
-              id="address"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              placeholder="Your address in Los Angeles"
-              required
-            />
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Step 1: Service Selection */}
+        <div className={`transition-all duration-300 ${step === 1 ? 'block' : 'hidden'}`}>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Service Type*</label>
+              <select
+                name="serviceType"
+                value={formData.serviceType}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                required
+              >
+                <option value="">Select a service</option>
+                <option value="residential">Residential Air Duct Cleaning</option>
+                <option value="commercial">Commercial Air Duct Cleaning</option>
+                <option value="dryer">Dryer Vent Cleaning</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">Property Type*</label>
+              <select
+                name="propertyType"
+                value={formData.propertyType}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                required
+              >
+                <option value="">Select property type</option>
+                <option value="house">House</option>
+                <option value="apartment">Apartment</option>
+                <option value="office">Office Building</option>
+                <option value="commercial">Commercial Space</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">Property Size (sq ft)</label>
+              <input
+                type="number"
+                name="propertySize"
+                value={formData.propertySize}
+                onChange={handleInputChange}
+                placeholder="e.g., 1500"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Main Concerns</label>
+              <div className="space-y-2">
+                {['Dust', 'Allergies', 'Odors', 'Energy Efficiency', 'Mold'].map((concern) => (
+                  <label key={concern} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      value={concern.toLowerCase()}
+                      checked={formData.concerns.includes(concern.toLowerCase())}
+                      onChange={handleCheckboxChange}
+                      className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
+                    />
+                    <span>{concern}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label htmlFor="propertyType" className="text-sm font-medium">
-              Property Type*
-            </label>
-            <Select 
-              value={formData.propertyType}
-              onValueChange={(value) => handleSelectChange('propertyType', value)}
+        {/* Step 2: Contact Information */}
+        <div className={`transition-all duration-300 ${step === 2 ? 'block' : 'hidden'}`}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">First Name*</label>
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Last Name*</label>
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                required
+              />
+            </div>
+          </div>
+          <div className="mt-4 space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Email*</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Phone*</label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Step 3: Schedule */}
+        <div className={`transition-all duration-300 ${step === 3 ? 'block' : 'hidden'}`}>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Preferred Date</label>
+              <input
+                type="date"
+                name="preferredDate"
+                value={formData.preferredDate}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Preferred Time</label>
+              <select
+                name="preferredTime"
+                value={formData.preferredTime}
+                onChange={handleInputChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+              >
+                <option value="">Select a time</option>
+                <option value="morning">Morning (8AM - 12PM)</option>
+                <option value="afternoon">Afternoon (12PM - 4PM)</option>
+                <option value="evening">Evening (4PM - 6PM)</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Additional Notes</label>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                rows={3}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                placeholder="Any special instructions or concerns?"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation Buttons */}
+        <div className="flex justify-between mt-8">
+          {step > 1 && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setStep(step - 1)}
+              className="px-6"
             >
-              <SelectTrigger id="propertyType" name="propertyType">
-                <SelectValue placeholder="Select property type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="residential">Residential</SelectItem>
-                <SelectItem value="commercial">Commercial</SelectItem>
-                <SelectItem value="apartment">Apartment/Condo</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+              Back
+            </Button>
+          )}
           
-          <div className="space-y-2">
-            <label htmlFor="serviceType" className="text-sm font-medium">
-              Service Needed*
-            </label>
-            <Select 
-              value={formData.serviceType}
-              onValueChange={(value) => handleSelectChange('serviceType', value)}
+          {step < 3 ? (
+            <Button
+              type="button"
+              onClick={() => validateStep(step) && setStep(step + 1)}
+              className={`px-6 ml-auto ${!validateStep(step) ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={!validateStep(step)}
             >
-              <SelectTrigger id="serviceType" name="serviceType">
-                <SelectValue placeholder="Select service type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="air-duct-cleaning">Air Duct Cleaning</SelectItem>
-                <SelectItem value="dryer-vent-cleaning">Dryer Vent Cleaning</SelectItem>
-                <SelectItem value="hvac-cleaning">HVAC System Cleaning</SelectItem>
-                <SelectItem value="residential-and-commercial">Both Residential & Commercial</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+              Next
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className="px-6 ml-auto"
+            >
+              Submit Quote Request
+            </Button>
+          )}
         </div>
-
-        <div className="space-y-2">
-          <label htmlFor="message" className="text-sm font-medium">
-            Additional Details
-          </label>
-          <Textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            placeholder="Tell us more about your needs..."
-            rows={4}
-          />
-        </div>
-
-        <Button 
-          type="submit" 
-          className="w-full bg-brand-600 hover:bg-brand-700 text-white font-medium py-2 px-4 rounded-md transition"
-        >
-          Get My Free Quote
-        </Button>
-
-        <p className="text-xs text-gray-500 text-center">
-          By submitting this form, you consent to be contacted about our services.
-        </p>
       </form>
+
+      {/* Trust Indicators */}
+      <div className="mt-8 pt-6 border-t border-gray-100">
+        <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+          <div className="flex items-center gap-2">
+            <Shield className="w-4 h-4 text-brand-600" />
+            <span>Secure Form</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <BadgeCheck className="w-4 h-4 text-brand-600" />
+            <span>No Obligation</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Clock className="w-4 h-4 text-brand-600" />
+            <span>Quick Response</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

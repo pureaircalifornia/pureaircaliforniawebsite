@@ -32,6 +32,7 @@ import Education from "./pages/industries/Education";
 import Retail from "./pages/industries/Retail";
 import Manufacturing from "./pages/industries/Manufacturing";
 import { useEffect } from 'react';
+import StickyServiceButton from '@/components/StickyServiceButton';
 
 const queryClient = new QueryClient();
 
@@ -81,6 +82,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <StickyServiceButton />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

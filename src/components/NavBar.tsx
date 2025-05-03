@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Phone } from 'lucide-react';
+import { Phone, Menu, X, ChevronDown, ChevronRight, Shield, Clock } from 'lucide-react';
 
 const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isIndustriesDropdownOpen, setIsIndustriesDropdownOpen] = useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [openMobileSubmenu, setOpenMobileSubmenu] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -183,82 +184,140 @@ const NavBar = () => {
         </div>
 
         {/* Mobile menu button */}
-        <button className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          <div className={`${isScrolled ? 'text-gray-800' : 'text-white'}`}>
-            {isMobileMenuOpen ? <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg> : <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-              </svg>}
-          </div>
+        <button 
+          className="md:hidden p-2 rounded-lg hover:bg-gray-100/10 transition-colors"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {isMobileMenuOpen ? (
+            <X className={`h-6 w-6 ${isScrolled ? 'text-gray-800' : 'text-white'}`} />
+          ) : (
+            <Menu className={`h-6 w-6 ${isScrolled ? 'text-gray-800' : 'text-white'}`} />
+          )}
         </button>
       </div>
 
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen && <div className="md:hidden bg-white shadow-lg">
-          <div className="flex flex-col px-4 pt-2 pb-4 space-y-1">
-            <Link to="/" className="px-4 py-2 text-gray-700 hover:bg-brand-100 rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
-              Home
-            </Link>
-            <Link to="/services" className="px-4 py-2 text-gray-700 hover:bg-brand-100 rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
-              Services
-            </Link>
-            <Link to="/locations" className="px-4 py-2 text-gray-700 hover:bg-brand-100 rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
-              Locations
-            </Link>
-            <div className="px-4 py-2 text-gray-700">
-              <button 
-                onClick={() => document.getElementById('industries-mobile')?.classList.toggle('hidden')}
-                className="flex items-center justify-between w-full"
+      {/* Enhanced Mobile Navigation */}
+      <div 
+        className={`md:hidden fixed inset-0 bg-white z-40 transition-transform duration-300 ease-in-out ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+        style={{ top: '64px' }}
+      >
+        <div className="h-full overflow-y-auto pb-32">
+          <nav className="px-4 py-2">
+            <div className="space-y-1">
+              <Link 
+                to="/" 
+                className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"
+                onClick={() => setIsMobileMenuOpen(false)}
               >
-                Industries
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1"><path d="m6 9 6 6 6-6"/></svg>
-              </button>
-              <div id="industries-mobile" className="hidden pl-4 mt-2 space-y-1">
-                <Link to="/industries/healthcare" className="block py-2 text-gray-600 hover:text-brand-600" onClick={() => setIsMobileMenuOpen(false)}>
-                  Healthcare Facilities
-                </Link>
-                <Link to="/industries/hospitality" className="block py-2 text-gray-600 hover:text-brand-600" onClick={() => setIsMobileMenuOpen(false)}>
-                  Hospitality
-                </Link>
-                <Link to="/industries/restaurants" className="block py-2 text-gray-600 hover:text-brand-600" onClick={() => setIsMobileMenuOpen(false)}>
-                  Restaurants
-                </Link>
-                <Link to="/industries/education" className="block py-2 text-gray-600 hover:text-brand-600" onClick={() => setIsMobileMenuOpen(false)}>
-                  Educational Institutions
-                </Link>
-                <Link to="/industries/retail" className="block py-2 text-gray-600 hover:text-brand-600" onClick={() => setIsMobileMenuOpen(false)}>
-                  Retail Spaces
-                </Link>
-                <Link to="/industries/manufacturing" className="block py-2 text-gray-600 hover:text-brand-600" onClick={() => setIsMobileMenuOpen(false)}>
-                  Manufacturing
-                </Link>
+                Home
+              </Link>
+              <Link 
+                to="/services" 
+                className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Services
+              </Link>
+              <Link 
+                to="/locations" 
+                className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Locations
+              </Link>
+
+              {/* Industries Dropdown */}
+              <div className="relative">
+                <button
+                  className="w-full px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg flex items-center justify-between"
+                  onClick={() => setOpenMobileSubmenu(openMobileSubmenu === 'industries' ? null : 'industries')}
+                >
+                  Industries
+                  <ChevronDown 
+                    className={`ml-2 h-5 w-5 transition-transform ${
+                      openMobileSubmenu === 'industries' ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                <div className={`pl-4 space-y-1 overflow-hidden transition-all duration-300 ${
+                  openMobileSubmenu === 'industries' ? 'max-h-96 py-2' : 'max-h-0'
+                }`}>
+                  {[
+                    ['Healthcare Facilities', '/industries/healthcare'],
+                    ['Hospitality', '/industries/hospitality'],
+                    ['Restaurants', '/industries/restaurants'],
+                    ['Educational Institutions', '/industries/education'],
+                    ['Retail Spaces', '/industries/retail'],
+                    ['Manufacturing', '/industries/manufacturing']
+                  ].map(([name, path]) => (
+                    <Link
+                      key={path}
+                      to={path}
+                      className="flex items-center px-4 py-2 text-gray-600 hover:text-brand-600 hover:bg-gray-50 rounded-lg"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <ChevronRight className="h-4 w-4 mr-2" />
+                      {name}
+                    </Link>
+                  ))}
+                </div>
               </div>
+
+              <Link 
+                to="/health-benefits" 
+                className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Health Benefits
+              </Link>
+              <Link 
+                to="/about" 
+                className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                About Us
+              </Link>
+              <Link 
+                to="/contact" 
+                className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Contact
+              </Link>
             </div>
-            <Link to="/health-benefits" className="px-4 py-2 text-gray-700 hover:bg-brand-100 rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
-              Health Benefits
-            </Link>
-            <Link to="/about" className="px-4 py-2 text-gray-700 hover:bg-brand-100 rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
-              About Us
-            </Link>
-            <Link to="/contact" className="px-4 py-2 text-gray-700 hover:bg-brand-100 rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
-              Contact
-            </Link>
-            <div className="pt-2">
-              <Button className="w-full bg-brand-600 hover:bg-brand-700" asChild>
-                <Link to="/quote">Get a Quote</Link>
+
+            {/* Quick Actions */}
+            <div className="mt-6 space-y-4 border-t border-gray-200 pt-6">
+              <Button className="w-full bg-brand-600 hover:bg-brand-700 text-lg py-6" asChild>
+                <Link to="/quote" onClick={() => setIsMobileMenuOpen(false)}>
+                  Get a Free Quote
+                </Link>
               </Button>
-            </div>
-            <div className="flex justify-center pt-2">
-              <Button variant="outline" className="flex items-center gap-2 w-full" asChild>
+              <Button variant="outline" className="w-full text-lg py-6 border-brand-600" asChild>
                 <a href="tel:2137924145">
-                  <Phone size={18} />
-                  <span className="text-gray-800">(213) 792-4145</span>
+                  <Phone size={20} className="mr-2" />
+                  (213) 792-4145
                 </a>
               </Button>
             </div>
-          </div>
-        </div>}
+
+            {/* Trust Badges */}
+            <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm text-gray-500">
+              <div className="flex items-center">
+                <Shield className="w-4 h-4 mr-1 text-brand-600" />
+                Licensed & Insured
+              </div>
+              <div className="flex items-center">
+                <Clock className="w-4 h-4 mr-1 text-brand-600" />
+                24/7 Service
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
     </header>;
 };
 export default NavBar;

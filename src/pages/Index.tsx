@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { AirVent, Home, Check, Star, ArrowRight, ShieldCheck, MapPin, ThumbsUp, Zap, BadgeDollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TrustedBy from '@/components/TrustedBy';
+import { useState } from 'react';
 
 const Index = () => {
   return (
@@ -251,6 +252,13 @@ const Index = () => {
           </div>
         </div>
       </section>
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+          <FAQ />
+        </div>
+      </section>
       
       {/* CTA Section */}
       <section className="py-16 bg-cta-pattern">
@@ -281,3 +289,51 @@ const Index = () => {
 };
 
 export default Index;
+
+const faqData = [
+  {
+    question: "How often should I have my air ducts cleaned?",
+    answer: "We recommend professional air duct cleaning every 2-3 years, or more frequently if you have pets, allergies, or recent renovations."
+  },
+  {
+    question: "Is air duct cleaning safe for my HVAC system?",
+    answer: "Yes, our certified technicians use industry-approved methods and equipment to safely clean your ducts without damaging your HVAC system."
+  },
+  {
+    question: "How long does the cleaning process take?",
+    answer: "Most residential air duct cleaning jobs are completed in 2-4 hours. Larger homes or commercial properties may take longer."
+  },
+  {
+    question: "Will air duct cleaning help with allergies?",
+    answer: "Yes, removing dust, pollen, and other allergens from your ductwork can significantly improve indoor air quality and reduce allergy symptoms."
+  },
+  {
+    question: "Do you offer free quotes?",
+    answer: "Absolutely! Contact us for a free, no-obligation quote for your air duct or dryer vent cleaning needs."
+  }
+];
+
+function FAQ() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  return (
+    <div className="space-y-4">
+      {faqData.map((item, idx) => (
+        <div key={idx} className="border rounded-lg bg-white shadow-sm">
+          <button
+            className="w-full text-left px-6 py-4 font-semibold text-lg flex justify-between items-center focus:outline-none"
+            onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+            aria-expanded={openIndex === idx}
+          >
+            {item.question}
+            <span className={`ml-2 transition-transform ${openIndex === idx ? 'rotate-180' : ''}`}>▼</span>
+          </button>
+          {openIndex === idx && (
+            <div className="px-6 pb-4 text-gray-700 animate-fade-in">
+              {item.answer}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}

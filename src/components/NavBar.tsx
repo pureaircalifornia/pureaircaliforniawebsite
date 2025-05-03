@@ -95,9 +95,10 @@ const NavBar = () => {
         <Link to="/" className="flex items-center gap-3" onClick={(e) => handleLinkClick(e)}>
           <div className={`p-1 rounded ${isScrolled ? 'bg-white' : 'bg-transparent'}`}>
             <img 
-              src="/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png" 
+              src="/logo.svg" 
               alt="Pure Air California Logo" 
-              className={`h-10 w-auto ${isScrolled ? '' : 'brightness-0 invert'}`} 
+              className={`h-8 w-auto ${isScrolled ? '' : 'brightness-0 invert'}`} 
+              loading="eager"
             />
           </div>
         </Link>

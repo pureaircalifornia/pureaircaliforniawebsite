@@ -2,9 +2,10 @@ import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, ShieldCheck } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import TrustedBy from '@/components/TrustedBy';
+import './index.css';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -36,7 +37,7 @@ const Contact = () => {
       <TrustedBy />
 
       {/* Contact Info Section */}
-      <section id="contact-info" className="py-16">
+      <section id="contact-info" className="py-12 bg-white fade-in">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
@@ -166,6 +167,20 @@ const Contact = () => {
               </form>
             </div>
           </div>
+          {/* 100% Satisfaction Guarantee Badge */}
+          <div className="flex justify-center mt-10">
+            <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-full px-6 py-2 shadow-sm">
+              <ShieldCheck size={24} className="text-green-600" />
+              <span className="font-semibold text-green-700 font-heading">100% Satisfaction Guarantee</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div className="border-t border-gray-100 my-8" />
+      {/* Contact Form Section */}
+      <section id="contact-form" className="py-12 bg-gray-50 fade-in">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <p className="text-xs text-gray-500 mt-2 text-center">We never share your information. Your privacy is protected.</p>
         </div>
       </section>
       

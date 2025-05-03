@@ -4,8 +4,9 @@ import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { AirVent, Fan, Filter, Home, Building } from 'lucide-react';
+import { AirVent, Fan, Filter, Home, Building, ShieldCheck, ArrowRight } from 'lucide-react';
 import TrustedBy from '@/components/TrustedBy';
+import './index.css';
 
 const ServiceCard = ({ 
   title, 
@@ -51,16 +52,9 @@ const Services = () => {
       <TrustedBy />
 
       {/* Services Section */}
-      <section id="services" className="py-16 bg-white">
+      <section id="services" className="py-16 bg-white fade-in">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Professional Services</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              From residential air duct cleaning to commercial ventilation solutions, we provide the expertise 
-              to improve your indoor air quality and system efficiency.
-            </p>
-          </div>
-
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 font-heading">Our Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Residential Services */}
             <ServiceCard
@@ -102,11 +96,19 @@ const Services = () => {
               link="/services/commercial-electrostatic-filter"
             />
           </div>
+          {/* 100% Satisfaction Guarantee Badge */}
+          <div className="flex justify-center mt-10">
+            <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-full px-6 py-2 shadow-sm">
+              <ShieldCheck size={24} className="text-green-600" />
+              <span className="font-semibold text-green-700 font-heading">100% Satisfaction Guarantee</span>
+            </div>
+          </div>
         </div>
       </section>
+      <div className="border-t border-gray-100 my-8" />
 
       {/* Process Section */}
-      <section id="process" className="py-16 bg-gray-50">
+      <section id="process" className="py-16 bg-gray-50 fade-in">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Simple Process</h2>
@@ -139,22 +141,17 @@ const Services = () => {
           </div>
         </div>
       </section>
+      <div className="border-t border-gray-100 my-8" />
 
       {/* CTA Section */}
-      <section id="cta" className="py-16 bg-brand-600 text-white">
+      <section id="cta" className="py-16 bg-brand-50 fade-in">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Improve Your Air Quality?</h2>
-          <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Contact us today for a free consultation and quote on our professional air quality services.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" variant="secondary" asChild>
-              <Link to="/quote">Get a Free Quote</Link>
-            </Button>
-            <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white hover:text-brand-600" asChild>
-              <a href="tel:2137924145">Call (213) 792-4145</a>
-            </Button>
-          </div>
+          <Button asChild variant="outline" className="group transition-all duration-200 hover:bg-brand-600 hover:text-white border-brand-600">
+            <Link to="/quote" className="flex items-center gap-2">
+              Get a Free Quote
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </Button>
         </div>
       </section>
 

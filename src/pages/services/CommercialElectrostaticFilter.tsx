@@ -1,4 +1,3 @@
-
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
@@ -71,10 +70,11 @@ const CommercialElectrostaticFilter = () => {
             </div>
             
             <div>
-              <img 
-                src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800" 
-                alt="Commercial building with clean air" 
-                className="rounded-lg shadow-lg w-full h-auto" 
+              <img
+                src="https://images.unsplash.com/photo-1631392561719-acb5c75c3ad5?auto=format&fit=crop&w=800&q=80"
+                alt="Professional technician installing commercial electrostatic filter"
+                className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
+                loading="lazy"
               />
             </div>
           </div>
@@ -264,10 +264,11 @@ const CommercialElectrostaticFilter = () => {
                 </p>
               </div>
               <div>
-                <img 
-                  src="https://images.unsplash.com/photo-1535350356005-fd52b3b524fb?auto=format&fit=crop&w=800" 
-                  alt="Electrostatic filter technology" 
-                  className="rounded-lg shadow-lg w-full h-auto" 
+                <img
+                  src="https://images.unsplash.com/photo-1635274605638-d44babc08a4f?auto=format&fit=crop&w=800&q=80"
+                  alt="Clean commercial air system with electrostatic filter"
+                  className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
+                  loading="lazy"
                 />
               </div>
             </div>

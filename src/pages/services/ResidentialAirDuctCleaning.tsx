@@ -1,4 +1,3 @@
-
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
@@ -70,10 +69,11 @@ const ResidentialAirDuctCleaning = () => {
             </div>
             
             <div>
-              <img 
-                src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=800" 
-                alt="Clean air ducts in home" 
-                className="rounded-lg shadow-lg w-full h-auto" 
+              <img
+                src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80"
+                alt="Professional technician cleaning residential air ducts"
+                className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
+                loading="lazy"
               />
             </div>
           </div>

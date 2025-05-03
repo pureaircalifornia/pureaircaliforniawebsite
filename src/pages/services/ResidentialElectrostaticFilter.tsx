@@ -1,4 +1,3 @@
-
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
@@ -70,10 +69,11 @@ const ResidentialElectrostaticFilter = () => {
             </div>
             
             <div>
-              <img 
-                src="https://images.unsplash.com/photo-1591825729269-caeb344f6df2?auto=format&fit=crop&w=800" 
-                alt="Electrostatic air filter" 
-                className="rounded-lg shadow-lg w-full h-auto" 
+              <img
+                src="https://images.unsplash.com/photo-1631392561719-acb5c75c3ad5?auto=format&fit=crop&w=800&q=80"
+                alt="Professional technician installing electrostatic filter"
+                className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
+                loading="lazy"
               />
             </div>
           </div>

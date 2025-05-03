@@ -3,8 +3,9 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { Home, Building, Calendar, CheckCircle2 } from 'lucide-react';
+import { Home, Building, Calendar, CheckCircle2, ShieldCheck } from 'lucide-react';
 import TrustedBy from '@/components/TrustedBy';
+import './index.css';
 
 const Quote = () => {
   const { toast } = useToast();
@@ -102,9 +103,10 @@ const Quote = () => {
         </div>
       </section>
 
-      {/* Quote Form */}
-      <section id="quote-form" className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
+      {/* Quote Form Section */}
+      <section className="py-12 bg-white fade-in">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 font-heading">Get Your Free Quote</h2>
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8">
             {step === 1 && (
               <div className="space-y-6">
@@ -420,8 +422,17 @@ const Quote = () => {
               )}
             </div>
           </form>
+          <p className="text-xs text-gray-500 mt-2 text-center">We never share your information. Your privacy is protected.</p>
+          {/* 100% Satisfaction Guarantee Badge */}
+          <div className="flex justify-center mt-10">
+            <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-full px-6 py-2 shadow-sm">
+              <ShieldCheck size={24} className="text-green-600" />
+              <span className="font-semibold text-green-700 font-heading">100% Satisfaction Guarantee</span>
+            </div>
+          </div>
         </div>
       </section>
+      <div className="border-t border-gray-100 my-8" />
 
       {/* Trust Indicators */}
       <section className="py-16 bg-white">

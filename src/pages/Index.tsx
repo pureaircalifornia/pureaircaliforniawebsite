@@ -10,6 +10,7 @@ import { AirVent, Home, Check, Star, ArrowRight, ShieldCheck, MapPin, ThumbsUp, 
 import { Link } from 'react-router-dom';
 import TrustedBy from '@/components/TrustedBy';
 import { useState } from 'react';
+import './index.css';
 
 const Index = () => {
   return (
@@ -20,41 +21,49 @@ const Index = () => {
       <Hero />
       <TrustedBy />
       {/* Why Choose Us Section */}
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-white fade-in">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Why Choose Pure Air California?</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 font-heading">Why Choose Pure Air California?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="flex flex-col items-center">
               <ShieldCheck size={40} className="text-brand-600 mb-3" />
-              <h3 className="text-lg font-semibold mb-2">Licensed & Insured</h3>
+              <h3 className="text-lg font-semibold mb-2 font-heading">Licensed & Insured</h3>
               <p className="text-gray-600">Fully certified, licensed, and insured for your peace of mind.</p>
             </div>
             <div className="flex flex-col items-center">
               <MapPin size={40} className="text-brand-600 mb-3" />
-              <h3 className="text-lg font-semibold mb-2">Local Experts</h3>
+              <h3 className="text-lg font-semibold mb-2 font-heading">Local Experts</h3>
               <p className="text-gray-600">Serving Los Angeles for over 10 years with local knowledge and care.</p>
             </div>
             <div className="flex flex-col items-center">
               <ThumbsUp size={40} className="text-brand-600 mb-3" />
-              <h3 className="text-lg font-semibold mb-2">Satisfaction Guarantee</h3>
+              <h3 className="text-lg font-semibold mb-2 font-heading">Satisfaction Guarantee</h3>
               <p className="text-gray-600">We stand behind our work with a 100% satisfaction guarantee.</p>
             </div>
             <div className="flex flex-col items-center">
               <Zap size={40} className="text-brand-600 mb-3" />
-              <h3 className="text-lg font-semibold mb-2">Fast Response</h3>
+              <h3 className="text-lg font-semibold mb-2 font-heading">Fast Response</h3>
               <p className="text-gray-600">Quick scheduling and prompt service for your convenience.</p>
             </div>
             <div className="flex flex-col items-center">
               <BadgeDollarSign size={40} className="text-brand-600 mb-3" />
-              <h3 className="text-lg font-semibold mb-2">Transparent Pricing</h3>
+              <h3 className="text-lg font-semibold mb-2 font-heading">Transparent Pricing</h3>
               <p className="text-gray-600">No hidden fees—just honest, upfront quotes every time.</p>
+            </div>
+          </div>
+          {/* 100% Satisfaction Guarantee Badge */}
+          <div className="flex justify-center mt-10">
+            <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-full px-6 py-2 shadow-sm">
+              <ShieldCheck size={24} className="text-green-600" />
+              <span className="font-semibold text-green-700 font-heading">100% Satisfaction Guarantee</span>
             </div>
           </div>
         </div>
       </section>
+      <div className="border-t border-gray-100 my-8" />
       
       {/* Services Section */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-gray-50 fade-in">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">Our Professional Services</h2>
@@ -69,24 +78,24 @@ const Index = () => {
               title="Residential Air Duct Cleaning" 
               description="Improve your home's air quality, reduce allergens, and enhance HVAC efficiency with our thorough residential air duct cleaning services."
               icon={<Home size={32} />}
-              link="/services/residential"
+              link="/services/residential-air-duct-cleaning"
             />
             <ServiceCard 
               title="Commercial Air Duct Cleaning" 
               description="Create a healthier work environment with our commercial-grade air duct cleaning, designed specifically for offices, retail spaces, and more."
               icon={<AirVent size={32} />}
-              link="/services/commercial"
+              link="/services/commercial-air-duct-cleaning"
             />
             <ServiceCard 
               title="Dryer Vent Cleaning" 
               description="Prevent fire hazards and improve dryer efficiency with our professional dryer vent cleaning services for homes and businesses."
               icon={<AirVent size={32} />}
-              link="/services/dryer-vent"
+              link="/services/residential-dryer-vent-cleaning"
             />
           </div>
           
           <div className="mt-12 text-center">
-            <Button asChild variant="outline" className="group">
+            <Button asChild variant="outline" className="group transition-all duration-200 hover:bg-brand-600 hover:text-white border-brand-600">
               <Link to="/services" className="flex items-center gap-2">
                 View All Services 
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -95,9 +104,10 @@ const Index = () => {
           </div>
         </div>
       </section>
+      <div className="border-t border-gray-100 my-8" />
       
       {/* Benefits Section */}
-      <section className="section-padding">
+      <section className="section-padding fade-in">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -173,9 +183,10 @@ const Index = () => {
           </div>
         </div>
       </section>
+      <div className="border-t border-gray-100 my-8" />
       
       {/* Quote Form Section */}
-      <section className="section-padding bg-gradient-to-r from-brand-50 to-secondary_brand-50">
+      <section className="section-padding bg-gradient-to-r from-brand-50 to-secondary_brand-50 fade-in">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
@@ -213,13 +224,17 @@ const Index = () => {
               </div>
             </div>
             
-            <QuoteForm />
+            <div>
+              <QuoteForm />
+              <p className="text-xs text-gray-500 mt-2 text-center">We never share your information. Your privacy is protected.</p>
+            </div>
           </div>
         </div>
       </section>
+      <div className="border-t border-gray-100 my-8" />
       
       {/* Testimonials Section */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-white fade-in">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
@@ -252,16 +267,18 @@ const Index = () => {
           </div>
         </div>
       </section>
+      <div className="border-t border-gray-100 my-8" />
       {/* FAQ Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 fade-in">
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Frequently Asked Questions</h2>
           <FAQ />
         </div>
       </section>
+      <div className="border-t border-gray-100 my-8" />
       
       {/* CTA Section */}
-      <section className="py-16 bg-cta-pattern">
+      <section className="py-16 bg-cta-pattern fade-in">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6">

@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 const Hero = () => {
   return (
     <div className="hero-section">
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 pt-24">
         <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 font-heading">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 font-heading drop-shadow-md">
             Breathe Cleaner, <span className="text-brand-400">Live Better</span>
           </h1>
-          <p className="text-xl text-gray-100 mb-8 max-w-2xl">
+          <p className="text-xl text-gray-100 mb-8 max-w-2xl drop-shadow">
             Professional air duct cleaning and dryer vent services for residential and 
             commercial properties across Los Angeles. Experience the difference clean air makes.
           </p>

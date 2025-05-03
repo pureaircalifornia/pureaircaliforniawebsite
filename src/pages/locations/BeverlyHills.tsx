@@ -1,4 +1,3 @@
-
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -112,7 +111,7 @@ const BeverlyHills = () => {
                     sophisticated HVAC systems.
                   </p>
                   <Button asChild variant="link" className="p-0 text-brand-600 font-medium">
-                    <Link to="/services/residential">Learn More</Link>
+                    <Link to="/services/residential-air-duct-cleaning">Learn More</Link>
                   </Button>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
@@ -122,7 +121,7 @@ const BeverlyHills = () => {
                     properties on Rodeo Drive and throughout Beverly Hills.
                   </p>
                   <Button asChild variant="link" className="p-0 text-brand-600 font-medium">
-                    <Link to="/services/commercial">Learn More</Link>
+                    <Link to="/services/commercial-air-duct-cleaning">Learn More</Link>
                   </Button>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
@@ -132,7 +131,7 @@ const BeverlyHills = () => {
                     that removes lint buildup and improves efficiency.
                   </p>
                   <Button asChild variant="link" className="p-0 text-brand-600 font-medium">
-                    <Link to="/services/dryer-vent">Learn More</Link>
+                    <Link to="/services/residential-dryer-vent-cleaning">Learn More</Link>
                   </Button>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
@@ -142,7 +141,7 @@ const BeverlyHills = () => {
                     throughout your property.
                   </p>
                   <Button asChild variant="link" className="p-0 text-brand-600 font-medium">
-                    <Link to="/services/hvac">Learn More</Link>
+                    <Link to="/services/residential-electrostatic-filter">Learn More</Link>
                   </Button>
                 </div>
               </div>

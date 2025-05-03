@@ -1,4 +1,3 @@
-
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -112,7 +111,7 @@ const Ventura = () => {
                     to inland neighborhoods.
                   </p>
                   <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/residential">Learn More</Link>
+                    <Link to="/services/residential-air-duct-cleaning">Learn More</Link>
                   </Button>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
@@ -122,7 +121,7 @@ const Ventura = () => {
                     businesses throughout Ventura County.
                   </p>
                   <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/commercial">Learn More</Link>
+                    <Link to="/services/commercial-air-duct-cleaning">Learn More</Link>
                   </Button>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
@@ -132,7 +131,7 @@ const Ventura = () => {
                     that removes lint buildup from residential and commercial properties.
                   </p>
                   <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/dryer-vent">Learn More</Link>
+                    <Link to="/services/residential-dryer-vent-cleaning">Learn More</Link>
                   </Button>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">

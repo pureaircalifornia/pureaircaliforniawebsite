@@ -1,4 +1,3 @@
-
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -139,7 +138,7 @@ const Malibu = () => {
                     humidity challenges that can compromise indoor air quality.
                   </p>
                   <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/residential">Learn More</Link>
+                    <Link to="/services/residential-air-duct-cleaning">Learn More</Link>
                   </Button>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
@@ -149,7 +148,7 @@ const Malibu = () => {
                     buildup and ensuring proper ventilation.
                   </p>
                   <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/dryer-vent">Learn More</Link>
+                    <Link to="/services/residential-dryer-vent-cleaning">Learn More</Link>
                   </Button>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">

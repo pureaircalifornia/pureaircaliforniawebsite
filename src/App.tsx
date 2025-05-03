@@ -18,6 +18,8 @@ import HealthBenefits from "./pages/HealthBenefits";
 import Locations from "./pages/Locations";
 import Services from "./pages/Services";
 import About from "./pages/About";
+import Quote from "./pages/Quote";
+import Contact from "./pages/Contact";
 import ResidentialAirDuctCleaning from "./pages/services/ResidentialAirDuctCleaning";
 import ResidentialDryerVentCleaning from "./pages/services/ResidentialDryerVentCleaning";
 import ResidentialElectrostaticFilter from "./pages/services/ResidentialElectrostaticFilter";
@@ -56,6 +58,8 @@ const App = () => (
           <Route path="/services/commercial-dryer-vent-cleaning" element={<CommercialDryerVentCleaning />} />
           <Route path="/services/commercial-electrostatic-filter" element={<CommercialElectrostaticFilter />} />
           <Route path="/about" element={<About />} />
+          <Route path="/quote" element={<Quote />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/health-benefits" element={<HealthBenefits />} />

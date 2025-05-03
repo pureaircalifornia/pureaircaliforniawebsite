@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import TrustedBy from '@/components/TrustedBy';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -27,12 +28,12 @@ const Contact = () => {
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
             <p className="text-xl mb-8">
-              Have questions about our services? Ready to schedule an appointment?
-              Our team is here to help!
+              We're here to help! Reach out for questions, quotes, or to schedule your service.
             </p>
           </div>
         </div>
       </section>
+      <TrustedBy />
 
       {/* Contact Info Section */}
       <section id="contact-info" className="py-16">

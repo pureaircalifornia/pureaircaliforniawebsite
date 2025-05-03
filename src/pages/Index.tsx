@@ -1,4 +1,3 @@
-
 import Hero from '@/components/Hero';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
@@ -7,8 +6,9 @@ import ServiceCard from '@/components/ServiceCard';
 import TestimonialCard from '@/components/TestimonialCard';
 import ProcessStep from '@/components/ProcessStep';
 import { Button } from '@/components/ui/button';
-import { AirVent, Home, Check, Star, ArrowRight } from 'lucide-react';
+import { AirVent, Home, Check, Star, ArrowRight, ShieldCheck, MapPin, ThumbsUp, Zap, BadgeDollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import TrustedBy from '@/components/TrustedBy';
 
 const Index = () => {
   return (
@@ -17,6 +17,40 @@ const Index = () => {
       
       {/* Hero Section */}
       <Hero />
+      <TrustedBy />
+      {/* Why Choose Us Section */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Why Choose Pure Air California?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="flex flex-col items-center">
+              <ShieldCheck size={40} className="text-brand-600 mb-3" />
+              <h3 className="text-lg font-semibold mb-2">Licensed & Insured</h3>
+              <p className="text-gray-600">Fully certified, licensed, and insured for your peace of mind.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <MapPin size={40} className="text-brand-600 mb-3" />
+              <h3 className="text-lg font-semibold mb-2">Local Experts</h3>
+              <p className="text-gray-600">Serving Los Angeles for over 10 years with local knowledge and care.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <ThumbsUp size={40} className="text-brand-600 mb-3" />
+              <h3 className="text-lg font-semibold mb-2">Satisfaction Guarantee</h3>
+              <p className="text-gray-600">We stand behind our work with a 100% satisfaction guarantee.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Zap size={40} className="text-brand-600 mb-3" />
+              <h3 className="text-lg font-semibold mb-2">Fast Response</h3>
+              <p className="text-gray-600">Quick scheduling and prompt service for your convenience.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <BadgeDollarSign size={40} className="text-brand-600 mb-3" />
+              <h3 className="text-lg font-semibold mb-2">Transparent Pricing</h3>
+              <p className="text-gray-600">No hidden fees—just honest, upfront quotes every time.</p>
+            </div>
+          </div>
+        </div>
+      </section>
       
       {/* Services Section */}
       <section className="section-padding bg-gray-50">

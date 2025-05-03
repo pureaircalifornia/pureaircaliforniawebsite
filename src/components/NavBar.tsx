@@ -66,23 +66,15 @@ const NavBar = () => {
     }
   };
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId?: string) => {
-    e.preventDefault();
-    if (sectionId) {
-      // If we're on a different page, navigate first then scroll
-      const currentPath = window.location.pathname;
-      const targetPath = e.currentTarget.getAttribute('href');
-      
-      if (currentPath !== targetPath) {
-        // Navigate to the new page
-        window.location.href = `${targetPath}#${sectionId}`;
-      } else {
-        // We're already on the right page, just scroll
-        scrollToSection(sectionId);
-      }
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId?: string, targetPath?: string) => {
+    const currentPath = window.location.pathname;
+    // If a sectionId is provided and we're on the correct page, scroll to section
+    if (sectionId && currentPath === (targetPath || currentPath)) {
+      e.preventDefault();
+      scrollToSection(sectionId);
     }
+    // If a sectionId is provided and we're NOT on the correct page, let the router handle navigation (do not preventDefault)
+    // For all other links, let the router handle navigation
   };
 
   // Handle hash changes for direct URL navigation
@@ -115,10 +107,10 @@ const NavBar = () => {
           <Link to="/" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e)}>
             Home
           </Link>
-          <Link to="/services" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'services')}>
+          <Link to="/services" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'services', '/services')}>
             Services
           </Link>
-          <Link to="/locations" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'locations')}>
+          <Link to="/locations" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'locations', '/locations')}>
             Locations
           </Link>
           <div 
@@ -160,13 +152,13 @@ const NavBar = () => {
               </div>
             )}
           </div>
-          <Link to="/health-benefits" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'health-benefits')}>
+          <Link to="/health-benefits" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'health-benefits', '/health-benefits')}>
             Health Benefits
           </Link>
-          <Link to="/about" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'about')}>
+          <Link to="/about" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'about', '/about')}>
             About Us
           </Link>
-          <Link to="/contact" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'contact')}>
+          <Link to="/contact" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} onClick={(e) => handleLinkClick(e, 'contact', '/contact')}>
             Contact
           </Link>
         </nav>

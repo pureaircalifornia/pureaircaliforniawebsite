@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { AirVent, Fan, Filter, Home, Building } from 'lucide-react';
+import TrustedBy from '@/components/TrustedBy';
 
 const ServiceCard = ({ 
   title, 
@@ -40,17 +41,14 @@ const Services = () => {
       <section id="services-hero" className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Professional Air Quality Services</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
             <p className="text-xl mb-8">
-              Pure Air California delivers comprehensive air quality solutions for both residential and commercial properties 
-              throughout Los Angeles and surrounding areas.
+              Comprehensive air duct and dryer vent cleaning for homes and businesses in Los Angeles.
             </p>
-            <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-              <Link to="#services">Explore Our Services</Link>
-            </Button>
           </div>
         </div>
       </section>
+      <TrustedBy />
 
       {/* Services Section */}
       <section id="services" className="py-16 bg-white">

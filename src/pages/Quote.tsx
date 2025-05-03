@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { Home, Building, Calendar, CheckCircle2 } from 'lucide-react';
+import TrustedBy from '@/components/TrustedBy';
 
 const Quote = () => {
   const { toast } = useToast();
@@ -71,6 +72,7 @@ const Quote = () => {
           </div>
         </div>
       </section>
+      <TrustedBy />
 
       {/* Progress Steps */}
       <section className="py-8 bg-white">

@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import TrustedBy from '@/components/TrustedBy';
 import { useState } from 'react';
 import './index.css';
+import TrustBadges from '@/components/TrustBadges';
 
 const Index = () => {
   return (
@@ -19,6 +20,9 @@ const Index = () => {
       
       {/* Hero Section */}
       <Hero />
+      
+      {/* Trust Badges */}
+      <TrustBadges />
       
       {/* Trust Badges */}
       <section className="py-8 bg-white border-b">

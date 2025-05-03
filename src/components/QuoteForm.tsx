@@ -2,302 +2,267 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useToast } from '@/hooks/use-toast';
-import { Shield, BadgeCheck, Clock } from 'lucide-react';
+import { Shield, Clock, CheckCircle } from 'lucide-react';
+
+type FormData = {
+  service: string;
+  propertyType: string;
+  squareFootage: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  message: string;
+  preferredDate: string;
+};
 
 const QuoteForm = () => {
-  const { toast } = useToast();
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    serviceType: '',
+  const [formData, setFormData] = useState<FormData>({
+    service: '',
     propertyType: '',
-    propertySize: '',
-    concerns: [],
-    firstName: '',
-    lastName: '',
+    squareFootage: '',
+    name: '',
     email: '',
     phone: '',
     address: '',
+    message: '',
     preferredDate: '',
-    preferredTime: '',
-    message: ''
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const services = [
+    'Residential Air Duct Cleaning',
+    'Commercial Air Duct Cleaning',
+    'Dryer Vent Cleaning',
+    'Electrostatic Filter Service',
+  ];
+
+  const propertyTypes = [
+    'Single Family Home',
+    'Apartment/Condo',
+    'Office Building',
+    'Restaurant',
+    'Healthcare Facility',
+    'Other Commercial',
+  ];
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      concerns: checked 
-        ? [...prev.concerns, value]
-        : prev.concerns.filter(concern => concern !== value)
-    }));
-  };
-
-  const validateStep = (currentStep: number) => {
-    switch (currentStep) {
-      case 1:
-        return formData.serviceType && formData.propertyType;
-      case 2:
-        return formData.firstName && formData.lastName && formData.email && formData.phone;
-      default:
-        return true;
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Quote Request Received!",
-      description: "We'll contact you shortly to discuss your needs.",
-    });
+    // Add form submission logic here
+    console.log('Form submitted:', formData);
   };
 
-  return (
-    <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
-      {/* Progress Steps */}
-      <div className="mb-8">
-        <div className="flex justify-between">
-          {[1, 2, 3].map((num) => (
-            <div key={num} className="flex flex-col items-center">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                step >= num ? 'bg-brand-600 text-white' : 'bg-gray-200 text-gray-600'
-              }`}>
-                {num}
-              </div>
-              <span className="text-xs mt-1 text-gray-600">
-                {num === 1 ? 'Service' : num === 2 ? 'Details' : 'Contact'}
-              </span>
-            </div>
-          ))}
-        </div>
-        <div className="relative mt-2">
-          <div className="absolute top-0 left-0 h-1 bg-gray-200 w-full rounded">
-            <div 
-              className="absolute top-0 left-0 h-full bg-brand-600 rounded transition-all duration-300"
-              style={{ width: `${((step - 1) / 2) * 100}%` }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Step 1: Service Selection */}
-        <div className={`transition-all duration-300 ${step === 1 ? 'block' : 'hidden'}`}>
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Service Type*</label>
+              <label className="block text-sm font-medium mb-2">Service Type</label>
               <select
-                name="serviceType"
-                value={formData.serviceType}
+                name="service"
+                value={formData.service}
                 onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                className="w-full p-2 border rounded-md"
                 required
               >
                 <option value="">Select a service</option>
-                <option value="residential">Residential Air Duct Cleaning</option>
-                <option value="commercial">Commercial Air Duct Cleaning</option>
-                <option value="dryer">Dryer Vent Cleaning</option>
+                {services.map((service) => (
+                  <option key={service} value={service}>
+                    {service}
+                  </option>
+                ))}
               </select>
             </div>
-
             <div>
-              <label className="block text-sm font-medium mb-1">Property Type*</label>
+              <label className="block text-sm font-medium mb-2">Property Type</label>
               <select
                 name="propertyType"
                 value={formData.propertyType}
                 onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                className="w-full p-2 border rounded-md"
                 required
               >
                 <option value="">Select property type</option>
-                <option value="house">House</option>
-                <option value="apartment">Apartment</option>
-                <option value="office">Office Building</option>
-                <option value="commercial">Commercial Space</option>
+                {propertyTypes.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
               </select>
             </div>
-
             <div>
-              <label className="block text-sm font-medium mb-1">Property Size (sq ft)</label>
-              <input
-                type="number"
-                name="propertySize"
-                value={formData.propertySize}
-                onChange={handleInputChange}
-                placeholder="e.g., 1500"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">Main Concerns</label>
-              <div className="space-y-2">
-                {['Dust', 'Allergies', 'Odors', 'Energy Efficiency', 'Mold'].map((concern) => (
-                  <label key={concern} className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      value={concern.toLowerCase()}
-                      checked={formData.concerns.includes(concern.toLowerCase())}
-                      onChange={handleCheckboxChange}
-                      className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
-                    />
-                    <span>{concern}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Step 2: Contact Information */}
-        <div className={`transition-all duration-300 ${step === 2 ? 'block' : 'hidden'}`}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">First Name*</label>
-              <input
+              <label className="block text-sm font-medium mb-2">Square Footage (approx.)</label>
+              <Input
                 type="text"
-                name="firstName"
-                value={formData.firstName}
+                name="squareFootage"
+                value={formData.squareFootage}
                 onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Last Name*</label>
-              <input
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                placeholder="e.g., 2000"
                 required
               />
             </div>
           </div>
-          <div className="mt-4 space-y-4">
+        );
+      case 2:
+        return (
+          <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Email*</label>
-              <input
+              <label className="block text-sm font-medium mb-2">Full Name</label>
+              <Input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Email</label>
+              <Input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Phone*</label>
-              <input
+              <label className="block text-sm font-medium mb-2">Phone</label>
+              <Input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Service Address</label>
+              <Input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
                 required
               />
             </div>
           </div>
-        </div>
-
-        {/* Step 3: Schedule */}
-        <div className={`transition-all duration-300 ${step === 3 ? 'block' : 'hidden'}`}>
+        );
+      case 3:
+        return (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Preferred Date</label>
-              <input
+              <label className="block text-sm font-medium mb-2">Preferred Service Date</label>
+              <Input
                 type="date"
                 name="preferredDate"
                 value={formData.preferredDate}
                 onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                min={new Date().toISOString().split('T')[0]}
+                required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Preferred Time</label>
-              <select
-                name="preferredTime"
-                value={formData.preferredTime}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
-              >
-                <option value="">Select a time</option>
-                <option value="morning">Morning (8AM - 12PM)</option>
-                <option value="afternoon">Afternoon (12PM - 4PM)</option>
-                <option value="evening">Evening (4PM - 6PM)</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Additional Notes</label>
-              <textarea
+              <label className="block text-sm font-medium mb-2">Additional Notes</label>
+              <Textarea
                 name="message"
                 value={formData.message}
                 onChange={handleInputChange}
-                rows={3}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
-                placeholder="Any special instructions or concerns?"
+                placeholder="Any specific concerns or requirements?"
+                className="h-32"
               />
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      {/* Progress Indicator */}
+      <div className="mb-8">
+        <div className="flex justify-between items-center">
+          {[1, 2, 3].map((num) => (
+            <div key={num} className="flex items-center">
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                  step >= num ? 'bg-brand-600 text-white' : 'bg-gray-200'
+                }`}
+              >
+                {num}
+              </div>
+              {num < 3 && (
+                <div
+                  className={`h-1 w-24 ${
+                    step > num ? 'bg-brand-600' : 'bg-gray-200'
+                  }`}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-between mt-2 text-sm">
+          <span>Service Details</span>
+          <span>Contact Info</span>
+          <span>Schedule</span>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        {renderStep()}
+
+        {/* Trust Indicators */}
+        <div className="mt-6 pt-6 border-t">
+          <div className="flex justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <Shield className="h-4 w-4 text-brand-600" />
+              <span>Secure Form</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-brand-600" />
+              <span>Quick Response</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-brand-600" />
+              <span>No Obligation</span>
             </div>
           </div>
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between mt-8">
+        <div className="mt-8 flex justify-between">
           {step > 1 && (
             <Button
               type="button"
               variant="outline"
-              onClick={() => setStep(step - 1)}
-              className="px-6"
+              onClick={() => setStep((prev) => prev - 1)}
             >
-              Back
+              Previous
             </Button>
           )}
-          
           {step < 3 ? (
             <Button
               type="button"
-              onClick={() => validateStep(step) && setStep(step + 1)}
-              className={`px-6 ml-auto ${!validateStep(step) ? 'opacity-50 cursor-not-allowed' : ''}`}
-              disabled={!validateStep(step)}
+              className="ml-auto"
+              onClick={() => setStep((prev) => prev + 1)}
             >
               Next
             </Button>
           ) : (
-            <Button
-              type="submit"
-              className="px-6 ml-auto"
-            >
-              Submit Quote Request
+            <Button type="submit" className="ml-auto">
+              Get Quote
             </Button>
           )}
         </div>
       </form>
-
-      {/* Trust Indicators */}
-      <div className="mt-8 pt-6 border-t border-gray-100">
-        <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-          <div className="flex items-center gap-2">
-            <Shield className="w-4 h-4 text-brand-600" />
-            <span>Secure Form</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <BadgeCheck className="w-4 h-4 text-brand-600" />
-            <span>No Obligation</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-brand-600" />
-            <span>Quick Response</span>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

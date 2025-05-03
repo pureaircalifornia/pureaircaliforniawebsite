@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Phone, Mail, MapPin, Clock, ShieldCheck } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import TrustedBy from '@/components/TrustedBy';
+import TrustBadges from '@/components/TrustBadges';
 import './index.css';
 
 const Contact = () => {
@@ -183,6 +184,8 @@ const Contact = () => {
           <p className="text-xs text-gray-500 mt-2 text-center">We never share your information. Your privacy is protected.</p>
         </div>
       </section>
+      
+      <TrustBadges />
       
       <Footer />
     </div>

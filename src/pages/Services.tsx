@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { AirVent, Fan, Filter, Home, Building, ShieldCheck, ArrowRight } from 'lucide-react';
 import TrustedBy from '@/components/TrustedBy';
+import TrustBadges from '@/components/TrustBadges';
 import './index.css';
 
 const ServiceCard = ({ 
@@ -154,6 +155,9 @@ const Services = () => {
           </Button>
         </div>
       </section>
+
+      {/* Trust Badges Section */}
+      <TrustBadges />
 
       <Footer />
     </div>

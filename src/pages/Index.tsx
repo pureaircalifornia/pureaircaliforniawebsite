@@ -32,35 +32,6 @@ const Index = () => {
       {/* Trust Badges */}
       <TrustBadges />
       
-      {/* Trust Badges */}
-      <section className="py-8 bg-white border-b">
-        <div className="container mx-auto">
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-            <div className="flex items-center gap-2 text-gray-600">
-              <Shield className="w-5 h-5 text-brand-600" />
-              <span className="text-sm font-medium">Licensed & Insured</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-600">
-              <Award className="w-5 h-5 text-brand-600" />
-              <span className="text-sm font-medium">NADCA Certified</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-600">
-              <Clock className="w-5 h-5 text-brand-600" />
-              <span className="text-sm font-medium">24/7 Emergency Service</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-600">
-              <Users className="w-5 h-5 text-brand-600" />
-              <span className="text-sm font-medium">500+ Happy Customers</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-600">
-              <BadgeCheck className="w-5 h-5 text-brand-600" />
-              <span className="text-sm font-medium">100% Satisfaction Guarantee</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <TrustedBy />
       <Gallery />
       
       {/* Why Choose Us Section */}

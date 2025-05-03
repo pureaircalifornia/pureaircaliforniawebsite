@@ -1,4 +1,3 @@
-
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
@@ -6,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Check, Users, Trophy, Building, Home, Shield, Star, Briefcase, Handshake } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import TrustBadges from '@/components/TrustBadges';
 
 const About = () => {
   return (
@@ -23,6 +23,7 @@ const About = () => {
           </div>
         </div>
       </section>
+      <TrustBadges />
 
       {/* Our Story Section */}
       <section className="py-16">
@@ -271,50 +272,6 @@ const About = () => {
               <h3 className="text-xl font-semibold mb-2">Indoor Air Quality Association</h3>
               <p className="text-gray-600">
                 We're active members of the IAQA, keeping up with the latest research and best practices for improving indoor air quality.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Indicators Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Why Our Clients Trust Us</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Pure Air California has built a reputation based on reliability, expertise, and results.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-              <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mx-auto mb-4">
-                <Users size={28} className="text-brand-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">25,000+ Satisfied Clients</h3>
-              <p className="text-gray-600">
-                Over our 30-year history, we've successfully served more than 25,000 residential and commercial clients across Southern California.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-              <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mx-auto mb-4">
-                <Trophy size={28} className="text-brand-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">30 Years of Excellence</h3>
-              <p className="text-gray-600">
-                Three decades of experience has refined our expertise and established us as industry leaders in indoor air quality services.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-              <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mx-auto mb-4">
-                <Shield size={28} className="text-brand-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Fully Insured & Bonded</h3>
-              <p className="text-gray-600">
-                We maintain comprehensive insurance coverage, providing complete peace of mind for our clients during every service we provide.
               </p>
             </div>
           </div>

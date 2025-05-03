@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { AirVent, Fan, Filter, Home, Building, ShieldCheck, ArrowRight } from 'lucide-react';
-import TrustedBy from '@/components/TrustedBy';
 import TrustBadges from '@/components/TrustBadges';
 import '../index.css';
 
@@ -50,7 +49,7 @@ const Services = () => {
           </div>
         </div>
       </section>
-      <TrustedBy />
+      <TrustBadges />
 
       {/* Services Section */}
       <section id="services" className="py-16 bg-white fade-in">
@@ -96,13 +95,6 @@ const Services = () => {
               icon={<Filter size={32} />}
               link="/services/commercial-electrostatic-filter"
             />
-          </div>
-          {/* 100% Satisfaction Guarantee Badge */}
-          <div className="flex justify-center mt-10">
-            <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-full px-6 py-2 shadow-sm">
-              <ShieldCheck size={24} className="text-green-600" />
-              <span className="font-semibold text-green-700 font-heading">100% Satisfaction Guarantee</span>
-            </div>
           </div>
         </div>
       </section>
@@ -155,9 +147,6 @@ const Services = () => {
           </Button>
         </div>
       </section>
-
-      {/* Trust Badges Section */}
-      <TrustBadges />
 
       <Footer />
     </div>

@@ -6,7 +6,7 @@ import { Phone, Mail, MapPin, Clock, ShieldCheck } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import TrustedBy from '@/components/TrustedBy';
 import TrustBadges from '@/components/TrustBadges';
-import './index.css';
+import '../index.css';
 
 const Contact = () => {
   const { toast } = useToast();

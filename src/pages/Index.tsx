@@ -10,7 +10,7 @@ import { AirVent, Home, Check, Star, ArrowRight, ShieldCheck, MapPin, ThumbsUp, 
 import { Link } from 'react-router-dom';
 import TrustedBy from '@/components/TrustedBy';
 import { useState } from 'react';
-import './index.css';
+import '../index.css';
 import TrustBadges from '@/components/TrustBadges';
 import Gallery from '@/components/Gallery';
 import ServiceAreaMap from '@/components/ServiceAreaMap';

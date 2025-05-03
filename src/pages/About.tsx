@@ -32,19 +32,13 @@ const About = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6">Our Story</h2>
               <p className="text-lg text-gray-600 mb-4">
-                Pure Air California was founded in 1995 by Daniel Martinez, a former HVAC technician who recognized 
-                the critical importance of air duct cleaning for both system efficiency and indoor air quality.
+                Pure Air California was founded in 1995 by Lou Chanab, an air duct cleaning expert with over 25 years of experience who recognized the critical importance of air duct cleaning for both system efficiency and indoor air quality.
               </p>
               <p className="text-lg text-gray-600 mb-4">
-                After witnessing firsthand how neglected air ducts were contributing to poor indoor air quality and 
-                respiratory issues for many Los Angeles residents, Daniel set out to create a company dedicated to 
-                providing superior air quality solutions.
+                After witnessing firsthand how neglected air ducts were contributing to poor indoor air quality and respiratory issues for many Los Angeles residents, Lou set out to create a company dedicated to providing superior air quality solutions.
               </p>
               <p className="text-lg text-gray-600">
-                What began as a small, family-owned business has grown into one of Los Angeles' most trusted air quality 
-                service providers, with a team of certified technicians serving both residential and commercial clients 
-                throughout Southern California. Despite our growth, we remain committed to our founding principles of 
-                quality workmanship, exceptional customer service, and creating healthier indoor environments.
+                What began as a small, family-owned business has grown into one of Los Angeles' most trusted air quality service providers, with a team of certified technicians serving both residential and commercial clients throughout Southern California. Despite our growth, we remain committed to our founding principles of quality workmanship, exceptional customer service, and creating healthier indoor environments.
               </p>
             </div>
             
@@ -170,64 +164,49 @@ const About = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="mb-4 relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80" 
-                  alt="Daniel Martinez, Founder & CEO" 
-                  className="rounded-full w-40 h-40 object-cover mx-auto" 
+                  src="/logo/VectorWiki-8ZQSp__four-seasons-hotels-and-resorts.svg" 
+                  alt="Lou Chanab, Owner" 
+                  className="rounded-full w-40 h-40 object-cover mx-auto bg-brand-100" 
                 />
               </div>
-              <h3 className="text-xl font-semibold mb-1">Daniel Martinez</h3>
-              <p className="text-brand-600 font-medium mb-3">Founder & CEO</p>
+              <h3 className="text-xl font-semibold mb-1">Lou Chanab</h3>
+              <p className="text-brand-600 font-medium mb-3">Owner</p>
               <p className="text-gray-600 text-sm">
-                Former HVAC technician with over 30 years of industry experience. Certified Air Systems Cleaning Specialist.
+                With over 25 years of experience in air duct cleaning, Lou leads our team with expertise and dedication to quality service.
               </p>
             </div>
             
             <div className="text-center">
-              <div className="mb-4">
+              <div className="mb-4 relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80" 
-                  alt="Maria Gonzalez, Operations Director" 
-                  className="rounded-full w-40 h-40 object-cover mx-auto" 
+                  src="/logo/VectorWiki-WfVlH__ford-logo-flat.svg" 
+                  alt="Elliot Bermudez, Senior Technician" 
+                  className="rounded-full w-40 h-40 object-cover mx-auto bg-brand-100" 
                 />
               </div>
-              <h3 className="text-xl font-semibold mb-1">Maria Gonzalez</h3>
-              <p className="text-brand-600 font-medium mb-3">Operations Director</p>
+              <h3 className="text-xl font-semibold mb-1">Elliot Bermudez</h3>
+              <p className="text-brand-600 font-medium mb-3">Senior Technician</p>
               <p className="text-gray-600 text-sm">
-                Oversees all service operations, ensuring quality and consistency in every project we undertake.
+                Elliot's extensive experience and technical expertise make him our most trusted senior technician.
               </p>
             </div>
             
             <div className="text-center">
-              <div className="mb-4">
+              <div className="mb-4 relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?auto=format&fit=crop&w=400&h=400&q=80" 
-                  alt="Robert Chen, Technical Director" 
-                  className="rounded-full w-40 h-40 object-cover mx-auto" 
+                  src="/logo/VectorWiki-N35KO__taco-bell.svg" 
+                  alt="Jeamy Montez, Lead Technician" 
+                  className="rounded-full w-40 h-40 object-cover mx-auto bg-brand-100" 
                 />
               </div>
-              <h3 className="text-xl font-semibold mb-1">Robert Chen</h3>
-              <p className="text-brand-600 font-medium mb-3">Technical Director</p>
+              <h3 className="text-xl font-semibold mb-1">Jeamy Montez</h3>
+              <p className="text-brand-600 font-medium mb-3">Lead Technician</p>
               <p className="text-gray-600 text-sm">
-                Mechanical engineer specializing in HVAC systems and indoor air quality solutions for over 15 years.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <div className="mb-4">
-                <img 
-                  src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&h=400&q=80" 
-                  alt="Sophia Williams, Customer Service Manager" 
-                  className="rounded-full w-40 h-40 object-cover mx-auto" 
-                />
-              </div>
-              <h3 className="text-xl font-semibold mb-1">Sophia Williams</h3>
-              <p className="text-brand-600 font-medium mb-3">Customer Service Manager</p>
-              <p className="text-gray-600 text-sm">
-                Dedicated to ensuring an exceptional experience for every client from first contact through service completion.
+                Jeamy's attention to detail and commitment to excellence ensure every job meets our high standards.
               </p>
             </div>
           </div>
@@ -369,6 +348,20 @@ const About = () => {
                 <h3 className="text-xl font-semibold mb-2">Satisfaction Guarantee</h3>
                 <p className="text-gray-600">
                   We stand behind our work with a 100% satisfaction guarantee on all services we provide.
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center">
+                  <Check size={20} className="text-brand-600" />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Emergency Services</h3>
+                <p className="text-gray-600">
+                  Available 24/7 for urgent air quality issues, with rapid response times and immediate solutions.
                 </p>
               </div>
             </div>

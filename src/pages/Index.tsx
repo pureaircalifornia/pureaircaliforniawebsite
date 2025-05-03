@@ -230,11 +230,11 @@ const Index = () => {
               Our expert technicians serve all areas of Los Angeles.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" className="bg-brand-600 hover:bg-brand-700">
-                Get a Free Quote
+              <Button size="lg" className="bg-brand-600 hover:bg-brand-700" asChild>
+                <Link to="/quote">Get a Free Quote</Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-brand-500 text-brand-700 hover:bg-brand-50">
-                Call (310) 555-1234
+              <Button size="lg" variant="outline" className="border-brand-500 text-brand-700 hover:bg-brand-50" asChild>
+                <a href="tel:2137924145">Call (213) 792-4145</a>
               </Button>
             </div>
           </div>

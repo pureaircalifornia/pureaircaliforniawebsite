@@ -31,23 +31,23 @@ const NavBar = () => {
     setIsIndustriesDropdownOpen(false);
   };
 
-  return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-gradient-to-b from-black/50 to-transparent py-4'}`}>
+  return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-gradient-to-b from-black/60 to-transparent py-4'}`}>
       <div className="container mx-auto flex items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-3">
-          <div className={`p-1 rounded ${isScrolled ? '' : 'bg-white/20 backdrop-blur-sm'}`}>
+          <div className={`p-1 rounded ${isScrolled ? 'bg-white' : 'bg-white/40 backdrop-blur-sm'}`}>
             <img src="/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png" alt="Pure Air California Logo" className="h-10 w-auto drop-shadow-md" />
           </div>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          <Link to="/" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-sm'}`}>
+          <Link to="/" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
             Home
           </Link>
-          <Link to="/services" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-sm'}`}>
+          <Link to="/services" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
             Services
           </Link>
-          <Link to="/locations" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-sm'}`}>
+          <Link to="/locations" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
             Locations
           </Link>
           <div 
@@ -55,7 +55,7 @@ const NavBar = () => {
             onMouseEnter={handleIndustriesMouseEnter}
             onMouseLeave={handleIndustriesMouseLeave}
           >
-            <button className={`font-medium hover:text-brand-500 transition flex items-center ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-sm'}`}>
+            <button className={`font-medium hover:text-brand-500 transition flex items-center ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
               Industries
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1"><path d="m6 9 6 6 6-6"/></svg>
             </button>
@@ -85,26 +85,32 @@ const NavBar = () => {
               </div>
             )}
           </div>
-          <Link to="/health-benefits" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-sm'}`}>
+          <Link to="/health-benefits" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
             Health Benefits
           </Link>
-          <Link to="/about" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-sm'}`}>
+          <Link to="/about" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
             About Us
           </Link>
-          <Link to="/contact" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-sm'}`}>
+          <Link to="/contact" className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
             Contact
           </Link>
         </nav>
 
         <div className="hidden md:flex items-center space-x-4">
-          <Button variant="ghost" className="flex items-center gap-2">
-            <Phone size={18} />
-            <span className={isScrolled ? "text-gray-800" : "text-white drop-shadow-sm"}>
-              (213) 792-4145
-            </span>
-          </Button>
-          <Button variant="default" className="bg-brand-600 hover:bg-brand-700">
-            Get a Quote
+          <a href="tel:2137924145" className="text-decoration-none">
+            <Button variant="ghost" className="flex items-center gap-2">
+              <Phone size={18} />
+              <span className={isScrolled ? "text-gray-800" : "text-white drop-shadow-md"}>
+                (213) 792-4145
+              </span>
+            </Button>
+          </a>
+          <Button 
+            variant="default" 
+            className="bg-brand-600 hover:bg-brand-700"
+            asChild
+          >
+            <Link to="/quote">Get a Quote</Link>
           </Button>
         </div>
 
@@ -171,14 +177,16 @@ const NavBar = () => {
               Contact
             </Link>
             <div className="pt-2">
-              <Button className="w-full bg-brand-600 hover:bg-brand-700">
-                Get a Quote
+              <Button className="w-full bg-brand-600 hover:bg-brand-700" asChild>
+                <Link to="/quote">Get a Quote</Link>
               </Button>
             </div>
             <div className="flex justify-center pt-2">
-              <Button variant="outline" className="flex items-center gap-2 w-full">
-                <Phone size={18} />
-                <span className="text-gray-800">(213) 792-4145</span>
+              <Button variant="outline" className="flex items-center gap-2 w-full" asChild>
+                <a href="tel:2137924145">
+                  <Phone size={18} />
+                  <span className="text-gray-800">(213) 792-4145</span>
+                </a>
               </Button>
             </div>
           </div>

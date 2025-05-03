@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <div className="hero-section">
-      <div className="container mx-auto px-4 relative z-10 pt-24">
+    <div className="hero-section relative bg-gradient-to-b from-gray-900 to-gray-800">
+      {/* Darker overlay for better text contrast */}
+      <div className="absolute inset-0 bg-black/40 z-0"></div>
+      
+      <div className="container mx-auto px-4 relative z-10 pt-24 pb-16 md:pt-32 md:pb-24">
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 font-heading drop-shadow-md">
             Breathe Cleaner, <span className="text-brand-400">Live Better</span>

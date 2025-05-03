@@ -3,12 +3,12 @@ import { Shield, Award, Star, CheckCircle } from 'lucide-react';
 
 const TrustBadges = () => {
   const clientLogos = [
-    { name: 'Ford', logo: '/logos/ford.svg' },
-    { name: 'Four Seasons', logo: '/logos/four-seasons.svg' },
-    { name: 'USPS', logo: '/logos/usps.svg' },
-    { name: 'Two Rodeo', logo: '/logos/two-rodeo.svg' },
-    { name: 'Warner Bros', logo: '/logos/warner-bros.svg' },
-    { name: 'CBRE', logo: '/logos/cbre.svg' },
+    { name: 'Ford', logo: '/logo/VectorWiki-WfVlH__ford-logo-flat.svg', alt: 'Ford logo' },
+    { name: 'Four Seasons', logo: '/logo/VectorWiki-8ZQSp__four-seasons-hotels-and-resorts.svg', alt: 'Four Seasons Hotels and Resorts logo' },
+    { name: 'USPS', logo: '/logo/VectorWiki-ZUgI8__united-states-postal-service.svg', alt: 'United States Postal Service logo' },
+    { name: 'Two Rodeo', logo: '/logo/VectorWiki-N35KO__taco-bell.svg', alt: 'Two Rodeo logo' },
+    { name: 'Warner Bros', logo: '/logo/VectorWiki-9Z0W8__the-wb-television-network.svg', alt: 'Warner Bros logo' },
+    { name: 'CBRE', logo: '/logo/VectorWiki-s2d88__united-states-postal-service.svg', alt: 'CBRE logo' },
   ];
 
   const certifications = [
@@ -29,8 +29,9 @@ const TrustBadges = () => {
             <div key={client.name} className="flex items-center justify-center">
               <img
                 src={client.logo}
-                alt={`${client.name} logo`}
+                alt={client.alt}
                 className="h-12 w-auto opacity-70 hover:opacity-100 transition-opacity"
+                loading="lazy"
               />
             </div>
           ))}

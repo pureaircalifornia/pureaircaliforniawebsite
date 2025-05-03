@@ -7,40 +7,40 @@ const Gallery = () => {
 
   const beforeAfterPhotos = [
     {
-      before: '/gallery/before-1.jpg',
-      after: '/gallery/after-1.jpg',
+      before: '/gallery/Before and after of an air duct cleaning service.jpg',
+      after: '/gallery/whats lurking inside baby.jpg',
       description: 'Residential Air Duct Cleaning - Beverly Hills'
     },
     {
-      before: '/gallery/before-2.jpg',
-      after: '/gallery/after-2.jpg',
+      before: '/gallery/65.png',
+      after: '/gallery/66.png',
       description: 'Commercial Air Duct Cleaning - Century City'
     },
     {
-      before: '/gallery/before-3.jpg',
-      after: '/gallery/after-3.jpg',
+      before: '/gallery/67.png',
+      after: '/gallery/68.png',
       description: 'Dryer Vent Cleaning - Malibu'
     }
   ];
 
   const processPhotos = [
     {
-      image: '/gallery/process-1.jpg',
+      image: '/gallery/Companies-that-have-worked-with-pure-air-california.webp',
       title: 'Initial Inspection',
       description: 'Our certified technicians perform a thorough inspection of your HVAC system'
     },
     {
-      image: '/gallery/process-2.jpg',
+      image: '/gallery/Pure-air-california-ratings.webp',
       title: 'Negative Air Setup',
       description: 'Setting up HEPA negative air machines to contain contaminants'
     },
     {
-      image: '/gallery/process-3.jpg',
+      image: '/gallery/trusted reviews.jpg',
       title: 'Cleaning Process',
       description: 'Using specialized brushes and air care products for deep cleaning'
     },
     {
-      image: '/gallery/process-4.jpg',
+      image: '/gallery/trusted review for pure air califonria.png',
       title: 'Final Inspection',
       description: 'Quality check to ensure complete cleaning and system integrity'
     }
@@ -48,12 +48,12 @@ const Gallery = () => {
 
   const videos = [
     {
-      thumbnail: '/gallery/video-1.jpg',
+      thumbnail: '/gallery/Companies that have worked with pure air california.png',
       title: 'Our Cleaning Process',
       description: 'See how we clean your air ducts using HEPA negative air systems'
     },
     {
-      thumbnail: '/gallery/video-2.jpg',
+      thumbnail: '/gallery/Pure air california ratings.png',
       title: 'Before & After Results',
       description: 'Watch the transformation of a commercial air duct system'
     }

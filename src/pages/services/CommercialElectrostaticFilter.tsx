@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Filter, Check, Building, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
 
 const CommercialElectrostaticFilter = () => {
   return (
@@ -18,8 +19,8 @@ const CommercialElectrostaticFilter = () => {
             <p className="text-xl mb-8">
               Advanced air filtration solutions for businesses seeking superior indoor air quality and HVAC efficiency.
             </p>
-            <Button size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-              Get a Commercial Quote
+            <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
+              <Link to="/quote">Get a Commercial Quote</Link>
             </Button>
           </div>
         </div>
@@ -471,7 +472,9 @@ const CommercialElectrostaticFilter = () => {
             Contact us today for a consultation and custom quote for your commercial property.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" variant="secondary">Request a Consultation</Button>
+            <Button asChild size="lg" variant="secondary">
+              <Link to="/quote">Request a Consultation</Link>
+            </Button>
             <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white hover:text-brand-600">
               Call (310) 555-1234
             </Button>

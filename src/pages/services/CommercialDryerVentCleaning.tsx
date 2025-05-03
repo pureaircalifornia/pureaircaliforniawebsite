@@ -3,6 +3,7 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Fan, Check, AlertTriangle, Building } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const CommercialDryerVentCleaning = () => {
   return (
@@ -17,8 +18,8 @@ const CommercialDryerVentCleaning = () => {
             <p className="text-xl mb-8">
               Specialized dryer vent cleaning services for laundromats, hotels, multi-unit buildings, and all commercial laundry operations.
             </p>
-            <Button size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-              Request Commercial Quote
+            <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
+              <Link to="/quote">Request Commercial Quote</Link>
             </Button>
           </div>
         </div>
@@ -398,7 +399,9 @@ const CommercialDryerVentCleaning = () => {
             Don't risk a fire hazard in your commercial facility. Schedule professional dryer vent cleaning today.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" variant="secondary">Schedule Consultation</Button>
+            <Button asChild size="lg" variant="secondary">
+              <Link to="/quote">Schedule Consultation</Link>
+            </Button>
             <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white hover:text-brand-600">
               Call (310) 555-1234
             </Button>

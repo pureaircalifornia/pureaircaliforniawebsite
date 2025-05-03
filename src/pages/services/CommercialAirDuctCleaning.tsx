@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Building, Check, Users } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Link } from 'react-router-dom';
 
 const CommercialAirDuctCleaning = () => {
   return (
@@ -18,8 +19,8 @@ const CommercialAirDuctCleaning = () => {
             <p className="text-xl mb-8">
               Professional air duct cleaning services for offices, retail spaces, restaurants, and all commercial properties.
             </p>
-            <Button size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-              Request Commercial Quote
+            <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
+              <Link to="/quote">Request Commercial Quote</Link>
             </Button>
           </div>
         </div>
@@ -361,7 +362,9 @@ const CommercialAirDuctCleaning = () => {
             Contact us today for a free consultation and customized quote for your business.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" variant="secondary">Get Commercial Quote</Button>
+            <Button asChild size="lg" variant="secondary">
+              <Link to="/quote">Get Commercial Quote</Link>
+            </Button>
             <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white hover:text-brand-600">
               Call (310) 555-1234
             </Button>

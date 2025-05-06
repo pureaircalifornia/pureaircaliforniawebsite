@@ -273,6 +273,7 @@ const NavBar = () => {
                       { path: '/services/commercial-air-duct-cleaning', label: 'Commercial Air Duct Cleaning' },
                       { path: '/services/residential-dryer-vent-cleaning', label: 'Residential Dryer Vent Cleaning' },
                       { path: '/services/commercial-dryer-vent-cleaning', label: 'Commercial Dryer Vent Cleaning' },
+                      { path: '/services/DryerVentMaintenanceProgram', label: 'Dryer Vent Maintenance Program' },
                       { path: '/services/residential-electrostatic-filter', label: 'Residential Electrostatic Filter' },
                       { path: '/services/commercial-electrostatic-filter', label: 'Commercial Electrostatic Filter' }
                     ].map((item, index) => (
@@ -469,6 +470,7 @@ const NavBar = () => {
                             ['Commercial Air Duct Cleaning', '/services/commercial-air-duct-cleaning'],
                             ['Residential Dryer Vent Cleaning', '/services/residential-dryer-vent-cleaning'],
                             ['Commercial Dryer Vent Cleaning', '/services/commercial-dryer-vent-cleaning'],
+                            ['Dryer Vent Maintenance Program', '/services/DryerVentMaintenanceProgram'],
                             ['Residential Electrostatic Filter', '/services/residential-electrostatic-filter'],
                             ['Commercial Electrostatic Filter', '/services/commercial-electrostatic-filter']
                           ].map(([name, path], index) => (

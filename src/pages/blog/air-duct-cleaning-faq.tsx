@@ -1,10 +1,14 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/Footer';
 
 const AirDuctCleaningFAQ = () => {
   return (
-    <div>
+    <div className='flex flex-col min-h-screen'>
+        <NavBar />
+      <main className='flex-grow'>
       <Helmet>
         <title>Frequently Asked Questions About Air Duct Cleaning | Pure Air California</title>
         <meta 
@@ -215,6 +219,8 @@ const AirDuctCleaningFAQ = () => {
           call us at (213) 792-4145 to schedule your air duct cleaning service.
         </p>
       </div>
+      </main>
+        <Footer />
     </div>
   );
 };

@@ -1,10 +1,14 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/Footer';
 
 const DryerVentSafetyGuide = () => {
   return (
-    <div>
+     <div className='flex flex-col min-h-screen'>
+       <NavBar />
+      <main className='flex-grow'>
       <Helmet>
         <title>The Complete Dryer Vent Safety Guide | Prevent Fires & Save Energy | Pure Air California</title>
         <meta 
@@ -222,6 +226,8 @@ const DryerVentSafetyGuide = () => {
           (213) 792-4145 to schedule your dryer vent inspection and cleaning.
         </p>
       </div>
+        </main>
+      <Footer />
     </div>
   );
 };

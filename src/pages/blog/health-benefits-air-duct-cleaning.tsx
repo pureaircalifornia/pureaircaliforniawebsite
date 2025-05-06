@@ -1,10 +1,14 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/Footer';
 
 const HealthBenefitsAirDuctCleaning = () => {
   return (
-    <div>
+    <div className='flex flex-col min-h-screen'>
+      <NavBar />
+      <main className='flex-grow'>
       <Helmet>
         <title>Health Benefits of Air Duct Cleaning | Breathe Easier | Pure Air California</title>
         <meta 
@@ -297,6 +301,8 @@ const HealthBenefitsAirDuctCleaning = () => {
           For a comprehensive overview of all the benefits of our services, visit our <Link to="/health-benefits" className="text-brand-600 hover:underline">health benefits page</Link>.
         </p>
       </div>
+        </main>
+      <Footer />
     </div>
   );
 };

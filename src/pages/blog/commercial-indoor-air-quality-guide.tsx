@@ -1,10 +1,14 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/Footer';
 
 const CommercialIndoorAirQualityGuide = () => {
   return (
-    <div>
+    <div className='flex flex-col min-h-screen'>
+        <NavBar />
+      <main className='flex-grow'>
       <Helmet>
         <title>Commercial Indoor Air Quality Guide | Boost Productivity & Health | Pure Air California</title>
         <meta 
@@ -321,6 +325,8 @@ const CommercialIndoorAirQualityGuide = () => {
           service (annually in some cases) due to their specific air quality challenges.
         </p>
       </div>
+      </main>
+      <Footer />
     </div>
   );
 };

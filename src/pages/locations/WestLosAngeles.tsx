@@ -1,0 +1,130 @@
+tsx
+import React from 'react';
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/Footer';
+import QuoteForm from '@/components/QuoteForm';
+import { Helmet } from 'react-helmet';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+
+const WestLosAngeles = () => {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>West Los Angeles Air Duct Cleaning | Pure Air California</title>
+        <meta
+          name="description"
+          content="Expert air duct cleaning services in West Los Angeles. Residential and commercial solutions for cleaner air."
+        />
+      </Helmet>
+
+      <NavBar />
+
+      {/* Hero Section */}
+      <section
+        className="relative py-24 bg-gray-900 overflow-hidden"
+      >
+        <div className="absolute inset-0 z-0 opacity-30">
+          <img
+            src="https://images.unsplash.com/photo-1602391833978-59074a8a1c25?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="West Los Angeles"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent z-0"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-3xl">
+            <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6 font-heading">
+              West Los Angeles Air Duct Cleaning Services
+            </h1>
+            <p className="text-xl text-gray-200 mb-8">
+              Pure Air California provides top-tier air duct cleaning and ventilation services for homes and businesses in West Los Angeles.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button asChild size="lg" className="bg-[#0A3D7C] hover:bg-[#072c5a]">
+                <Link to="/quote">Get a Free Quote</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10">
+                <Link to="/services">Explore Services</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold font-heading text-center mb-12">
+            Our Services in West Los Angeles
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Residential Air Duct Cleaning */}
+            <div className="bg-gray-100 p-6 rounded-lg">
+              <h3 className="font-bold text-xl mb-4">Residential Air Duct Cleaning</h3>
+              <p className="text-gray-600">
+                Improve indoor air quality in your West Los Angeles home with our thorough air duct cleaning.
+              </p>
+            </div>
+            {/* Residential Dryer Vent Cleaning */}
+            <div className="bg-gray-100 p-6 rounded-lg">
+              <h3 className="font-bold text-xl mb-4">Residential Dryer Vent Cleaning</h3>
+              <p className="text-gray-600">
+                Prevent fire hazards and improve dryer efficiency with our residential dryer vent cleaning service.
+              </p>
+            </div>
+            {/* Residential Electrostatic Filter */}
+            <div className="bg-gray-100 p-6 rounded-lg">
+              <h3 className="font-bold text-xl mb-4">Residential Electrostatic Filter</h3>
+              <p className="text-gray-600">
+                Upgrade your home's air filtration system with our high-efficiency electrostatic filters.
+              </p>
+            </div>
+            {/* Commercial Air Duct Cleaning */}
+            <div className="bg-gray-100 p-6 rounded-lg">
+              <h3 className="font-bold text-xl mb-4">Commercial Air Duct Cleaning</h3>
+              <p className="text-gray-600">
+                Maintain a healthy work environment with our commercial air duct cleaning services in West Los Angeles.
+              </p>
+            </div>
+            {/* Commercial Dryer Vent Cleaning */}
+            <div className="bg-gray-100 p-6 rounded-lg">
+              <h3 className="font-bold text-xl mb-4">Commercial Dryer Vent Cleaning</h3>
+              <p className="text-gray-600">
+                Ensure safety and efficiency in your commercial laundry operations with our dryer vent cleaning.
+              </p>
+            </div>
+            {/* Commercial Electrostatic Filter */}
+            <div className="bg-gray-100 p-6 rounded-lg">
+              <h3 className="font-bold text-xl mb-4">Commercial Electrostatic Filter</h3>
+              <p className="text-gray-600">
+                Improve air quality and reduce energy costs with our commercial electrostatic filter solutions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Quote Form Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6">
+                Get a Free Quote for West Los Angeles
+              </h2>
+              <p className="text-lg text-gray-600 mb-6">
+                Ready to breathe cleaner air? Fill out our quick quote form and we'll provide a customized estimate for your property.
+              </p>
+            </div>
+            <QuoteForm />
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default WestLosAngeles;

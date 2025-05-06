@@ -1,30 +1,30 @@
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import NavBar from '@/components/NavBar';
-import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
+import Footer from '@/components/Footer';
 import FeaturedServices from '@/components/FeaturedServices';
-import WhyChooseUs from '@/components/WhyChooseUs';
 import TestimonialSection from '@/components/TestimonialSection';
-import FAQSection from '@/components/FAQSection';
 import CTASection from '@/components/CTASection';
 import ServiceArea from '@/components/ServiceArea';
-import BlogSection from '@/components/BlogSection';
-import TrustedBy from '@/components/TrustedBy';
-import { Helmet } from 'react-helmet';
+import WhyChooseUs from '@/components/WhyChooseUs';
+import FAQSection from '@/components/FAQSection';
 import { Phone, Calendar, CheckCircle } from 'lucide-react';
 
+// Renamed to HomePage to avoid case sensitivity issues
 const HomePage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>Pure Air California | Air Duct & Dryer Vent Cleaning Services</title>
+        <title>Pure Air California | Air Duct & Dryer Vent Cleaning</title>
         <meta
           name="description"
-          content="Expert air duct and dryer vent cleaning services in Los Angeles and Southern California. Improve air quality & reduce energy costs."
+          content="Professional air duct and dryer vent cleaning services in Los Angeles. Improve your indoor air quality today!"
         />
       </Helmet>
       <NavBar />
+      
       <main>
         <Hero />
         
@@ -50,13 +50,12 @@ const HomePage = () => {
         
         <FeaturedServices />
         <WhyChooseUs />
-        <TrustedBy />
-        <TestimonialSection />
         <ServiceArea />
+        <TestimonialSection />
         <FAQSection />
-        <BlogSection />
         <CTASection />
       </main>
+      
       <Footer />
     </div>
   );

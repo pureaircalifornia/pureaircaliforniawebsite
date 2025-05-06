@@ -1,34 +1,32 @@
-tsx
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
-import QuoteForm from '@/components/QuoteForm';
-import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { MapPin, Check } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { MapPin, Check, Star, Shield, Award } from 'lucide-react';
+import QuoteForm from '@/components/QuoteForm';
 import TrustBadges from '@/components/TrustBadges';
 import CTASection from '@/components/CTASection';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 
-const Westwood = () => {
+const HolmbyHills = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>Air Duct Cleaning in Westwood | Pure Air California</title>
-        <meta name="description" content="Professional air duct cleaning services in Westwood, CA. Serving residential and commercial clients." />
-        <meta name="keywords" content="air duct cleaning Westwood, HVAC cleaning Westwood, dryer vent cleaning Westwood, commercial duct cleaning Westwood" />
+        <title>Air Duct Cleaning in Holmby Hills | Pure Air California</title>
+        <meta name="description" content="Professional air duct cleaning, dryer vent cleaning, and electrostatic filter services in Holmby Hills. Improve your indoor air quality today!" />
+        <meta name="keywords" content="air duct cleaning Holmby Hills, dryer vent cleaning Holmby Hills, electrostatic filter Holmby Hills, HVAC cleaning Holmby Hills, luxury estate air quality" />
       </Helmet>
-
+      
       <NavBar />
-
-      {/* Hero Section */}
+      
       {/* Hero Section */}
       <div className="relative py-24 bg-gray-900 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-30">
           <img 
-            src="https://images.unsplash.com/photo-1589808710416-25c7a4caed3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
-            alt="Westwood Neighborhood" 
+            src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
+            alt="Holmby Hills Luxury Estate" 
             className="w-full h-full object-cover"
           />
         </div>
@@ -42,16 +40,16 @@ const Westwood = () => {
               <span className="mx-2">/</span>
               <Link to="/locations" className="hover:text-brand-400 transition">Locations</Link>
               <span className="mx-2">/</span>
-              <span>Westwood</span>
+              <span>Holmby Hills</span>
             </div>
           </div>
           
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Air Duct Cleaning Services in Westwood
+              Elite Air Duct Cleaning Services in Holmby Hills
             </h1>
             <p className="text-xl text-gray-100 mb-8">
-              Pure Air California offers professional air duct cleaning, dryer vent cleaning, and electrostatic filter services for homes, apartments, and businesses in Westwood. Serving the UCLA area with exceptional indoor air quality solutions.
+              Pure Air California delivers exceptional air duct cleaning, dryer vent cleaning, and electrostatic filter services for prestigious estates and luxury properties in Holmby Hills. Experience the highest standard of indoor air quality.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button asChild size="lg" className="bg-brand-600 hover:bg-brand-700">
@@ -66,59 +64,58 @@ const Westwood = () => {
       </div>
 
       <TrustBadges />
-
-      {/* Services Section */}
+      
       {/* Services Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              Our Services in Westwood
+              Our Elite Services in Holmby Hills
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Residential Services */}
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-4">Residential Air Duct Cleaning</h3>
-                <p className="text-gray-600">Comprehensive air duct cleaning for Westwood homes and apartments, improving air quality and HVAC efficiency.</p>
+                <h3 className="text-xl font-semibold mb-4">Estate Air Duct Cleaning</h3>
+                <p className="text-gray-600">Comprehensive air duct cleaning for Holmby Hills estates and mansions, ensuring pristine air quality throughout your luxury property.</p>
               </div>
               
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-4">Residential Dryer Vent Cleaning</h3>
-                <p className="text-gray-600">Specialized dryer vent cleaning for Westwood apartments and condos, preventing fire hazards in multi-unit buildings.</p>
+                <h3 className="text-xl font-semibold mb-4">Premium Dryer Vent Cleaning</h3>
+                <p className="text-gray-600">Meticulous dryer vent cleaning to eliminate fire hazards and enhance appliance performance in Holmby Hills luxury residences.</p>
               </div>
               
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-4">Residential Electrostatic Filter</h3>
-                <p className="text-gray-600">Installation and maintenance of electrostatic filters for enhanced air purification in Westwood residences.</p>
+                <h3 className="text-xl font-semibold mb-4">Advanced Electrostatic Filtration</h3>
+                <p className="text-gray-600">Installation and maintenance of state-of-the-art electrostatic filters for superior air purification in Holmby Hills estates.</p>
               </div>
               
-              {/* Commercial Services */}
+              {/* Additional Services */}
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-4">Commercial Air Duct Cleaning</h3>
-                <p className="text-gray-600">Professional air duct cleaning services for businesses, restaurants, and retail spaces throughout Westwood Village.</p>
-              </div>
-              
-              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-4">Commercial Dryer Vent Cleaning</h3>
-                <p className="text-gray-600">Maintain safety and efficiency in your commercial laundry with our commercial dryer vent cleaning services.</p>
+                <h3 className="text-xl font-semibold mb-4">Whole-Estate Air Quality Management</h3>
+                <p className="text-gray-600">Comprehensive air quality solutions for large estates and multi-building properties throughout Holmby Hills.</p>
               </div>
               
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-4">Commercial Electrostatic Filter</h3>
-                <p className="text-gray-600">Improve your commercial building's air quality with our commercial electrostatic filter installations.</p>
+                <h3 className="text-xl font-semibold mb-4">HVAC System Enhancement</h3>
+                <p className="text-gray-600">Professional HVAC system cleaning and optimization for peak performance and efficiency in Holmby Hills luxury properties.</p>
+              </div>
+              
+              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                <h3 className="text-xl font-semibold mb-4">Customized Air Quality Solutions</h3>
+                <p className="text-gray-600">Tailored air quality assessments and bespoke solutions for the unique needs of Holmby Hills estates and historic properties.</p>
               </div>
             </div>
           </ScrollReveal>
         </div>
       </section>
-
+      
       {/* Benefits Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              Benefits of Professional Air Duct Cleaning in Westwood
+              Benefits of Elite Air Duct Cleaning in Holmby Hills
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -127,8 +124,8 @@ const Westwood = () => {
                   <Check className="text-brand-600" size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Improved Indoor Air Quality</h3>
-                  <p className="text-gray-600">Remove dust, allergens, and contaminants from your air ducts for cleaner, healthier air throughout your Westwood property.</p>
+                  <h3 className="text-xl font-semibold mb-2">Exceptional Air Quality</h3>
+                  <p className="text-gray-600">Eliminate dust, allergens, and contaminants from your air ducts for the purest possible air throughout your Holmby Hills estate, essential for luxury living standards.</p>
                 </div>
               </div>
               
@@ -137,8 +134,8 @@ const Westwood = () => {
                   <Check className="text-brand-600" size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Enhanced Energy Efficiency</h3>
-                  <p className="text-gray-600">Clean air ducts allow your HVAC system to operate more efficiently, potentially reducing energy costs in your Westwood home or business.</p>
+                  <h3 className="text-xl font-semibold mb-2">Optimized Energy Efficiency</h3>
+                  <p className="text-gray-600">Pristine air ducts allow your sophisticated HVAC systems to operate at peak efficiency in your Holmby Hills property, reducing energy consumption while maintaining perfect comfort.</p>
                 </div>
               </div>
               
@@ -147,8 +144,8 @@ const Westwood = () => {
                   <Check className="text-brand-600" size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Extended HVAC System Life</h3>
-                  <p className="text-gray-600">Regular cleaning helps prevent wear and tear on your heating and cooling systems, extending their operational life in Westwood's climate.</p>
+                  <h3 className="text-xl font-semibold mb-2">HVAC System Longevity</h3>
+                  <p className="text-gray-600">Regular professional cleaning extends the life of premium HVAC systems in Holmby Hills estates, protecting your significant investment and ensuring consistent performance.</p>
                 </div>
               </div>
               
@@ -157,8 +154,8 @@ const Westwood = () => {
                   <Check className="text-brand-600" size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Allergy Relief for Students</h3>
-                  <p className="text-gray-600">Minimize dust, pollen, and allergens that can accumulate in your air duct system, especially important for Westwood's student population.</p>
+                  <h3 className="text-xl font-semibold mb-2">Healthier Living Environment</h3>
+                  <p className="text-gray-600">Eliminate allergens, dust, and potential irritants from your air circulation system, creating the healthiest possible environment in your Holmby Hills residence.</p>
                 </div>
               </div>
             </div>
@@ -171,10 +168,10 @@ const Westwood = () => {
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
-              Request a Free Quote for Your Westwood Property
+              Request a Personalized Quote for Your Holmby Hills Estate
             </h2>
             <p className="text-xl text-center text-gray-600 mb-12">
-              Fill out the form below to receive a free, no-obligation quote for our services in Westwood.
+              Complete the form below to receive a customized, no-obligation quote for our premium services in Holmby Hills.
             </p>
             
             <div className="max-w-2xl mx-auto">
@@ -190,4 +187,4 @@ const Westwood = () => {
   );
 };
 
-export default Westwood;
+export default HolmbyHills;

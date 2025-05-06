@@ -1,4 +1,5 @@
 
+import React, { useEffect, Suspense } from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -33,7 +34,6 @@ import Restaurants from "./pages/industries/Restaurants";
 import Education from "./pages/industries/Education";
 import Retail from "./pages/industries/Retail";
 import Manufacturing from "./pages/industries/Manufacturing";
-import { useEffect } from 'react';
 import StickyServiceButton from '@/components/StickyServiceButton';
 
 // Import blog components
@@ -59,12 +59,65 @@ function ScrollToTop() {
 const routes = [
   { path: "/", element: <HomePage /> },
   { path: "/locations", element: <Locations /> },
+  
+  // Location pages
   { path: "/locations/beverly-hills", element: <BeverlyHills /> },
   { path: "/locations/malibu", element: <Malibu /> },
   { path: "/locations/century-city", element: <CenturyCity /> },
   { path: "/locations/hollywood", element: <Hollywood /> },
   { path: "/locations/downtown-los-angeles", element: <DowntownLA /> },
   { path: "/locations/ventura", element: <Ventura /> },
+  
+  // Import all other location pages dynamically
+  { path: "/locations/beverly-glen", element: React.lazy(() => import('./pages/locations/BeverlyGlen')) },
+  { path: "/locations/brentwood", element: React.lazy(() => import('./pages/locations/Brentwood')) },
+  { path: "/locations/burbank", element: React.lazy(() => import('./pages/locations/Burbank')) },
+  { path: "/locations/calabasas", element: React.lazy(() => import('./pages/locations/Calabasas')) },
+  { path: "/locations/central-la", element: React.lazy(() => import('./pages/locations/CentralLA')) },
+  { path: "/locations/chatsworth", element: React.lazy(() => import('./pages/locations/Chatsworth')) },
+  { path: "/locations/conga-park", element: React.lazy(() => import('./pages/locations/CongaPark')) },
+  { path: "/locations/culver-city", element: React.lazy(() => import('./pages/locations/CulverCity')) },
+  { path: "/locations/deer-lake-highlands", element: React.lazy(() => import('./pages/locations/DeerLakeHighlands')) },
+  { path: "/locations/encino", element: React.lazy(() => import('./pages/locations/Encino')) },
+  { path: "/locations/encino-village", element: React.lazy(() => import('./pages/locations/EncinoVillage')) },
+  { path: "/locations/fairfax", element: React.lazy(() => import('./pages/locations/Fairfax')) },
+  { path: "/locations/glendale", element: React.lazy(() => import('./pages/locations/Glendale')) },
+  { path: "/locations/granada-hills", element: React.lazy(() => import('./pages/locations/GranadaHills')) },
+  { path: "/locations/hidden-hills", element: React.lazy(() => import('./pages/locations/HiddenHills')) },
+  { path: "/locations/koreatown", element: React.lazy(() => import('./pages/locations/Koreatown')) },
+  { path: "/locations/lake-balboa", element: React.lazy(() => import('./pages/locations/LakeBalboa')) },
+  { path: "/locations/larchmont", element: React.lazy(() => import('./pages/locations/Larchmont')) },
+  { path: "/locations/laurel-canyon", element: React.lazy(() => import('./pages/locations/LaurelCanyon')) },
+  { path: "/locations/los-feliz", element: React.lazy(() => import('./pages/locations/LosFeliz')) },
+  { path: "/locations/magnolia-park", element: React.lazy(() => import('./pages/locations/MagnoliaPark')) },
+  { path: "/locations/mid-wilshire", element: React.lazy(() => import('./pages/locations/MidWilshire')) },
+  { path: "/locations/mission-hills", element: React.lazy(() => import('./pages/locations/MissionHills')) },
+  { path: "/locations/north-hollywood", element: React.lazy(() => import('./pages/locations/NorthHollywood')) },
+  { path: "/locations/north-of-montana", element: React.lazy(() => import('./pages/locations/NorthOfMontana')) },
+  { path: "/locations/northridge", element: React.lazy(() => import('./pages/locations/Northridge')) },
+  { path: "/locations/pacific-palisades", element: React.lazy(() => import('./pages/locations/PacificPalisades')) },
+  { path: "/locations/panorama-city", element: React.lazy(() => import('./pages/locations/PanoramaCity')) },
+  { path: "/locations/pasadena", element: React.lazy(() => import('./pages/locations/Pasadena')) },
+  { path: "/locations/porter-ranch", element: React.lazy(() => import('./pages/locations/PorterRanch')) },
+  { path: "/locations/reseda", element: React.lazy(() => import('./pages/locations/Reseda')) },
+  { path: "/locations/sawtelle", element: React.lazy(() => import('./pages/locations/Sawtelle')) },
+  { path: "/locations/sepulveda-basin", element: React.lazy(() => import('./pages/locations/SepulvedaBasin')) },
+  { path: "/locations/sherman-oaks", element: React.lazy(() => import('./pages/locations/ShermanOaks')) },
+  { path: "/locations/sherwood-forest", element: React.lazy(() => import('./pages/locations/SherwoodForest')) },
+  { path: "/locations/studio-city", element: React.lazy(() => import('./pages/locations/StudioCity')) },
+  { path: "/locations/sun-valley", element: React.lazy(() => import('./pages/locations/SunValley')) },
+  { path: "/locations/tarzana", element: React.lazy(() => import('./pages/locations/Tarzana')) },
+  { path: "/locations/toluca-lake", element: React.lazy(() => import('./pages/locations/TolucaLake')) },
+  { path: "/locations/valley-glen", element: React.lazy(() => import('./pages/locations/ValleyGlen')) },
+  { path: "/locations/valley-village", element: React.lazy(() => import('./pages/locations/ValleyVillage')) },
+  { path: "/locations/van-nuys", element: React.lazy(() => import('./pages/locations/VanNuys')) },
+  { path: "/locations/west-hollywood", element: React.lazy(() => import('./pages/locations/WestHollywood')) },
+  { path: "/locations/west-los-angeles", element: React.lazy(() => import('./pages/locations/WestLosAngeles')) },
+  { path: "/locations/westwood", element: React.lazy(() => import('./pages/locations/Westwood')) },
+  { path: "/locations/winnetka", element: React.lazy(() => import('./pages/locations/Winnetka')) },
+  { path: "/locations/woodland-hills", element: React.lazy(() => import('./pages/locations/WoodlandHills')) },
+  
+  // Services routes
   { path: "/services", element: <Services /> },
   { path: "/services/residential-air-duct-cleaning", element: <ResidentialAirDuctCleaning /> },
   { path: "/services/residential-dryer-vent-cleaning", element: <ResidentialDryerVentCleaning /> },
@@ -73,6 +126,8 @@ const routes = [
   { path: "/services/commercial-dryer-vent-cleaning", element: <CommercialDryerVentCleaning /> },
   { path: "/services/commercial-electrostatic-filter", element: <CommercialElectrostaticFilter /> },
   { path: "/services/dryer-vent-maintenance-program", element: <DryerVentMaintenanceProgram /> },
+  
+  // Other main pages
   { path: "/about", element: <About /> },
   { path: "/quote", element: <Quote /> },
   { path: "/contact", element: <Contact /> },
@@ -100,6 +155,16 @@ const routes = [
   { path: "*", element: <NotFound /> }
 ];
 
+// Loading component for Suspense fallback
+const LoadingPage = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-600 mx-auto mb-4"></div>
+      <p className="text-lg font-medium text-gray-700">Loading...</p>
+    </div>
+  </div>
+);
+
 // Properly nest components to avoid hooks outside of React component context
 const App = () => (
   <BrowserRouter>
@@ -108,11 +173,13 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <Routes>
-          {routes.map((route) => (
-            <Route key={route.path} path={route.path} element={route.element} />
-          ))}
-        </Routes>
+        <Suspense fallback={<LoadingPage />}>
+          <Routes>
+            {routes.map((route) => (
+              <Route key={route.path} path={route.path} element={route.element} />
+            ))}
+          </Routes>
+        </Suspense>
         <StickyServiceButton />
       </TooltipProvider>
     </QueryClientProvider>

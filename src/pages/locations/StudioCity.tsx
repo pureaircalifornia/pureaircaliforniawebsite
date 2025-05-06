@@ -55,32 +55,32 @@ const StudioCity = () => {
             <ServiceCard
               title="Residential Air Duct Cleaning"
               description="Improve your home's air quality with our thorough residential air duct cleaning service."
-              link="/services/ResidentialAirDuctCleaning"
+              link="/services/residential-air-duct-cleaning"
             />
             <ServiceCard
               title="Residential Dryer Vent Cleaning"
               description="Ensure the safety and efficiency of your home with our professional dryer vent cleaning service."
-              link="/services/ResidentialDryerVentCleaning"
+              link="/services/residential-dryer-vent-cleaning"
             />
             <ServiceCard
               title="Residential Electrostatic Filter"
               description="Upgrade your home's filtration system with our residential electrostatic filter installation."
-              link="/services/ResidentialElectrostaticFilter"
+              link="/services/residential-electrostatic-filter"
             />
             <ServiceCard
               title="Commercial Air Duct Cleaning"
               description="Maintain a healthy work environment with our comprehensive commercial air duct cleaning service."
-              link="/services/CommercialAirDuctCleaning"
+              link="/services/commercial-air-duct-cleaning"
             />
             <ServiceCard
               title="Commercial Dryer Vent Cleaning"
               description="Prevent fire hazards and improve efficiency with our commercial dryer vent cleaning service."
-              link="/services/CommercialDryerVentCleaning"
+              link="/services/commercial-dryer-vent-cleaning"
             />
             <ServiceCard
               title="Commercial Electrostatic Filter"
               description="Enhance your business's air quality with our advanced commercial electrostatic filter solutions."
-              link="/services/CommercialElectrostaticFilter"
+              link="/services/commercial-electrostatic-filter"
             />
           </div>
         </div>

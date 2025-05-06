@@ -1,4 +1,4 @@
-tsx
+
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import NavBar from '@/components/NavBar';
@@ -58,32 +58,32 @@ const ValleyVillage = () => {
             <ServiceCard
               title="Residential Air Duct Cleaning"
               description="Improve your home's air quality with our professional residential air duct cleaning service."
-              link="/services/ResidentialAirDuctCleaning"
+              link="/services/residential-air-duct-cleaning"
             />
             <ServiceCard
               title="Residential Dryer Vent Cleaning"
               description="Ensure safety and efficiency with our residential dryer vent cleaning service."
-              link="/services/ResidentialDryerVentCleaning"
+              link="/services/residential-dryer-vent-cleaning"
             />
             <ServiceCard
               title="Residential Electrostatic Filter"
               description="Upgrade your home's air filtration system with our residential electrostatic filter service."
-              link="/services/ResidentialElectrostaticFilter"
+              link="/services/residential-electrostatic-filter"
             />
             <ServiceCard
               title="Commercial Air Duct Cleaning"
               description="Maintain a healthy environment in your business with our commercial air duct cleaning service."
-              link="/services/CommercialAirDuctCleaning"
+              link="/services/commercial-air-duct-cleaning"
             />
             <ServiceCard
               title="Commercial Dryer Vent Cleaning"
               description="Keep your commercial dryers safe and efficient with our dryer vent cleaning service."
-              link="/services/CommercialDryerVentCleaning"
+              link="/services/commercial-dryer-vent-cleaning"
             />
             <ServiceCard
               title="Commercial Electrostatic Filter"
               description="Improve your business's air quality with our commercial electrostatic filter service."
-              link="/services/CommercialElectrostaticFilter"
+              link="/services/commercial-electrostatic-filter"
             />
           </div>
         </div>

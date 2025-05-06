@@ -10,9 +10,9 @@ interface UseScrollAnimationOptions {
 /**
  * Hook to detect when an element enters the viewport
  */
-function useScrollAnimation<T extends HTMLElement>(
+const useScrollAnimation = <T extends HTMLElement>(
   options: UseScrollAnimationOptions = {}
-): [RefObject<T>, boolean] {
+): [RefObject<T>, boolean] => {
   const {
     threshold = 0.1,
     rootMargin = '0px',
@@ -55,6 +55,6 @@ function useScrollAnimation<T extends HTMLElement>(
   }, [threshold, rootMargin, once]);
 
   return [ref, isInView];
-}
+};
 
 export default useScrollAnimation;

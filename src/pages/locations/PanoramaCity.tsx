@@ -1,4 +1,3 @@
-tsx
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import NavBar from '@/components/NavBar';

@@ -37,7 +37,8 @@ export function ScrollReveal({
   });
 
   const getAnimationVariant = (): Variants => {
-    const selectedAnimation = animations[animation as keyof typeof animations] as Variants;
+    const animationKey = animation as keyof typeof animations;
+    const selectedAnimation = animations[animationKey] as Variants;
     
     if (!selectedAnimation) {
       return animations.fadeInUp;
@@ -48,7 +49,7 @@ export function ScrollReveal({
       return {
         ...selectedAnimation,
         visible: {
-          ...selectedAnimation.visible,
+          ...(selectedAnimation.visible as any),
           transition: {
             ...(selectedAnimation.visible as any).transition,
             duration

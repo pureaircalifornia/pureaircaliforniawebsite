@@ -35,6 +35,13 @@ import { useEffect } from 'react';
 import StickyServiceButton from '@/components/StickyServiceButton';
 import MotionProvider from "@/components/providers/MotionProvider";
 
+// Import blog components
+import AirDuctCleaningFAQ from "./pages/blog/air-duct-cleaning-faq";
+import DryerVentSafetyGuide from "./pages/blog/dryer-vent-safety-guide";
+import CommercialIndoorAirQualityGuide from "./pages/blog/commercial-indoor-air-quality-guide";
+import HealthBenefitsAirDuctCleaning from "./pages/blog/health-benefits-air-duct-cleaning";
+import ImportanceOfRegularAirDuctCleaning from "./pages/blog/importance-of-regular-air-duct-cleaning";
+
 const queryClient = new QueryClient();
 
 function ScrollToTop() {
@@ -66,7 +73,17 @@ const routes = [
   { path: "/quote", element: <Quote /> },
   { path: "/contact", element: <Contact /> },
   { path: "/blog", element: <Blog /> },
+  
+  // Blog post specific routes
+  { path: "/blog/air-duct-cleaning-faq", element: <AirDuctCleaningFAQ /> },
+  { path: "/blog/dryer-vent-safety-guide", element: <DryerVentSafetyGuide /> },
+  { path: "/blog/commercial-indoor-air-quality-guide", element: <CommercialIndoorAirQualityGuide /> },
+  { path: "/blog/health-benefits-air-duct-cleaning", element: <HealthBenefitsAirDuctCleaning /> },
+  { path: "/blog/importance-of-regular-air-duct-cleaning", element: <ImportanceOfRegularAirDuctCleaning /> },
+  
+  // Catch-all for other blog posts using the dynamic component
   { path: "/blog/:slug", element: <BlogPost /> },
+  
   { path: "/health-benefits", element: <HealthBenefits /> },
   { path: "/industries/healthcare", element: <HealthcareFacilities /> },
   { path: "/industries/hospitality", element: <Hospitality /> },

@@ -1,4 +1,3 @@
-
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -107,43 +106,35 @@ const CenturyCity = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h4 className="font-heading font-semibold mb-3">Commercial Air Duct Cleaning</h4>
-                  <p className="text-gray-600 mb-4">
-                    Specialized cleaning for office towers, corporate headquarters, and mixed-use commercial buildings 
-                    with minimal disruption to operations.
+                  <p className="mb-3 text-gray-600">
+                    Comprehensive cleaning services for office buildings, retail spaces, and
+                    commercial properties in Century City.
                   </p>
-                  <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/commercial">Learn More</Link>
-                  </Button>
+                  <Link to="/services/commercial-air-duct-cleaning">Learn More</Link>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
-                  <h4 className="font-heading font-semibold mb-3">Residential Duct Cleaning</h4>
-                  <p className="text-gray-600 mb-4">
-                    Comprehensive cleaning services for luxury residential towers and condominium complexes
-                    throughout Century City.
+                  <h4 className="font-heading font-semibold mb-3">Residential Air Duct Cleaning</h4>
+                  <p className="mb-3 text-gray-600">
+                    Professional cleaning services for luxury condominiums and apartments
+                    in the Century City area.
                   </p>
-                  <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/residential">Learn More</Link>
-                  </Button>
+                  <Link to="/services/residential-air-duct-cleaning">Learn More</Link>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h4 className="font-heading font-semibold mb-3">Dryer Vent Cleaning</h4>
-                  <p className="text-gray-600 mb-4">
-                    Critical fire prevention services for multi-unit residential buildings through professional 
-                    dryer vent cleaning that removes lint buildup.
+                  <p className="mb-3 text-gray-600">
+                    Essential fire prevention services for residential and commercial
+                    properties with on-site laundry facilities.
                   </p>
-                  <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/dryer-vent">Learn More</Link>
-                  </Button>
+                  <Link to="/services/residential-dryer-vent-cleaning">Learn More</Link>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
-                  <h4 className="font-heading font-semibold mb-3">HVAC System Cleaning</h4>
-                  <p className="text-gray-600 mb-4">
-                    Complete cleaning and maintenance for sophisticated HVAC systems that serve 
-                    Century City's modern buildings.
+                  <h4 className="font-heading font-semibold mb-3">HVAC Maintenance</h4>
+                  <p className="mb-3 text-gray-600">
+                    Comprehensive HVAC system inspection, cleaning, and maintenance for
+                    optimal indoor air quality and energy efficiency.
                   </p>
-                  <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/hvac">Learn More</Link>
-                  </Button>
+                  <Link to="/services/commercial-air-duct-cleaning">Learn More</Link>
                 </div>
               </div>
               

@@ -52,8 +52,10 @@ const Footer = () => {
   const serviceLinks = [
     { name: 'Residential Air Duct Cleaning', path: '/services/residential-air-duct-cleaning' },
     { name: 'Commercial Air Duct Cleaning', path: '/services/commercial-air-duct-cleaning' },
-    { name: 'Dryer Vent Cleaning', path: '/services/dryer-vent-cleaning' },
-    { name: 'Electrostatic Filter Service', path: '/services/electrostatic-filter' }
+    { name: 'Residential Dryer Vent Cleaning', path: '/services/residential-dryer-vent-cleaning' },
+    { name: 'Commercial Dryer Vent Cleaning', path: '/services/commercial-dryer-vent-cleaning' },
+    { name: 'Residential Electrostatic Filter', path: '/services/residential-electrostatic-filter' },
+    { name: 'Commercial Electrostatic Filter', path: '/services/commercial-electrostatic-filter' }
   ];
 
   const trustBadges = [

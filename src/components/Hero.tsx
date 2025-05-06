@@ -129,7 +129,7 @@ const Hero = () => {
           
           <motion.div 
             variants={itemVariants}
-            className="mt-12 flex flex-col sm:flex-row items-center gap-6 bg-white/10 backdrop-blur-lg p-6 rounded-xl max-w-xl border border-white/10 shadow-xl"
+            className="mt-12 flex flex-col sm:flex-row items-center gap-6 bg-white/10 backdrop-blur-lg p-6 rounded-xl sm:w-full border border-white/10 shadow-xl"
           >
             {[
               { number: "25K+", text: "Happy Customers" },
@@ -138,7 +138,7 @@ const Hero = () => {
             ].map((stat, index) => (
               <motion.div 
                 key={index}
-                className="flex items-center gap-3"
+                className="flex items-center gap-3 flex-1 justify-center"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
@@ -150,7 +150,7 @@ const Hero = () => {
                 >
                   {stat.number}
                 </motion.div>
-                <div className="text-white">
+                <div className="text-white whitespace-nowrap">
                   {stat.text.split(' ').map((word, i) => (
                     <div key={i}>{word}</div>
                   ))}

@@ -1,4 +1,3 @@
-
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -25,20 +24,36 @@ const blogPosts = [
     category: "Health Benefits"
   },
   {
-    title: "Commercial Air Duct Cleaning: Boosting Employee Productivity",
-    slug: "commercial-air-duct-cleaning-productivity",
-    excerpt: "Research shows that clean air in the workplace leads to better focus, fewer sick days, and increased productivity.",
-    date: "April 10, 2023",
+    title: "Frequently Asked Questions About Air Duct Cleaning",
+    slug: "air-duct-cleaning-faq",
+    excerpt: "Expert answers to common questions about air duct cleaning costs, benefits, process, and maintenance.",
+    date: "June 15, 2023",
+    image: "https://images.unsplash.com/photo-1581788604067-720597431e8a",
+    category: "Education"
+  },
+  {
+    title: "The Complete Dryer Vent Safety Guide: Preventing Fires & Improving Efficiency",
+    slug: "dryer-vent-safety-guide",
+    excerpt: "Learn how regular dryer vent cleaning prevents house fires, improves energy efficiency, and extends appliance life.",
+    date: "June 5, 2023",
+    image: "https://images.unsplash.com/photo-1635274605638-d44babc08a4f",
+    category: "Safety"
+  },
+  {
+    title: "Commercial Indoor Air Quality Guide for Los Angeles Businesses",
+    slug: "commercial-indoor-air-quality-guide",
+    excerpt: "Improve workplace productivity and employee health with better indoor air quality in your commercial building.",
+    date: "May 29, 2023",
     image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2",
     category: "Commercial"
   },
   {
-    title: "Dryer Vent Cleaning: A Critical Fire Prevention Measure",
-    slug: "dryer-vent-cleaning-fire-prevention",
-    excerpt: "Understand how regular dryer vent cleaning can prevent one of the most common causes of residential fires.",
-    date: "March 15, 2023",
-    image: "https://images.unsplash.com/photo-1635274605638-d44babc08a4f",
-    category: "Safety"
+    title: "Health Benefits of Professional Air Duct Cleaning",
+    slug: "health-benefits-air-duct-cleaning",
+    excerpt: "Discover how clean air ducts can improve respiratory health, reduce allergies, and create a healthier home environment.",
+    date: "May 17, 2023",
+    image: "https://images.unsplash.com/photo-1597345637412-9fd611e758e4",
+    category: "Health Benefits"
   },
   {
     title: "HVAC Efficiency: How Clean Air Ducts Save You Money",
@@ -55,16 +70,59 @@ const blogPosts = [
     date: "February 18, 2023",
     image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12",
     category: "Services"
+  },
+  {
+    title: "Commercial Air Duct Cleaning: Boosting Employee Productivity",
+    slug: "commercial-air-duct-cleaning-productivity",
+    excerpt: "Research shows that clean air in the workplace leads to better focus, fewer sick days, and increased productivity.",
+    date: "April 10, 2023",
+    image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2",
+    category: "Commercial"
+  },
+  {
+    title: "Dryer Vent Cleaning: A Critical Fire Prevention Measure",
+    slug: "dryer-vent-cleaning-fire-prevention",
+    excerpt: "Understand how regular dryer vent cleaning can prevent one of the most common causes of residential fires.",
+    date: "March 15, 2023",
+    image: "https://images.unsplash.com/photo-1635274605638-d44babc08a4f",
+    category: "Safety"
+  },
+  {
+    title: "The Importance of Regular Air Duct Cleaning for Los Angeles Homes",
+    slug: "importance-of-regular-air-duct-cleaning",
+    excerpt: "Why Los Angeles homeowners should prioritize regular air duct cleaning to combat urban pollution and allergens.",
+    date: "January 22, 2023",
+    image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f",
+    category: "Residential"
+  },
+  {
+    title: "Choosing the Right Air Duct Cleaning Company in Los Angeles",
+    slug: "choosing-air-duct-cleaning-company",
+    excerpt: "Essential questions to ask and certifications to look for when selecting a professional air duct cleaning service.",
+    date: "January 12, 2023",
+    image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12",
+    category: "Education"
   }
 ];
+
+// Count posts by category for the sidebar
+const getCategoryCounts = () => {
+  const counts = {};
+  blogPosts.forEach(post => {
+    counts[post.category] = (counts[post.category] || 0) + 1;
+  });
+  return counts;
+};
+
+const categoryCounts = getCategoryCounts();
 
 const Blog = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>Air Duct Cleaning Blog | Pure Air California</title>
-        <meta name="description" content="Learn about indoor air quality, HVAC maintenance, allergen reduction, and fire prevention through professional air duct and dryer vent cleaning." />
-        <meta name="keywords" content="air duct cleaning blog, dryer vent maintenance, indoor air quality, HVAC efficiency, allergen reduction, fire prevention, Los Angeles air quality" />
+        <title>Air Duct & Dryer Vent Cleaning Blog | Expert Tips & Insights | Pure Air California</title>
+        <meta name="description" content="Expert guides on indoor air quality, HVAC maintenance, allergen reduction, fire prevention, and energy efficiency through professional air duct and dryer vent cleaning in Los Angeles." />
+        <meta name="keywords" content="air duct cleaning blog, dryer vent maintenance, indoor air quality tips, HVAC efficiency, allergen reduction, fire prevention, Los Angeles air quality, commercial air duct cleaning, residential duct cleaning, electrostatic filters" />
       </Helmet>
       
       <NavBar />
@@ -109,24 +167,15 @@ const Blog = () => {
                 <div className="bg-gray-50 rounded-xl p-6">
                   <h3 className="font-heading font-semibold text-xl mb-4">Categories</h3>
                   <div className="space-y-2">
-                    <Button variant="ghost" className="w-full justify-start text-gray-700 hover:text-[#0A3D7C] hover:bg-gray-100">
-                      Residential (8)
-                    </Button>
-                    <Button variant="ghost" className="w-full justify-start text-gray-700 hover:text-[#0A3D7C] hover:bg-gray-100">
-                      Commercial (6)
-                    </Button>
-                    <Button variant="ghost" className="w-full justify-start text-gray-700 hover:text-[#0A3D7C] hover:bg-gray-100">
-                      Health Benefits (7)
-                    </Button>
-                    <Button variant="ghost" className="w-full justify-start text-gray-700 hover:text-[#0A3D7C] hover:bg-gray-100">
-                      Safety (5)
-                    </Button>
-                    <Button variant="ghost" className="w-full justify-start text-gray-700 hover:text-[#0A3D7C] hover:bg-gray-100">
-                      Cost Savings (4)
-                    </Button>
-                    <Button variant="ghost" className="w-full justify-start text-gray-700 hover:text-[#0A3D7C] hover:bg-gray-100">
-                      Services (9)
-                    </Button>
+                    {Object.entries(categoryCounts).map(([category, count]) => (
+                      <Button 
+                        key={category}
+                        variant="ghost" 
+                        className="w-full justify-start text-gray-700 hover:text-[#0A3D7C] hover:bg-gray-100"
+                      >
+                        {category} ({count})
+                      </Button>
+                    ))}
                   </div>
                 </div>
                 
@@ -137,19 +186,19 @@ const Blog = () => {
                       <div className="flex-shrink-0 w-16 h-16 rounded overflow-hidden">
                         <img 
                           src="https://images.unsplash.com/photo-1635274605638-d44babc08a4f" 
-                          alt="Dryer vent cleaning" 
+                          alt="Dryer vent cleaning safety guide" 
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <div>
                         <h4 className="font-medium text-sm hover:text-[#0A3D7C] transition">
-                          <Link to="/blog/dryer-vent-cleaning-fire-prevention">
-                            Dryer Vent Cleaning: A Critical Fire Prevention Measure
+                          <Link to="/blog/dryer-vent-safety-guide">
+                            The Complete Dryer Vent Safety Guide
                           </Link>
                         </h4>
                         <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
                           <CalendarIcon size={12} />
-                          <span>March 15, 2023</span>
+                          <span>June 5, 2023</span>
                         </div>
                       </div>
                     </div>
@@ -158,19 +207,19 @@ const Blog = () => {
                       <div className="flex-shrink-0 w-16 h-16 rounded overflow-hidden">
                         <img 
                           src="https://images.unsplash.com/photo-1597345637412-9fd611e758e4" 
-                          alt="Allergy relief" 
+                          alt="Air duct cleaning health benefits" 
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <div>
                         <h4 className="font-medium text-sm hover:text-[#0A3D7C] transition">
-                          <Link to="/blog/clean-air-ducts-allergy-relief">
-                            How Clean Air Ducts Improve Indoor Air Quality for Allergy Sufferers
+                          <Link to="/blog/health-benefits-air-duct-cleaning">
+                            Health Benefits of Professional Air Duct Cleaning
                           </Link>
                         </h4>
                         <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
                           <CalendarIcon size={12} />
-                          <span>April 22, 2023</span>
+                          <span>May 17, 2023</span>
                         </div>
                       </div>
                     </div>
@@ -179,7 +228,7 @@ const Blog = () => {
                       <div className="flex-shrink-0 w-16 h-16 rounded overflow-hidden">
                         <img 
                           src="https://images.unsplash.com/photo-1551639325-8f2e71afa1fc" 
-                          alt="Air duct signs" 
+                          alt="Air duct cleaning signs" 
                           className="w-full h-full object-cover"
                         />
                       </div>

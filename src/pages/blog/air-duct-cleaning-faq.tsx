@@ -44,7 +44,7 @@ const AirDuctCleaningFAQ = () => {
 
         <h2 id="what-is">What is Air Duct Cleaning?</h2>
         <p>
-          Air duct cleaning is the process of removing dust, debris, allergens, mold, and other contaminants from your home's 
+          <Link to="/services/residential-air-duct-cleaning" className="text-brand-600 hover:underline">Air duct cleaning</Link> is the process of removing dust, debris, allergens, mold, and other contaminants from your home's 
           HVAC system. This includes the supply and return air ducts, registers, grilles, diffusers, heat exchangers, cooling coils, 
           condensate drain pans, and air handling unit components.
         </p>
@@ -70,7 +70,7 @@ const AirDuctCleaningFAQ = () => {
 
         <h2 id="how-often">How Often Should Air Ducts Be Cleaned?</h2>
         <p>
-          The National Air Duct Cleaners Association (NADCA) recommends cleaning your air ducts every 3 to 5 years. However, 
+          The National Air Duct Cleaners Association (NADCA) recommends cleaning your <Link to="/services/residential-air-duct-cleaning" className="text-brand-600 hover:underline">air ducts</Link> every 3 to 5 years. However, 
           certain circumstances may warrant more frequent cleaning:
         </p>
         <ul>
@@ -88,7 +88,7 @@ const AirDuctCleaningFAQ = () => {
         </p>
 
         <h2 id="signs">What Are the Signs That I Need Air Duct Cleaning?</h2>
-        <p>Look for these telltale signs that indicate your air ducts need professional attention:</p>
+        <p>Look for these telltale signs that indicate your <Link to="/services/residential-air-duct-cleaning" className="text-brand-600 hover:underline">air ducts need professional attention</Link>:</p>
         <ul>
           <li>Visible dust blowing out of air vents</li>
           <li>Dust accumulation around vent covers shortly after cleaning</li>
@@ -105,7 +105,7 @@ const AirDuctCleaningFAQ = () => {
         </p>
 
         <h2 id="process">What Does the Air Duct Cleaning Process Involve?</h2>
-        <p>Our professional air duct cleaning process typically includes:</p>
+        <p>Our <Link to="/services/residential-air-duct-cleaning" className="text-brand-600 hover:underline">professional air duct cleaning process</Link> typically includes:</p>
         <ol>
           <li><strong>Inspection:</strong> We begin with a thorough inspection of your HVAC system using specialized cameras</li>
           <li><strong>Protection:</strong> We protect your home by laying down floor coverings and ensuring proper containment</li>
@@ -123,7 +123,7 @@ const AirDuctCleaningFAQ = () => {
 
         <h2 id="cost">How Much Does Air Duct Cleaning Cost?</h2>
         <p>
-          The cost of air duct cleaning varies based on several factors:
+          The cost of <Link to="/services/residential-air-duct-cleaning" className="text-brand-600 hover:underline">air duct cleaning</Link> varies based on several factors:
         </p>
         <ul>
           <li>Size of your home or building</li>
@@ -145,8 +145,8 @@ const AirDuctCleaningFAQ = () => {
 
         <h2 id="time">How Long Does Air Duct Cleaning Take?</h2>
         <p>
-          For an average-sized home, professional air duct cleaning typically takes 3 to 5 hours. Larger homes or systems with 
-          significant contamination may require 6 to 8 hours. Commercial properties can take 1-2 days depending on system size 
+          For an average-sized home, <Link to="/services/residential-air-duct-cleaning" className="text-brand-600 hover:underline">professional air duct cleaning</Link> typically takes 3 to 5 hours. Larger homes or systems with 
+          significant contamination may require 6 to 8 hours. <Link to="/services/commercial-air-duct-cleaning" className="text-brand-600 hover:underline">Commercial properties</Link> can take 1-2 days depending on system size 
           and complexity.
         </p>
         <p>
@@ -156,7 +156,7 @@ const AirDuctCleaningFAQ = () => {
 
         <h2 id="health">Can Air Duct Cleaning Improve Health Issues?</h2>
         <p>
-          Many clients report health improvements after professional air duct cleaning, particularly those with allergies, 
+          Many clients report health improvements after <Link to="/services/residential-air-duct-cleaning" className="text-brand-600 hover:underline">professional air duct cleaning</Link>, particularly those with allergies, 
           asthma, or respiratory sensitivities. Clean air ducts can reduce the circulation of:
         </p>
         <ul>
@@ -173,8 +173,8 @@ const AirDuctCleaningFAQ = () => {
 
         <h2 id="diy">Can I Clean My Air Ducts Myself?</h2>
         <p>
-          While homeowners can perform basic maintenance like changing filters and cleaning visible vent covers, DIY air duct 
-          cleaning is generally not recommended for several reasons:
+          While homeowners can perform basic maintenance like changing filters and cleaning visible vent covers, DIY <Link to="/services/residential-air-duct-cleaning" className="text-brand-600 hover:underline">air duct 
+          cleaning</Link> is generally not recommended for several reasons:
         </p>
         <ul>
           <li>Household vacuums lack the power to create sufficient negative pressure</li>
@@ -189,7 +189,7 @@ const AirDuctCleaningFAQ = () => {
         </p>
 
         <h2 id="after">What Maintenance Should I Do After Air Duct Cleaning?</h2>
-        <p>To maintain clean air ducts between professional cleanings:</p>
+        <p>To maintain clean air ducts between <Link to="/services/residential-air-duct-cleaning" className="text-brand-600 hover:underline">professional cleanings</Link>:</p>
         <ul>
           <li>Change HVAC filters regularly (every 1-3 months)</li>
           <li>Consider upgrading to high-efficiency filters</li>

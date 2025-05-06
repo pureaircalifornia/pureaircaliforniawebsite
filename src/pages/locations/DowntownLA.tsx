@@ -126,13 +126,11 @@ const DowntownLA = () => {
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h4 className="font-heading font-semibold mb-3">Historic Building Specialists</h4>
-                  <p className="text-gray-600 mb-4">
-                    Expert cleaning for historic Downtown buildings with original or modified 
-                    ventilation systems requiring careful attention.
+                  <p className="mb-3 text-gray-600">
+                    Expert cleaning for historic Downtown buildings with original or modified
+                    ventilation systems.
                   </p>
-                  <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/historic">Learn More</Link>
-                  </Button>
+                  <Link to="/services/commercial-air-duct-cleaning">Learn More</Link>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h4 className="font-heading font-semibold mb-3">Dryer Vent Cleaning</h4>

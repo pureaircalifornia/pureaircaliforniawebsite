@@ -8,6 +8,7 @@ const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isIndustriesDropdownOpen, setIsIndustriesDropdownOpen] = useState(false);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
   const [openMobileSubmenu, setOpenMobileSubmenu] = useState<string | null>(null);
 
@@ -31,11 +32,28 @@ const NavBar = () => {
       setDropdownTimeout(null);
     }
     setIsIndustriesDropdownOpen(true);
+    setIsServicesDropdownOpen(false);
   };
 
   const handleIndustriesMouseLeave = () => {
     const timeout = setTimeout(() => {
       setIsIndustriesDropdownOpen(false);
+    }, 300); // 300ms delay before closing
+    setDropdownTimeout(timeout);
+  };
+
+  const handleServicesMouseEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    setIsServicesDropdownOpen(true);
+    setIsIndustriesDropdownOpen(false);
+  };
+
+  const handleServicesMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setIsServicesDropdownOpen(false);
     }, 300); // 300ms delay before closing
     setDropdownTimeout(timeout);
   };
@@ -50,6 +68,7 @@ const NavBar = () => {
   const handleDropdownMouseLeave = () => {
     const timeout = setTimeout(() => {
       setIsIndustriesDropdownOpen(false);
+      setIsServicesDropdownOpen(false);
     }, 300);
     setDropdownTimeout(timeout);
   };
@@ -204,9 +223,7 @@ const NavBar = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           {[
-            { path: '/', label: 'Home', id: null },
-            { path: '/services', label: 'Services', id: 'services' },
-            { path: '/locations', label: 'Locations', id: 'locations' }
+            { path: '/', label: 'Home', id: null }
           ].map((item, index) => (
             <motion.div key={item.path} variants={navItemVariants}>
               <Link 
@@ -218,6 +235,70 @@ const NavBar = () => {
               </Link>
             </motion.div>
           ))}
+          
+          {/* Services Dropdown */}
+          <motion.div 
+            className="relative"
+            onMouseEnter={handleServicesMouseEnter}
+            onMouseLeave={handleServicesMouseLeave}
+            variants={navItemVariants}
+          >
+            <Link 
+              to="/services"
+              className={`font-medium hover:text-brand-500 transition flex items-center ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}
+            >
+              Services
+              <motion.div
+                animate={{ rotate: isServicesDropdownOpen ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1"><path d="m6 9 6 6 6-6"/></svg>
+              </motion.div>
+            </Link>
+            
+            <AnimatePresence>
+              {isServicesDropdownOpen && (
+                <motion.div 
+                  className="absolute left-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 overflow-hidden"
+                  onMouseEnter={handleDropdownMouseEnter}
+                  onMouseLeave={handleDropdownMouseLeave}
+                  variants={dropdownVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                >
+                  <div className="py-1" role="menu" aria-orientation="vertical">
+                    {[
+                      { path: '/services/residential-air-duct-cleaning', label: 'Residential Air Duct Cleaning' },
+                      { path: '/services/commercial-air-duct-cleaning', label: 'Commercial Air Duct Cleaning' },
+                      { path: '/services/residential-dryer-vent-cleaning', label: 'Residential Dryer Vent Cleaning' },
+                      { path: '/services/commercial-dryer-vent-cleaning', label: 'Commercial Dryer Vent Cleaning' },
+                      { path: '/services/residential-electrostatic-filter', label: 'Residential Electrostatic Filter' },
+                      { path: '/services/commercial-electrostatic-filter', label: 'Commercial Electrostatic Filter' }
+                    ].map((item, index) => (
+                      <motion.div
+                        key={item.path}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ 
+                          delay: index * 0.05,
+                          duration: 0.2
+                        }}
+                      >
+                        <Link 
+                          to={item.path} 
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                          onClick={() => setIsServicesDropdownOpen(false)}
+                        >
+                          {item.label}
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
           
           <motion.div 
             className="relative"
@@ -277,6 +358,15 @@ const NavBar = () => {
                 </motion.div>
               )}
             </AnimatePresence>
+          </motion.div>
+          
+          <motion.div variants={navItemVariants}>
+            <Link 
+              to="/locations" 
+              className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} 
+            >
+              Locations
+            </Link>
           </motion.div>
           
           {[
@@ -350,13 +440,59 @@ const NavBar = () => {
                   >
                     Home
                   </Link>
-                  <Link 
-                    to="/services" 
-                    className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Services
-                  </Link>
+                  
+                  {/* Services Dropdown */}
+                  <div className="relative">
+                    <button
+                      className="w-full px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg flex items-center justify-between"
+                      onClick={() => setOpenMobileSubmenu(openMobileSubmenu === 'services' ? null : 'services')}
+                    >
+                      Services
+                      <motion.div
+                        animate={{ rotate: openMobileSubmenu === 'services' ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <ChevronDown className="ml-2 h-5 w-5" />
+                      </motion.div>
+                    </button>
+                    <AnimatePresence>
+                      {openMobileSubmenu === 'services' && (
+                        <motion.div 
+                          className="pl-4 space-y-1 overflow-hidden"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                          {[
+                            ['Residential Air Duct Cleaning', '/services/residential-air-duct-cleaning'],
+                            ['Commercial Air Duct Cleaning', '/services/commercial-air-duct-cleaning'],
+                            ['Residential Dryer Vent Cleaning', '/services/residential-dryer-vent-cleaning'],
+                            ['Commercial Dryer Vent Cleaning', '/services/commercial-dryer-vent-cleaning'],
+                            ['Residential Electrostatic Filter', '/services/residential-electrostatic-filter'],
+                            ['Commercial Electrostatic Filter', '/services/commercial-electrostatic-filter']
+                          ].map(([name, path], index) => (
+                            <motion.div
+                              key={path}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: index * 0.05, duration: 0.2 }}
+                            >
+                              <Link
+                                to={path}
+                                className="flex items-center px-4 py-2 text-gray-600 hover:text-brand-600 hover:bg-gray-50 rounded-lg"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                <ChevronRight className="h-4 w-4 mr-2" />
+                                {name}
+                              </Link>
+                            </motion.div>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                  
                   <Link 
                     to="/locations" 
                     className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"

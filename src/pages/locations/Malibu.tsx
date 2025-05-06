@@ -153,23 +153,19 @@ const Malibu = () => {
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h4 className="font-heading font-semibold mb-3">Mold Prevention & Remediation</h4>
-                  <p className="text-gray-600 mb-4">
-                    Comprehensive cleaning and treatment of air ducts to remove existing mold and prevent 
+                  <p className="mb-3 text-gray-600">
+                    Specialized cleaning and preventive treatments to stop mold and mildew
                     future growth in Malibu's humid coastal environment.
                   </p>
-                  <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/mold-remediation">Learn More</Link>
-                  </Button>
+                  <Link to="/services/residential-air-duct-cleaning">Learn More</Link>
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h4 className="font-heading font-semibold mb-3">Vacation Home Services</h4>
-                  <p className="text-gray-600 mb-4">
-                    Specialized maintenance for seasonal properties, including pre-arrival freshening and 
-                    post-season cleaning to maintain air quality.
+                  <p className="mb-3 text-gray-600">
+                    Scheduled maintenance for seasonal properties to ensure clean, healthy air
+                    upon your return to Malibu.
                   </p>
-                  <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/vacation-homes">Learn More</Link>
-                  </Button>
+                  <Link to="/services/residential-air-duct-cleaning">Learn More</Link>
                 </div>
               </div>
               

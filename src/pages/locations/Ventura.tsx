@@ -136,13 +136,10 @@ const Ventura = () => {
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h4 className="font-heading font-semibold mb-3">Coastal Property Specialists</h4>
-                  <p className="text-gray-600 mb-4">
-                    Specialized services addressing the unique challenges of beachside and 
+                  <p className="mb-3 text-gray-600">Expert air duct and dryer vent cleaning services for
                     coastal properties with salt air exposure.
                   </p>
-                  <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/coastal">Learn More</Link>
-                  </Button>
+                  <Link to="/services/residential-air-duct-cleaning">Learn More</Link>
                 </div>
               </div>
               

@@ -136,13 +136,11 @@ const Hollywood = () => {
                 </div>
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h4 className="font-heading font-semibold mb-3">Historic Building Specialists</h4>
-                  <p className="text-gray-600 mb-4">
-                    Careful cleaning and maintenance for vintage and historic Hollywood buildings 
-                    with original or modified ventilation systems.
+                  <p className="mb-3 text-gray-600">
+                    Careful cleaning and maintenance for vintage and historic Hollywood buildings
+                    with specialized air duct systems.
                   </p>
-                  <Button asChild variant="link" className="p-0 text-[#0A3D7C] font-medium">
-                    <Link to="/services/historic">Learn More</Link>
-                  </Button>
+                  <Link to="/services/residential-air-duct-cleaning">Learn More</Link>
                 </div>
               </div>
               

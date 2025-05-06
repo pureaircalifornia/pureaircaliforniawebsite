@@ -1,73 +1,85 @@
-# Welcome to your Lovable project
+# Pure Air California Website
 
-## Project info
+A premium, high-end website for Pure Air California, a professional air duct and dryer vent cleaning service in Los Angeles, CA.
 
-**URL**: https://lovable.dev/projects/aaaa73c8-1cbe-49d1-9ba1-c59aeb2707db
+## Features
 
-## How can I edit this code?
+- Modern, responsive design with premium animations
+- Interactive Google Maps integration for service areas
+- Framer Motion animations for a high-end user experience
+- 6-point "Why Choose Us" section highlighting company benefits
+- Environmental focus with eco-friendly messaging
 
-There are several ways of editing your application.
+## Setup Instructions
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/aaaa73c8-1cbe-49d1-9ba1-c59aeb2707db) and start prompting.
+- Node.js 16+ and npm
 
-Changes made via Lovable will be committed automatically to this repo.
+### Installation
 
-**Use your preferred IDE**
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/breathe-pure-california-air.git
+cd breathe-pure-california-air
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2. Install dependencies:
+```bash
+npm install
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+3. Create `.env` file:
+Create a `.env` file in the root directory and add your Google Maps API key:
+```
+VITE_GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY_HERE
+```
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+4. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+5. Build for production:
+```bash
+npm run build
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Key Features
 
-**Use GitHub Codespaces**
+### Interactive Map
+The service area map uses Google Maps API to display service areas with interactive markers. To ensure it works properly:
+- Provide a valid Google Maps API key in the `.env` file
+- The map will automatically center on Los Angeles with service area markers
+- Clicking on a service area in the list highlights it on the map
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Premium Animations
+The site uses Framer Motion for smooth, high-end animations:
+- Scroll-triggered animations for content sections
+- Hover effects on interactive elements
+- Page transitions between routes
 
-## What technologies are used for this project?
+### Responsive Design
+The site is fully responsive and optimized for:
+- Mobile devices
+- Tablets
+- Desktop computers
 
-This project is built with:
+## Troubleshooting
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Google Maps Not Loading
+If the Google Maps integration isn't loading:
+1. Check that your API key is valid and has the correct permissions
+2. Ensure JavaScript is enabled in your browser
+3. Check browser console for errors
 
-## How can I deploy this project?
+### Animation Performance
+If animations seem sluggish on mobile:
+1. The site automatically reduces animation complexity on lower-end devices
+2. Consider setting `enableAuto` to `true` in the motion provider for better performance
 
-Simply open [Lovable](https://lovable.dev/projects/aaaa73c8-1cbe-49d1-9ba1-c59aeb2707db) and click on Share -> Publish.
+## Contact
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+For any issues or questions, please contact:
+- Email: info@pureaircalifornia.com
+- Phone: (213) 792-4145

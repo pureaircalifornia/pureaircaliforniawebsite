@@ -33,6 +33,7 @@ import Retail from "./pages/industries/Retail";
 import Manufacturing from "./pages/industries/Manufacturing";
 import { useEffect } from 'react';
 import StickyServiceButton from '@/components/StickyServiceButton';
+import MotionProvider from "@/components/providers/MotionProvider";
 
 const queryClient = new QueryClient();
 
@@ -44,45 +45,59 @@ function ScrollToTop() {
   return null;
 }
 
+// Route configuration for cleaner app structure
+const routes = [
+  { path: "/", element: <Index /> },
+  { path: "/locations", element: <Locations /> },
+  { path: "/locations/beverly-hills", element: <BeverlyHills /> },
+  { path: "/locations/malibu", element: <Malibu /> },
+  { path: "/locations/century-city", element: <CenturyCity /> },
+  { path: "/locations/hollywood", element: <Hollywood /> },
+  { path: "/locations/downtown-los-angeles", element: <DowntownLA /> },
+  { path: "/locations/ventura", element: <Ventura /> },
+  { path: "/services", element: <Services /> },
+  { path: "/services/residential-air-duct-cleaning", element: <ResidentialAirDuctCleaning /> },
+  { path: "/services/residential-dryer-vent-cleaning", element: <ResidentialDryerVentCleaning /> },
+  { path: "/services/residential-electrostatic-filter", element: <ResidentialElectrostaticFilter /> },
+  { path: "/services/commercial-air-duct-cleaning", element: <CommercialAirDuctCleaning /> },
+  { path: "/services/commercial-dryer-vent-cleaning", element: <CommercialDryerVentCleaning /> },
+  { path: "/services/commercial-electrostatic-filter", element: <CommercialElectrostaticFilter /> },
+  { path: "/about", element: <About /> },
+  { path: "/quote", element: <Quote /> },
+  { path: "/contact", element: <Contact /> },
+  { path: "/blog", element: <Blog /> },
+  { path: "/blog/:slug", element: <BlogPost /> },
+  { path: "/health-benefits", element: <HealthBenefits /> },
+  { path: "/industries/healthcare", element: <HealthcareFacilities /> },
+  { path: "/industries/hospitality", element: <Hospitality /> },
+  { path: "/industries/restaurants", element: <Restaurants /> },
+  { path: "/industries/education", element: <Education /> },
+  { path: "/industries/retail", element: <Retail /> },
+  { path: "/industries/manufacturing", element: <Manufacturing /> },
+  { path: "*", element: <NotFound /> }
+];
+
+const AppContent = () => (
+  <>
+    <ScrollToTop />
+    <MotionProvider>
+      <Routes>
+        {routes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
+      </Routes>
+      <StickyServiceButton />
+    </MotionProvider>
+  </>
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/locations" element={<Locations />} />
-          <Route path="/locations/beverly-hills" element={<BeverlyHills />} />
-          <Route path="/locations/malibu" element={<Malibu />} />
-          <Route path="/locations/century-city" element={<CenturyCity />} />
-          <Route path="/locations/hollywood" element={<Hollywood />} />
-          <Route path="/locations/downtown-los-angeles" element={<DowntownLA />} />
-          <Route path="/locations/ventura" element={<Ventura />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/services/residential-air-duct-cleaning" element={<ResidentialAirDuctCleaning />} />
-          <Route path="/services/residential-dryer-vent-cleaning" element={<ResidentialDryerVentCleaning />} />
-          <Route path="/services/residential-electrostatic-filter" element={<ResidentialElectrostaticFilter />} />
-          <Route path="/services/commercial-air-duct-cleaning" element={<CommercialAirDuctCleaning />} />
-          <Route path="/services/commercial-dryer-vent-cleaning" element={<CommercialDryerVentCleaning />} />
-          <Route path="/services/commercial-electrostatic-filter" element={<CommercialElectrostaticFilter />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/quote" element={<Quote />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/health-benefits" element={<HealthBenefits />} />
-          <Route path="/industries/healthcare" element={<HealthcareFacilities />} />
-          <Route path="/industries/hospitality" element={<Hospitality />} />
-          <Route path="/industries/restaurants" element={<Restaurants />} />
-          <Route path="/industries/education" element={<Education />} />
-          <Route path="/industries/retail" element={<Retail />} />
-          <Route path="/industries/manufacturing" element={<Manufacturing />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <StickyServiceButton />
+        <AppContent />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

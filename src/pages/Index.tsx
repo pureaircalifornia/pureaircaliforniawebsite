@@ -6,7 +6,7 @@ import ServiceCard from '@/components/ServiceCard';
 import TestimonialCard from '@/components/TestimonialCard';
 import ProcessStep from '@/components/ProcessStep';
 import { Button } from '@/components/ui/button';
-import { AirVent, Home, Check, Star, ArrowRight, ShieldCheck, MapPin, ThumbsUp, Zap, BadgeDollarSign, Shield, Award, Clock, Users, BadgeCheck } from 'lucide-react';
+import { AirVent, Home, Check, Star, ArrowRight, ShieldCheck, MapPin, ThumbsUp, Zap, BadgeDollarSign, Shield, Award, Clock, Users, BadgeCheck, Leaf } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TrustedBy from '@/components/TrustedBy';
 import { useState } from 'react';
@@ -61,6 +61,11 @@ const Index = () => {
               <BadgeDollarSign size={40} className="text-brand-600 mb-3" />
               <h3 className="text-lg font-semibold mb-2 font-heading">Transparent Pricing</h3>
               <p className="text-gray-600">No hidden fees—just honest, upfront quotes every time.</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Leaf size={40} className="text-brand-600 mb-3" />
+              <h3 className="text-lg font-semibold mb-2 font-heading">Eco-Friendly Approach</h3>
+              <p className="text-gray-600">Committed to environmentally responsible methods and products.</p>
             </div>
           </div>
           {/* 100% Satisfaction Guarantee Badge */}

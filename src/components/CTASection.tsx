@@ -1,3 +1,7 @@
+
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 const CTASection = () => {
   return (
     <div className="bg-black py-16">
@@ -27,3 +31,5 @@ const CTASection = () => {
     </div>
   );
 }; 
+
+export default CTASection;

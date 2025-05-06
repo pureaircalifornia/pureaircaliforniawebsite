@@ -1,45 +1,60 @@
-import { useEffect, useRef, MutableRefObject } from 'react';
-import { useInView } from 'framer-motion';
 
-type ScrollAnimationOptions = {
+import { useEffect, useRef, useState, RefObject } from 'react';
+
+interface UseScrollAnimationOptions {
   threshold?: number;
-  once?: boolean;
   rootMargin?: string;
-  onEnter?: () => void;
-  onExit?: () => void;
-};
+  once?: boolean;
+}
 
 /**
- * Premium scroll animation hook for creating high-end animations
- * tied to scroll position and element visibility
+ * Hook to detect when an element enters the viewport
  */
-export function useScrollAnimation<T extends HTMLElement>(
-  options: ScrollAnimationOptions = {}
-): [MutableRefObject<T | null>, boolean] {
+function useScrollAnimation<T extends HTMLElement>(
+  options: UseScrollAnimationOptions = {}
+): [RefObject<T>, boolean] {
   const {
-    threshold = 0.2,
+    threshold = 0.1,
+    rootMargin = '0px',
     once = true,
-    rootMargin = "0px",
-    onEnter,
-    onExit
   } = options;
-  
-  const ref = useRef<T | null>(null);
-  const isInView = useInView(ref, {
-    amount: threshold,
-    once,
-    margin: rootMargin
-  });
-  
+
+  const ref = useRef<T>(null);
+  const [isInView, setIsInView] = useState(false);
+
   useEffect(() => {
-    if (isInView && onEnter) {
-      onEnter();
-    } else if (!isInView && onExit) {
-      onExit();
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          if (once && ref.current) {
+            observer.unobserve(ref.current);
+          }
+        } else {
+          if (!once) {
+            setIsInView(false);
+          }
+        }
+      },
+      {
+        threshold,
+        rootMargin,
+      }
+    );
+
+    const currentRef = ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
-  }, [isInView, onEnter, onExit]);
-  
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [threshold, rootMargin, once]);
+
   return [ref, isInView];
 }
 
-export default useScrollAnimation; 
+export default useScrollAnimation;

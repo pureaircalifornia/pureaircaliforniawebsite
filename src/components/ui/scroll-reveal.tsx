@@ -1,10 +1,11 @@
+
 import React, { ReactNode } from 'react';
-import { motion, Variants } from 'framer-motion';
+import { motion, Variants, HTMLMotionProps } from 'framer-motion';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
 import { cn } from '@/lib/utils';
 import * as animations from '@/lib/animation';
 
-export interface ScrollRevealProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ScrollRevealProps extends Omit<HTMLMotionProps<"div">, "animate" | "initial" | "exit" | "variants"> {
   children: ReactNode;
   animation?: 'fadeIn' | 'fadeInUp' | 'slideInLeft' | 'slideInRight' | 'scaleUp' | 'float' | 'pulse';
   delay?: number;
@@ -88,7 +89,7 @@ export function StaggerContainer({
   children: ReactNode;
   className?: string;
   staggerDelay?: number;
-} & React.HTMLAttributes<HTMLDivElement>) {
+} & Omit<HTMLMotionProps<"div">, "animate" | "initial" | "variants">) {
   const [ref, isInView] = useScrollAnimation<HTMLDivElement>();
   
   const staggerVariants: Variants = {
@@ -115,4 +116,4 @@ export function StaggerContainer({
   );
 }
 
-export default ScrollReveal; 
+export default ScrollReveal;

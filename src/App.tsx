@@ -33,7 +33,6 @@ import Retail from "./pages/industries/Retail";
 import Manufacturing from "./pages/industries/Manufacturing";
 import { useEffect } from 'react';
 import StickyServiceButton from '@/components/StickyServiceButton';
-import MotionProvider from "@/components/providers/MotionProvider";
 
 // Import blog components
 import AirDuctCleaningFAQ from "./pages/blog/air-duct-cleaning-faq";
@@ -94,30 +93,22 @@ const routes = [
   { path: "*", element: <NotFound /> }
 ];
 
-const AppContent = () => (
-  <>
-    <ScrollToTop />
-    <MotionProvider>
-      <Routes>
-        {routes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
-        ))}
-      </Routes>
-      <StickyServiceButton />
-    </MotionProvider>
-  </>
-);
-
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AppContent />
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <ScrollToTop />
+        <Toaster />
+        <Sonner />
+        <Routes>
+          {routes.map((route) => (
+            <Route key={route.path} path={route.path} element={route.element} />
+          ))}
+        </Routes>
+        <StickyServiceButton />
+      </TooltipProvider>
+    </QueryClientProvider>
+  </BrowserRouter>
 );
 
 export default App;

@@ -1,11 +1,11 @@
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
-import { Link } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { AirVent, Fan, Filter, Home, Building, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';import { AirVent, Fan, Filter, Home, Building, ArrowRight } from 'lucide-react';
 import TrustBadges from '@/components/TrustBadges';
+
 import '../index.css';
 
 const ServiceCard = ({ 
@@ -30,6 +30,16 @@ const ServiceCard = ({
         <Link to={link}>Learn More</Link>
       </Button>
     </CardContent>
+  </Card>
+);
+
+const MaintenanceCard = () => (
+  <Card className="hover:shadow-lg transition-shadow duration-300">
+    <CardHeader>
+      <CardTitle>
+        <Link to="/services/DryerVentMaintenanceProgram" className="text-brand-600 hover:underline">Dryer Vent Maintenance Program</Link>
+      </CardTitle>
+    </CardHeader>
   </Card>
 );
 
@@ -95,6 +105,12 @@ const Services = () => {
               icon={<Filter size={32} />}
               link="/services/commercial-electrostatic-filter"
             />
+            {/* Maintenance Program */}
+            
+              <MaintenanceCard />
+            
+            
+            
           </div>
         </div>
       </section>

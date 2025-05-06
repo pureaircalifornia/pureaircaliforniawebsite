@@ -1,56 +1,57 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-// Official SVGs sourced from company websites or logo databases
+// Updated client list with available logo files
 const clients = [
   {
     name: 'Ford',
-    logo: '/logo/ford-logo.svg',
+    logo: '/logo/VectorWiki-WfVlH__ford-logo-flat.svg',
     alt: 'Ford logo',
   },
   {
     name: 'Four Seasons',
-    logo: '/logo/four-seasons-logo.svg',
+    logo: '/logo/VectorWiki-8ZQSp__four-seasons-hotels-and-resorts.svg',
     alt: 'Four Seasons Hotels and Resorts logo',
   },
   {
     name: 'USPS',
-    logo: '/logo/usps-logo.svg',
+    logo: '/logo/VectorWiki-s2d88__united-states-postal-service.svg',
     alt: 'United States Postal Service logo',
   },
   {
     name: 'Warner Bros',
-    logo: '/logo/warner-bros-logo.svg',
+    logo: '/logo/VectorWiki-9Z0W8__the-wb-television-network.svg',
     alt: 'Warner Bros logo',
   },
   {
-    name: 'CBRE',
-    logo: '/logo/cbre-logo.svg',
-    alt: 'CBRE logo',
+    name: 'YMCA',
+    logo: '/logo/ymca.png',
+    alt: 'YMCA logo',
   },
   {
-    name: 'Hilton',
-    logo: '/logo/hilton-logo.svg',
-    alt: 'Hilton Hotels logo',
+    name: 'Taco Bell',
+    logo: '/logo/VectorWiki-N35KO__taco-bell.svg',
+    alt: 'Taco Bell logo',
   },
   {
-    name: 'UCLA',
-    logo: '/logo/ucla-logo.svg',
-    alt: 'UCLA logo',
+    name: 'Pure Air California',
+    logo: '/logo/pac-logo.png',
+    alt: 'Pure Air California logo',
   },
+  // Placeholder for remaining logos - will use name fallback when images fail to load
   {
     name: 'Beverly Hills Hotel',
-    logo: '/logo/beverly-hills-hotel-logo.svg',
+    logo: '/placeholder.svg',
     alt: 'Beverly Hills Hotel logo',
   },
   {
     name: 'Kaiser Permanente',
-    logo: '/logo/kaiser-permanente-logo.svg',
+    logo: '/placeholder.svg',
     alt: 'Kaiser Permanente logo',
   },
   {
     name: 'Cedars-Sinai',
-    logo: '/logo/cedars-sinai-logo.svg',
+    logo: '/placeholder.svg',
     alt: 'Cedars-Sinai Medical Center logo',
   }
 ];

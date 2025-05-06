@@ -303,10 +303,9 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
       
       // Create script element
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=${callbackName}`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=${callbackName}&loading=async`;
       script.async = true;
       script.defer = true;
-      script.loading = 'async'; // Add loading attribute
       script.id = 'google-maps-api-script';
       script.crossOrigin = 'anonymous'; // Add crossOrigin attribute
       

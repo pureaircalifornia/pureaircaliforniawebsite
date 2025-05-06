@@ -10,6 +10,7 @@ import CTASection from '@/components/CTASection';
 import ServiceArea from '@/components/ServiceArea';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import FAQSection from '@/components/FAQSection';
+import { Phone, Calendar, CheckCircle } from 'lucide-react';
 
 // Renamed to HomePage to avoid case sensitivity issues
 const HomePage = () => {
@@ -23,13 +24,38 @@ const HomePage = () => {
         />
       </Helmet>
       <NavBar />
-      <Hero />
-      <FeaturedServices />
-      <WhyChooseUs />
-      <ServiceArea />
-      <TestimonialSection />
-      <FAQSection />
-      <CTASection />
+      
+      <main>
+        <Hero />
+        
+        {/* Benefits Banner */}
+        <div className="bg-[#0A3D7C] text-white py-4">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center text-center">
+              <div className="flex items-center justify-center gap-2">
+                <Phone size={20} />
+                <span>24/7 Emergency Service</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <Calendar size={20} />
+                <span>Flexible Scheduling</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <CheckCircle size={20} />
+                <span>100% Satisfaction Guaranteed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <FeaturedServices />
+        <WhyChooseUs />
+        <ServiceArea />
+        <TestimonialSection />
+        <FAQSection />
+        <CTASection />
+      </main>
+      
       <Footer />
     </div>
   );

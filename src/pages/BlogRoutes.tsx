@@ -12,7 +12,7 @@ import HealthBenefitsAirDuctCleaning from './blog/health-benefits-air-duct-clean
 import CleanAirDuctsAllergyRelief from './blog/clean-air-ducts-allergy-relief';
 import SignsAirDuctsNeedCleaning from './blog/signs-air-ducts-need-cleaning';
 
-// Blog post content mapping
+// Blog routes component
 const BlogRoutes = () => {
   return (
     <Routes>
@@ -30,6 +30,7 @@ const BlogRoutes = () => {
   );
 };
 
+// Export the component mapping for use elsewhere
 export const blogPostComponents = {
   'importance-of-regular-air-duct-cleaning': ImportanceOfRegularAirDuctCleaning,
   'air-duct-cleaning-faq': AirDuctCleaningFAQ,
@@ -40,4 +41,4 @@ export const blogPostComponents = {
   'signs-air-ducts-need-cleaning': SignsAirDuctsNeedCleaning
 };
 
-export default BlogRoutes; 
+export default BlogRoutes;

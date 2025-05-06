@@ -1,4 +1,4 @@
-tsx
+
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import NavBar from '@/components/NavBar';
@@ -90,7 +90,7 @@ const CongaPark = () => {
              <div className="service-card bg-gray-50 p-6 rounded-lg shadow-md">
               <h3 className="font-bold text-xl mb-2">Commercial Electrostatic Filter</h3>
               <p className="text-gray-700">
-              Enhance your commercial property’s air quality with our durable commercial electrostatic filters.
+              Enhance your commercial property's air quality with our durable commercial electrostatic filters.
               </p>
             </div>
           </div>

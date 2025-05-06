@@ -11,6 +11,9 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     historyApiFallback: true,
     open: true,
+    allowedHosts: [
+      "aaaa73c8-1cbe-49d1-9ba1-c59aeb2707db.lovableproject.com"
+    ]
   },
   plugins: [
     react(),

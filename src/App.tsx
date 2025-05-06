@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import HomePage from "./pages/index";
+import HomePage from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import BeverlyHills from "./pages/locations/BeverlyHills";
 import Malibu from "./pages/locations/Malibu";
@@ -100,11 +100,12 @@ const routes = [
   { path: "*", element: <NotFound /> }
 ];
 
+// Properly nest components to avoid hooks outside of React component context
 const App = () => (
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
+      <ScrollToTop />
       <TooltipProvider>
-        <ScrollToTop />
         <Toaster />
         <Sonner />
         <Routes>

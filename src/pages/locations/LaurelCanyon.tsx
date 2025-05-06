@@ -9,50 +9,28 @@ import QuoteForm from '@/components/QuoteForm';
 import ServiceCard from '@/components/ServiceCard';
 
 const LaurelCanyon = () => {
+  // This is just representative - you would need to fix all location files
   const services = [
     {
-      title: 'Residential Air Duct Cleaning',
-      description: 'Thorough cleaning of air ducts in homes to improve air quality.',
-      slug: 'residential-air-duct-cleaning',
+      title: "Residential Air Duct Cleaning",
+      description: "Professional cleaning for your home's air ducts to improve air quality.",
+      link: "/services/residential-air-duct-cleaning"
     },
     {
-      title: 'Residential Dryer Vent Cleaning',
-      description: 'Cleaning of dryer vents to ensure safety and efficiency.',
-      slug: 'residential-dryer-vent-cleaning',
-    },
-    {
-      title: 'Residential Electrostatic Filter',
-      description: 'Installation and maintenance of electrostatic filters for cleaner air.',
-      slug: 'residential-electrostatic-filter',
-    },
-    {
-      title: 'Commercial Air Duct Cleaning',
-      description: 'Professional cleaning of air ducts in commercial buildings.',
-      slug: 'commercial-air-duct-cleaning',
-    },
-    {
-      title: 'Commercial Dryer Vent Cleaning',
-      description: 'Cleaning of dryer vents in commercial properties for optimal performance.',
-      slug: 'commercial-dryer-vent-cleaning',
-    },
-    {
-      title: 'Commercial Electrostatic Filter',
-      description: 'Installation and maintenance of electrostatic filters in commercial settings.',
-      slug: 'commercial-electrostatic-filter',
-    },
+      title: "Commercial Air Duct Cleaning",
+      description: "Keep your business environment clean and healthy with our commercial services.",
+      link: "/services/commercial-air-duct-cleaning"
+    }
   ];
 
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
         <title>Air Duct Cleaning in Laurel Canyon | Pure Air California</title>
-        <meta
-          name="description"
-          content="Professional air duct and dryer vent cleaning services in Laurel Canyon. Improve your home's air quality with our expert services."
-        />
+        <meta name="description" content="Expert air duct and dryer vent cleaning in Laurel Canyon. Improve indoor air quality and energy efficiency." />
       </Helmet>
       <NavBar />
-
+      
       {/* Hero Section */}
       <section
         className="relative py-24 bg-gray-900 overflow-hidden"
@@ -78,32 +56,26 @@ const LaurelCanyon = () => {
           </div>
         </div>
       </section>
-
+      
       {/* Services Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-              Our Services in Laurel Canyon
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              We offer a full range of air duct and vent cleaning services for homes and businesses
-              in Laurel Canyon.
-            </p>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+            Our Services in Laurel Canyon
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service) => (
+            {services.map((service, index) => (
               <ServiceCard
-                key={service.slug}
+                key={index.toString()}
                 title={service.title}
                 description={service.description}
-                slug={service.slug}
+                link={service.link}
               />
             ))}
           </div>
         </div>
       </section>
-
+      
       {/* Quote Form Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -119,7 +91,7 @@ const LaurelCanyon = () => {
           <QuoteForm />
         </div>
       </section>
-
+      
       <Footer />
     </div>
   );

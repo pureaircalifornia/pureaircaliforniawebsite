@@ -1,6 +1,19 @@
 
 import { Variants } from 'framer-motion';
 
+// Page transition animation
+export const pageTransition: Variants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { duration: 0.5, ease: "easeInOut" }
+  },
+  exit: { 
+    opacity: 0,
+    transition: { duration: 0.3, ease: "easeInOut" }
+  }
+};
+
 // Fade animations
 export const fadeIn: Variants = {
   hidden: { opacity: 0 },

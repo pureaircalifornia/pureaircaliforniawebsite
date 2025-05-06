@@ -1,11 +1,10 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-
 
 const Home = () => {
   return (
@@ -26,7 +25,7 @@ const Home = () => {
           <Card className="hover:shadow-lg transition-shadow duration-300">
             <CardHeader>
               <CardTitle>
-                <Link to="/services/DryerVentMaintenanceProgram" className="text-brand-600 hover:underline">
+                <Link to="/services/dryer-vent-maintenance-program" className="text-brand-600 hover:underline">
                   Dryer Vent Maintenance Program
                 </Link>
               </CardTitle>
@@ -34,20 +33,29 @@ const Home = () => {
             <CardContent>
               <p>Enroll in our maintenance program for annual inspections and cleanings to ensure your dryer vents are always safe and efficient.</p>
             </CardContent>
+          </Card>
         </div>
         {/* Blog Section */}
         <div className="container mx-auto my-8 p-4">
           <h2 className="text-2xl font-bold mb-4">
             Explore Our Blog for More Insights
           </h2>
-          <div className="space-y-2">
+          <div className="space-y-2 flex flex-col">
             <Link to="/blog/health-benefits-air-duct-cleaning" className="text-brand-600 hover:underline">
-              health benefits of professional air duct cleaning
+              Health Benefits of Professional Air Duct Cleaning
             </Link>
-            <Link to="/blog/dryer-vent-safety-guide" className="text-brand-600 hover:underline">dryer vent safety guide</Link>
-            <Link to="/blog/clean-air-ducts-allergy-relief" className="text-brand-600 hover:underline">how clean air ducts improve indoor air quality for allergy sufferers</Link>
-            <Link to="/blog/signs-air-ducts-need-cleaning" className="text-brand-600 hover:underline">signs your air ducts need cleaning</Link>
-            <Link to="/blog/air-duct-cleaning-faq" className="text-brand-600 hover:underline">air duct cleaning FAQ</Link>
+            <Link to="/blog/dryer-vent-safety-guide" className="text-brand-600 hover:underline">
+              Dryer Vent Safety Guide
+            </Link>
+            <Link to="/blog/clean-air-ducts-allergy-relief" className="text-brand-600 hover:underline">
+              How Clean Air Ducts Improve Indoor Air Quality for Allergy Sufferers
+            </Link>
+            <Link to="/blog/signs-air-ducts-need-cleaning" className="text-brand-600 hover:underline">
+              Signs Your Air Ducts Need Cleaning
+            </Link>
+            <Link to="/blog/air-duct-cleaning-faq" className="text-brand-600 hover:underline">
+              Air Duct Cleaning FAQ
+            </Link>
           </div>
         </div>
       </main>

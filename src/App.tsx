@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -25,6 +26,7 @@ import ResidentialElectrostaticFilter from "./pages/services/ResidentialElectros
 import CommercialAirDuctCleaning from "./pages/services/CommercialAirDuctCleaning";
 import CommercialDryerVentCleaning from "./pages/services/CommercialDryerVentCleaning";
 import CommercialElectrostaticFilter from "./pages/services/CommercialElectrostaticFilter";
+import DryerVentMaintenanceProgram from "./pages/services/DryerVentMaintenanceProgram";
 import HealthcareFacilities from "./pages/industries/HealthcareFacilities";
 import Hospitality from "./pages/industries/Hospitality";
 import Restaurants from "./pages/industries/Restaurants";
@@ -40,6 +42,8 @@ import DryerVentSafetyGuide from "./pages/blog/dryer-vent-safety-guide";
 import CommercialIndoorAirQualityGuide from "./pages/blog/commercial-indoor-air-quality-guide";
 import HealthBenefitsAirDuctCleaning from "./pages/blog/health-benefits-air-duct-cleaning";
 import ImportanceOfRegularAirDuctCleaning from "./pages/blog/importance-of-regular-air-duct-cleaning";
+import CleanAirDuctsAllergyRelief from "./pages/blog/clean-air-ducts-allergy-relief";
+import SignsAirDuctsNeedCleaning from "./pages/blog/signs-air-ducts-need-cleaning";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +72,7 @@ const routes = [
   { path: "/services/commercial-air-duct-cleaning", element: <CommercialAirDuctCleaning /> },
   { path: "/services/commercial-dryer-vent-cleaning", element: <CommercialDryerVentCleaning /> },
   { path: "/services/commercial-electrostatic-filter", element: <CommercialElectrostaticFilter /> },
+  { path: "/services/dryer-vent-maintenance-program", element: <DryerVentMaintenanceProgram /> },
   { path: "/about", element: <About /> },
   { path: "/quote", element: <Quote /> },
   { path: "/contact", element: <Contact /> },
@@ -79,6 +84,8 @@ const routes = [
   { path: "/blog/commercial-indoor-air-quality-guide", element: <CommercialIndoorAirQualityGuide /> },
   { path: "/blog/health-benefits-air-duct-cleaning", element: <HealthBenefitsAirDuctCleaning /> },
   { path: "/blog/importance-of-regular-air-duct-cleaning", element: <ImportanceOfRegularAirDuctCleaning /> },
+  { path: "/blog/clean-air-ducts-allergy-relief", element: <CleanAirDuctsAllergyRelief /> },
+  { path: "/blog/signs-air-ducts-need-cleaning", element: <SignsAirDuctsNeedCleaning /> },
   
   // Catch-all for other blog posts using the dynamic component
   { path: "/blog/:slug", element: <BlogPost /> },

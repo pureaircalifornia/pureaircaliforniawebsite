@@ -1,9 +1,11 @@
+
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';import { AirVent, Fan, Filter, Home, Building, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { AirVent, Fan, Filter, Home, Building, ArrowRight } from 'lucide-react';
 import TrustBadges from '@/components/TrustBadges';
 
 import '../index.css';
@@ -37,9 +39,17 @@ const MaintenanceCard = () => (
   <Card className="hover:shadow-lg transition-shadow duration-300">
     <CardHeader>
       <CardTitle>
-        <Link to="/services/DryerVentMaintenanceProgram" className="text-brand-600 hover:underline">Dryer Vent Maintenance Program</Link>
+        <Link to="/services/dryer-vent-maintenance-program" className="text-brand-600 hover:underline">Dryer Vent Maintenance Program</Link>
       </CardTitle>
     </CardHeader>
+    <CardContent>
+      <p className="text-gray-600">Enroll in our maintenance program for annual inspections and cleanings to ensure your dryer vents are always safe and efficient.</p>
+      <div className="mt-4">
+        <Button asChild variant="outline">
+          <Link to="/services/dryer-vent-maintenance-program">Learn More</Link>
+        </Button>
+      </div>
+    </CardContent>
   </Card>
 );
 
@@ -105,12 +115,9 @@ const Services = () => {
               icon={<Filter size={32} />}
               link="/services/commercial-electrostatic-filter"
             />
+            
             {/* Maintenance Program */}
-            
-              <MaintenanceCard />
-            
-            
-            
+            <MaintenanceCard />
           </div>
         </div>
       </section>
@@ -129,22 +136,22 @@ const Services = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-brand-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">1</div>
-              <h3 className="text-xl font-semibold mb-2">Consultation</h3>
+              <h3 className="text-xl font-semibold mb-2 font-heading">Consultation</h3>
               <p className="text-gray-600">Free assessment of your property and air quality needs</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-brand-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">2</div>
-              <h3 className="text-xl font-semibold mb-2">Custom Plan</h3>
+              <h3 className="text-xl font-semibold mb-2 font-heading">Custom Plan</h3>
               <p className="text-gray-600">Tailored service recommendations for your specific situation</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-brand-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
-              <h3 className="text-xl font-semibold mb-2">Professional Service</h3>
+              <h3 className="text-xl font-semibold mb-2 font-heading">Professional Service</h3>
               <p className="text-gray-600">Expert technicians thoroughly clean and service your systems</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-brand-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">4</div>
-              <h3 className="text-xl font-semibold mb-2">Breathe Better</h3>
+              <h3 className="text-xl font-semibold mb-2 font-heading">Breathe Better</h3>
               <p className="text-gray-600">Enjoy cleaner air and improved system performance</p>
             </div>
           </div>

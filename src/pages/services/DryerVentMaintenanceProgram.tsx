@@ -1,95 +1,124 @@
-tsx
+
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import NavBar from '@/components/NavBar';
-import { Link } from 'react-router-dom';
 import Footer from '@/components/Footer';
+import TrustBadges from '@/components/TrustBadges';
+import { Check, Calendar, Clock, Shield, ArrowRight } from 'lucide-react';
+
 const DryerVentMaintenanceProgram = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Helmet>
-        <title>Dryer Vent Maintenance Program | Pure Air California</title>
-        <meta
-          name="description"
-          content="Enroll in our dryer vent maintenance program for annual inspections and cleanings. Ensure your dryers run efficiently and safely with regular service from LA's trusted experts."
-        />
-        <meta
-          name="keywords"
-          content="dryer vent maintenance program, dryer vent cleaning, dryer vent inspection, laundry safety, energy efficiency, fire prevention, Pure Air California, Los Angeles"
-        />
-      </Helmet>
-      <main className="flex-grow">
-      <div className="prose max-w-none lg:prose-lg">
-          <h1>Dryer Vent Maintenance Program: Your Path to Safety and Efficiency</h1>
-
-          <p>
-            At Pure Air California, we believe in proactive maintenance to ensure the safety and efficiency of your home. That's why we're proud to introduce our Dryer Vent Maintenance Program—a comprehensive solution designed to keep your dryer vent system in top condition year after year.
-          </p>
-
-          <h2>Why Enroll in a Dryer Vent Maintenance Program?</h2>
-
-          <p>
-            Dryer vents are often overlooked, but they're critical to both the safety and efficiency of your home. Neglected dryer vents can lead to:
-          </p>
-
-          <ul>
-            <li>Increased risk of house fires</li>
-            <li>Higher energy bills due to reduced dryer efficiency</li>
-            <li>Premature dryer failure</li>
-            <li>Longer drying times</li>
-            <li>Moisture and mold issues</li>
-          </ul>
-
-          <p>
-            Our Dryer Vent Maintenance Program is designed to prevent these problems before they start, providing you with peace of mind and significant cost savings over time.
-          </p>
-
-          <h2>Program Benefits</h2>
-
-          <ul>
-            <li><strong>Annual Inspections:</strong> Our trained technicians will thoroughly inspect your entire dryer vent system, from the connection at the dryer to the exterior vent, ensuring there are no safety issues or code violations.</li>
-            <li><strong>Professional Cleaning:</strong> We'll provide annual cleaning to remove lint and other debris, ensuring your dryer operates at peak efficiency.</li>
-            <li><strong>Priority Scheduling:</strong> As a program member, you'll receive priority scheduling for all your dryer vent maintenance needs.</li>
-            <li><strong>Exclusive Discounts:</strong> Enjoy exclusive discounts on other services, such as air duct cleaning and electrostatic filter installations.</li>
-            <li><strong>Safety Assurance:</strong> Protect your home and family from the risk of dryer vent fires.</li>
-            <li><strong>Efficiency Guarantee:</strong> Reduce energy consumption and lower your utility bills with a clean, unobstructed dryer vent system.</li>
-            <li><strong>Extended Appliance Life:</strong> Minimize wear and tear on your dryer, extending its operational lifespan.</li>
-            <li><strong>Peace of Mind:</strong> With regular maintenance, you can rest assured that your dryer vent is in safe and efficient working order.</li>
-          </ul>
-
-          <h2>What's Included in Each Maintenance Visit?</h2>
-
-          <p>
-            Each visit from our Pure Air California team includes:
-          </p>
-
-          <ul>
-            <li><strong>System Inspection:</strong> A full assessment of your dryer vent system, identifying potential problems.</li>
-            <li><strong>Comprehensive Cleaning:</strong> Removal of all lint and debris using high-powered tools and specialized brushes.</li>
-            <li><strong>Airflow Verification:</strong> Testing to ensure proper airflow and efficiency after cleaning.</li>
-            <li><strong>Safety Check:</strong> Verification of proper vent material, secure connections, and compliance with safety codes.</li>
-            <li><strong>Detailed Report:</strong> A written report outlining the service performed and any recommendations for your system.</li>
-          </ul>
-
-          <h2>Pricing and Enrollment</h2>
-
-          <p>
-            Our Dryer Vent Maintenance Program offers great value at a competitive price. Please contact us to learn about current pricing and enrollment options. Enrollment is quick and easy, and once you're a member, you'll enjoy all the benefits listed above.
-          </p>
-
-          <h2>Why Choose Pure Air California?</h2>
-
-          <p>
-            At Pure Air California, we're committed to providing expert dryer vent services throughout the Los Angeles area. Our certified technicians are trained in the latest safety protocols and cleaning technologies, ensuring your complete satisfaction.
-          </p>
-
-          <h2>Take the Next Step Toward a Safer and More Efficient Home</h2>
-
-          <p>
-            Don't wait for a problem to arise. Enroll in our Dryer Vent Maintenance Program today and enjoy the benefits of a professionally maintained dryer vent system. <Link to="/quote" className="text-brand-600 hover:underline">Request a free quote</Link> or call us at (213) 792-4145 to discuss your needs and schedule your first service.
-          </p>
+    <div className="min-h-screen flex flex-col">
+      <NavBar />
+      
+      {/* Hero Section */}
+      <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Dryer Vent Maintenance Program</h1>
+            <p className="text-xl mb-8">
+              Prevent fire hazards and maintain optimal efficiency with our professional dryer vent maintenance program.
+            </p>
+            <Button asChild size="lg" className="bg-white text-brand-600 hover:bg-gray-100">
+              <Link to="/quote">Enroll Now</Link>
+            </Button>
+          </div>
         </div>
-      </main>
+      </section>
+      
+      <TrustBadges />
+      
+      {/* Program Details */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold mb-8 text-center">Our Maintenance Program Includes</h2>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <Calendar className="text-brand-600" /> Annual Inspections
+                </h3>
+                <p className="text-gray-600">
+                  Regular professional inspections to identify potential issues before they become hazardous.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <Clock className="text-brand-600" /> Priority Scheduling
+                </h3>
+                <p className="text-gray-600">
+                  Program members receive priority scheduling for all services, minimizing wait times.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <Shield className="text-brand-600" /> Preventive Maintenance
+                </h3>
+                <p className="text-gray-600">
+                  Regular cleaning to prevent lint build-up, improving efficiency and reducing fire risks.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <ArrowRight className="text-brand-600" /> Discounted Services
+                </h3>
+                <p className="text-gray-600">
+                  Exclusive discounts on repairs and additional services for maintenance program members.
+                </p>
+              </div>
+            </div>
+            
+            <div className="mt-12">
+              <h3 className="text-2xl font-semibold mb-6">Why Regular Maintenance Matters</h3>
+              
+              <div className="space-y-4">
+                <div className="flex gap-3">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
+                    <Check size={14} className="text-brand-600" />
+                  </div>
+                  <p><span className="font-medium">Fire Prevention</span> - Lint buildup in dryer vents is a leading cause of house fires</p>
+                </div>
+                
+                <div className="flex gap-3">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
+                    <Check size={14} className="text-brand-600" />
+                  </div>
+                  <p><span className="font-medium">Energy Efficiency</span> - Clean vents allow your dryer to operate at peak efficiency</p>
+                </div>
+                
+                <div className="flex gap-3">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
+                    <Check size={14} className="text-brand-600" />
+                  </div>
+                  <p><span className="font-medium">Extended Appliance Life</span> - Reduce wear and tear on your dryer</p>
+                </div>
+                
+                <div className="flex gap-3">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
+                    <Check size={14} className="text-brand-600" />
+                  </div>
+                  <p><span className="font-medium">Peace of Mind</span> - Know your home is protected with regular professional service</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-12 text-center">
+              <Button asChild size="lg" className="bg-brand-600 hover:bg-brand-700">
+                <Link to="/quote">Enroll in Our Maintenance Program</Link>
+              </Button>
+              <p className="text-sm text-gray-500 mt-4">
+                We recommend annual dryer vent cleaning for most households. Contact us for a personalized recommendation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
       <Footer />
     </div>
   );

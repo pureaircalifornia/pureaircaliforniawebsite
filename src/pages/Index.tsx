@@ -29,6 +29,7 @@ const Index = () => {
       {/* Hero Section */}
       <Hero />
       <TrustBadges />
+      <TrustedBy />
       
       <Gallery />
       

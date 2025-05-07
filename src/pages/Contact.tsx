@@ -33,7 +33,70 @@ const Contact = () => {
     setIsSubmitting(true);
     setFormStatus('submitting');
     
-    // Simulate API call
+    // Create the email data object
+    const emailData = {
+      to_email: 'info@pureaircalifornia.com',
+      from_name: `${formData.firstName} ${formData.lastName}`,
+      from_email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+      subject: 'New Contact Form Submission - Pure Air California'
+    };
+    
+    // Send the email using EmailJS
+    // Note: In a real implementation, you would need to:
+    // 1. Install EmailJS: npm install @emailjs/browser
+    // 2. Create an EmailJS account and get your service ID, template ID, and user ID
+    // 3. Replace the placeholders below with your actual IDs
+    
+    // For now, we'll simulate the API call
+    // In production, uncomment the EmailJS code and remove the setTimeout
+    
+    /* 
+    import emailjs from '@emailjs/browser';
+    
+    emailjs.send(
+      'YOUR_SERVICE_ID', // replace with your EmailJS service ID
+      'YOUR_TEMPLATE_ID', // replace with your EmailJS template ID
+      emailData,
+      'YOUR_USER_ID' // replace with your EmailJS user ID
+    )
+    .then((response) => {
+      console.log('Email sent successfully:', response);
+      setIsSubmitting(false);
+      setFormStatus('success');
+      
+      toast({
+        title: "Message Sent Successfully",
+        description: "Thank you for contacting us. We'll get back to you shortly.",
+      });
+      
+      // Reset form after 2 seconds
+      setTimeout(() => {
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          message: ''
+        });
+        setFormStatus('idle');
+      }, 2000);
+    })
+    .catch((error) => {
+      console.error('Error sending email:', error);
+      setIsSubmitting(false);
+      setFormStatus('error');
+      
+      toast({
+        title: "Error Sending Message",
+        description: "There was a problem sending your message. Please try again later.",
+        variant: "destructive"
+      });
+    });
+    */
+    
+    // Simulate API call (remove this in production)
     setTimeout(() => {
       setIsSubmitting(false);
       setFormStatus('success');

@@ -27,9 +27,27 @@ const AppointmentScheduling = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log('Appointment scheduled:', formData);
-    setStep(4); // Show confirmation
+    
+    // Create the email data object for the appointment request
+    const emailData = {
+      to_email: 'info@pureaircalifornia.com',
+      service: formData.serviceType,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+      date: formData.date,
+      time: formData.time,
+      notes: formData.notes,
+      subject: `Appointment Request: ${formData.service} - ${formData.name}`
+    };
+    
+    // In a real implementation, you would send this data using EmailJS
+    // For now, we'll just log it to the console and show the confirmation
+    console.log('Appointment scheduled:', emailData);
+    
+    // Move to confirmation step
+    setStep(4);
   };
 
   return (
@@ -303,4 +321,4 @@ const AppointmentScheduling = () => {
   );
 };
 
-export default AppointmentScheduling; 
+export default AppointmentScheduling;

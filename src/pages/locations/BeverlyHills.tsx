@@ -2,7 +2,7 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { MapPin, Check } from 'lucide-react';
+import { MapPin, Check, Phone } from 'lucide-react';
 import QuoteForm from '@/components/QuoteForm';
 
 const BeverlyHills = () => {
@@ -14,9 +14,10 @@ const BeverlyHills = () => {
       <div className="relative py-24 bg-gray-900 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-30">
           <img 
-            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" 
-            alt="Beverly Hills" 
+            src="/gallery/Photos/IMG-20250505-WA0140.jpg" 
+            alt="Beverly Hills - Premium air duct cleaning services" 
             className="w-full h-full object-cover"
+            loading="lazy"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent z-0"></div>
@@ -272,6 +273,3 @@ const BeverlyHills = () => {
 };
 
 export default BeverlyHills;
-
-// Missing imports
-import { Phone } from 'lucide-react';

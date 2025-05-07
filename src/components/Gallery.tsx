@@ -7,40 +7,40 @@ const Gallery = () => {
 
   const beforeAfterPhotos = [
     {
-      before: '/gallery/Before and after of an air duct cleaning service.jpg',
-      after: '/gallery/whats lurking inside baby.jpg',
-      description: 'Residential Air Duct Cleaning - Beverly Hills'
+      before: '/gallery/Photos/IMG-20250505-WA0016.jpg',
+      after: '/gallery/Photos/IMG-20250505-WA0017.jpg',
+      description: 'Residential Air Duct Cleaning - Before and After Transformation'
     },
     {
-      before: '/gallery/65.png',
-      after: '/gallery/66.png',
-      description: 'Commercial Air Duct Cleaning - Century City'
+      before: '/gallery/Photos/IMG-20250505-WA0039.jpg',
+      after: '/gallery/Photos/IMG-20250505-WA0040.jpg',
+      description: 'Commercial Air Duct Cleaning - Removing Years of Dust and Debris'
     },
     {
-      before: '/gallery/67.png',
-      after: '/gallery/68.png',
-      description: 'Dryer Vent Cleaning - Malibu'
+      before: '/gallery/Photos/IMG-20250505-WA0056.jpg',
+      after: '/gallery/Photos/IMG-20250505-WA0057.jpg',
+      description: 'Dryer Vent Cleaning - Fire Hazard Prevention'
     }
   ];
 
   const processPhotos = [
     {
-      image: '/gallery/Companies-that-have-worked-with-pure-air-california.webp',
+      image: '/gallery/Photos/IMG-20250505-WA0090.jpg',
       title: 'Initial Inspection',
       description: 'Our certified technicians perform a thorough inspection of your HVAC system'
     },
     {
-      image: '/gallery/Pure-air-california-ratings.webp',
+      image: '/gallery/Photos/IMG-20250505-WA0100.jpg',
       title: 'Negative Air Setup',
       description: 'Setting up HEPA negative air machines to contain contaminants'
     },
     {
-      image: '/gallery/trusted reviews.jpg',
+      image: '/gallery/Photos/IMG-20250505-WA0110.jpg',
       title: 'Cleaning Process',
       description: 'Using specialized brushes and air care products for deep cleaning'
     },
     {
-      image: '/gallery/trusted review for pure air califonria.png',
+      image: '/gallery/Photos/IMG-20250505-WA0120.jpg',
       title: 'Final Inspection',
       description: 'Quality check to ensure complete cleaning and system integrity'
     }
@@ -48,12 +48,12 @@ const Gallery = () => {
 
   const videos = [
     {
-      thumbnail: '/gallery/Companies that have worked with pure air california.png',
+      thumbnail: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.29.27_474ca597.jpg',
       title: 'Our Cleaning Process',
       description: 'See how we clean your air ducts using HEPA negative air systems'
     },
     {
-      thumbnail: '/gallery/Pure air california ratings.png',
+      thumbnail: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.34.22_37a5838c.jpg',
       title: 'Before & After Results',
       description: 'Watch the transformation of a commercial air duct system'
     }
@@ -107,13 +107,15 @@ const Gallery = () => {
                   <div className="relative h-64">
                     <img
                       src={photo.before}
-                      alt="Before cleaning"
+                      alt={`Before cleaning - ${photo.description}`}
                       className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
                     />
                     <img
                       src={photo.after}
-                      alt="After cleaning"
+                      alt={`After cleaning - ${photo.description}`}
                       className="absolute inset-0 w-full h-full object-cover opacity-0 hover:opacity-100 transition-opacity duration-300"
+                      loading="lazy"
                     />
                   </div>
                   <div className="p-4">
@@ -131,8 +133,9 @@ const Gallery = () => {
                   <div className="relative h-48">
                     <img
                       src={photo.image}
-                      alt={photo.title}
+                      alt={`${photo.title} - ${photo.description}`}
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                   </div>
                   <div className="p-4">
@@ -151,8 +154,9 @@ const Gallery = () => {
                   <div className="relative h-64">
                     <img
                       src={video.thumbnail}
-                      alt={video.title}
+                      alt={`${video.title} - ${video.description}`}
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                       <Play className="w-12 h-12 text-white" />
@@ -172,4 +176,4 @@ const Gallery = () => {
   );
 };
 
-export default Gallery; 
+export default Gallery;

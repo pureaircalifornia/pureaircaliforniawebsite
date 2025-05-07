@@ -4,12 +4,13 @@ import { motion } from 'framer-motion';
 
 const TrustBadges = () => {
   const clientLogos = [
-    { name: 'Ford', logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Ford_Motor_Company_Logo.svg', alt: 'Ford logo' },
-    { name: 'Four Seasons', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/Four_Seasons_logo.svg', alt: 'Four Seasons Hotels and Resorts logo' },
-    { name: 'USPS', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d2/USPS_Eagle_Logo.svg', alt: 'United States Postal Service logo' },
-    { name: 'Rodeo Drive', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Rodeo_Drive_street_sign.svg', alt: 'Rodeo Drive logo' },
-    { name: 'Warner Bros', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/64/Warner_Bros_logo.svg', alt: 'Warner Bros logo' },
-    { name: 'CBRE', logo: 'https://upload.wikimedia.org/wikipedia/commons/c/c9/CBRE_Group_logo.svg', alt: 'CBRE logo' },
+    { name: 'Ford', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.37.39_f42a4fbf.jpg', alt: 'Ford logo - Trusted client of Pure Air California' },
+    { name: 'Four Seasons', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.37.39_74f379d3.jpg', alt: 'Four Seasons Hotels and Resorts - Luxury hotel client' },
+    { name: 'USPS', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.37.39_9f5ceca5.jpg', alt: 'United States Postal Service - Government facility client' },
+    { name: 'Rodeo Drive', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.39.31_655e691d.jpg', alt: 'Rodeo Drive - Premium retail client' },
+    { name: 'Warner Bros', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.39.31_73824649.jpg', alt: 'Warner Bros - Entertainment industry client' },
+    { name: 'CBRE', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.39.31_8116cdd3.jpg', alt: 'CBRE - Commercial real estate client' },
+    { name: 'UCLA', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.39.31_bf5b5e51.jpg', alt: 'UCLA - Educational institution client' },
   ];
 
   const certifications = [

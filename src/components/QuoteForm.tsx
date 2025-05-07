@@ -53,8 +53,42 @@ const QuoteForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add form submission logic here
-    console.log('Form submitted:', formData);
+    
+    // Create the email data object for the quote request
+    const emailData = {
+      to_email: 'info@pureaircalifornia.com',
+      service: formData.service,
+      property_type: formData.propertyType,
+      square_footage: formData.squareFootage,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+      message: formData.message,
+      preferred_date: formData.preferredDate,
+      subject: `Quote Request: ${formData.service} - ${formData.name}`
+    };
+    
+    // In a real implementation, you would send this data using EmailJS
+    // For now, we'll just log it to the console
+    console.log('Quote form submitted:', emailData);
+    
+    // Show success message or redirect to thank you page
+    alert('Thank you for your quote request! We will contact you shortly.');
+    
+    // Reset form
+    setStep(1);
+    setFormData({
+      service: '',
+      propertyType: '',
+      squareFootage: '',
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      message: '',
+      preferredDate: '',
+    });
   };
 
   const renderStep = () => {

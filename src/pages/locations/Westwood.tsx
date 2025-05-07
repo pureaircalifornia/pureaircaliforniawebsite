@@ -27,9 +27,10 @@ const Westwood = () => {
       <div className="relative py-24 bg-gray-900 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-30">
           <img 
-            src="https://images.unsplash.com/photo-1589808710416-25c7a4caed3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
-            alt="Westwood Neighborhood" 
+            src="/gallery/Photos/IMG-20250505-WA0130.jpg" 
+            alt="Westwood Neighborhood - Pure Air California service area" 
             className="w-full h-full object-cover"
+            loading="lazy"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent z-0"></div>
@@ -81,32 +82,62 @@ const Westwood = () => {
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                 <h3 className="text-xl font-semibold mb-4">Residential Air Duct Cleaning</h3>
                 <p className="text-gray-600">Comprehensive air duct cleaning for Westwood homes and apartments, improving air quality and HVAC efficiency.</p>
+                <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
+                  <Link to="/services/ResidentialAirDuctCleaning">
+                    Learn More
+                  </Link>
+                </Button>
               </div>
               
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                 <h3 className="text-xl font-semibold mb-4">Residential Dryer Vent Cleaning</h3>
                 <p className="text-gray-600">Specialized dryer vent cleaning for Westwood apartments and condos, preventing fire hazards in multi-unit buildings.</p>
+                <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
+                  <Link to="/services/ResidentialDryerVentCleaning">
+                    Learn More
+                  </Link>
+                </Button>
               </div>
               
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                 <h3 className="text-xl font-semibold mb-4">Residential Electrostatic Filter</h3>
                 <p className="text-gray-600">Installation and maintenance of electrostatic filters for enhanced air purification in Westwood residences.</p>
+                <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
+                  <Link to="/services/ResidentialElectrostaticFilter">
+                    Learn More
+                  </Link>
+                </Button>
               </div>
               
               {/* Commercial Services */}
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                 <h3 className="text-xl font-semibold mb-4">Commercial Air Duct Cleaning</h3>
                 <p className="text-gray-600">Professional air duct cleaning services for businesses, restaurants, and retail spaces throughout Westwood Village.</p>
+                <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
+                  <Link to="/services/CommercialAirDuctCleaning">
+                    Learn More
+                  </Link>
+                </Button>
               </div>
               
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                 <h3 className="text-xl font-semibold mb-4">Commercial Dryer Vent Cleaning</h3>
                 <p className="text-gray-600">Maintain safety and efficiency in your commercial laundry with our commercial dryer vent cleaning services.</p>
+                <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
+                  <Link to="/services/CommercialDryerVentCleaning">
+                    Learn More
+                  </Link>
+                </Button>
               </div>
               
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                 <h3 className="text-xl font-semibold mb-4">Commercial Electrostatic Filter</h3>
                 <p className="text-gray-600">Improve your commercial building's air quality with our commercial electrostatic filter installations.</p>
+                <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
+                  <Link to="/services/CommercialElectrostaticFilter">
+                    Learn More
+                  </Link>
+                </Button>
               </div>
             </div>
           </ScrollReveal>

@@ -273,7 +273,7 @@ const NavBar = () => {
                       { path: '/services/commercial-air-duct-cleaning', label: 'Commercial Air Duct Cleaning' },
                       { path: '/services/residential-dryer-vent-cleaning', label: 'Residential Dryer Vent Cleaning' },
                       { path: '/services/commercial-dryer-vent-cleaning', label: 'Commercial Dryer Vent Cleaning' },
-                      { path: '/services/DryerVentMaintenanceProgram', label: 'Dryer Vent Maintenance Program' },
+                      { path: '/services/dryer-vent-maintenance-program', label: 'Dryer Vent Maintenance Program' },
                       { path: '/services/residential-electrostatic-filter', label: 'Residential Electrostatic Filter' },
                       { path: '/services/commercial-electrostatic-filter', label: 'Commercial Electrostatic Filter' }
                     ].map((item, index) => (

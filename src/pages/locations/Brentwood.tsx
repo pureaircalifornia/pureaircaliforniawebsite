@@ -73,7 +73,7 @@ const Brentwood = () => {
                 </p>
               </div>
               <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/ResidentialAirDuctCleaning">Learn More</Link>
+                  <Link to="/services/residential-air-duct-cleaning">Learn More</Link>
                 </Button>
             </div>
 
@@ -86,7 +86,7 @@ const Brentwood = () => {
                 </p>
               </div>
               <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/ResidentialDryerVentCleaning">Learn More</Link>
+                  <Link to="/services/residential-dryer-vent-cleaning">Learn More</Link>
                 </Button>
             </div>
 
@@ -99,7 +99,7 @@ const Brentwood = () => {
                 </p>
               </div>
               <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/ResidentialElectrostaticFilter">Learn More</Link>
+                  <Link to="/services/residential-electrostatic-filter">Learn More</Link>
                 </Button>
             </div>
 
@@ -112,7 +112,7 @@ const Brentwood = () => {
                 </p>
               </div>
               <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/CommercialAirDuctCleaning">Learn More</Link>
+                  <Link to="/services/commercial-air-duct-cleaning">Learn More</Link>
                 </Button>
             </div>
 
@@ -125,7 +125,7 @@ const Brentwood = () => {
                 </p>
               </div>
               <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/CommercialDryerVentCleaning">Learn More</Link>
+                  <Link to="/services/commercial-dryer-vent-cleaning">Learn More</Link>
                 </Button>
             </div>
 
@@ -138,7 +138,7 @@ const Brentwood = () => {
                 </p>
               </div>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/CommercialElectrostaticFilter">Learn More</Link>
+                  <Link to="/services/commercial-electrostatic-filter">Learn More</Link>
                 </Button>
             </div>
           </div>

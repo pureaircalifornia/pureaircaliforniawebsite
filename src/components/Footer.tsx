@@ -49,7 +49,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/services/electrostatic-filter" className="hover:text-white transition">
+                <Link to="/services/residential-electrostatic-filter" className="hover:text-white transition">
                   Electrostatic Filters
                 </Link>
               </li>

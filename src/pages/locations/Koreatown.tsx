@@ -64,7 +64,7 @@ const Koreatown = () => {
               <h3 className="text-xl font-semibold mb-2">Residential Air Duct Cleaning</h3>
               <p className="text-gray-600 flex-grow">Thorough cleaning for cleaner, healthier air in your Koreatown home.</p>
               <Button asChild variant="link" className="mt-auto">
-                <Link to="/services/ResidentialAirDuctCleaning">Learn More</Link>
+                <Link to="/services/residential-air-duct-cleaning">Learn More</Link>
               </Button>
             </div>
             {/* Residential Dryer Vent Cleaning */}
@@ -72,7 +72,7 @@ const Koreatown = () => {
               <h3 className="text-xl font-semibold mb-2">Residential Dryer Vent Cleaning</h3>
               <p className="text-gray-600 flex-grow">Improve efficiency and safety with our dryer vent cleaning service.</p>
               <Button asChild variant="link" className="mt-auto">
-                <Link to="/services/ResidentialDryerVentCleaning">Learn More</Link>
+                <Link to="/services/residential-dryer-vent-cleaning">Learn More</Link>
               </Button>
             </div>
             {/* Residential Electrostatic Filter */}
@@ -80,7 +80,7 @@ const Koreatown = () => {
               <h3 className="text-xl font-semibold mb-2">Residential Electrostatic Filter</h3>
               <p className="text-gray-600 flex-grow">Upgrade your home's air filtration with our electrostatic filters.</p>
               <Button asChild variant="link" className="mt-auto">
-                <Link to="/services/ResidentialElectrostaticFilter">Learn More</Link>
+                <Link to="/services/residential-electrostatic-filter">Learn More</Link>
               </Button>
             </div>
              {/* Commercial Air Duct Cleaning */}
@@ -88,7 +88,7 @@ const Koreatown = () => {
               <h3 className="text-xl font-semibold mb-2">Commercial Air Duct Cleaning</h3>
               <p className="text-gray-600 flex-grow">Maintain a healthy environment in your Koreatown business with our commercial air duct cleaning services.</p>
               <Button asChild variant="link" className="mt-auto">
-                <Link to="/services/CommercialAirDuctCleaning">Learn More</Link>
+                <Link to="/services/commercial-air-duct-cleaning">Learn More</Link>
               </Button>
             </div>
             {/* Commercial Dryer Vent Cleaning */}
@@ -96,7 +96,7 @@ const Koreatown = () => {
               <h3 className="text-xl font-semibold mb-2">Commercial Dryer Vent Cleaning</h3>
               <p className="text-gray-600 flex-grow">Ensure the safety and efficiency of your commercial dryers with regular vent cleaning.</p>
               <Button asChild variant="link" className="mt-auto">
-                <Link to="/services/CommercialDryerVentCleaning">Learn More</Link>
+                <Link to="/services/commercial-dryer-vent-cleaning">Learn More</Link>
               </Button>
             </div>
             {/* Commercial Electrostatic Filter */}
@@ -104,7 +104,7 @@ const Koreatown = () => {
               <h3 className="text-xl font-semibold mb-2">Commercial Electrostatic Filter</h3>
               <p className="text-gray-600 flex-grow">Improve air quality in your commercial space with our advanced electrostatic filters.</p>
               <Button asChild variant="link" className="mt-auto">
-                <Link to="/services/CommercialElectrostaticFilter">Learn More</Link>
+                <Link to="/services/commercial-electrostatic-filter">Learn More</Link>
               </Button>
             </div>
           </div>

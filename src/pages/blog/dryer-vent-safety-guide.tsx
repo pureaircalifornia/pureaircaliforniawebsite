@@ -229,7 +229,7 @@ const DryerVentSafetyGuide = () => {
           <strong>Consider Our Dryer Vent Maintenance Program</strong>
         </p>
         <p>
-          For the ultimate peace of mind and to ensure your dryer vents are always operating safely and efficiently, consider enrolling in our <Link to="/services/DryerVentMaintenanceProgram" className="text-brand-600 hover:underline">Dryer Vent Maintenance Program</Link>. 
+          For the ultimate peace of mind and to ensure your dryer vents are always operating safely and efficiently, consider enrolling in our <Link to="/services/dryer-vent-maintenance-program" className="text-brand-600 hover:underline">Dryer Vent Maintenance Program</Link>. 
           Members enjoy annual inspections, professional cleanings, priority scheduling, and exclusive discounts. Call us at (213) 792-4145 or <Link to="/quote" className="text-brand-600 hover:underline">request a free quote</Link> to learn more.
         </p>
 
@@ -240,4 +240,4 @@ const DryerVentSafetyGuide = () => {
   );
 };
 
-export default DryerVentSafetyGuide; 
+export default DryerVentSafetyGuide;

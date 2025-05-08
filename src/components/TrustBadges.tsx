@@ -3,14 +3,14 @@ import { Shield, Award, Star, CheckCircle, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const TrustBadges = () => {
-  const clientLogos = [
-    { name: 'Ford', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.37.39_f42a4fbf.jpg', alt: 'Ford logo - Trusted client of Pure Air California' },
-    { name: 'Four Seasons', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.37.39_74f379d3.jpg', alt: 'Four Seasons Hotels and Resorts - Luxury hotel client' },
-    { name: 'USPS', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.37.39_9f5ceca5.jpg', alt: 'United States Postal Service - Government facility client' },
-    { name: 'Rodeo Drive', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.39.31_655e691d.jpg', alt: 'Rodeo Drive - Premium retail client' },
-    { name: 'Warner Bros', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.39.31_73824649.jpg', alt: 'Warner Bros - Entertainment industry client' },
-    { name: 'CBRE', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.39.31_8116cdd3.jpg', alt: 'CBRE - Commercial real estate client' },
-    { name: 'UCLA', logo: '/gallery/Photos/WhatsApp Image 2025-05-05 at 14.39.31_bf5b5e51.jpg', alt: 'UCLA - Educational institution client' },
+..  const clientLogos = [
+    { name: 'Ford', logo: '/logo/VectorWiki-WfVlH__ford-logo-flat.svg', alt: 'Ford logo - Trusted client of Pure Air California' },
+    { name: 'Four Seasons', logo: '/logo/VectorWiki-8ZQSp__four-seasons-hotels-and-resorts.svg', alt: 'Four Seasons Hotels and Resorts - Luxury hotel client' },
+    { name: 'USPS', logo: '/logo/VectorWiki-ZUgI8__united-states-postal-service.svg', alt: 'United States Postal Service - Government facility client' },
+    { name: 'Taco Bell', logo: '/logo/VectorWiki-N35KO__taco-bell.svg', alt: 'Taco Bell - Restaurant chain client' },
+    { name: 'Warner Bros', logo: '/logo/VectorWiki-9Z0W8__the-wb-television-network.svg', alt: 'Warner Bros - Entertainment industry client' },
+    { name: 'Panera Bread', logo: '/logo/Panera_Bread_wordmark.svg.png', alt: 'Panera Bread - Restaurant chain client' },
+    { name: 'YMCA', logo: '/logo/ymca.png', alt: 'YMCA - Non-profit organization client' },
   ];
 
   const certifications = [

@@ -29,9 +29,13 @@ const LocationPage = () => {
       <div className="relative py-24 bg-gray-900 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-30">
           <img 
-            src="https://source.unsplash.com/random/1920x1080/?los-angeles" 
-            alt="LocationName" 
+            src="/gallery/gerson-repreza-tNQ2tmQiC6g-unsplash (Large).jpg" 
+            alt="LocationName cityscape view" 
             className="w-full h-full object-cover"
+            /* 
+              NOTE: Replace the image source with an appropriate local image from /gallery/ 
+              and update the alt text to be specific to the location 
+            */
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent z-0"></div>

@@ -4,18 +4,24 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { MapPin, Check, Phone } from 'lucide-react';
 import QuoteForm from '@/components/QuoteForm';
+import { Helmet } from 'react-helmet-async';
 
 const CenturyCity = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Air Duct & Dryer Vent Cleaning in Century City | Pure Air California</title>
+        <meta name="description" content="Professional air duct and dryer vent cleaning services for high-rise offices and luxury residential buildings in Century City. Improve indoor air quality today!" />
+        <meta name="keywords" content="air duct cleaning Century City, dryer vent cleaning Century City, commercial air duct cleaning, residential air duct cleaning, HVAC maintenance Century City" />
+      </Helmet>
       <NavBar />
       
       {/* Hero Section */}
       <div className="relative py-24 bg-gray-900 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-30">
           <img 
-            src="https://images.unsplash.com/photo-1577132399834-60a8d38f2783" 
-            alt="Century City" 
+            src="/gallery/gerson-repreza-tNQ2tmQiC6g-unsplash (Large).jpg" 
+            alt="Century City skyline with modern high-rise buildings" 
             className="w-full h-full object-cover"
           />
         </div>
@@ -52,6 +58,8 @@ const CenturyCity = () => {
           </div>
         </div>
       </div>
+      
+      <TrustBadges />
       
       {/* Main Content */}
       <section className="py-16">
@@ -235,28 +243,7 @@ const CenturyCity = () => {
         </div>
       </section>
       
-      {/* CTA Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-heading font-bold mb-6">
-              Experience Premium Air Duct Cleaning in Century City
-            </h2>
-            <p className="text-lg text-gray-600 mb-8">
-              Join our satisfied Century City commercial and residential clients and discover why Pure Air California 
-              is the trusted choice for air duct and dryer vent cleaning in modern high-rise buildings.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button asChild size="lg" className="bg-[#0A3D7C] hover:bg-[#072c5a]">
-                <Link to="/quote">Get a Free Quote</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link to="/contact">Contact Us</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection />
       
       <Footer />
     </div>

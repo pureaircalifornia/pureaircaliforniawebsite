@@ -9,8 +9,8 @@ const Hero = () => {
       {/* Background image with overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=3472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Air duct cleaning services"
+          src="/gallery/jason-hawke-fu7pSuUa2PE-unsplash (Large).jpg"
+          alt="Professional air duct cleaning services in California"
           className="w-full h-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent"></div>

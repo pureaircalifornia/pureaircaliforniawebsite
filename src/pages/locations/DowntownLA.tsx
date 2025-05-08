@@ -264,6 +264,10 @@ const DowntownLA = () => {
         </div>
       </section>
       
+      <TrustBadges />
+      
+      <CTASection />
+      
       <Footer />
     </div>
   );

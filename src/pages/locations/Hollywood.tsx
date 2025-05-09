@@ -146,7 +146,7 @@ const Hollywood = () => {
           <ScrollReveal>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2">
-              <h2 className="text-3xl font-heading font-bold mb-6">
+              <h2 className="text-3xl font-heading font-bold mb-6 text-brand-800">
                 Expert Air Duct Cleaning Services in Hollywood
               </h2>
               
@@ -154,38 +154,39 @@ const Hollywood = () => {
                 Hollywood's unique blend of historic buildings, entertainment studios, and modern residential 
                 developments demands specialized air quality solutions. Our experienced technicians understand 
                 the unique ventilation challenges of this iconic neighborhood and provide tailored services to 
-                meet your specific needs.
+                meet your specific needs. With our comprehensive approach, we ensure cleaner air, improved energy 
+                efficiency, and healthier indoor environments for all Hollywood properties.
               </p>
               
-              <div className="mb-8">
-                <h3 className="text-xl font-heading font-semibold mb-4">Why Hollywood Properties Need Regular Air Duct Cleaning</h3>
+              <div className="mb-8 bg-gray-50 p-6 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                <h3 className="text-xl font-heading font-semibold mb-4 text-brand-800">Why Hollywood Properties Need Regular Air Duct Cleaning</h3>
                 <p className="text-gray-600 mb-4">
                   Hollywood properties face unique air quality challenges:
                 </p>
-                <ul className="space-y-3">
+                <ul className="space-y-4">
                   <li className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
+                      <Check size={14} className="text-brand-600" aria-hidden="true" />
                     </div>
-                    <span>Historic buildings with original ductwork require careful, specialized attention</span>
+                    <span className="text-gray-700">Historic buildings with original ductwork require careful, specialized attention to preserve architectural integrity</span>
                   </li>
                   <li className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
+                      <Check size={14} className="text-brand-600" aria-hidden="true" />
                     </div>
-                    <span>Entertainment studios need clean air for optimal equipment performance and set conditions</span>
+                    <span className="text-gray-700">Entertainment studios need clean air for optimal equipment performance, set conditions, and talent comfort</span>
                   </li>
                   <li className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
+                      <Check size={14} className="text-brand-600" aria-hidden="true" />
                     </div>
-                    <span>Mixed-use buildings face complex ventilation challenges that require expert solutions</span>
+                    <span className="text-gray-700">Mixed-use buildings face complex ventilation challenges that require expert solutions tailored to each space</span>
                   </li>
                   <li className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
+                      <Check size={14} className="text-brand-600" aria-hidden="true" />
                     </div>
-                    <span>Urban location with high traffic introduces additional air quality concerns</span>
+                    <span className="text-gray-700">Urban location with high traffic introduces additional air quality concerns including pollution and particulate matter</span>
                   </li>
                 </ul>
               </div>
@@ -265,38 +266,38 @@ const Hollywood = () => {
                 </div>
               </div>
               
-              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
-                <h3 className="text-xl font-heading font-semibold mb-3">Why Choose Pure Air California in Hollywood</h3>
-                <ul className="space-y-3">
+              <div className="bg-gray-50 p-6 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                <h3 className="text-xl font-heading font-semibold mb-4 text-brand-800">Why Choose Pure Air California in Hollywood</h3>
+                <ul className="space-y-4">
                   <li className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
+                      <Check size={14} className="text-brand-600" aria-hidden="true" />
                     </div>
-                    <span>Specialized experience with historic and entertainment industry buildings</span>
+                    <span className="text-gray-700">Specialized experience with historic and entertainment industry buildings, preserving architectural integrity</span>
                   </li>
                   <li className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
+                      <Check size={14} className="text-brand-600" aria-hidden="true" />
                     </div>
-                    <span>Flexible scheduling to accommodate filming schedules and business hours</span>
+                    <span className="text-gray-700">Flexible scheduling to accommodate filming schedules and business hours with minimal disruption</span>
                   </li>
                   <li className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
+                      <Check size={14} className="text-brand-600" aria-hidden="true" />
                     </div>
-                    <span>Advanced equipment designed for all building types and ventilation systems</span>
+                    <span className="text-gray-700">Advanced equipment designed for all building types and ventilation systems, including vintage ductwork</span>
                   </li>
                   <li className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
+                      <Check size={14} className="text-brand-600" aria-hidden="true" />
                     </div>
-                    <span>Fully insured, licensed, and background-checked technicians</span>
+                    <span className="text-gray-700">Fully insured, licensed, and background-checked technicians trained in handling historic properties</span>
                   </li>
                   <li className="flex gap-3">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
+                      <Check size={14} className="text-brand-600" aria-hidden="true" />
                     </div>
-                    <span>Proven track record with Hollywood's most prestigious properties</span>
+                    <span className="text-gray-700">Proven track record with Hollywood's most prestigious properties and entertainment venues</span>
                   </li>
                 </ul>
               </div>
@@ -306,22 +307,39 @@ const Hollywood = () => {
               <div className="sticky top-24">
                 <QuoteForm />
                 
-                <div className="mt-8 bg-gray-50 p-6 rounded-lg border border-gray-100">
-                  <h3 className="text-xl font-heading font-semibold mb-4">Contact Us</h3>
+                <div className="mt-8 bg-gray-50 p-6 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                  <h3 className="text-xl font-heading font-semibold mb-4 text-brand-800">Contact Us</h3>
                   <div className="space-y-4">
                     <div className="flex items-start gap-3">
-                      <MapPin size={18} className="text-brand-600 mt-1" />
+                      <MapPin size={18} className="text-brand-600 mt-1 flex-shrink-0" aria-hidden="true" />
                       <div>
-                        <p className="font-medium">Hollywood Service Area</p>
+                        <p className="font-medium text-brand-700">Hollywood Service Area</p>
                         <p className="text-gray-600">Serving all Hollywood neighborhoods and business districts</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Phone size={18} className="text-brand-600" />
+                    <div className="flex items-start gap-3">
+                      <Phone size={18} className="text-brand-600 mt-1 flex-shrink-0" aria-hidden="true" />
                       <div>
-                        <p className="font-medium">(323) 555-1234</p>
+                        <p className="font-medium text-brand-700">(323) 555-1234</p>
                         <p className="text-gray-600">Mon-Sat: 8AM - 6PM</p>
+                        <a href="tel:+13235551234" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">Call Now</a>
                       </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-600 mt-1 flex-shrink-0" aria-hidden="true">
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                      </svg>
+                      <div>
+                        <p className="font-medium text-brand-700">Email Us</p>
+                        <p className="text-gray-600">For quotes and inquiries</p>
+                        <a href="mailto:info@pureair-california.com" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">info@pureair-california.com</a>
+                      </div>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-gray-200">
+                      <Button asChild className="w-full bg-brand-600 hover:bg-brand-700">
+                        <Link to="/quote">Request a Free Quote</Link>
+                      </Button>
                     </div>
                   </div>
                 </div>

@@ -4,6 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { MapPin, Check, Phone } from 'lucide-react';
 import QuoteForm from '@/components/QuoteForm';
+import TrustBadges from '@/components/TrustBadges';
+import CTASection from '@/components/CTASection';
+import { Helmet } from 'react-helmet-async';
 
 const DowntownLA = () => {
   return (

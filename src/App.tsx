@@ -5,7 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import HomePage from "./pages/index";
+import EnhancedLanding from "./pages/EnhancedLanding";
 import NotFound from "./pages/NotFound";
 import BeverlyHills from "./pages/locations/BeverlyHills";
 import Malibu from "./pages/locations/Malibu";
@@ -20,7 +20,7 @@ import Locations from "./pages/Locations";
 import Services from "./pages/Services";
 import About from "./pages/About";
 import Quote from "./pages/Quote";
-import Contact from "./pages/Contact";
+import EnhancedContact from "./pages/EnhancedContact";
 import ResidentialAirDuctCleaning from "./pages/services/ResidentialAirDuctCleaning";
 import ResidentialDryerVentCleaning from "./pages/services/ResidentialDryerVentCleaning";
 import ResidentialElectrostaticFilter from "./pages/services/ResidentialElectrostaticFilter";
@@ -57,7 +57,7 @@ function ScrollToTop() {
 
 // Route configuration for cleaner app structure
 const routes = [
-  { path: "/", element: <HomePage /> },
+  { path: "/", element: <EnhancedLanding /> },
   { path: "/locations", element: <Locations /> },
   
   // Location pages
@@ -130,7 +130,7 @@ const routes = [
   // Other main pages
   { path: "/about", element: <About /> },
   { path: "/quote", element: <Quote /> },
-  { path: "/contact", element: <Contact /> },
+  { path: "/contact", element: <EnhancedContact /> },
   { path: "/blog", element: <Blog /> },
   
   // Blog post specific routes
@@ -176,7 +176,15 @@ const App = () => (
         <Suspense fallback={<LoadingPage />}>
           <Routes>
             {routes.map((route) => (
-              <Route key={route.path} path={route.path} element={route.element} />
+              <Route 
+                key={route.path} 
+                path={route.path} 
+                element={
+                  React.isValidElement(route.element) 
+                    ? route.element
+                    : <Suspense fallback={<LoadingPage />}><route.element /></Suspense>
+                }
+              />
             ))}
           </Routes>
         </Suspense>

@@ -3,7 +3,7 @@ import { Shield, Award, Star, CheckCircle, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const TrustBadges = () => {
-..  const clientLogos = [
+  const clientLogos = [
     { name: 'Ford', logo: '/logo/VectorWiki-WfVlH__ford-logo-flat.svg', alt: 'Ford logo - Trusted client of Pure Air California' },
     { name: 'Four Seasons', logo: '/logo/VectorWiki-8ZQSp__four-seasons-hotels-and-resorts.svg', alt: 'Four Seasons Hotels and Resorts - Luxury hotel client' },
     { name: 'USPS', logo: '/logo/VectorWiki-ZUgI8__united-states-postal-service.svg', alt: 'United States Postal Service - Government facility client' },

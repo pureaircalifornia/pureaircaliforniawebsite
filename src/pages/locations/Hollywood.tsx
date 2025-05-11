@@ -101,7 +101,7 @@ const Hollywood = () => {
             loading="eager"
             width="1920"
             height="1080"
-            fetchpriority="high"
+            fetchPriority="high"
             aria-hidden="false"
             decoding="async"
           />

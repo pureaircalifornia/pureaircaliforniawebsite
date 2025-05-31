@@ -9,20 +9,34 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    historyApiFallback: true,
     open: true,
-    allowedHosts: [
-      "aaaa73c8-1cbe-49d1-9ba1-c59aeb2707db.lovableproject.com"
-    ]
+    proxy: {
+      // Handle API requests if needed
+      '/api': {
+        target: 'http://localhost:3000', // Update this if you have a backend
+        changeOrigin: true,
+      },
+    },
   },
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    mode === 'development' && componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  // Add this to handle client-side routing
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
     },
   },
 }));

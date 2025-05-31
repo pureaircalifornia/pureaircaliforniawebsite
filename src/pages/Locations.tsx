@@ -1,4 +1,3 @@
-
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -7,7 +6,8 @@ import { MapPin } from 'lucide-react';
 import QuoteForm from '@/components/QuoteForm';
 import { Helmet } from 'react-helmet';
 
-const locationData = [
+// Export the locationData array
+export const locationData = [
   {
     name: "Beverly Hills",
     description: "Premier air duct cleaning for luxury homes and high-end commercial spaces in Beverly Hills.",

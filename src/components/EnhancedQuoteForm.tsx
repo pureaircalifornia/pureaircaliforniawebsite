@@ -140,12 +140,12 @@ const EnhancedQuoteForm = () => {
   const renderProgressBar = () => {
     return (
       <div className="mb-6">
-        <div className="flex justify-between mb-2">
+        <div className="flex justify-between mb-2 text-gray-700 dark:text-gray-300">
           <span className="text-sm font-medium">Service Details</span>
           <span className="text-sm font-medium">Personal Info</span>
           <span className="text-sm font-medium">Additional Details</span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2.5">
+        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
           <div 
             className="bg-brand-600 h-2.5 rounded-full transition-all duration-300 ease-in-out" 
             style={{ width: `${(step / 3) * 100}%` }}
@@ -166,23 +166,23 @@ const EnhancedQuoteForm = () => {
             className="space-y-4"
           >
             <div>
-              <label className="block text-sm font-medium mb-2">Service Type</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Service Type</label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {services.map((service) => (
                   <div 
                     key={service}
-                    className={`border rounded-md p-3 cursor-pointer transition-all ${formData.service === service ? 'border-brand-600 bg-brand-50 shadow-sm' : 'border-gray-200 hover:border-gray-300'}`}
+                    className={`border rounded-md p-3 cursor-pointer transition-all ${formData.service === service ? 'border-brand-600 bg-brand-50 dark:bg-brand-900 shadow-sm dark:shadow-lg' : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'}`}
                     onClick={() => setFormData(prev => ({ ...prev, service }))}
                   >
                     <div className="flex items-center">
                       {service.includes('Residential') ? (
-                        <Home className="mr-2 h-5 w-5 text-brand-600" />
+                        <Home className="mr-2 h-5 w-5 text-brand-600 dark:text-brand-300" />
                       ) : service.includes('Commercial') ? (
-                        <Building2 className="mr-2 h-5 w-5 text-brand-600" />
+                        <Building2 className="mr-2 h-5 w-5 text-brand-600 dark:text-brand-300" />
                       ) : (
-                        <CheckCircle className="mr-2 h-5 w-5 text-brand-600" />
+                        <CheckCircle className="mr-2 h-5 w-5 text-brand-600 dark:text-brand-300" />
                       )}
-                      <span>{service}</span>
+                      <span className="text-gray-700 dark:text-gray-300">{service}</span>
                     </div>
                   </div>
                 ))}
@@ -190,17 +190,17 @@ const EnhancedQuoteForm = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-2">Property Type</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Property Type</label>
               <select
                 name="propertyType"
                 value={formData.propertyType}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-brand-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 required
               >
                 <option value="">Select property type</option>
                 {propertyTypes.map((type) => (
-                  <option key={type} value={type}>
+                  <option key={type} value={type} className="text-gray-900 dark:text-white">
                     {type}
                   </option>
                 ))}
@@ -208,14 +208,14 @@ const EnhancedQuoteForm = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-2">Square Footage (approx.)</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Square Footage (approx.)</label>
               <Input
                 type="text"
                 name="squareFootage"
                 value={formData.squareFootage}
                 onChange={handleInputChange}
                 placeholder="e.g., 2000"
-                className="focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                className="focus:ring-2 focus:ring-brand-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 required
               />
             </div>
@@ -263,14 +263,14 @@ const EnhancedQuoteForm = () => {
             className="space-y-4"
           >
             <div>
-              <label className="block text-sm font-medium mb-2">Full Name</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name</label>
               <div className="relative">
                 <Input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="pl-10 focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  className="pl-10 focus:ring-2 focus:ring-brand-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                   placeholder="John Doe"
                   required
                 />
@@ -281,14 +281,14 @@ const EnhancedQuoteForm = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
               <div className="relative">
                 <Input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="pl-10 focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  className="pl-10 focus:ring-2 focus:ring-brand-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                   placeholder="your@email.com"
                   required
                 />
@@ -299,14 +299,14 @@ const EnhancedQuoteForm = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-2">Phone</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone</label>
               <div className="relative">
                 <Input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="pl-10 focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  className="pl-10 focus:ring-2 focus:ring-brand-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                   placeholder="(123) 456-7890"
                   required
                 />
@@ -317,14 +317,14 @@ const EnhancedQuoteForm = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-2">Service Address</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Service Address</label>
               <div className="relative">
                 <Input
                   type="text"
                   name="address"
                   value={formData.address}
                   onChange={handleInputChange}
-                  className="pl-10 focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  className="pl-10 focus:ring-2 focus:ring-brand-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                   placeholder="123 Main St, Los Angeles, CA"
                   required
                 />
@@ -344,14 +344,14 @@ const EnhancedQuoteForm = () => {
             className="space-y-4"
           >
             <div>
-              <label className="block text-sm font-medium mb-2">Preferred Service Date</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Preferred Service Date</label>
               <div className="relative">
                 <Input
                   type="date"
                   name="preferredDate"
                   value={formData.preferredDate}
                   onChange={handleInputChange}
-                  className="pl-10 focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  className="pl-10 focus:ring-2 focus:ring-brand-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                   min={new Date().toISOString().split('T')[0]}
                   required
                 />
@@ -362,20 +362,20 @@ const EnhancedQuoteForm = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-2">Additional Information</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Additional Information</label>
               <Textarea
                 name="message"
                 value={formData.message}
                 onChange={handleInputChange}
                 placeholder="Please share any additional details that might help us serve you better..."
-                className="h-32 focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                className="h-32 focus:ring-2 focus:ring-brand-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
               />
             </div>
             
             {priceEstimate && (
-              <div className="p-4 bg-gray-50 border border-gray-200 rounded-md">
-                <h4 className="font-medium mb-2">Service Summary</h4>
-                <ul className="space-y-1 text-sm">
+              <div className="p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md">
+                <h4 className="font-medium mb-2 text-gray-700 dark:text-gray-300">Service Summary</h4>
+                <ul className="space-y-1 text-sm text-gray-700 dark:text-gray-300">
                   <li><span className="font-medium">Service:</span> {formData.service}</li>
                   <li><span className="font-medium">Property Type:</span> {formData.propertyType}</li>
                   <li><span className="font-medium">Square Footage:</span> {formData.squareFootage}</li>
@@ -388,11 +388,11 @@ const EnhancedQuoteForm = () => {
               <input
                 id="terms"
                 type="checkbox"
-                className="h-4 w-4 text-brand-600 focus:ring-brand-500 border-gray-300 rounded"
+                className="h-4 w-4 text-brand-600 focus:ring-brand-500 border-gray-300 dark:border-gray-600 rounded"
                 required
               />
-              <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
-                I agree to the <a href="#" className="text-brand-600 hover:text-brand-500">Terms of Service</a> and <a href="#" className="text-brand-600 hover:text-brand-500">Privacy Policy</a>
+              <label htmlFor="terms" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                I agree to the <a href="#" className="text-brand-600 dark:text-brand-300 hover:text-brand-500 dark:hover:text-brand-500">Terms of Service</a> and <a href="#" className="text-brand-600 dark:text-brand-300 hover:text-brand-500 dark:hover:text-brand-500">Privacy Policy</a>
               </label>
             </div>
           </motion.div>
@@ -407,17 +407,17 @@ const EnhancedQuoteForm = () => {
       <motion.div 
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-white p-6 rounded-lg shadow-md text-center"
+        className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center"
       >
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <CheckCircle className="h-8 w-8 text-green-600" />
+        <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+          <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-300" />
         </div>
-        <h3 className="text-xl font-bold mb-2">Quote Request Submitted!</h3>
-        <p className="text-gray-600 mb-4">
+        <h3 className="text-xl font-bold mb-2 text-gray-700 dark:text-gray-300">Quote Request Submitted!</h3>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">
           Thank you for your request. One of our specialists will contact you shortly to discuss your needs and provide a detailed quote.
         </p>
         <div className="flex justify-center">
-          <div className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-brand-700 bg-brand-100">
+          <div className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-brand-700 dark:text-brand-300 bg-brand-100 dark:bg-brand-900">
             <Clock className="mr-2 h-4 w-4" />
             <span>We typically respond within 2 hours during business hours</span>
           </div>
@@ -427,74 +427,42 @@ const EnhancedQuoteForm = () => {
   }
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold">Get Your Free Quote</h3>
-        <div className="flex items-center gap-1 bg-brand-50 px-2 py-1 rounded text-xs font-medium text-brand-700">
-          <Clock size={14} />
-          <span>Takes ~2 min</span>
-        </div>
-      </div>
-      
-      {renderProgressBar()}
-      
-      <form onSubmit={handleSubmit}>
-        <AnimatePresence mode="wait">
-          {renderStep()}
-        </AnimatePresence>
-        
-        <div className="flex justify-between mt-6">
-          {step > 1 ? (
-            <Button 
-              type="button" 
-              variant="outline" 
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {renderProgressBar()}
+        {renderStep()}
+        <div className="flex justify-between space-x-4">
+          {step > 1 && (
+            <Button
+              type="button"
+              variant="outline"
               onClick={prevStep}
-              className="px-4"
+              className="bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
             >
+              <ArrowRight className="rotate-180 mr-2" />
               Back
             </Button>
-          ) : (
-            <div></div>
           )}
-          
           {step < 3 ? (
-            <Button 
-              type="button" 
-              onClick={nextStep} 
-              disabled={step === 1 && (!formData.service || !formData.propertyType || !formData.squareFootage) || 
-                       step === 2 && (!formData.name || !formData.email || !formData.phone || !formData.address)}
-              className="bg-brand-600 hover:bg-brand-700 px-4"
+            <Button
+              type="button"
+              onClick={nextStep}
+              className="bg-brand-600 dark:bg-brand-300 hover:bg-brand-700 dark:hover:bg-brand-500 text-white"
             >
-              Next <ArrowRight className="ml-1 h-4 w-4" />
+              Next
+              <ArrowRight className="ml-2" />
             </Button>
           ) : (
-            <Button 
-              type="submit" 
-              className="bg-brand-600 hover:bg-brand-700 px-4"
+            <Button
+              type="submit"
               disabled={isSubmitting}
+              className="bg-brand-600 dark:bg-brand-300 hover:bg-brand-700 dark:hover:bg-brand-500 text-white"
             >
-              {isSubmitting ? (
-                <>
-                  <span className="animate-spin mr-2">⟳</span> Submitting...
-                </>
-              ) : (
-                'Submit Request'
-              )}
+              {isSubmitting ? 'Submitting...' : 'Submit'}
             </Button>
           )}
         </div>
       </form>
-      
-      <div className="mt-6 pt-4 border-t border-gray-100">
-        <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-          <Shield className="h-4 w-4 text-brand-600" />
-          <span>Your information is secure and encrypted</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <CheckCircle className="h-4 w-4 text-brand-600" />
-          <span>No obligation quote</span>
-        </div>
-      </div>
     </div>
   );
 };

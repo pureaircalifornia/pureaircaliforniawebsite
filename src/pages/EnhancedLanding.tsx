@@ -37,7 +37,6 @@ const EnhancedLanding = () => {
         <meta name="twitter:description" content="Professional air duct and dryer vent cleaning services in Los Angeles. NADCA certified, licensed & insured." />
         <meta name="twitter:image" content="/gallery/jason-hawke-fu7pSuUa2PE-unsplash.jpg" />
       </Helmet>
-      <NavBar />
       
       <main>
         {/* Enhanced Hero Section */}
@@ -51,7 +50,6 @@ const EnhancedLanding = () => {
               loading="eager"
               width="1920"
               height="1080"
-              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent"></div>
           </div>

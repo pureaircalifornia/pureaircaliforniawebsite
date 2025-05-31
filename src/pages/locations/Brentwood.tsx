@@ -168,4 +168,4 @@ const Brentwood = () => {
   );
 };
 
-export default Brentwood;
+export { Brentwood };

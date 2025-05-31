@@ -4,7 +4,7 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Phone, Calendar, CheckCircle, ArrowRight, Shield, Award, Star } from 'lucide-react';
+import { Phone, Calendar, CheckCircle, ArrowRight, Shield, Award, Star, MapPin, Clock, Users } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { motion } from 'framer-motion';
 import EnhancedTrustBadges from '@/components/EnhancedTrustBadges';
@@ -14,16 +14,28 @@ import ServiceArea from '@/components/ServiceArea';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import FAQSection from '@/components/FAQSection';
 import CTASection from '@/components/CTASection';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const EnhancedLanding = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>Pure Air California | Air Duct & Dryer Vent Cleaning</title>
+        <title>Pure Air California - Professional Air Duct & Dryer Vent Cleaning in Los Angeles</title>
         <meta
           name="description"
-          content="Professional air duct and dryer vent cleaning services in Los Angeles. Improve your indoor air quality today!"
+          content="Professional air duct and dryer vent cleaning services in Los Angeles. NADCA certified, licensed & insured. Free estimates, same-day service available."
         />
+        <meta name="keywords" content="air duct cleaning, dryer vent cleaning, Los Angeles, indoor air quality, HVAC cleaning, mold removal, allergen reduction" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content="Pure Air California - Air Duct & Dryer Vent Cleaning" />
+        <meta property="og:description" content="Professional air duct and dryer vent cleaning services in Los Angeles. NADCA certified, licensed & insured." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/gallery/jason-hawke-fu7pSuUa2PE-unsplash.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Pure Air California - Air Duct & Dryer Vent Cleaning" />
+        <meta name="twitter:description" content="Professional air duct and dryer vent cleaning services in Los Angeles. NADCA certified, licensed & insured." />
+        <meta name="twitter:image" content="/gallery/jason-hawke-fu7pSuUa2PE-unsplash.jpg" />
       </Helmet>
       <NavBar />
       
@@ -71,31 +83,53 @@ const EnhancedLanding = () => {
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <Button asChild size="lg" className="bg-[#0A3D7C] hover:bg-[#072c5a]">
-                    <Link to="/quote">Get a Free Quote</Link>
+                    <Link to="/quote">
+                      <Phone className="mr-2" size={16} />
+                      Schedule Your Free Estimate
+                    </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                    <Link to="/services">Our Services</Link>
+                    <Link to="/services">
+                      <ArrowRight className="mr-2" size={16} />
+                      View All Services
+                    </Link>
                   </Button>
                 </motion.div>
                 
                 {/* Trust indicators */}
                 <motion.div 
-                  className="mt-8 flex flex-wrap gap-4"
+                  className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                 >
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-2 rounded-full">
-                    <Shield className="text-brand-400" size={16} />
-                    <span className="text-sm font-medium">Licensed & Insured</span>
+                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-3 rounded-lg">
+                    <Shield className="text-brand-400" size={20} />
+                    <div>
+                      <span className="text-sm font-medium">Licensed & Insured</span>
+                      <p className="text-xs text-gray-400">Fully bonded and insured</p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-2 rounded-full">
-                    <Star className="text-yellow-400" size={16} />
-                    <span className="text-sm font-medium">4.9/5 Rating (1,200+ Reviews)</span>
+                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-3 rounded-lg">
+                    <Star className="text-yellow-400" size={20} />
+                    <div>
+                      <span className="text-sm font-medium">5-Star Service</span>
+                      <p className="text-xs text-gray-400">1,200+ 5-star reviews</p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-2 rounded-full">
-                    <Award className="text-brand-400" size={16} />
-                    <span className="text-sm font-medium">NADCA Certified</span>
+                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-3 rounded-lg">
+                    <Award className="text-brand-400" size={20} />
+                    <div>
+                      <span className="text-sm font-medium">NADCA Certified</span>
+                      <p className="text-xs text-gray-400">Professional certification</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-3 rounded-lg">
+                    <Clock className="text-brand-400" size={20} />
+                    <div>
+                      <span className="text-sm font-medium">Same-Day Service</span>
+                      <p className="text-xs text-gray-400">Available in most areas</p>
+                    </div>
                   </div>
                 </motion.div>
               </div>

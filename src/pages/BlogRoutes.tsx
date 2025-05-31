@@ -2,6 +2,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import BlogPost from './BlogPost';
+import { blogPostComponents } from './blog-components';
 
 // Import blog post components
 import ImportanceOfRegularAirDuctCleaning from './blog/importance-of-regular-air-duct-cleaning';
@@ -30,8 +31,7 @@ const BlogRoutes = () => {
   );
 };
 
-// Export the component mapping for use elsewhere
-export const blogPostComponents = {
+// Use the imported blog components
   'importance-of-regular-air-duct-cleaning': ImportanceOfRegularAirDuctCleaning,
   'air-duct-cleaning-faq': AirDuctCleaningFAQ,
   'dryer-vent-safety-guide': DryerVentSafetyGuide,

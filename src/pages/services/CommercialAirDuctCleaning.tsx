@@ -366,8 +366,9 @@ const CommercialAirDuctCleaning = () => {
               <Link to="/quote">Get Commercial Quote</Link>
             </Button>
             <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white hover:text-brand-600">
-              Call (310) 555-1234
+              Call (213) 792-4145
             </Button>
+            <a href="tel:+12137924145" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">Call Now</a>
           </div>
         </div>
       </section>

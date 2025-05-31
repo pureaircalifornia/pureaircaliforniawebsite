@@ -17,6 +17,7 @@ import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
 import IndustryPage from './pages/IndustryPage.tsx';
+import HealthBenefits from './pages/HealthBenefits'; // Import HealthBenefits component
 
 // Create query client
 const queryClient = new QueryClient();
@@ -43,9 +44,8 @@ const routes: RouteConfig[] = [
   { path: "/services/commercial-air-duct-cleaning", element: <Services service="commercial-air-duct-cleaning" /> },
   { path: "/services/residential-dryer-vent-cleaning", element: <Services service="residential-dryer-vent-cleaning" /> },
   { path: "/services/commercial-dryer-vent-cleaning", element: <Services service="commercial-dryer-vent-cleaning" /> },
-  { path: "/services/dryer-vent-maintenance-program", element: <Services service="dryer-vent-maintenance-program" /> },
-  { path: "/services/residential-electrostatic-filter", element: <Services service="residential-electrostatic-filter" /> },
-  { path: "/services/commercial-electrostatic-filter", element: <Services service="commercial-electrostatic-filter" /> },
+  { path: "/services/electrostatic-filter-program", element: <Services service="electrostatic-filter-program" /> },
+  { path: "/services/hvac-system-cleaning", element: <Services service="hvac-system-cleaning" /> },
   // Industry pages
   { path: "/industries/healthcare", element: <IndustryPage industry="healthcare" /> },
   { path: "/industries/hospitality", element: <IndustryPage industry="hospitality" /> },
@@ -53,6 +53,8 @@ const routes: RouteConfig[] = [
   { path: "/industries/education", element: <IndustryPage industry="education" /> },
   { path: "/industries/retail", element: <IndustryPage industry="retail" /> },
   { path: "/industries/manufacturing", element: <IndustryPage industry="manufacturing" /> },
+  // Health benefits page
+  { path: "/health-benefits", element: <HealthBenefits /> },
   // Other pages
   { path: "/about", element: <About /> },
   { path: "/contact", element: <Contact /> },

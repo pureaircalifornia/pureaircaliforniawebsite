@@ -476,7 +476,7 @@ const CommercialElectrostaticFilter = () => {
               <Link to="/quote">Request a Consultation</Link>
             </Button>
             <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white hover:text-brand-600">
-              Call (310) 555-1234
+              <a href="tel:+12137924145" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">Call (213) 792-4145</a>
             </Button>
           </div>
         </div>

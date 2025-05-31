@@ -44,7 +44,7 @@ const CommercialDryerVentCleaning = () => {
                   <Link to="/quote">Get a Free Quote</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10">
-                  <a href="tel:+13105551234">Call (310) 555-1234</a>
+                  <a href="tel:+12137924145">Call (213) 792-4145</a>
                 </Button>
               </div>
             </div>

@@ -38,7 +38,7 @@ const Hollywood = () => {
             "image": "/gallery/jeremy-bishop-zCFt2Rzcv_c-unsplash (Large).jpg",
             "@id": "https://pureair-california.com/locations/hollywood",
             "url": "https://pureair-california.com/locations/hollywood",
-            "telephone": "(323) 555-1234",
+            "telephone": "(213) 792-4145",
             "description": "Professional air duct and dryer vent cleaning services for entertainment venues, studios, and residential properties in Hollywood.",
             "address": {
               "@type": "PostalAddress",
@@ -320,9 +320,9 @@ const Hollywood = () => {
                     <div className="flex items-start gap-3">
                       <Phone size={18} className="text-brand-600 mt-1 flex-shrink-0" aria-hidden="true" />
                       <div>
-                        <p className="font-medium text-brand-700">(323) 555-1234</p>
+                        <p className="font-medium text-brand-700">(213) 792-4145</p>
                         <p className="text-gray-600">Mon-Sat: 8AM - 6PM</p>
-                        <a href="tel:+13235551234" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">Call Now</a>
+                        <a href="tel:+12137924145" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">Call Now</a>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">

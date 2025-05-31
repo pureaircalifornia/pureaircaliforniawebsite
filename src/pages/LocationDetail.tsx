@@ -59,8 +59,8 @@ const LocationDetail = () => {
                 <Link to="/quote">Get a Free Quote</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10">
-                <a href="tel:+18001234567">
-                  <Phone className="w-4 h-4 mr-2" /> (800) 123-4567
+                <a href="tel:+12137924145">
+                  <Phone className="w-4 h-4 mr-2" /> (213) 792-4145
                 </a>
               </Button>
             </div>
@@ -129,8 +129,8 @@ const LocationDetail = () => {
                   <Link to="/quote">Get a Free Quote</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline">
-                  <a href="tel:+18001234567">
-                    <Phone className="w-4 h-4 mr-2" /> (800) 123-4567
+                  <a href="tel:+12137924145">
+                    <Phone className="w-4 h-4 mr-2" /> (213) 792-4145
                   </a>
                 </Button>
               </div>
@@ -156,7 +156,7 @@ const LocationDetail = () => {
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-sm">
                     <Phone className="w-4 h-4 text-gray-500" />
-                    <a href="tel:+18001234567" className="text-[#0A3D7C] hover:underline">(800) 123-4567</a>
+                    <a href="tel:+12137924145" className="text-[#0A3D7C] hover:underline">(213) 792-4145</a>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Mail className="w-4 h-4 text-gray-500" />

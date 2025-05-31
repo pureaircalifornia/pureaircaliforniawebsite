@@ -232,8 +232,9 @@ const DowntownLA = () => {
                     <div className="flex items-center gap-3">
                       <Phone size={18} className="text-[#0A3D7C]" />
                       <div>
-                        <p className="font-medium">(213) 555-1234</p>
+                        <p className="font-medium">(213) 792-4145</p>
                         <p className="text-gray-600">Mon-Sat: 8AM - 6PM</p>
+                        <a href="tel:+12137924145" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">Call Now</a>
                       </div>
                     </div>
                   </div>

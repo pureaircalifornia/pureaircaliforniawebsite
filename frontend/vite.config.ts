@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => ({
   },
   // Add this to handle client-side routing
   build: {
-    outDir: 'dist',
+    outDir: 'build',
     assetsDir: 'assets',
     rollupOptions: {
       output: {

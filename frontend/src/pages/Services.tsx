@@ -114,7 +114,7 @@ const serviceData: ServiceData = {
                 <Link to="/contact">Get a Free Quote</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="text-white border-white hover:bg-blue-600">
-                <Link to="tel:+18005551234">Call Now: (800) 555-1234</Link>
+                <Link to="tel:+12137924145">Call Now: (213) 792-4145</Link>
               </Button>
             </div>
           </div>
@@ -151,7 +151,7 @@ const serviceData: ServiceData = {
                 <Link to="/contact">Request a Quote</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="text-white border-white hover:bg-blue-600">
-                <Link to="tel:+18005551234">Call Now: (800) 555-1234</Link>
+                <Link to="tel:+12137924145">Call Now: (213) 792-4145</Link>
               </Button>
             </div>
           </div>
@@ -387,7 +387,7 @@ const serviceData: ServiceData = {
                 <Link to="/contact">Request a Quote</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="text-white border-white hover:bg-blue-600">
-                <Link to="tel:+18005551234">Call Now: (800) 555-1234</Link>
+                <Link to="tel:+12137924145">Call Now: (213) 792-4145</Link>
               </Button>
             </div>
           </div>

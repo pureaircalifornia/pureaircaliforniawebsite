@@ -18,6 +18,7 @@ import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
 import IndustryPage from './pages/IndustryPage.tsx';
 import HealthBenefits from './pages/HealthBenefits'; // Import HealthBenefits component
+import Quote from './pages/Quote';
 
 // Create query client
 const queryClient = new QueryClient();
@@ -60,6 +61,7 @@ const routes: RouteConfig[] = [
   { path: "/contact", element: <Contact /> },
   { path: "/blog", element: <Blog /> },
   { path: "/blog/:slug", element: <BlogPost /> },
+  { path: "/quote", element: <Quote /> },
   { path: "/404", element: <NotFound /> },
   // Catch all other routes and redirect to home or show 404
   { path: "*", element: <Navigate to="/" replace /> }

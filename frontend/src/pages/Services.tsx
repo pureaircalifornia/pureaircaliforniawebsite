@@ -170,7 +170,79 @@ const serviceData: ServiceData = {
     content: (
       <div className="prose max-w-none">
         <h2 className="text-3xl font-bold mb-6">Residential Dryer Vent Cleaning Services</h2>
-        {/* Content similar to other services */}
+
+        <div className="bg-blue-50 p-6 rounded-lg mb-8">
+          <p className="text-lg font-medium">
+            Lint buildup is a leading cause of household dryer fires. Our thorough dryer vent cleaning
+            removes dangerous lint and obstructions to keep your family safe and your dryer running efficiently.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+          <div>
+            <h3 className="text-2xl font-semibold mb-4">Benefits of Professional Vent Cleaning</h3>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3">
+                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                <span>Significantly reduces dryer fire risk</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                <span>Improves drying times and energy efficiency</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                <span>Extends dryer lifespan by reducing strain</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                <span>Helps prevent moisture, mold, and odor issues</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold mb-4">Warning Signs Your Vent Needs Cleaning</h3>
+            <ul className="space-y-3">
+              <li className="flex gap-3">
+                <div className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div>
+                  <h4 className="font-medium">Clothes take longer than one cycle to dry</h4>
+                  <p className="text-sm text-gray-600">Common sign of restricted airflow from lint buildup</p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <div className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div>
+                  <h4 className="font-medium">Dryer or laundry room feels unusually hot</h4>
+                  <p className="text-sm text-gray-600">Heat is trapped due to a clogged vent</p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <div className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">3</div>
+                <div>
+                  <h4 className="font-medium">Burning or musty odors while drying</h4>
+                  <p className="text-sm text-gray-600">Lint and moisture accumulation can create odors</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-12 bg-blue-700 text-white p-8 rounded-lg">
+          <div className="max-w-4xl mx-auto text-center">
+            <h3 className="text-2xl font-bold mb-4">Protect Your Home from Dryer Fires</h3>
+            <p className="text-xl mb-6">Schedule your residential dryer vent cleaning today for peace of mind and better performance.</p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button asChild size="lg" className="bg-white text-blue-700 hover:bg-gray-100">
+                <Link to="/contact">Get a Free Quote</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="text-white border-white hover:bg-blue-600">
+                <Link to="tel:+12137924145">Call Now: (213) 792-4145</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     )
   },

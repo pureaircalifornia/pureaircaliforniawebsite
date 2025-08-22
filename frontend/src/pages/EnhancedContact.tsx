@@ -64,8 +64,8 @@ const EnhancedContact = () => {
                     <div>
                       <h3 className="text-xl font-semibold mb-1">Call Us</h3>
                       <p className="text-gray-600 mb-1">Our team is available to take your call</p>
-                      <a href="tel:+13105551234" className="text-brand-600 font-medium text-lg hover:text-brand-700 transition-colors">
-                        (310) 555-1234
+                      <a href="tel:+12137924145" className="text-brand-600 font-medium text-lg hover:text-brand-700 transition-colors">
+                        (213) 792-4145
                       </a>
                     </div>
                   </div>

@@ -2,7 +2,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import BlogPost from './BlogPost';
-import { blogPostComponents } from './blog-components';
 
 // Import blog post components
 import ImportanceOfRegularAirDuctCleaning from './blog/importance-of-regular-air-duct-cleaning';
@@ -24,21 +23,10 @@ const BlogRoutes = () => {
       <Route path="health-benefits-air-duct-cleaning" element={<HealthBenefitsAirDuctCleaning />} />
       <Route path="clean-air-ducts-allergy-relief" element={<CleanAirDuctsAllergyRelief />} />
       <Route path="signs-air-ducts-need-cleaning" element={<SignsAirDuctsNeedCleaning />} />
-      
       {/* For all other blog posts, use the generic BlogPost component with the slug */}
       <Route path=":slug" element={<BlogPost />} />
     </Routes>
   );
-};
-
-// Use the imported blog components
-  'importance-of-regular-air-duct-cleaning': ImportanceOfRegularAirDuctCleaning,
-  'air-duct-cleaning-faq': AirDuctCleaningFAQ,
-  'dryer-vent-safety-guide': DryerVentSafetyGuide,
-  'commercial-indoor-air-quality-guide': CommercialIndoorAirQualityGuide,
-  'health-benefits-air-duct-cleaning': HealthBenefitsAirDuctCleaning,
-  'clean-air-ducts-allergy-relief': CleanAirDuctsAllergyRelief,
-  'signs-air-ducts-need-cleaning': SignsAirDuctsNeedCleaning
 };
 
 export default BlogRoutes;

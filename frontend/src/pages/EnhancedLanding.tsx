@@ -38,6 +38,7 @@ const EnhancedLanding = () => {
         <meta name="twitter:image" content="/gallery/jason-hawke-fu7pSuUa2PE-unsplash.jpg" />
       </Helmet>
       
+      <NavBar />
       <main>
         {/* Enhanced Hero Section */}
         <div className="relative bg-gray-900 text-white">

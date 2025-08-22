@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-route
 import { TooltipProvider } from '@radix-ui/react-tooltip';
 import SEOProvider from './components/SEOProvider';
 import { seoConfig } from './utils/seo/seoConfig';
-import NavBar from './components/NavBar';
 import ScrollToTop from './components/ScrollToTop';
 import EnhancedLanding from './pages/EnhancedLanding';
 import Locations from './pages/Locations';
@@ -86,7 +85,6 @@ function App() {
           <BrowserRouter>
             <SEOProvider>
               <div className="min-h-screen bg-gray-50">
-                <NavBar />
                 <ScrollToTopOnRouteChange />
                 <ScrollToTop />
                 <Suspense fallback={<LoadingFallback />}>

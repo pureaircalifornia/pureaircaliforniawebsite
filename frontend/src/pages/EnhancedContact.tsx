@@ -77,8 +77,8 @@ const EnhancedContact = () => {
                     <div>
                       <h3 className="text-xl font-semibold mb-1">Email Us</h3>
                       <p className="text-gray-600 mb-1">Send us an email and we'll respond promptly</p>
-                      <a href="mailto:info@pureair-california.com" className="text-brand-600 font-medium hover:text-brand-700 transition-colors">
-                        info@pureair-california.com
+                      <a href="mailto:info@pureaircalifornia.com" className="text-brand-600 font-medium hover:text-brand-700 transition-colors">
+                        info@pureaircalifornia.com
                       </a>
                     </div>
                   </div>

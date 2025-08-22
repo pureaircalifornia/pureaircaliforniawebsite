@@ -333,7 +333,7 @@ const Hollywood = () => {
                       <div>
                         <p className="font-medium text-brand-700">Email Us</p>
                         <p className="text-gray-600">For quotes and inquiries</p>
-                        <a href="mailto:info@pureair-california.com" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">info@pureair-california.com</a>
+                        <a href="mailto:info@pureaircalifornia.com" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">info@pureaircalifornia.com</a>
                       </div>
                     </div>
                     <div className="mt-4 pt-4 border-t border-gray-200">

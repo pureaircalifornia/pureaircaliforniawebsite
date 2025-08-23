@@ -273,7 +273,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
   };
   
   // Function to load Google Maps API
-  const loadGoogleMapsAPI = () => {
+  const loadGoogleMapsAPI = useCallback(() => {
     try {
       // If Google Maps is already loaded, initialize the map
       if (window.google?.maps) {
@@ -315,7 +315,6 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
       script.crossOrigin = 'anonymous'; // Add crossOrigin attribute
       
       script.onerror = (error) => {
-        console.error('Google Maps script failed to load:', error);
         setLoadError(true);
         // Clean up callback
         if (window[callbackName]) delete window[callbackName];
@@ -337,11 +336,10 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
         if (window[callbackName]) delete window[callbackName];
       };
     } catch (error) {
-      console.error('Error loading Google Maps API:', error);
       setLoadError(true);
       return undefined;
     }
-  };
+  }, []);
   
   // Helper function to clean up map resources
   const cleanupMapResources = () => {
@@ -369,7 +367,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
             }
           }
         } catch (error) {
-          console.error('Error cleaning up map resources:', error);
+          // Error cleaning up map resources
         }
       });
     }
@@ -389,7 +387,6 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
     try {
       cleanup = loadGoogleMapsAPI();
     } catch (e) {
-      console.error('Failed to load Google Maps:', e);
       setLoadError(true);
     }
     
@@ -452,7 +449,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
           }
         }
       } catch (error) {
-        console.error('Error highlighting selected area:', error);
+        // Error highlighting selected area
       }
     }
   }, [selectedArea]);

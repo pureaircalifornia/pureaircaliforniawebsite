@@ -83,7 +83,7 @@ const Westwood = () => {
                 <h3 className="text-xl font-semibold mb-4">Residential Air Duct Cleaning</h3>
                 <p className="text-gray-600">Comprehensive air duct cleaning for Westwood homes and apartments, improving air quality and HVAC efficiency.</p>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/ResidentialAirDuctCleaning">
+                  <Link to="/services/residential-air-duct-cleaning">
                     Learn More
                   </Link>
                 </Button>
@@ -93,7 +93,7 @@ const Westwood = () => {
                 <h3 className="text-xl font-semibold mb-4">Residential Dryer Vent Cleaning</h3>
                 <p className="text-gray-600">Specialized dryer vent cleaning for Westwood apartments and condos, preventing fire hazards in multi-unit buildings.</p>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/ResidentialDryerVentCleaning">
+                  <Link to="/services/residential-dryer-vent-cleaning">
                     Learn More
                   </Link>
                 </Button>
@@ -103,7 +103,7 @@ const Westwood = () => {
                 <h3 className="text-xl font-semibold mb-4">Residential Electrostatic Filter</h3>
                 <p className="text-gray-600">Installation and maintenance of electrostatic filters for enhanced air purification in Westwood residences.</p>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/ResidentialElectrostaticFilter">
+                  <Link to="/services/electrostatic-filter-program">
                     Learn More
                   </Link>
                 </Button>
@@ -114,7 +114,7 @@ const Westwood = () => {
                 <h3 className="text-xl font-semibold mb-4">Commercial Air Duct Cleaning</h3>
                 <p className="text-gray-600">Professional air duct cleaning services for businesses, restaurants, and retail spaces throughout Westwood Village.</p>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/CommercialAirDuctCleaning">
+                  <Link to="/services/commercial-air-duct-cleaning">
                     Learn More
                   </Link>
                 </Button>
@@ -124,7 +124,7 @@ const Westwood = () => {
                 <h3 className="text-xl font-semibold mb-4">Commercial Dryer Vent Cleaning</h3>
                 <p className="text-gray-600">Maintain safety and efficiency in your commercial laundry with our commercial dryer vent cleaning services.</p>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/CommercialDryerVentCleaning">
+                  <Link to="/services/commercial-dryer-vent-cleaning">
                     Learn More
                   </Link>
                 </Button>
@@ -134,7 +134,7 @@ const Westwood = () => {
                 <h3 className="text-xl font-semibold mb-4">Commercial Electrostatic Filter</h3>
                 <p className="text-gray-600">Improve your commercial building's air quality with our commercial electrostatic filter installations.</p>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/CommercialElectrostaticFilter">
+                  <Link to="/services/electrostatic-filter-program">
                     Learn More
                   </Link>
                 </Button>

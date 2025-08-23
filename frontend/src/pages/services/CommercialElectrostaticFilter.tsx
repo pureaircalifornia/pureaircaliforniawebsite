@@ -2,13 +2,50 @@ import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Filter, Check, Building, ArrowRight } from 'lucide-react';
+import { Filter, Check, Building, ArrowRight, Shield, Award, Clock, Zap, Users } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const CommercialElectrostaticFilter = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Commercial Electrostatic Air Filter Systems | Pure Air California</title>
+        <meta name="description" content="Advanced commercial electrostatic air filter systems for superior indoor air quality. Reduce operating costs, improve HVAC efficiency, and ensure compliance. Get a free quote today." />
+        <meta name="keywords" content="commercial electrostatic air filter, business air filter, commercial air filtration, HVAC filter system, indoor air quality, office air filter, industrial air filter" />
+        <meta property="og:title" content="Commercial Electrostatic Air Filter Systems | Pure Air California" />
+        <meta property="og:description" content="Advanced commercial electrostatic air filter systems for superior indoor air quality. Reduce operating costs, improve HVAC efficiency, and ensure compliance." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pureairca.com/services/commercial-electrostatic-filter" />
+        <link rel="canonical" href="https://pureairca.com/services/commercial-electrostatic-filter" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Commercial Electrostatic Air Filter",
+            "provider": {
+              "@type": "LocalBusiness",
+              "name": "Pure Air California",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "123 Airway Blvd",
+                "addressLocality": "Los Angeles",
+                "addressRegion": "CA",
+                "postalCode": "90001",
+                "addressCountry": "US"
+              },
+              "telephone": "+18005551234"
+            },
+            "description": "Advanced commercial electrostatic air filter systems for superior indoor air quality. Reduce operating costs, improve HVAC efficiency, and ensure compliance.",
+            "areaServed": {
+              "@type": "State",
+              "name": "California"
+            }
+          })}
+        </script>
+      </Helmet>
+
       <NavBar />
 
       {/* Hero Section */}
@@ -17,11 +54,17 @@ const CommercialElectrostaticFilter = () => {
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Commercial Electrostatic Air Filter Systems</h1>
             <p className="text-xl mb-8">
-              Advanced air filtration solutions for businesses seeking superior indoor air quality and HVAC efficiency.
+              Advanced air filtration solutions for businesses seeking superior indoor air quality and HVAC efficiency. 
+              Reduce operating costs, improve employee health, and ensure compliance with industry standards.
             </p>
-            <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-              <Link to="/quote">Get a Commercial Quote</Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
+                <Link to="/quote">Get Commercial Quote</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-700">
+                <Link to="/contact">Schedule Consultation</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -36,7 +79,7 @@ const CommercialElectrostaticFilter = () => {
                 Commercial buildings face unique air quality challenges due to high occupancy, diverse activities, 
                 and complex HVAC systems. Our commercial electrostatic filter systems provide an advanced, 
                 cost-effective solution that captures a higher percentage of airborne contaminants compared to 
-                standard filters, while reducing ongoing maintenance costs.
+                standard filters, while reducing ongoing maintenance costs and improving system efficiency.
               </p>
               
               <div className="space-y-4 mb-8">
@@ -58,7 +101,7 @@ const CommercialElectrostaticFilter = () => {
                   <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
                     <Check size={14} className="text-brand-600" />
                   </div>
-                  <p><span className="font-medium">Lower Energy Consumption</span> - Improve HVAC efficiency and reduce utility costs</p>
+                  <p><span className="font-medium">Lower Energy Consumption</span> - Improve HVAC efficiency and reduce utility costs by up to 25%</p>
                 </div>
                 
                 <div className="flex items-start gap-3">
@@ -88,7 +131,8 @@ const CommercialElectrostaticFilter = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Industry-Specific Solutions</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Our commercial electrostatic filter systems are tailored to meet the specific needs of different industries.
+              Our commercial electrostatic filter systems are tailored to meet the specific needs of different industries, 
+              ensuring optimal air quality and compliance with industry standards.
             </p>
           </div>
 
@@ -98,141 +142,87 @@ const CommercialElectrostaticFilter = () => {
                 <Building size={36} className="text-brand-600 mb-4" />
                 <h3 className="text-xl font-semibold mb-3">Office Buildings</h3>
                 <p className="text-gray-600 mb-4">
-                  Create healthier work environments that can reduce employee sick days and increase productivity.
+                  Improve employee productivity and reduce sick days with superior air filtration. Meet LEED certification requirements and create a healthier work environment.
                 </p>
-                <ul className="space-y-2 text-gray-600 mb-6">
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Improve air quality in open office plans</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Reduce dust on equipment and surfaces</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Scale solutions for buildings of any size</span>
-                  </li>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• Reduce absenteeism</li>
+                  <li>• Improve focus and productivity</li>
+                  <li>• Meet green building standards</li>
                 </ul>
               </CardContent>
             </Card>
-            
+
             <Card className="border-0 shadow-md">
               <CardContent className="p-6">
                 <Building size={36} className="text-brand-600 mb-4" />
                 <h3 className="text-xl font-semibold mb-3">Healthcare Facilities</h3>
                 <p className="text-gray-600 mb-4">
-                  Enhance infection control measures with superior filtration designed for medical environments.
+                  Critical air quality for patient safety and recovery. Our systems meet strict healthcare regulations and reduce infection transmission risks.
                 </p>
-                <ul className="space-y-2 text-gray-600 mb-6">
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Capture airborne pathogens and allergens</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>HEPA-equivalent filtration options</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Compatible with hospital-grade HVAC systems</span>
-                  </li>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• HIPAA-compliant procedures</li>
+                  <li>• Hospital-grade filtration</li>
+                  <li>• Enhanced infection control</li>
                 </ul>
               </CardContent>
             </Card>
-            
+
             <Card className="border-0 shadow-md">
               <CardContent className="p-6">
                 <Building size={36} className="text-brand-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Educational Institutions</h3>
+                <h3 className="text-xl font-semibold mb-3">Retail & Hospitality</h3>
                 <p className="text-gray-600 mb-4">
-                  Create healthier learning environments with cleaner air for students, faculty, and staff.
+                  Enhance customer experience with cleaner air. Reduce odors, improve comfort, and maintain property value with superior filtration.
                 </p>
-                <ul className="space-y-2 text-gray-600 mb-6">
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Reduce spread of airborne illnesses</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Cost-effective for school budgets</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Easy maintenance for facility staff</span>
-                  </li>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• Improve guest satisfaction</li>
+                  <li>• Reduce allergy complaints</li>
+                  <li>• Maintain property value</li>
                 </ul>
               </CardContent>
             </Card>
-            
+
             <Card className="border-0 shadow-md">
               <CardContent className="p-6">
                 <Building size={36} className="text-brand-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Retail Spaces</h3>
+                <h3 className="text-xl font-semibold mb-3">Manufacturing</h3>
                 <p className="text-gray-600 mb-4">
-                  Enhance customer comfort while protecting merchandise from dust and pollutants.
+                  Remove industrial contaminants and protect equipment. Meet OSHA requirements and improve worker safety with advanced filtration.
                 </p>
-                <ul className="space-y-2 text-gray-600 mb-6">
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Reduce dust accumulation on merchandise</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Create a more comfortable shopping environment</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Modular solutions for spaces of any size</span>
-                  </li>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• Remove industrial contaminants</li>
+                  <li>• Meet OSHA requirements</li>
+                  <li>• Protect equipment lifespan</li>
                 </ul>
               </CardContent>
             </Card>
-            
+
             <Card className="border-0 shadow-md">
               <CardContent className="p-6">
                 <Building size={36} className="text-brand-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Manufacturing Facilities</h3>
+                <h3 className="text-xl font-semibold mb-3">Educational Facilities</h3>
                 <p className="text-gray-600 mb-4">
-                  Manage industrial dust and particulates with heavy-duty filtration systems.
+                  Create healthier learning environments for students and staff. Reduce allergens and improve concentration in classrooms.
                 </p>
-                <ul className="space-y-2 text-gray-600 mb-6">
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>High-capacity systems for industrial settings</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Capture process-specific particulates</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Durable filters for demanding environments</span>
-                  </li>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• Healthier learning environments</li>
+                  <li>• Reduce student absenteeism</li>
+                  <li>• Improve concentration</li>
                 </ul>
               </CardContent>
             </Card>
-            
+
             <Card className="border-0 shadow-md">
               <CardContent className="p-6">
                 <Building size={36} className="text-brand-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Hospitality</h3>
+                <h3 className="text-xl font-semibold mb-3">Data Centers</h3>
                 <p className="text-gray-600 mb-4">
-                  Enhance guest experience with superior air quality in hotels and restaurants.
+                  Protect sensitive equipment from dust and contaminants. Maintain optimal operating conditions and extend equipment life.
                 </p>
-                <ul className="space-y-2 text-gray-600 mb-6">
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Eliminate odors and airborne contaminants</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Special solutions for kitchen exhaust systems</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight size={14} className="text-brand-600 mt-1 flex-shrink-0" />
-                    <span>Customizable filtration for guest areas</span>
-                  </li>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• Protect sensitive equipment</li>
+                  <li>• Maintain optimal conditions</li>
+                  <li>• Extend equipment life</li>
                 </ul>
               </CardContent>
             </Card>
@@ -240,243 +230,264 @@ const CommercialElectrostaticFilter = () => {
         </div>
       </section>
 
-      {/* How It Works Section */}
+      {/* Technology Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">How Our Commercial Electrostatic Filters Work</h2>
+            <h2 className="text-3xl font-bold mb-4">Advanced Electrostatic Technology</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Understanding the science behind this advanced filtration technology
+              Understanding how electrostatic filtration technology provides superior air quality for commercial applications.
             </p>
           </div>
 
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-              <div>
-                <h3 className="text-2xl font-semibold mb-4">The Electrostatic Advantage</h3>
-                <p className="text-gray-600 mb-4">
-                  Commercial electrostatic filters utilize the principles of static electricity to capture airborne 
-                  particles more efficiently than conventional filters. As air passes through multiple layers of 
-                  filter media, an electrostatic charge is created that attracts and holds particulates.
-                </p>
-                <p className="text-gray-600">
-                  This passive electrostatic process requires no electricity and creates a stronger attraction to 
-                  airborne particles than mechanical filtration alone, resulting in superior air cleaning performance.
-                </p>
-              </div>
-              <div>
-                <img
-                  src="https://images.unsplash.com/photo-1635274605638-d44babc08a4f?auto=format&fit=crop&w=800&q=80"
-                  alt="Clean commercial air system with electrostatic filter"
-                  className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-4">
-                  <div className="text-xl font-bold text-brand-600">1</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap size={32} className="text-brand-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Particle Charging</h3>
+                <h3 className="text-xl font-semibold mb-3">Static Charge Generation</h3>
                 <p className="text-gray-600">
-                  As air enters the filter, the first layer of specialized media imparts a slight electrical charge 
-                  to airborne particles of all sizes.
+                  As air passes through the filter media, it creates a powerful static electrical charge that attracts and captures airborne particles.
                 </p>
-              </div>
-              
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-4">
-                  <div className="text-xl font-bold text-brand-600">2</div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Filter size={32} className="text-brand-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Magnetic-Like Attraction</h3>
+                <h3 className="text-xl font-semibold mb-3">Superior Particle Capture</h3>
                 <p className="text-gray-600">
-                  Subsequent layers of the filter contain oppositely charged media that attract and capture the 
-                  charged particles, similar to how a magnet attracts metal.
+                  Captures particles as small as 0.1 microns with 95%+ efficiency, including bacteria, viruses, pollen, and industrial contaminants.
                 </p>
-              </div>
-              
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-4">
-                  <div className="text-xl font-bold text-brand-600">3</div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users size={32} className="text-brand-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Enhanced Particle Retention</h3>
+                <h3 className="text-xl font-semibold mb-3">Healthier Environment</h3>
                 <p className="text-gray-600">
-                  The electrostatic bond holds captured particles securely within the filter, preventing them 
-                  from becoming dislodged even under high air flow conditions.
+                  Delivers cleaner, healthier air throughout your commercial space, improving occupant health and productivity.
                 </p>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* Our Services Section */}
+      {/* Benefits Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Our Commercial Filter Services</h2>
+            <h2 className="text-3xl font-bold mb-4">Commercial Benefits</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              We offer comprehensive electrostatic filter solutions for commercial properties
+              Discover the comprehensive benefits that electrostatic air filtration provides for commercial properties and businesses.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
-            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-100">
-              <Filter size={36} className="text-brand-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-3">Custom System Design</h3>
-              <p className="text-gray-600 mb-4">
-                We evaluate your facility's specific needs and design a custom electrostatic filtration system 
-                that integrates seamlessly with your existing HVAC infrastructure.
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <Award size={48} className="text-brand-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-3">Cost Savings</h3>
+              <p className="text-gray-600">
+                Eliminate ongoing filter replacement costs and reduce energy consumption by up to 25%, providing significant long-term savings.
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center gap-2">
-                  <Check size={16} className="text-brand-600" />
-                  <span>Comprehensive HVAC system evaluation</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check size={16} className="text-brand-600" />
-                  <span>Custom filtration specifications</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check size={16} className="text-brand-600" />
-                  <span>Engineered solutions for any size facility</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check size={16} className="text-brand-600" />
-                  <span>Professional installation</span>
-                </li>
-              </ul>
             </div>
-            
-            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-100">
-              <Filter size={36} className="text-brand-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-3">Maintenance Programs</h3>
-              <p className="text-gray-600 mb-4">
-                Keep your electrostatic filters operating at peak efficiency with our professional cleaning 
-                and maintenance service plans tailored to your facility's needs.
+
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <Users size={48} className="text-brand-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-3">Employee Health</h3>
+              <p className="text-gray-600">
+                Improve employee health and productivity by reducing allergens, respiratory irritants, and airborne contaminants.
               </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center gap-2">
-                  <Check size={16} className="text-brand-600" />
-                  <span>Scheduled filter cleaning and maintenance</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check size={16} className="text-brand-600" />
-                  <span>System performance verification</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check size={16} className="text-brand-600" />
-                  <span>Filter replacement when necessary</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check size={16} className="text-brand-600" />
-                  <span>Documentation for facility records</span>
-                </li>
-              </ul>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <Shield size={48} className="text-brand-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-3">Compliance</h3>
+              <p className="text-gray-600">
+                Meet industry-specific air quality standards and regulations for healthcare, manufacturing, and other sectors.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <Clock size={48} className="text-brand-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-3">Low Maintenance</h3>
+              <p className="text-gray-600">
+                Washable filters require minimal maintenance and can be cleaned on-site, reducing service calls and downtime.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <Building size={48} className="text-brand-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-3">HVAC Protection</h3>
+              <p className="text-gray-600">
+                Protect your HVAC system from dust and debris buildup, potentially extending equipment life and reducing repair costs.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <ArrowRight size={48} className="text-brand-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-3">Environmental Impact</h3>
+              <p className="text-gray-600">
+                Reduce environmental impact by eliminating disposable filter waste and improving energy efficiency.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ROI Section */}
+      {/* Installation & Service */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Return on Investment</h2>
+            <h2 className="text-3xl font-bold mb-4">Professional Installation & Service</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Commercial electrostatic filters provide significant long-term cost savings and efficiency benefits
+              Our certified technicians ensure proper installation and provide ongoing maintenance services for optimal performance.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-100 mb-8">
-              <h3 className="text-xl font-semibold mb-4">Cost Analysis: Disposable vs. Electrostatic</h3>
-              <div className="overflow-x-auto">
-                <table className="w-full text-left">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="px-4 py-3">Cost Factor</th>
-                      <th className="px-4 py-3">Disposable Filters</th>
-                      <th className="px-4 py-3">Electrostatic Filters</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-gray-200">
-                      <td className="px-4 py-3">Initial Investment</td>
-                      <td className="px-4 py-3">Low</td>
-                      <td className="px-4 py-3">Moderate</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="px-4 py-3">Annual Replacement Costs</td>
-                      <td className="px-4 py-3">High (4-12 changes/year)</td>
-                      <td className="px-4 py-3">None</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="px-4 py-3">Maintenance Costs</td>
-                      <td className="px-4 py-3">Labor for frequent changes</td>
-                      <td className="px-4 py-3">Periodic cleaning</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="px-4 py-3">Energy Efficiency</td>
-                      <td className="px-4 py-3">Decreases as filter loads</td>
-                      <td className="px-4 py-3">Consistent</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="px-4 py-3">Average Lifespan</td>
-                      <td className="px-4 py-3">1-3 months</td>
-                      <td className="px-4 py-3">5-10 years</td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-3 font-semibold">5-Year Total Cost</td>
-                      <td className="px-4 py-3">$7,500 - $15,000*</td>
-                      <td className="px-4 py-3">$3,000 - $5,000*</td>
-                    </tr>
-                  </tbody>
-                </table>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-brand-600">1</span>
               </div>
-              <p className="text-sm text-gray-500 mt-3">*Estimated costs for a mid-sized commercial building. Actual savings will vary based on facility size and specific requirements.</p>
+              <h3 className="text-xl font-semibold mb-3">System Assessment</h3>
+              <p className="text-gray-600">
+                Comprehensive evaluation of your current HVAC system and air quality needs to determine optimal filter solutions.
+              </p>
             </div>
-            
-            <div className="bg-brand-50 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-3">Additional ROI Benefits</h3>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-2">
-                  <Check size={18} className="text-brand-600 mt-1 flex-shrink-0" />
-                  <span><span className="font-medium">Reduced HVAC Maintenance Costs</span> - Cleaner systems require less frequent servicing and repair</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check size={18} className="text-brand-600 mt-1 flex-shrink-0" />
-                  <span><span className="font-medium">Extended Equipment Life</span> - Properly filtered systems can last years longer</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check size={18} className="text-brand-600 mt-1 flex-shrink-0" />
-                  <span><span className="font-medium">Productivity Gains</span> - Better air quality can reduce sick days and improve worker performance</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check size={18} className="text-brand-600 mt-1 flex-shrink-0" />
-                  <span><span className="font-medium">Environmental Impact</span> - Reduced waste from disposable filters</span>
-                </li>
-              </ul>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-brand-600">2</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Professional Installation</h3>
+              <p className="text-gray-600">
+                Certified technicians install your electrostatic filter system with proper sizing and integration.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-brand-600">3</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Performance Testing</h3>
+              <p className="text-gray-600">
+                Verify optimal operation and airflow to ensure your system is performing at peak efficiency.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-brand-600">4</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Ongoing Support</h3>
+              <p className="text-gray-600">
+                Maintenance programs and technical support to keep your system operating effectively long-term.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Get answers to common questions about our commercial electrostatic air filter systems.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-6">
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-3">How do electrostatic filters compare to HEPA filters for commercial use?</h3>
+              <p className="text-gray-600">
+                Electrostatic filters offer similar filtration efficiency to HEPA filters but are more cost-effective for commercial applications. 
+                They're washable, reusable, and have lower maintenance costs while providing excellent particle capture for most commercial environments.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-3">What maintenance is required for commercial electrostatic filters?</h3>
+              <p className="text-gray-600">
+                Commercial electrostatic filters require regular cleaning every 1-3 months depending on usage and environment. 
+                We offer maintenance programs that include professional cleaning, inspection, and performance optimization.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-3">Can electrostatic filters help with compliance requirements?</h3>
+              <p className="text-gray-600">
+                Yes, our electrostatic filter systems can help meet various industry compliance requirements including healthcare, 
+                manufacturing, and office building standards. We provide documentation for compliance purposes.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-3">How much can I save on energy costs with electrostatic filters?</h3>
+              <p className="text-gray-600">
+                Commercial properties typically see 15-25% reduction in HVAC energy costs with properly maintained electrostatic filters. 
+                The exact savings depend on your system size, usage patterns, and current filter efficiency.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-3">Do you offer installation for large commercial facilities?</h3>
+              <p className="text-gray-600">
+                Yes, we specialize in large commercial installations including multi-story buildings, manufacturing facilities, 
+                healthcare complexes, and retail centers. Our team can handle projects of any size.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-3">What's included in your commercial maintenance programs?</h3>
+              <p className="text-gray-600">
+                Our maintenance programs include regular filter cleaning, system inspections, performance testing, 
+                and priority service scheduling. We also provide detailed reporting and compliance documentation.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-3">How long do commercial electrostatic filters last?</h3>
+              <p className="text-gray-600">
+                With proper maintenance, commercial electrostatic filters can last 5-10 years or more. 
+                The washable design eliminates replacement costs and provides excellent long-term value.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-3">Do you provide emergency service for commercial clients?</h3>
+              <p className="text-gray-600">
+                Yes, we offer 24/7 emergency service for commercial clients. Priority scheduling and rapid response 
+                are available for urgent air quality issues or system failures.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-brand-600 text-white">
+      <section className="py-16 bg-brand-700 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Upgrade Your Commercial Filtration</h2>
-          <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Contact us today for a consultation and custom quote for your commercial property.
+          <h2 className="text-3xl font-bold mb-4">Upgrade Your Commercial Air Quality Today</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Experience the benefits of advanced electrostatic air filtration for your business. 
+            Contact us for a free consultation and customized quote for your commercial property.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button asChild size="lg" variant="secondary">
-              <Link to="/quote">Request a Consultation</Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
+              <Link to="/quote">Get Commercial Quote</Link>
             </Button>
-            <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white hover:text-brand-600">
-              <a href="tel:+12137924145" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">Call (213) 792-4145</a>
+            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-700">
+              <Link to="/contact">Schedule Consultation</Link>
             </Button>
           </div>
         </div>

@@ -5,7 +5,15 @@ import { motion } from 'framer-motion';
 // Define the interface for Google Maps objects
 declare global {
   interface Window {
-    google: any;
+    google: {
+      maps: {
+        Map: new (element: HTMLElement, options: Record<string, unknown>) => unknown;
+        MapTypeId: { ROADMAP: string };
+        marker?: { AdvancedMarkerElement: unknown };
+        LatLng: new (lat: number, lng: number) => unknown;
+        InfoWindow: new (options: Record<string, unknown>) => unknown;
+      };
+    };
     initializeGoogleMapsCallback: () => void;
   }
 }
@@ -49,8 +57,8 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [loadError, setLoadError] = useState(false);
-  const mapInstanceRef = useRef<any>(null);
-  const markersRef = useRef<any[]>([]);
+  const mapInstanceRef = useRef<unknown>(null);
+  const markersRef = useRef<unknown[]>([]);
   const officeLocationRef = useRef({ lat: 34.0984, lng: -118.3301 }); // LA center
   const scriptElementRef = useRef<HTMLScriptElement | null>(null);
   const scriptLoadedRef = useRef<boolean>(false);

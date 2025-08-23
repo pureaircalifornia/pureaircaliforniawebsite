@@ -77,7 +77,7 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ serviceType }) => {
               name: 'How often should I clean my air ducts?',
               acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'We recommend cleaning your air ducts every 3-5 years, depending on your home's specific needs.'
+                text: 'We recommend cleaning your air ducts every 3-5 years, depending on your home\'s specific needs.'
               }
             },
             {

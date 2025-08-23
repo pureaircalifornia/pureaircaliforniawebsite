@@ -31,7 +31,8 @@ const BlogRoutes = () => {
   );
 };
 
-// Use the imported blog components
+// Export the blog components mapping
+export const blogPostComponents = {
   'importance-of-regular-air-duct-cleaning': ImportanceOfRegularAirDuctCleaning,
   'air-duct-cleaning-faq': AirDuctCleaningFAQ,
   'dryer-vent-safety-guide': DryerVentSafetyGuide,

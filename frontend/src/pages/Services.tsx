@@ -406,7 +406,54 @@ const serviceData: ServiceData = {
     content: (
       <div className="prose max-w-none">
         <h2 className="text-3xl font-bold mb-6">Electrostatic Air Filter Program</h2>
-        {/* Content similar to other services */}
+        <div className="bg-blue-50 p-6 rounded-lg mb-8">
+          <p className="text-lg font-medium">
+            Our washable, reusable electrostatic filters capture up to 94% of airborne particles,
+            improving indoor air quality while reducing waste from disposable filters.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+          <div>
+            <h3 className="text-2xl font-semibold mb-4">Why Choose Electrostatic Filters</h3>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3">
+                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                <span>High capture efficiency for dust, pollen, and pet dander</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                <span>Washable and reusable for long-term savings</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                <span>Improves HVAC airflow and reduces system strain</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                <span>Eco-friendly alternative to disposable filters</span>
+              </li>
+            </ul>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold mb-4">Program Options</h3>
+            <ul className="space-y-3">
+              <li className="flex gap-3">
+                <div className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div>
+                  <h4 className="font-medium">Home Filter Program</h4>
+                  <p className="text-sm text-gray-600">Custom-sized filters with scheduled maintenance reminders</p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <div className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div>
+                  <h4 className="font-medium">Commercial Filter Program</h4>
+                  <p className="text-sm text-gray-600">Bulk filters and maintenance plans for offices and facilities</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     )
   },
@@ -421,7 +468,54 @@ const serviceData: ServiceData = {
     content: (
       <div className="prose max-w-none">
         <h2 className="text-3xl font-bold mb-6">Professional HVAC System Cleaning</h2>
-        {/* Content similar to other services */}
+        <div className="bg-blue-50 p-6 rounded-lg mb-8">
+          <p className="text-lg font-medium">
+            Comprehensive cleaning of coils, blower, drain pan, and duct connections to restore
+            system efficiency, improve air quality, and reduce energy costs.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+          <div>
+            <h3 className="text-2xl font-semibold mb-4">What We Clean</h3>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3">
+                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                <span>Evaporator and condenser coils</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                <span>Blower assembly and housing</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                <span>Drain pan and condensate line</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                <span>Supply/return plenum and accessible connections</span>
+              </li>
+            </ul>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold mb-4">Benefits</h3>
+            <ul className="space-y-3">
+              <li className="flex gap-3">
+                <div className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div>
+                  <h4 className="font-medium">Better Efficiency</h4>
+                  <p className="text-sm text-gray-600">Clean components reduce resistance and improve airflow</p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <div className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div>
+                  <h4 className="font-medium">Lower Costs</h4>
+                  <p className="text-sm text-gray-600">Less energy consumption and fewer breakdowns</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     )
   }

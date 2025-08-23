@@ -5,7 +5,15 @@ import { motion } from 'framer-motion';
 // Define the interface for Google Maps objects
 declare global {
   interface Window {
-    google: any;
+    google: {
+      maps: {
+        Map: new (element: HTMLElement, options: Record<string, unknown>) => unknown;
+        MapTypeId: { ROADMAP: string };
+        marker?: { AdvancedMarkerElement: unknown };
+        LatLng: new (lat: number, lng: number) => unknown;
+        InfoWindow: new (options: Record<string, unknown>) => unknown;
+      };
+    };
     initializeGoogleMapsCallback: () => void;
   }
 }
@@ -49,8 +57,8 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [loadError, setLoadError] = useState(false);
-  const mapInstanceRef = useRef<any>(null);
-  const markersRef = useRef<any[]>([]);
+  const mapInstanceRef = useRef<unknown>(null);
+  const markersRef = useRef<unknown[]>([]);
   const officeLocationRef = useRef({ lat: 34.0984, lng: -118.3301 }); // LA center
   const scriptElementRef = useRef<HTMLScriptElement | null>(null);
   const scriptLoadedRef = useRef<boolean>(false);
@@ -123,7 +131,6 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
             areaName: "office" 
           });
         } catch (error) {
-          console.error('Error creating AdvancedMarkerElement:', error);
           // Fallback to regular marker
           const officeMarker = new window.google.maps.Marker({
             position: officeLocationRef.current,
@@ -188,7 +195,6 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
               title: area.name
             });
           } catch (error) {
-            console.error('Error creating AdvancedMarkerElement:', error);
             // Fallback to regular marker if advanced marker fails
             marker = new window.google.maps.Marker({
               position: area.coordinates,
@@ -249,7 +255,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
             }
           });
         } catch (error) {
-          console.error('Error adding marker click listener:', error);
+          // Error adding marker click listener
         }
         
         // Store marker reference
@@ -261,14 +267,13 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
       });
       
       setMapLoaded(true);
-    } catch (error) {
-      console.error('Error initializing map:', error);
-      setLoadError(true);
-    }
+          } catch (error) {
+        setLoadError(true);
+      }
   };
   
   // Function to load Google Maps API
-  const loadGoogleMapsAPI = () => {
+  const loadGoogleMapsAPI = useCallback(() => {
     try {
       // If Google Maps is already loaded, initialize the map
       if (window.google?.maps) {
@@ -293,13 +298,13 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
       window[callbackName] = initializeMap;
       
       // Get API key from environment variable
-      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-      
-      if (!apiKey) {
-        console.error('Google Maps API key is missing');
-        setLoadError(true);
-        return;
-      }
+          const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+    
+    if (!apiKey) {
+      // Google Maps API key is missing - show fallback UI
+      setLoadError(true);
+      return;
+    }
       
       // Create script element
       const script = document.createElement('script');
@@ -310,7 +315,6 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
       script.crossOrigin = 'anonymous'; // Add crossOrigin attribute
       
       script.onerror = (error) => {
-        console.error('Google Maps script failed to load:', error);
         setLoadError(true);
         // Clean up callback
         if (window[callbackName]) delete window[callbackName];
@@ -332,11 +336,10 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
         if (window[callbackName]) delete window[callbackName];
       };
     } catch (error) {
-      console.error('Error loading Google Maps API:', error);
       setLoadError(true);
       return undefined;
     }
-  };
+  }, []);
   
   // Helper function to clean up map resources
   const cleanupMapResources = () => {
@@ -364,7 +367,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
             }
           }
         } catch (error) {
-          console.error('Error cleaning up map resources:', error);
+          // Error cleaning up map resources
         }
       });
     }
@@ -384,7 +387,6 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
     try {
       cleanup = loadGoogleMapsAPI();
     } catch (e) {
-      console.error('Failed to load Google Maps:', e);
       setLoadError(true);
     }
     
@@ -396,7 +398,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
         cleanupMapResources();
       }
     };
-  }, []);
+  }, [loadGoogleMapsAPI]);
   
   // Effect to update selected area
   useEffect(() => {
@@ -447,7 +449,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
           }
         }
       } catch (error) {
-        console.error('Error highlighting selected area:', error);
+        // Error highlighting selected area
       }
     }
   }, [selectedArea]);

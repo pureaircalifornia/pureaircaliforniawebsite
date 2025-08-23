@@ -72,7 +72,7 @@ const Contact = () => {
     
     // Create the email data object
     const emailData = {
-      to_email: 'info@pureaircalifornia.com',
+      to_email: 'lou@pureaircalifornia.com',
       from_name: `${formData.firstName} ${formData.lastName}`,
       from_email: formData.email,
       phone: formData.phone,
@@ -93,13 +93,13 @@ const Contact = () => {
     import emailjs from '@emailjs/browser';
     
     emailjs.send(
-      'YOUR_SERVICE_ID', // replace with your EmailJS service ID
-      'YOUR_TEMPLATE_ID', // replace with your EmailJS template ID
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
       emailData,
-      'YOUR_USER_ID' // replace with your EmailJS user ID
+      import.meta.env.VITE_EMAILJS_USER_ID
     )
     .then((response) => {
-      console.log('Email sent successfully:', response);
+              // Email sent successfully
       setIsSubmitting(false);
       setFormStatus('success');
       
@@ -121,7 +121,7 @@ const Contact = () => {
       }, 2000);
     })
     .catch((error) => {
-      console.error('Error sending email:', error);
+              // Error sending email
       setIsSubmitting(false);
       setFormStatus('error');
       
@@ -192,8 +192,8 @@ const Contact = () => {
       icon: <Mail size={24} />,
       title: "Email",
       subtitle: "Send us a message",
-      content: "info@pureaircalifornia.com",
-      href: "mailto:info@pureaircalifornia.com"
+              content: "lou@pureaircalifornia.com",
+        href: "mailto:lou@pureaircalifornia.com"
     },
     {
       icon: <MapPin size={24} />,
@@ -339,7 +339,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
-                    <p className="text-gray-600">info@pureaircalifornia.com</p>
+                    <p className="text-gray-600">lou@pureaircalifornia.com</p>
                   </div>
                 </div>
 

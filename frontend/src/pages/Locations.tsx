@@ -18,10 +18,9 @@ export const locationData = [
     name: "Glendale",
     description: "Reliable air duct cleaning and maintenance services for residential and commercial properties in Glendale.",
     slug: "glendale", 
-    image: "https://source.unsplash.com/random?glendale"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
-    {
-
+  {
     name: "Malibu",
     description: "Specialized air duct and dryer vent cleaning for beachfront properties and exclusive homes in Malibu.",
     slug: "malibu", 
@@ -55,277 +54,277 @@ export const locationData = [
     name: "Pasadena",
     description: "Professional air duct cleaning services for historic homes and modern businesses in Pasadena.",
     slug: "pasadena",
-    image: "https://source.unsplash.com/random?pasadena"
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Burbank",
     description: "Expert air duct cleaning services for homes and entertainment industry businesses in Burbank.",
     slug: "burbank",
-    image: "https://source.unsplash.com/random?burbank"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Studio City",
     description: "Specialized air duct and vent cleaning for studios and residential properties in Studio City.",
     slug: "studio-city",
-    image: "https://source.unsplash.com/random?studio-city"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Encino",
     description: "Comprehensive air duct services for homes and businesses in the Encino area.",
     slug: "encino",
-    image: "https://source.unsplash.com/random?encino"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Tarzana",
     description: "Thorough air duct cleaning for residential and commercial clients in Tarzana.",
     slug: "tarzana",
-    image: "https://source.unsplash.com/random?tarzana"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Reseda",
     description: "High-quality air duct cleaning for homes and businesses in Reseda.",
     slug: "reseda",
-    image: "https://source.unsplash.com/random?reseda"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
-    name: "Canyon Park",
-    description: "Reliable air duct cleaning services for residential properties in Canyon Park.",
-    slug: "canyon-park",
-    image: "https://source.unsplash.com/random?canyon-park"
+    name: "Conga Park",
+    description: "Reliable air duct cleaning services for residential properties in Conga Park.",
+    slug: "conga-park",
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Woodland Hills",
     description: "Professional air duct cleaning services for homes and businesses in Woodland Hills.",
     slug: "woodland-hills",
-    image: "https://source.unsplash.com/random?woodland-hills"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Calabasas",
     description: "Premier air duct and dryer vent cleaning for luxury homes and commercial spaces in Calabasas.",
     slug: "calabasas",
-    image: "https://source.unsplash.com/random?calabasas"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Valley Village",
     description: "Comprehensive air duct cleaning solutions for homes and businesses in Valley Village.",
     slug: "valley-village",
-    image: "https://source.unsplash.com/random?valley-village"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Van Nuys",
     description: "Reliable air duct cleaning services for diverse residential and commercial settings in Van Nuys.",
     slug: "van-nuys",
-    image: "https://source.unsplash.com/random?van-nuys"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Panorama City",
     description: "Quality air duct and vent cleaning for homes and commercial buildings in Panorama City.",
     slug: "panorama-city",
-    image: "https://source.unsplash.com/random?panorama-city"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Northridge",
     description: "Expert air duct cleaning for homes, businesses, and educational institutions in Northridge.",
     slug: "northridge",
-    image: "https://source.unsplash.com/random?northridge"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Sun Valley",
     description: "Specialized air duct cleaning services for residential and commercial properties in Sun Valley.",
     slug: "sun-valley",
-    image: "https://source.unsplash.com/random?sun-valley"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Central LA",
     description: "Comprehensive air duct and ventilation services for homes and businesses in Central LA.",
     slug: "central-la",
-    image: "https://source.unsplash.com/random?central-la"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Pacific Palisades",
     description: "Luxury air duct and dryer vent cleaning for homes and exclusive properties in Pacific Palisades.",
     slug: "pacific-palisades",
-    image: "https://source.unsplash.com/random?pacific-palisades"
+    image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Brentwood",
     description: "Professional air duct cleaning services for homes and commercial spaces in Brentwood.",
     slug: "brentwood",
-    image: "https://source.unsplash.com/random?brentwood"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Los Feliz",
     description: "Expert air duct and vent cleaning for historic homes and businesses in Los Feliz.",
     slug: "los-feliz",
-    image: "https://source.unsplash.com/random?los-feliz"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Culver City",
     description: "Reliable air duct cleaning for homes, studios, and businesses in Culver City.",
     slug: "culver-city",
-    image: "https://source.unsplash.com/random?culver-city"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "West Hollywood",
     description: "Comprehensive air duct cleaning for homes, nightlife venues, and commercial properties in West Hollywood.",
     slug: "west-hollywood",
-    image: "https://source.unsplash.com/random?west-hollywood"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Chatsworth",
     description: "Quality air duct and dryer vent cleaning for homes and businesses in Chatsworth.",
     slug: "chatsworth",
-    image: "https://source.unsplash.com/random?chatsworth"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Laurel Canyon",
     description: "Specialized air duct services for the unique residential properties in Laurel Canyon.",
     slug: "laurel-canyon",
-    image: "https://source.unsplash.com/random?laurel-canyon"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Fairfax",
     description: "Expert air duct cleaning for the diverse homes and businesses in Fairfax.",
     slug: "fairfax",
-    image: "https://source.unsplash.com/random?fairfax"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Larchmont",
     description: "Professional air duct and vent cleaning for historic and modern properties in Larchmont.",
     slug: "larchmont",
-    image: "https://source.unsplash.com/random?larchmont"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Koreatown",
     description: "Reliable air duct cleaning for the many homes and businesses in Koreatown.",
     slug: "koreatown",
-    image: "https://source.unsplash.com/random?koreatown"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "West Los Angeles",
     description: "Comprehensive air duct cleaning for homes, offices, and commercial spaces in West Los Angeles.",
     slug: "west-los-angeles",
-    image: "https://source.unsplash.com/random?west-los-angeles"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Westwood",
     description: "Expert air duct cleaning services for homes and businesses near UCLA in Westwood.",
     slug: "westwood",
-    image: "https://source.unsplash.com/random?westwood"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "North of Montana",
     description: "Premier air duct services for the upscale homes in the North of Montana area.",
     slug: "north-of-montana",
-    image: "https://source.unsplash.com/random?north-of-montana"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Sawtelle",
     description: "Quality air duct cleaning for homes and businesses in the Sawtelle area.",
     slug: "sawtelle",
-    image: "https://source.unsplash.com/random?sawtelle"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Beverly Glen",
     description: "Specialized air duct cleaning for the unique properties in Beverly Glen.",
     slug: "beverly-glen",
-    image: "https://source.unsplash.com/random?beverly-glen"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Mid Wilshire",
     description: "Reliable air duct cleaning for homes and commercial buildings in Mid Wilshire.",
     slug: "mid-wilshire",
-    image: "https://source.unsplash.com/random?mid-wilshire"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Sherman Oaks",
     description: "Comprehensive air duct cleaning services for homes and businesses in Sherman Oaks.",
     slug: "sherman-oaks",
-    image: "https://source.unsplash.com/random?sherman-oaks"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Encino Village",
     description: "Expert air duct cleaning solutions for homes and businesses in Encino Village.",
     slug: "encino-village",
-    image: "https://source.unsplash.com/random?encino-village"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Lake Balboa",
     description: "Reliable air duct cleaning for residential properties in Lake Balboa.",
     slug: "lake-balboa",
-    image: "https://source.unsplash.com/random?lake-balboa"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Valley Glen",
     description: "Quality air duct and ventilation services for homes and businesses in Valley Glen.",
     slug: "valley-glen",
-    image: "https://source.unsplash.com/random?valley-glen"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Magnolia Park",
     description: "Professional air duct cleaning for the charming homes and businesses in Magnolia Park.",
     slug: "magnolia-park",
-    image: "https://source.unsplash.com/random?magnolia-park"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Toluca Lake",
     description: "Comprehensive air duct cleaning for homes and businesses in Toluca Lake.",
     slug: "toluca-lake",
-    image: "https://source.unsplash.com/random?toluca-lake"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Sherwood Forest",
     description: "Specialized air duct and vent cleaning for homes in Sherwood Forest.",
     slug: "sherwood-forest",
-    image: "https://source.unsplash.com/random?sherwood-forest"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Winnetka",
     description: "Expert air duct cleaning services for homes and businesses in Winnetka.",
     slug: "winnetka",
-    image: "https://source.unsplash.com/random?winnetka"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Granada Hills",
     description: "Reliable air duct cleaning for residential and commercial properties in Granada Hills.",
     slug: "granada-hills",
-    image: "https://source.unsplash.com/random?granada-hills"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Mission Hills",
     description: "Quality air duct cleaning for homes and businesses in Mission Hills.",
     slug: "mission-hills",
-    image: "https://source.unsplash.com/random?mission-hills"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Porter Ranch",
     description: "Premier air duct and dryer vent cleaning for upscale homes in Porter Ranch.",
     slug: "porter-ranch",
-    image: "https://source.unsplash.com/random?porter-ranch"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "North Hollywood",
     description: "Comprehensive air duct cleaning for homes, studios, and businesses in North Hollywood.",
     slug: "north-hollywood",
-    image: "https://source.unsplash.com/random?north-hollywood"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Sepulveda Basin",
     description: "Specialized air duct cleaning services for homes near Sepulveda Basin.",
     slug: "sepulveda-basin",
-    image: "https://source.unsplash.com/random?sepulveda-basin"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Hidden Hills",
     description: "Luxury air duct cleaning for exclusive properties in Hidden Hills.",
     slug: "hidden-hills",
-    image: "https://source.unsplash.com/random?hidden-hills"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   },
   {
     name: "Deer Lake Highlands",
     description: "Expert air duct and vent cleaning for homes in Deer Lake Highlands.",
     slug: "deer-lake-highlands",
-    image: "https://source.unsplash.com/random?deer-lake-highlands"
+    image: "https://images.unsplash.com/photo-1563431453304-92a686736508?auto=format&fit=crop&q=80&w=1080"
   }
 ];
 
@@ -506,7 +505,7 @@ const Locations = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Canyon Park</span>
+                  <span>Conga Park</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin size={16} className="text-[#0A3D7C]" />

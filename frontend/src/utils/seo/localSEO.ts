@@ -10,7 +10,7 @@ export const localSEO = {
       addressCountry: 'US'
     },
     telephone: '+12137924145',
-    email: 'info@pureaircalifornia.com',
+    email: 'lou@pureaircalifornia.com',
     openingHours: {
       monday: ['08:00-20:00'],
       tuesday: ['08:00-20:00'],

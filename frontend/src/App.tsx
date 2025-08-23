@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-route
 import { TooltipProvider } from '@radix-ui/react-tooltip';
 import SEOProvider from './components/SEOProvider';
 import { seoConfig } from './utils/seo/seoConfig';
+import NavBar from './components/NavBar';
 import ScrollToTop from './components/ScrollToTop';
 import EnhancedLanding from './pages/EnhancedLanding';
 import Locations from './pages/Locations';
@@ -12,20 +13,20 @@ import LocationDetail from './pages/LocationDetail.tsx'; // Import LocationDetai
 import Services from './pages/Services';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Quote from './pages/Quote';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
 import IndustryPage from './pages/IndustryPage.tsx';
 import HealthBenefits from './pages/HealthBenefits'; // Import HealthBenefits component
-import Quote from './pages/Quote';
-import DryerVentMaintenanceProgram from './pages/services/DryerVentMaintenanceProgram.tsx';
-import CommercialAirDuctCleaning from './pages/services/CommercialAirDuctCleaning.tsx';
-import ResidentialAirDuctCleaning from './pages/services/ResidentialAirDuctCleaning.tsx';
-import CommercialDryerVentCleaning from './pages/services/CommercialDryerVentCleaning.tsx';
-import ResidentialDryerVentCleaning from './pages/services/ResidentialDryerVentCleaning.tsx';
-import CommercialElectrostaticFilter from './pages/services/CommercialElectrostaticFilter.tsx';
-import ResidentialElectrostaticFilter from './pages/services/ResidentialElectrostaticFilter.tsx';
-import HVACSystemCleaning from './pages/services/HVACSystemCleaning.tsx';
+
+// Import individual service pages
+import CommercialAirDuctCleaning from './pages/services/CommercialAirDuctCleaning';
+import ResidentialDryerVentCleaning from './pages/services/ResidentialDryerVentCleaning';
+import ResidentialElectrostaticFilter from './pages/services/ResidentialElectrostaticFilter';
+import CommercialElectrostaticFilter from './pages/services/CommercialElectrostaticFilter';
+import DryerVentMaintenanceProgram from './pages/services/DryerVentMaintenanceProgram';
+import HVACSystemCleaning from './pages/services/HVACSystemCleaning';
 
 // Create query client
 const queryClient = new QueryClient();
@@ -47,15 +48,17 @@ const routes: RouteConfig[] = [
   { path: "/locations", element: <Locations /> },
   { path: "/locations/:locationSlug", element: <LocationDetail /> },
   { path: "/services", element: <Services /> },
-  // Service detail pages - pointing to individual components
-  { path: "/services/residential-air-duct-cleaning", element: <ResidentialAirDuctCleaning /> },
+  // Individual service pages
   { path: "/services/commercial-air-duct-cleaning", element: <CommercialAirDuctCleaning /> },
   { path: "/services/residential-dryer-vent-cleaning", element: <ResidentialDryerVentCleaning /> },
-  { path: "/services/commercial-dryer-vent-cleaning", element: <CommercialDryerVentCleaning /> },
   { path: "/services/residential-electrostatic-filter", element: <ResidentialElectrostaticFilter /> },
   { path: "/services/commercial-electrostatic-filter", element: <CommercialElectrostaticFilter /> },
   { path: "/services/dryer-vent-maintenance-program", element: <DryerVentMaintenanceProgram /> },
   { path: "/services/hvac-system-cleaning", element: <HVACSystemCleaning /> },
+  // Legacy service routes (redirect to individual pages)
+  { path: "/services/residential-air-duct-cleaning", element: <Services service="residential-air-duct-cleaning" /> },
+  { path: "/services/commercial-dryer-vent-cleaning", element: <Services service="commercial-dryer-vent-cleaning" /> },
+  { path: "/services/electrostatic-filter-program", element: <Services service="electrostatic-filter-program" /> },
   // Industry pages
   { path: "/industries/healthcare", element: <IndustryPage industry="healthcare" /> },
   { path: "/industries/hospitality", element: <IndustryPage industry="hospitality" /> },
@@ -68,9 +71,9 @@ const routes: RouteConfig[] = [
   // Other pages
   { path: "/about", element: <About /> },
   { path: "/contact", element: <Contact /> },
+  { path: "/quote", element: <Quote /> },
   { path: "/blog", element: <Blog /> },
   { path: "/blog/:slug", element: <BlogPost /> },
-  { path: "/quote", element: <Quote /> },
   { path: "/404", element: <NotFound /> },
   // Catch all other routes and redirect to home or show 404
   { path: "*", element: <Navigate to="/" replace /> }
@@ -95,6 +98,7 @@ function App() {
           <BrowserRouter>
             <SEOProvider>
               <div className="min-h-screen bg-gray-50">
+                <NavBar />
                 <ScrollToTopOnRouteChange />
                 <ScrollToTop />
                 <Suspense fallback={<LoadingFallback />}>

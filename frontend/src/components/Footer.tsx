@@ -93,7 +93,7 @@ const Footer = () => {
               Phone: (310) 555-1234
             </p>
             <p className="text-gray-400">
-              Email: info@pureaircalifornia.com
+                              Email: lou@pureaircalifornia.com
             </p>
           </div>
         </div>

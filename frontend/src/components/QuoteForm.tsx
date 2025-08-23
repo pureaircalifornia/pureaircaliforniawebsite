@@ -56,7 +56,7 @@ const QuoteForm = () => {
     
     // Create the email data object for the quote request
     const emailData = {
-      to_email: 'info@pureaircalifornia.com',
+      to_email: 'lou@pureaircalifornia.com',
       service: formData.service,
       property_type: formData.propertyType,
       square_footage: formData.squareFootage,
@@ -71,7 +71,7 @@ const QuoteForm = () => {
     
     // In a real implementation, you would send this data using EmailJS
     // For now, we'll just log it to the console
-    console.log('Quote form submitted:', emailData);
+            // Quote form submitted successfully
     
     // Show success message or redirect to thank you page
     alert('Thank you for your quote request! We will contact you shortly.');

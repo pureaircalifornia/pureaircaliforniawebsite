@@ -49,9 +49,9 @@ export function ScrollReveal({
       return {
         ...selectedAnimation,
         visible: {
-          ...(selectedAnimation.visible as any),
+          ...(selectedAnimation.visible as Record<string, unknown>),
           transition: {
-            ...(selectedAnimation.visible as any).transition,
+            ...(selectedAnimation.visible as Record<string, unknown>).transition,
             duration
           }
         }

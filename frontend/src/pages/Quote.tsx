@@ -30,8 +30,7 @@ const Quote = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission logic here
-    console.log('Form submitted:', formData);
-    // You can add API call or email submission logic here
+    // TODO: Implement form submission to backend or EmailJS
   };
 
   return (
@@ -298,7 +297,7 @@ const Quote = () => {
                   </div>
                   <div className="flex items-center gap-3">
                     <Mail className="text-brand-600" size={18} />
-                    <span className="text-gray-700">info@pureairca.com</span>
+                    <span className="text-gray-700">lou@pureaircalifornia.com</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <MapPin className="text-brand-600" size={18} />

@@ -131,7 +131,6 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
             areaName: "office" 
           });
         } catch (error) {
-          console.error('Error creating AdvancedMarkerElement:', error);
           // Fallback to regular marker
           const officeMarker = new window.google.maps.Marker({
             position: officeLocationRef.current,
@@ -196,7 +195,6 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
               title: area.name
             });
           } catch (error) {
-            console.error('Error creating AdvancedMarkerElement:', error);
             // Fallback to regular marker if advanced marker fails
             marker = new window.google.maps.Marker({
               position: area.coordinates,
@@ -257,7 +255,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
             }
           });
         } catch (error) {
-          console.error('Error adding marker click listener:', error);
+          // Error adding marker click listener
         }
         
         // Store marker reference
@@ -269,10 +267,9 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
       });
       
       setMapLoaded(true);
-    } catch (error) {
-      console.error('Error initializing map:', error);
-      setLoadError(true);
-    }
+          } catch (error) {
+        setLoadError(true);
+      }
   };
   
   // Function to load Google Maps API
@@ -301,13 +298,13 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
       window[callbackName] = initializeMap;
       
       // Get API key from environment variable
-      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-      
-      if (!apiKey) {
-        console.error('Google Maps API key is missing');
-        setLoadError(true);
-        return;
-      }
+          const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+    
+    if (!apiKey) {
+      // Google Maps API key is missing - show fallback UI
+      setLoadError(true);
+      return;
+    }
       
       // Create script element
       const script = document.createElement('script');
@@ -404,7 +401,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
         cleanupMapResources();
       }
     };
-  }, []);
+  }, [loadGoogleMapsAPI]);
   
   // Effect to update selected area
   useEffect(() => {

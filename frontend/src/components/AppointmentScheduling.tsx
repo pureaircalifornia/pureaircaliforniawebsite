@@ -30,7 +30,7 @@ const AppointmentScheduling = () => {
     
     // Create the email data object for the appointment request
     const emailData = {
-      to_email: 'info@pureaircalifornia.com',
+      to_email: 'lou@pureaircalifornia.com',
       service: formData.serviceType,
       name: formData.name,
       email: formData.email,
@@ -44,7 +44,7 @@ const AppointmentScheduling = () => {
     
     // In a real implementation, you would send this data using EmailJS
     // For now, we'll just log it to the console and show the confirmation
-    console.log('Appointment scheduled:', emailData);
+            // Appointment scheduled successfully
     
     // Move to confirmation step
     setStep(4);

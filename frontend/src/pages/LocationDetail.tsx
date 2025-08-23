@@ -160,7 +160,7 @@ const LocationDetail = () => {
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Mail className="w-4 h-4 text-gray-500" />
-                    <a href="mailto:info@pureaircalifornia.com" className="text-[#0A3D7C] hover:underline">info@pureaircalifornia.com</a>
+                    <a href="mailto:lou@pureaircalifornia.com" className="text-[#0A3D7C] hover:underline">lou@pureaircalifornia.com</a>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Clock className="w-4 h-4 text-gray-500" />

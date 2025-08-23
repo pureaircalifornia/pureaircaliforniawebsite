@@ -15,9 +15,9 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ serviceType }) => {
           '@context': 'https://schema.org',
           '@type': 'LocalBusiness',
           name: localSEO.business.name,
-          image: 'https://www.pureaircalifornia.com/logo.png',
-          '@id': 'https://www.pureaircalifornia.com/#business',
-          url: 'https://www.pureaircalifornia.com',
+          image: 'https://pureaircalifornia.com/logo.png',
+          '@id': 'https://pureaircalifornia.com/#business',
+          url: 'https://pureaircalifornia.com',
           telephone: localSEO.business.telephone,
           address: {
             '@type': 'PostalAddress',
@@ -57,7 +57,7 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ serviceType }) => {
         {JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'AggregateRating',
-          '@id': 'https://www.pureaircalifornia.com/#aggregateRating',
+          '@id': 'https://pureaircalifornia.com/#aggregateRating',
           ratingValue: 4.9,
           reviewCount: 500,
           bestRating: 5,

@@ -18,6 +18,7 @@ import NotFound from './pages/NotFound';
 import IndustryPage from './pages/IndustryPage.tsx';
 import HealthBenefits from './pages/HealthBenefits'; // Import HealthBenefits component
 import Quote from './pages/Quote';
+import DryerVentMaintenanceProgram from './pages/services/DryerVentMaintenanceProgram.tsx';
 
 // Create query client
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const routes: RouteConfig[] = [
   { path: "/services/commercial-dryer-vent-cleaning", element: <Services service="commercial-dryer-vent-cleaning" /> },
   { path: "/services/electrostatic-filter-program", element: <Services service="electrostatic-filter-program" /> },
   { path: "/services/hvac-system-cleaning", element: <Services service="hvac-system-cleaning" /> },
+  { path: "/services/dryer-vent-maintenance-program", element: <DryerVentMaintenanceProgram /> },
   // Industry pages
   { path: "/industries/healthcare", element: <IndustryPage industry="healthcare" /> },
   { path: "/industries/hospitality", element: <IndustryPage industry="hospitality" /> },

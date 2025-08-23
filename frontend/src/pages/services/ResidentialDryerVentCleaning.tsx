@@ -1,12 +1,29 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Fan, Check, AlertTriangle } from 'lucide-react';
+import { Fan, Check, AlertTriangle, Shield, Clock, Award } from 'lucide-react';
+import TrustBadges from '@/components/TrustBadges';
 
 const ResidentialDryerVentCleaning = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Residential Dryer Vent Cleaning Services | Pure Air California</title>
+        <meta 
+          name="description" 
+          content="Professional residential dryer vent cleaning services to prevent fires and improve dryer efficiency. Certified technicians serving California homes with safety-focused cleaning." 
+        />
+        <meta name="keywords" content="residential dryer vent cleaning, dryer vent cleaning, fire prevention, dryer efficiency, California dryer vent services" />
+        <meta property="og:title" content="Residential Dryer Vent Cleaning Services | Pure Air California" />
+        <meta property="og:description" content="Professional residential dryer vent cleaning services to prevent fires and improve dryer efficiency." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pureaircalifornia.com/services/residential-dryer-vent-cleaning" />
+        <link rel="canonical" href="https://pureaircalifornia.com/services/residential-dryer-vent-cleaning" />
+      </Helmet>
+
       <NavBar />
 
       {/* Hero Section */}
@@ -17,12 +34,20 @@ const ResidentialDryerVentCleaning = () => {
             <p className="text-xl mb-8">
               Prevent fire hazards and improve dryer efficiency with our professional dryer vent cleaning service.
             </p>
-            <Button size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-              Schedule Service
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
+                <Link to="/quote">Get Free Quote</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-700">
+                <Link to="/contact">Schedule Service</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Trust Badges */}
+      <TrustBadges />
 
       {/* Safety First Section */}
       <section className="py-16">

@@ -19,6 +19,13 @@ import IndustryPage from './pages/IndustryPage.tsx';
 import HealthBenefits from './pages/HealthBenefits'; // Import HealthBenefits component
 import Quote from './pages/Quote';
 import DryerVentMaintenanceProgram from './pages/services/DryerVentMaintenanceProgram.tsx';
+import CommercialAirDuctCleaning from './pages/services/CommercialAirDuctCleaning.tsx';
+import ResidentialAirDuctCleaning from './pages/services/ResidentialAirDuctCleaning.tsx';
+import CommercialDryerVentCleaning from './pages/services/CommercialDryerVentCleaning.tsx';
+import ResidentialDryerVentCleaning from './pages/services/ResidentialDryerVentCleaning.tsx';
+import CommercialElectrostaticFilter from './pages/services/CommercialElectrostaticFilter.tsx';
+import ResidentialElectrostaticFilter from './pages/services/ResidentialElectrostaticFilter.tsx';
+import HVACSystemCleaning from './pages/services/HVACSystemCleaning.tsx';
 
 // Create query client
 const queryClient = new QueryClient();
@@ -40,14 +47,15 @@ const routes: RouteConfig[] = [
   { path: "/locations", element: <Locations /> },
   { path: "/locations/:locationSlug", element: <LocationDetail /> },
   { path: "/services", element: <Services /> },
-  // Service detail pages
-  { path: "/services/residential-air-duct-cleaning", element: <Services service="residential-air-duct-cleaning" /> },
-  { path: "/services/commercial-air-duct-cleaning", element: <Services service="commercial-air-duct-cleaning" /> },
-  { path: "/services/residential-dryer-vent-cleaning", element: <Services service="residential-dryer-vent-cleaning" /> },
-  { path: "/services/commercial-dryer-vent-cleaning", element: <Services service="commercial-dryer-vent-cleaning" /> },
-  { path: "/services/electrostatic-filter-program", element: <Services service="electrostatic-filter-program" /> },
-  { path: "/services/hvac-system-cleaning", element: <Services service="hvac-system-cleaning" /> },
+  // Service detail pages - pointing to individual components
+  { path: "/services/residential-air-duct-cleaning", element: <ResidentialAirDuctCleaning /> },
+  { path: "/services/commercial-air-duct-cleaning", element: <CommercialAirDuctCleaning /> },
+  { path: "/services/residential-dryer-vent-cleaning", element: <ResidentialDryerVentCleaning /> },
+  { path: "/services/commercial-dryer-vent-cleaning", element: <CommercialDryerVentCleaning /> },
+  { path: "/services/residential-electrostatic-filter", element: <ResidentialElectrostaticFilter /> },
+  { path: "/services/commercial-electrostatic-filter", element: <CommercialElectrostaticFilter /> },
   { path: "/services/dryer-vent-maintenance-program", element: <DryerVentMaintenanceProgram /> },
+  { path: "/services/hvac-system-cleaning", element: <HVACSystemCleaning /> },
   // Industry pages
   { path: "/industries/healthcare", element: <IndustryPage industry="healthcare" /> },
   { path: "/industries/hospitality", element: <IndustryPage industry="hospitality" /> },

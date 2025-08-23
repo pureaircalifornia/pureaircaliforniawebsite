@@ -1,15 +1,30 @@
 
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import TrustBadges from '@/components/TrustBadges';
-import { Check, Calendar, Clock, Shield, ArrowRight } from 'lucide-react';
+import { Check, Calendar, Clock, Shield, ArrowRight, Users, Building } from 'lucide-react';
 
 const DryerVentMaintenanceProgram = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Dryer Vent Maintenance Program | Pure Air California</title>
+        <meta 
+          name="description" 
+          content="Professional dryer vent maintenance program with annual inspections, priority scheduling, and preventive cleaning. Protect your home from fire hazards and maintain dryer efficiency." 
+        />
+        <meta name="keywords" content="dryer vent maintenance program, dryer vent cleaning service, fire prevention, dryer efficiency, California dryer vent maintenance" />
+        <meta property="og:title" content="Dryer Vent Maintenance Program | Pure Air California" />
+        <meta property="og:description" content="Professional dryer vent maintenance program with annual inspections and preventive cleaning for fire safety." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pureaircalifornia.com/services/dryer-vent-maintenance-program" />
+        <link rel="canonical" href="https://pureaircalifornia.com/services/dryer-vent-maintenance-program" />
+      </Helmet>
+
       <NavBar />
       
       {/* Hero Section */}
@@ -20,9 +35,14 @@ const DryerVentMaintenanceProgram = () => {
             <p className="text-xl mb-8">
               Prevent fire hazards and maintain optimal efficiency with our professional dryer vent maintenance program.
             </p>
-            <Button asChild size="lg" className="bg-white text-brand-600 hover:bg-gray-100">
-              <Link to="/quote">Enroll Now</Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button asChild size="lg" className="bg-white text-brand-600 hover:bg-gray-100">
+                <Link to="/quote">Get Free Quote</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-600">
+                <Link to="/contact">Enroll Now</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>

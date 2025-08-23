@@ -1,14 +1,30 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Filter, Check, Building, ArrowRight } from 'lucide-react';
+import { Filter, Check, Building, ArrowRight, Shield, Clock, Award, Zap } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
+import TrustBadges from '@/components/TrustBadges';
 
 const CommercialElectrostaticFilter = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Commercial Electrostatic Air Filter Systems | Pure Air California</title>
+        <meta 
+          name="description" 
+          content="Advanced commercial electrostatic air filter systems for superior indoor air quality. Professional installation and maintenance for offices, healthcare, retail, and industrial facilities." 
+        />
+        <meta name="keywords" content="commercial electrostatic air filter, business air filtration, office air filter systems, healthcare air filters, California commercial air quality" />
+        <meta property="og:title" content="Commercial Electrostatic Air Filter Systems | Pure Air California" />
+        <meta property="og:description" content="Advanced commercial electrostatic air filter systems for superior indoor air quality and HVAC efficiency." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pureaircalifornia.com/services/commercial-electrostatic-filter" />
+        <link rel="canonical" href="https://pureaircalifornia.com/services/commercial-electrostatic-filter" />
+      </Helmet>
+
       <NavBar />
 
       {/* Hero Section */}
@@ -19,12 +35,20 @@ const CommercialElectrostaticFilter = () => {
             <p className="text-xl mb-8">
               Advanced air filtration solutions for businesses seeking superior indoor air quality and HVAC efficiency.
             </p>
-            <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-              <Link to="/quote">Get a Commercial Quote</Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
+                <Link to="/quote">Get Free Quote</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-700">
+                <Link to="/contact">Schedule Consultation</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Trust Badges */}
+      <TrustBadges />
 
       {/* Main Content */}
       <section className="py-16">

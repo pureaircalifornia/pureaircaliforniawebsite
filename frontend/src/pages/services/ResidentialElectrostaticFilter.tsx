@@ -1,13 +1,30 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Filter, Check, ArrowRight } from 'lucide-react';
+import { Filter, Check, ArrowRight, Shield, Clock, Award, Zap } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import TrustBadges from '@/components/TrustBadges';
 
 const ResidentialElectrostaticFilter = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Residential Electrostatic Air Filter Services | Pure Air California</title>
+        <meta 
+          name="description" 
+          content="Advanced residential electrostatic air filter installation and maintenance services. Improve indoor air quality with washable, reusable filters that capture 99% of airborne particles." 
+        />
+        <meta name="keywords" content="residential electrostatic air filter, electrostatic filter installation, air filter replacement, indoor air quality, California air filter services" />
+        <meta property="og:title" content="Residential Electrostatic Air Filter Services | Pure Air California" />
+        <meta property="og:description" content="Advanced residential electrostatic air filter installation and maintenance services for superior indoor air quality." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pureaircalifornia.com/services/residential-electrostatic-filter" />
+        <link rel="canonical" href="https://pureaircalifornia.com/services/residential-electrostatic-filter" />
+      </Helmet>
+
       <NavBar />
 
       {/* Hero Section */}
@@ -18,12 +35,20 @@ const ResidentialElectrostaticFilter = () => {
             <p className="text-xl mb-8">
               Upgrade your home's air filtration with advanced electrostatic air filters for superior indoor air quality.
             </p>
-            <Button size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-              Learn More
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
+                <Link to="/quote">Get Free Quote</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-700">
+                <Link to="/contact">Schedule Installation</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Trust Badges */}
+      <TrustBadges />
 
       {/* Main Content Section */}
       <section className="py-16">

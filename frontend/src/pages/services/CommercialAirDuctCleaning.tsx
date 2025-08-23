@@ -1,14 +1,30 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Building, Check, Users } from 'lucide-react';
+import { Building, Check, Users, Shield, Clock, Award, Zap } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Link } from 'react-router-dom';
+import TrustBadges from '@/components/TrustBadges';
 
 const CommercialAirDuctCleaning = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Commercial Air Duct Cleaning Services | Pure Air California</title>
+        <meta 
+          name="description" 
+          content="Professional commercial air duct cleaning services for offices, retail, healthcare, and industrial facilities. Improve indoor air quality and HVAC efficiency with certified technicians." 
+        />
+        <meta name="keywords" content="commercial air duct cleaning, office duct cleaning, retail duct cleaning, healthcare duct cleaning, California commercial HVAC cleaning" />
+        <meta property="og:title" content="Commercial Air Duct Cleaning Services | Pure Air California" />
+        <meta property="og:description" content="Professional commercial air duct cleaning services for offices, retail, healthcare, and industrial facilities." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pureaircalifornia.com/services/commercial-air-duct-cleaning" />
+        <link rel="canonical" href="https://pureaircalifornia.com/services/commercial-air-duct-cleaning" />
+      </Helmet>
+
       <NavBar />
 
       {/* Hero Section */}
@@ -25,6 +41,9 @@ const CommercialAirDuctCleaning = () => {
           </div>
         </div>
       </section>
+
+      {/* Trust Badges */}
+      <TrustBadges />
 
       {/* Main Content */}
       <section className="py-16">

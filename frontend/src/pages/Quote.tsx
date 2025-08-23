@@ -58,7 +58,7 @@ const Quote = () => {
             </div>
               <div className="flex items-center gap-2">
               <Mail className="text-brand-600" size={18}/>
-              <span>info@example.com</span>
+              <span>info@pureaircalifornia.com</span>
             </div>
           </div>          
         </div>

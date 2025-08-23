@@ -22,16 +22,53 @@ const Contact = () => {
   });
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value
-    });
+    const { id, value } = e.target;
+    // Basic phone masking: (XXX) XXX-XXXX
+    const formatPhone = (raw: string) => {
+      const digits = raw.replace(/\D/g, '').slice(0, 10);
+      const part1 = digits.slice(0, 3);
+      const part2 = digits.slice(3, 6);
+      const part3 = digits.slice(6, 10);
+      if (digits.length > 6) return `(${part1}) ${part2}-${part3}`;
+      if (digits.length > 3) return `(${part1}) ${part2}`;
+      if (digits.length > 0) return `(${part1}`;
+      return '';
+    };
+
+    setFormData(prev => ({
+      ...prev,
+      [id]: id === 'phone' ? formatPhone(value) : value
+    }));
   };
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setFormStatus('submitting');
+
+    // Basic client-side validation
+    const emailValid = /[^@\s]+@[^@\s]+\.[^@\s]+/.test(formData.email);
+    const phoneDigits = formData.phone.replace(/\D/g, '');
+    const phoneValid = phoneDigits.length === 10;
+    const nameValid = formData.firstName.trim().length > 1 && formData.lastName.trim().length > 1;
+    const messageValid = formData.message.trim().length >= 10;
+
+    if (!emailValid || !phoneValid || !nameValid || !messageValid) {
+      setIsSubmitting(false);
+      setFormStatus('error');
+      toast({
+        title: "Please check the form",
+        description: !emailValid
+          ? 'Enter a valid email address.'
+          : !phoneValid
+          ? 'Enter a valid 10-digit phone number.'
+          : !nameValid
+          ? 'Please provide your first and last name.'
+          : 'Your message should be at least 10 characters.',
+        variant: 'destructive'
+      });
+      return;
+    }
     
     // Create the email data object
     const emailData = {
@@ -175,6 +212,7 @@ const Contact = () => {
   
   return (
     <div className="min-h-screen flex flex-col">
+      <NavBar />
       <main>
         <div className="container mx-auto px-4 py-12">
           <h1 className="text-4xl font-bold text-center mb-12">Contact Us</h1>
@@ -184,7 +222,9 @@ const Contact = () => {
             <div className="bg-white rounded-lg shadow-lg p-8">
               <h2 className="text-2xl font-bold mb-6">Get in Touch</h2>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                {/* Honeypot */}
+                <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
                   <input
@@ -194,6 +234,7 @@ const Contact = () => {
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                     required
+                    aria-required="true"
                   />
                 </div>
 
@@ -206,6 +247,7 @@ const Contact = () => {
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                     required
+                    aria-required="true"
                   />
                 </div>
 
@@ -218,6 +260,8 @@ const Contact = () => {
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                     required
+                    aria-required="true"
+                    inputMode="email"
                   />
                 </div>
 
@@ -230,6 +274,9 @@ const Contact = () => {
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                     required
+                    aria-required="true"
+                    inputMode="tel"
+                    placeholder="(123) 456-7890"
                   />
                 </div>
 
@@ -242,10 +289,12 @@ const Contact = () => {
                     rows={4}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                     required
+                    aria-required="true"
+                    placeholder="Briefly describe your project or needs"
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-brand-600 hover:bg-brand-700 text-white">
+                <Button type="submit" className="w-full bg-brand-600 hover:bg-brand-700 text-white" aria-busy={isSubmitting}>
                   {isSubmitting ? (
                     <div className="flex items-center gap-2">
                       <motion.div
@@ -326,6 +375,17 @@ const Contact = () => {
           </div>
         </div>
       </main>
+      {/* Sticky CTA Bar */}
+      <div className="fixed bottom-4 inset-x-0 px-4 md:hidden z-40">
+        <div className="bg-white shadow-lg rounded-full p-2 flex items-center justify-between border border-gray-200">
+          <Button asChild className="bg-[#0A3D7C] hover:bg-[#072c5a] rounded-full px-6">
+            <a href="tel:+12137924145">Call (213) 792-4145</a>
+          </Button>
+          <Button asChild variant="outline" className="rounded-full px-6">
+            <a href="/quote">Get Free Quote</a>
+          </Button>
+        </div>
+      </div>
       <Footer />
     </div>
   );

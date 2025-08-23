@@ -66,9 +66,9 @@ const ValleyVillage = () => {
               link="/services/residential-dryer-vent-cleaning"
             />
             <ServiceCard
-              title="Residential Electrostatic Filter"
-              description="Upgrade your home's air filtration system with our residential electrostatic filter service."
-              link="/services/residential-electrostatic-filter"
+              title="Electrostatic Filter Program"
+              description="Upgrade your home's air filtration system with our electrostatic filter program."
+              link="/services/electrostatic-filter-program"
             />
             <ServiceCard
               title="Commercial Air Duct Cleaning"
@@ -81,9 +81,9 @@ const ValleyVillage = () => {
               link="/services/commercial-dryer-vent-cleaning"
             />
             <ServiceCard
-              title="Commercial Electrostatic Filter"
-              description="Improve your business's air quality with our commercial electrostatic filter service."
-              link="/services/commercial-electrostatic-filter"
+              title="Electrostatic Filter Program"
+              description="Improve your business's air quality with our electrostatic filter program."
+              link="/services/electrostatic-filter-program"
             />
           </div>
         </div>

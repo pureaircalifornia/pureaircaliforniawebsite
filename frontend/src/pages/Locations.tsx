@@ -88,10 +88,10 @@ export const locationData = [
     image: "https://source.unsplash.com/random?reseda"
   },
   {
-    name: "Conga Park",
-    description: "Reliable air duct cleaning services for residential properties in Conga Park.",
-    slug: "conga-park",
-    image: "https://source.unsplash.com/random?conga-park"
+    name: "Canyon Park",
+    description: "Reliable air duct cleaning services for residential properties in Canyon Park.",
+    slug: "canyon-park",
+    image: "https://source.unsplash.com/random?canyon-park"
   },
   {
     name: "Woodland Hills",
@@ -506,7 +506,7 @@ const Locations = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Conga Park</span>
+                  <span>Canyon Park</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin size={16} className="text-[#0A3D7C]" />

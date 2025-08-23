@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { CalendarIcon, UserIcon, ArrowLeftIcon, FacebookIcon, TwitterIcon, LinkedinIcon } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Facebook, Twitter, Linkedin } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import QuoteForm from '@/components/QuoteForm';
 
@@ -442,11 +442,11 @@ const BlogPost = () => {
               </h1>
               <div className="flex flex-wrap items-center gap-4 text-white/80">
                 <div className="flex items-center gap-2">
-                  <UserIcon size={16} />
+                  <User size={16} />
                   <span>{post.author}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CalendarIcon size={16} />
+                  <Calendar size={16} />
                   <span>{post.date}</span>
                 </div>
               </div>
@@ -462,7 +462,7 @@ const BlogPost = () => {
             <div className="lg:col-span-2">
               <div className="bg-white rounded-xl p-6 md:p-8 shadow-sm">
                 <Link to="/blog" className="flex items-center gap-2 text-[#0A3D7C] font-medium hover:underline mb-6">
-                  <ArrowLeftIcon size={16} />
+                  <ArrowLeft size={16} />
                   Back to Blog
                 </Link>
                 
@@ -477,13 +477,13 @@ const BlogPost = () => {
                       <span className="text-gray-600">Share this article:</span>
                       <div className="flex gap-2 mt-2">
                         <Button variant="outline" size="icon" className="rounded-full w-8 h-8 p-0">
-                          <FacebookIcon size={16} />
+                          <Facebook size={16} />
                         </Button>
                         <Button variant="outline" size="icon" className="rounded-full w-8 h-8 p-0">
-                          <TwitterIcon size={16} />
+                          <Twitter size={16} />
                         </Button>
                         <Button variant="outline" size="icon" className="rounded-full w-8 h-8 p-0">
-                          <LinkedinIcon size={16} />
+                          <Linkedin size={16} />
                         </Button>
                       </div>
                     </div>
@@ -523,7 +523,7 @@ const BlogPost = () => {
                           </Link>
                         </h4>
                         <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
-                          <CalendarIcon size={12} />
+                          <Calendar size={12} />
                           <span>March 15, 2023</span>
                         </div>
                       </div>
@@ -544,7 +544,7 @@ const BlogPost = () => {
                           </Link>
                         </h4>
                         <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
-                          <CalendarIcon size={12} />
+                          <Calendar size={12} />
                           <span>March 3, 2023</span>
                         </div>
                       </div>
@@ -565,7 +565,7 @@ const BlogPost = () => {
                           </Link>
                         </h4>
                         <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
-                          <CalendarIcon size={12} />
+                          <Calendar size={12} />
                           <span>February 18, 2023</span>
                         </div>
                       </div>

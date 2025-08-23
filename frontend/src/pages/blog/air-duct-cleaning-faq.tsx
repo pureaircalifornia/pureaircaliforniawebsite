@@ -200,7 +200,7 @@ const AirDuctCleaningFAQ = () => {
           <li>Keep vents and returns clear of furniture and obstructions</li>
           <li>Clean vent covers regularly with a damp cloth</li>
           <li>Control humidity levels in your home (30-50% is ideal)</li>
-          <li>Consider an <Link to="/services/residential-electrostatic-filter" className="text-brand-600 hover:underline">electrostatic filter system</Link> for enhanced air filtration</li>
+          <li>Consider an <Link to="/services/electrostatic-filter-program" className="text-brand-600 hover:underline">electrostatic filter system</Link> for enhanced air filtration</li>
           <li>Schedule regular HVAC maintenance with a qualified technician</li>
         </ul>
         <p>

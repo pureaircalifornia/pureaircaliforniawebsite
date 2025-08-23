@@ -274,8 +274,8 @@ const NavBar = () => {
                       { path: '/services/residential-dryer-vent-cleaning', label: 'Residential Dryer Vent Cleaning' },
                       { path: '/services/commercial-dryer-vent-cleaning', label: 'Commercial Dryer Vent Cleaning' },
                       { path: '/services/dryer-vent-maintenance-program', label: 'Dryer Vent Maintenance Program' },
-                      { path: '/services/residential-electrostatic-filter', label: 'Residential Electrostatic Filter' },
-                      { path: '/services/commercial-electrostatic-filter', label: 'Commercial Electrostatic Filter' }
+                      { path: '/services/electrostatic-filter-program', label: 'Electrostatic Filter Program' },
+                      { path: '/services/electrostatic-filter-program', label: 'Electrostatic Filter Program' }
                     ].map((item, index) => (
                       <motion.div
                         key={item.path}
@@ -470,9 +470,9 @@ const NavBar = () => {
                             ['Commercial Air Duct Cleaning', '/services/commercial-air-duct-cleaning'],
                             ['Residential Dryer Vent Cleaning', '/services/residential-dryer-vent-cleaning'],
                             ['Commercial Dryer Vent Cleaning', '/services/commercial-dryer-vent-cleaning'],
-                            ['Dryer Vent Maintenance Program', '/services/DryerVentMaintenanceProgram'],
-                            ['Residential Electrostatic Filter', '/services/residential-electrostatic-filter'],
-                            ['Commercial Electrostatic Filter', '/services/commercial-electrostatic-filter']
+                            ['Dryer Vent Maintenance Program', '/services/dryer-vent-maintenance-program'],
+                            ['Electrostatic Filter Program', '/services/electrostatic-filter-program'],
+                            ['Electrostatic Filter Program', '/services/electrostatic-filter-program']
                           ].map(([name, path], index) => (
                             <motion.div
                               key={path}

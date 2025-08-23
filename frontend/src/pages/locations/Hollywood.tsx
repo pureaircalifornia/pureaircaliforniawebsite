@@ -22,13 +22,13 @@ const Hollywood = () => {
         <meta property="og:title" content="Air Duct & Dryer Vent Cleaning in Hollywood | Pure Air California" />
         <meta property="og:description" content="Professional air duct and dryer vent cleaning services for entertainment venues, studios, and residential properties in Hollywood." />
         <meta property="og:image" content="/gallery/jeremy-bishop-zCFt2Rzcv_c-unsplash (Large).jpg" />
-        <meta property="og:url" content="https://pureair-california.com/locations/hollywood" />
+        <meta property="og:url" content="https://pureaircalifornia.com/locations/hollywood" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Air Duct & Dryer Vent Cleaning in Hollywood | Pure Air California" />
         <meta name="twitter:description" content="Professional air duct and dryer vent cleaning services for entertainment venues, studios, and residential properties in Hollywood." />
         <meta name="twitter:image" content="/gallery/jeremy-bishop-zCFt2Rzcv_c-unsplash (Large).jpg" />
-        <link rel="canonical" href="https://pureair-california.com/locations/hollywood" />
+        <link rel="canonical" href="https://pureaircalifornia.com/locations/hollywood" />
         {/* Structured Data for Local Business */}
         <script type="application/ld+json">
           {JSON.stringify({
@@ -36,8 +36,8 @@ const Hollywood = () => {
             "@type": "LocalBusiness",
             "name": "Pure Air California - Hollywood",
             "image": "/gallery/jeremy-bishop-zCFt2Rzcv_c-unsplash (Large).jpg",
-            "@id": "https://pureair-california.com/locations/hollywood",
-            "url": "https://pureair-california.com/locations/hollywood",
+            "@id": "https://pureaircalifornia.com/locations/hollywood",
+            "url": "https://pureaircalifornia.com/locations/hollywood",
             "telephone": "(213) 792-4145",
             "description": "Professional air duct and dryer vent cleaning services for entertainment venues, studios, and residential properties in Hollywood.",
             "address": {
@@ -333,7 +333,7 @@ const Hollywood = () => {
                       <div>
                         <p className="font-medium text-brand-700">Email Us</p>
                         <p className="text-gray-600">For quotes and inquiries</p>
-                        <a href="mailto:info@pureair-california.com" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">info@pureair-california.com</a>
+                        <a href="mailto:info@pureaircalifornia.com" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">info@pureaircalifornia.com</a>
                       </div>
                     </div>
                     <div className="mt-4 pt-4 border-t border-gray-200">

@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-route
 import { TooltipProvider } from '@radix-ui/react-tooltip';
 import SEOProvider from './components/SEOProvider';
 import { seoConfig } from './utils/seo/seoConfig';
-import NavBar from './components/NavBar';
 import ScrollToTop from './components/ScrollToTop';
 import EnhancedLanding from './pages/EnhancedLanding';
 import Locations from './pages/Locations';
@@ -18,6 +17,8 @@ import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
 import IndustryPage from './pages/IndustryPage.tsx';
 import HealthBenefits from './pages/HealthBenefits'; // Import HealthBenefits component
+import Quote from './pages/Quote';
+import DryerVentMaintenanceProgram from './pages/services/DryerVentMaintenanceProgram.tsx';
 
 // Create query client
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const routes: RouteConfig[] = [
   { path: "/services/commercial-dryer-vent-cleaning", element: <Services service="commercial-dryer-vent-cleaning" /> },
   { path: "/services/electrostatic-filter-program", element: <Services service="electrostatic-filter-program" /> },
   { path: "/services/hvac-system-cleaning", element: <Services service="hvac-system-cleaning" /> },
+  { path: "/services/dryer-vent-maintenance-program", element: <DryerVentMaintenanceProgram /> },
   // Industry pages
   { path: "/industries/healthcare", element: <IndustryPage industry="healthcare" /> },
   { path: "/industries/hospitality", element: <IndustryPage industry="hospitality" /> },
@@ -60,6 +62,7 @@ const routes: RouteConfig[] = [
   { path: "/contact", element: <Contact /> },
   { path: "/blog", element: <Blog /> },
   { path: "/blog/:slug", element: <BlogPost /> },
+  { path: "/quote", element: <Quote /> },
   { path: "/404", element: <NotFound /> },
   // Catch all other routes and redirect to home or show 404
   { path: "*", element: <Navigate to="/" replace /> }
@@ -84,7 +87,6 @@ function App() {
           <BrowserRouter>
             <SEOProvider>
               <div className="min-h-screen bg-gray-50">
-                <NavBar />
                 <ScrollToTopOnRouteChange />
                 <ScrollToTop />
                 <Suspense fallback={<LoadingFallback />}>

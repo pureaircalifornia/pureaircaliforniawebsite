@@ -56,7 +56,7 @@ const Reseda = () => {
                 Comprehensive air duct cleaning to improve the air quality in your Reseda home.
               </p>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                    <Link to={`/services/ResidentialAirDuctCleaning`}>
+                    <Link to={`/services/residential-air-duct-cleaning`}>
                     Learn More
                     </Link>
                 </Button>
@@ -69,7 +69,7 @@ const Reseda = () => {
                 Ensure the safety and efficiency of your dryer with our professional cleaning services.
               </p>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                    <Link to={`/services/ResidentialDryerVentCleaning`}>
+                    <Link to={`/services/residential-dryer-vent-cleaning`}>
                     Learn More
                     </Link>
                 </Button>
@@ -82,7 +82,7 @@ const Reseda = () => {
                 Upgrade your home's air filtration with our high-quality electrostatic filters.
               </p>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                    <Link to={`/services/ResidentialElectrostaticFilter`}>
+                    <Link to={`/services/electrostatic-filter-program`}>
                     Learn More
                     </Link>
                 </Button>
@@ -95,7 +95,7 @@ const Reseda = () => {
                 Maintain a healthy work environment with our commercial air duct cleaning services.
               </p>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                    <Link to={`/services/CommercialAirDuctCleaning`}>
+                    <Link to={`/services/commercial-air-duct-cleaning`}>
                     Learn More
                     </Link>
                 </Button>
@@ -108,7 +108,7 @@ const Reseda = () => {
                 Keep your commercial dryer vents clean and safe with our professional cleaning.
               </p>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                    <Link to={`/services/CommercialDryerVentCleaning`}>
+                    <Link to={`/services/commercial-dryer-vent-cleaning`}>
                     Learn More
                     </Link>
                 </Button>
@@ -121,7 +121,7 @@ const Reseda = () => {
                 Improve the air quality in your Reseda business with our electrostatic filter solutions.
               </p>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                    <Link to={`/services/CommercialElectrostaticFilter`}>
+                    <Link to={`/services/electrostatic-filter-program`}>
                     Learn More
                     </Link>
                 </Button>

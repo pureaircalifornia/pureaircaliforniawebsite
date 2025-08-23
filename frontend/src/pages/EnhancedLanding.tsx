@@ -32,12 +32,15 @@ const EnhancedLanding = () => {
         <meta property="og:description" content="Professional air duct and dryer vent cleaning services in Los Angeles. NADCA certified, licensed & insured." />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="/gallery/jason-hawke-fu7pSuUa2PE-unsplash.jpg" />
+        <meta property="og:url" content="https://pureaircalifornia.com/" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Pure Air California - Air Duct & Dryer Vent Cleaning" />
         <meta name="twitter:description" content="Professional air duct and dryer vent cleaning services in Los Angeles. NADCA certified, licensed & insured." />
         <meta name="twitter:image" content="/gallery/jason-hawke-fu7pSuUa2PE-unsplash.jpg" />
+        <link rel="canonical" href="https://pureaircalifornia.com/" />
       </Helmet>
       
+      <NavBar />
       <main>
         {/* Enhanced Hero Section */}
         <div className="relative bg-gray-900 text-white">
@@ -50,6 +53,8 @@ const EnhancedLanding = () => {
               loading="eager"
               width="1920"
               height="1080"
+              decoding="async"
+              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent"></div>
           </div>

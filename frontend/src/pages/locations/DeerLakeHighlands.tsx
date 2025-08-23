@@ -69,32 +69,32 @@ const DeerLakeHighlands = () => {
             <ServiceCard
               title="Residential Air Duct Cleaning"
               description="Improve your home's air quality with our thorough air duct cleaning services."
-              link="/services/ResidentialAirDuctCleaning"
+              link="/services/residential-air-duct-cleaning"
             />
             <ServiceCard
               title="Residential Dryer Vent Cleaning"
               description="Prevent hazards and improve efficiency with our residential dryer vent cleaning."
-              link="/services/ResidentialDryerVentCleaning"
+              link="/services/residential-dryer-vent-cleaning"
             />
             <ServiceCard
-              title="Residential Electrostatic Filter"
+              title="Electrostatic Filter Program"
               description="Upgrade your home with our advanced electrostatic filter installation."
-              link="/services/ResidentialElectrostaticFilter"
+              link="/services/electrostatic-filter-program"
             />
              <ServiceCard
               title="Commercial Air Duct Cleaning"
               description="Ensure a healthy work environment with our commercial air duct cleaning services."
-              link="/services/CommercialAirDuctCleaning"
+              link="/services/commercial-air-duct-cleaning"
             />
              <ServiceCard
               title="Commercial Dryer Vent Cleaning"
               description="Maintain safety and efficiency with our commercial dryer vent cleaning services."
-              link="/services/CommercialDryerVentCleaning"
+              link="/services/commercial-dryer-vent-cleaning"
             />
               <ServiceCard
-              title="Commercial Electrostatic Filter"
-              description="Enhance your business's air quality with our commercial electrostatic filters."
-              link="/services/CommercialElectrostaticFilter"
+              title="Electrostatic Filter Program"
+              description="Enhance your business's air quality with our electrostatic filter program."
+              link="/services/electrostatic-filter-program"
             />
           </div>
         </div>

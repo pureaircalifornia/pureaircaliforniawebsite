@@ -261,7 +261,7 @@ const HealthBenefitsAirDuctCleaning = () => {
           <li>Maintain optimal humidity levels (30-50%)</li>
           <li>Ventilate appropriately when cooking, cleaning, or using products that release chemicals</li>
           <li>Control sources of pollution (smoking outdoors, choosing low-VOC products)</li>
-          <li>Consider <Link to="/services/residential-electrostatic-filter" className="text-brand-600 hover:underline">electrostatic filter systems</Link> for enhanced ongoing filtration</li>
+          <li>Consider <Link to="/services/electrostatic-filter-program" className="text-brand-600 hover:underline">electrostatic filter systems</Link> for enhanced ongoing filtration</li>
           <li>Regular dusting and vacuuming with HEPA-filtered equipment</li>
         </ul>
         <p>

@@ -99,7 +99,7 @@ const Brentwood = () => {
                 </p>
               </div>
               <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/residential-electrostatic-filter">Learn More</Link>
+                  <Link to="/services/electrostatic-filter-program">Learn More</Link>
                 </Button>
             </div>
 
@@ -138,7 +138,7 @@ const Brentwood = () => {
                 </p>
               </div>
                 <Button asChild variant="outline" className="mt-4 text-[#0A3D7C] border-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/services/commercial-electrostatic-filter">Learn More</Link>
+                  <Link to="/services/electrostatic-filter-program">Learn More</Link>
                 </Button>
             </div>
           </div>

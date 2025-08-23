@@ -159,7 +159,7 @@ const CommercialIndoorAirQualityGuide = () => {
 
         <h3>3. Advanced Filtration Solutions</h3>
         <p>
-          <Link to="/services/commercial-electrostatic-filter" className="text-brand-600 hover:underline">Commercial electrostatic filter systems</Link> offer 
+          <Link to="/services/electrostatic-filter-program" className="text-brand-600 hover:underline">Commercial electrostatic filter systems</Link> offer 
           significant advantages over traditional filters. These systems:
         </p>
         <ul>
@@ -305,7 +305,7 @@ const CommercialIndoorAirQualityGuide = () => {
         <ul>
           <li><Link to="/services/commercial-air-duct-cleaning" className="text-brand-600 hover:underline">Commercial air duct cleaning</Link></li>
           <li><Link to="/services/commercial-dryer-vent-cleaning" className="text-brand-600 hover:underline">Commercial dryer vent cleaning</Link></li>
-          <li><Link to="/services/commercial-electrostatic-filter" className="text-brand-600 hover:underline">Commercial electrostatic filter systems</Link></li>
+          <li><Link to="/services/electrostatic-filter-program" className="text-brand-600 hover:underline">Commercial electrostatic filter systems</Link></li>
           <li>Indoor air quality testing and assessment</li>
           <li>Customized maintenance programs</li>
           <li>HVAC system cleaning and sanitizing</li>

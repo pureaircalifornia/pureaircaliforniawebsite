@@ -470,7 +470,7 @@ const NavBar = () => {
                             ['Commercial Air Duct Cleaning', '/services/commercial-air-duct-cleaning'],
                             ['Residential Dryer Vent Cleaning', '/services/residential-dryer-vent-cleaning'],
                             ['Commercial Dryer Vent Cleaning', '/services/commercial-dryer-vent-cleaning'],
-                            ['Dryer Vent Maintenance Program', '/services/DryerVentMaintenanceProgram'],
+                            ['Dryer Vent Maintenance Program', '/services/dryer-vent-maintenance-program'],
                             ['Electrostatic Filter Program', '/services/electrostatic-filter-program'],
                             ['Electrostatic Filter Program', '/services/electrostatic-filter-program']
                           ].map(([name, path], index) => (

@@ -60,32 +60,32 @@ const SepulvedaBasin = () => {
             <ServiceCard
               title="Residential Air Duct Cleaning"
               description="Improve your home's air quality with our thorough residential air duct cleaning."
-              link="/services/ResidentialAirDuctCleaning"
+              link="/services/residential-air-duct-cleaning"
             />
             <ServiceCard
               title="Residential Dryer Vent Cleaning"
               description="Ensure your dryer runs efficiently and safely with our residential dryer vent cleaning service."
-              link="/services/ResidentialDryerVentCleaning"
+              link="/services/residential-dryer-vent-cleaning"
             />
             <ServiceCard
-              title="Residential Electrostatic Filter"
-              description="Upgrade your home's air filtration with our high-quality residential electrostatic filter installation."
-              link="/services/ResidentialElectrostaticFilter"
+              title="Electrostatic Filter Program"
+              description="Upgrade your home's air filtration with our high-quality electrostatic filter program."
+              link="/services/electrostatic-filter-program"
             />
              <ServiceCard
               title="Commercial Air Duct Cleaning"
               description="Maintain a healthy environment for your business with our professional commercial air duct cleaning."
-              link="/services/CommercialAirDuctCleaning"
+              link="/services/commercial-air-duct-cleaning"
             />
             <ServiceCard
               title="Commercial Dryer Vent Cleaning"
               description="Keep your commercial dryer vents clean and safe with our expert cleaning service."
-              link="/services/CommercialDryerVentCleaning"
+              link="/services/commercial-dryer-vent-cleaning"
             />
             <ServiceCard
-              title="Commercial Electrostatic Filter"
-              description="Improve your commercial space's air quality with our commercial electrostatic filter installation."
-              link="/services/CommercialElectrostaticFilter"
+              title="Electrostatic Filter Program"
+              description="Improve your commercial space's air quality with our electrostatic filter program."
+              link="/services/electrostatic-filter-program"
             />
           </div>
         </div>

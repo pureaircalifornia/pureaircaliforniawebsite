@@ -123,7 +123,7 @@ const PorterRanch = () => {
                 Improve air filtration in your commercial space with electrostatic filters.
               </p>
               <Button asChild size="sm" variant="link" className="mt-4 self-start text-[#0A3D7C]">
-                <Link to="/services/commercial-electrostatic-filter">Learn More</Link>
+                <Link to="/services/electrostatic-filter-program">Learn More</Link>
               </Button>
             </div>
           </div>

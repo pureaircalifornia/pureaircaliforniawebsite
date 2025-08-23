@@ -79,32 +79,32 @@ const Chatsworth = () => {
             <ServiceCard
               title="Residential Air Duct Cleaning"
               description="Improve your home's air quality with our thorough residential air duct cleaning services."
-              link="/services/ResidentialAirDuctCleaning"
+              link="/services/residential-air-duct-cleaning"
             />
             <ServiceCard
               title="Residential Dryer Vent Cleaning"
               description="Ensure safety and efficiency with our residential dryer vent cleaning services."
-              link="/services/ResidentialDryerVentCleaning"
+              link="/services/residential-dryer-vent-cleaning"
             />
             <ServiceCard
-              title="Residential Electrostatic Filter"
+              title="Electrostatic Filter Program"
               description="Upgrade to an electrostatic filter for cleaner air in your home."
-              link="/services/ResidentialElectrostaticFilter"
+              link="/services/electrostatic-filter-program"
             />
             <ServiceCard
               title="Commercial Air Duct Cleaning"
               description="Maintain a healthy workplace with our commercial air duct cleaning services."
-              link="/services/CommercialAirDuctCleaning"
+              link="/services/commercial-air-duct-cleaning"
             />
             <ServiceCard
               title="Commercial Dryer Vent Cleaning"
               description="Keep your commercial dryer vents clean and safe with our professional cleaning."
-              link="/services/CommercialDryerVentCleaning"
+              link="/services/commercial-dryer-vent-cleaning"
             />
             <ServiceCard
-              title="Commercial Electrostatic Filter"
-              description="Optimize air quality in your business with our commercial electrostatic filter services."
-              link="/services/CommercialElectrostaticFilter"
+              title="Electrostatic Filter Program"
+              description="Optimize air quality in your business with our electrostatic filter program."
+              link="/services/electrostatic-filter-program"
             />
           </div>
         </div>

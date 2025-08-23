@@ -13,32 +13,32 @@ const Glendale = () => {
     {
       title: 'Residential Air Duct Cleaning',
       description: 'Comprehensive air duct cleaning for homes in Glendale.',
-      link: '/services/ResidentialAirDuctCleaning',
+      link: '/services/residential-air-duct-cleaning',
     },
     {
       title: 'Residential Dryer Vent Cleaning',
       description: 'Expert dryer vent cleaning services for Glendale residents.',
-      link: '/services/ResidentialDryerVentCleaning',
+      link: '/services/residential-dryer-vent-cleaning',
     },
     {
-      title: 'Residential Electrostatic Filter',
+      title: 'Electrostatic Filter Program',
       description: 'High-quality electrostatic filter installation and maintenance for homes.',
-      link: '/services/ResidentialElectrostaticFilter',
+      link: '/services/electrostatic-filter-program',
     },
     {
       title: 'Commercial Air Duct Cleaning',
       description: 'Professional air duct cleaning for businesses and commercial spaces in Glendale.',
-      link: '/services/CommercialAirDuctCleaning',
+      link: '/services/commercial-air-duct-cleaning',
     },
     {
       title: 'Commercial Dryer Vent Cleaning',
       description: 'Reliable dryer vent cleaning services for commercial properties.',
-      link: '/services/CommercialDryerVentCleaning',
+      link: '/services/commercial-dryer-vent-cleaning',
     },
     {
-      title: 'Commercial Electrostatic Filter',
+      title: 'Electrostatic Filter Program',
       description: 'Installation and maintenance of electrostatic filters for commercial buildings.',
-      link: '/services/CommercialElectrostaticFilter',
+      link: '/services/electrostatic-filter-program',
     },
   ];
 

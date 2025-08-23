@@ -584,7 +584,7 @@ const Services: React.FC<{ service?: string }> = ({ service }) => {
           <meta property="og:title" content={serviceInfo.metaTitle} />
           <meta property="og:description" content={serviceInfo.metaDescription} />
           <meta property="og:type" content="website" />
-          <meta property="og:url" content={`https://pureairca.com/services/${serviceInfo.slug}`} />
+          <meta property="og:url" content={`https://pureaircalifornia.com/services/${serviceInfo.slug}`} />
           <script type="application/ld+json">
             {JSON.stringify(structuredData)}
           </script>
@@ -635,6 +635,11 @@ const Services: React.FC<{ service?: string }> = ({ service }) => {
           name="description" 
           content="Professional air duct cleaning, dryer vent cleaning, and indoor air quality services. Serving residential and commercial customers across California with certified technicians." 
         />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Air Duct & Dryer Vent Cleaning Services | Pure Air California" />
+        <meta property="og:description" content="Professional air duct cleaning, dryer vent cleaning, and indoor air quality services." />
+        <meta property="og:url" content="https://pureaircalifornia.com/services" />
+        <link rel="canonical" href="https://pureaircalifornia.com/services" />
       </Helmet>
       
       <NavBar />

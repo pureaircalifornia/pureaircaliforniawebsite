@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Shield, Clock, CheckCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 type FormData = {
   service: string;
@@ -69,26 +70,44 @@ const QuoteForm = () => {
       subject: `Quote Request: ${formData.service} - ${formData.name}`
     };
     
-    // In a real implementation, you would send this data using EmailJS
-    // For now, we'll just log it to the console
-            // Quote form submitted successfully
-    
-    // Show success message or redirect to thank you page
-    alert('Thank you for your quote request! We will contact you shortly.');
-    
-    // Reset form
-    setStep(1);
-    setFormData({
-      service: '',
-      propertyType: '',
-      squareFootage: '',
-      name: '',
-      email: '',
-      phone: '',
-      address: '',
-      message: '',
-      preferredDate: '',
-    });
+    try {
+      // Check if environment variables are available
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const userId = import.meta.env.VITE_EMAILJS_USER_ID;
+      
+      if (!serviceId || !templateId || !userId) {
+        throw new Error('EmailJS configuration missing. Please check your .env file.');
+      }
+      
+      console.log('Sending email with EmailJS:', { serviceId, templateId, userId });
+      console.log('Email data:', emailData);
+      
+      // Send email using EmailJS
+      const result = await emailjs.send(serviceId, templateId, emailData, userId);
+      console.log('Email sent successfully:', result);
+      
+      // Show success message
+      alert('Thank you for your quote request! We will contact you shortly.');
+      
+      // Reset form
+      setStep(1);
+      setFormData({
+        service: '',
+        propertyType: '',
+        squareFootage: '',
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        message: '',
+        preferredDate: '',
+      });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      alert(`There was a problem sending your request: ${errorMessage}. Please try again or call us at (213) 792-4145.`);
+    }
   };
 
   const renderStep = () => {

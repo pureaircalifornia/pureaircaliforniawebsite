@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Calendar, Clock, MapPin, User, Phone, Mail } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const AppointmentScheduling = () => {
   const [step, setStep] = useState(1);
@@ -25,7 +26,7 @@ const AppointmentScheduling = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Create the email data object for the appointment request
@@ -39,15 +40,33 @@ const AppointmentScheduling = () => {
       date: formData.date,
       time: formData.time,
       notes: formData.notes,
-      subject: `Appointment Request: ${formData.service} - ${formData.name}`
+      subject: `Appointment Request: ${formData.serviceType} - ${formData.name}`
     };
     
-    // In a real implementation, you would send this data using EmailJS
-    // For now, we'll just log it to the console and show the confirmation
-            // Appointment scheduled successfully
-    
-    // Move to confirmation step
-    setStep(4);
+    try {
+      // Check if environment variables are available
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const userId = import.meta.env.VITE_EMAILJS_USER_ID;
+      
+      if (!serviceId || !templateId || !userId) {
+        throw new Error('EmailJS configuration missing. Please check your .env file.');
+      }
+      
+      console.log('Sending email with EmailJS:', { serviceId, templateId, userId });
+      console.log('Email data:', emailData);
+      
+      // Send email using EmailJS
+      const result = await emailjs.send(serviceId, templateId, emailData, userId);
+      console.log('Email sent successfully:', result);
+      
+      // Move to confirmation step
+      setStep(4);
+    } catch (error) {
+      console.error('Error sending email:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      alert(`There was a problem scheduling your appointment: ${errorMessage}. Please try again or call us at (213) 792-4145.`);
+    }
   };
 
   return (

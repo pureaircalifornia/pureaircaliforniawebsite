@@ -22,6 +22,8 @@ import HealthBenefits from './pages/HealthBenefits'; // Import HealthBenefits co
 
 // Import individual service pages
 import CommercialAirDuctCleaning from './pages/services/CommercialAirDuctCleaning';
+import ResidentialAirDuctCleaning from './pages/services/ResidentialAirDuctCleaning';
+import CommercialDryerVentCleaning from './pages/services/CommercialDryerVentCleaning';
 import ResidentialDryerVentCleaning from './pages/services/ResidentialDryerVentCleaning';
 import ResidentialElectrostaticFilter from './pages/services/ResidentialElectrostaticFilter';
 import CommercialElectrostaticFilter from './pages/services/CommercialElectrostaticFilter';
@@ -56,8 +58,8 @@ const routes: RouteConfig[] = [
   { path: "/services/dryer-vent-maintenance-program", element: <DryerVentMaintenanceProgram /> },
   { path: "/services/hvac-system-cleaning", element: <HVACSystemCleaning /> },
   // Legacy service routes (redirect to individual pages)
-  { path: "/services/residential-air-duct-cleaning", element: <Services service="residential-air-duct-cleaning" /> },
-  { path: "/services/commercial-dryer-vent-cleaning", element: <Services service="commercial-dryer-vent-cleaning" /> },
+  { path: "/services/residential-air-duct-cleaning", element: <ResidentialAirDuctCleaning /> },
+  { path: "/services/commercial-dryer-vent-cleaning", element: <CommercialDryerVentCleaning /> },
   { path: "/services/electrostatic-filter-program", element: <Services service="electrostatic-filter-program" /> },
   // Industry pages
   { path: "/industries/healthcare", element: <IndustryPage industry="healthcare" /> },

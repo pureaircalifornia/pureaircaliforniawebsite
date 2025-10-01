@@ -90,7 +90,7 @@ const Footer = () => {
               Address: 123 Main Street, Los Angeles, CA 90001
             </p>
             <p className="text-gray-400">
-              Phone: (310) 555-1234
+              <a href="tel:+12137924145" className="hover:text-white transition-colors">Phone: (213) 792-4145</a>
             </p>
             <p className="text-gray-400">
                               Email: lou@pureaircalifornia.com

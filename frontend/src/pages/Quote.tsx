@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import { Shield, Clock, CheckCircle, Phone, Mail, MapPin, Calendar, Building, Home } from 'lucide-react';
+import { Shield, Clock, CheckCircle, Phone, Mail, MapPin, Calendar, Building, Home, Send } from 'lucide-react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Helmet } from 'react-helmet-async';
+import { useToast } from '@/components/ui/use-toast';
+import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 
 const Quote = () => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,16 +28,131 @@ const Quote = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    
+    // Basic phone masking: (XXX) XXX-XXXX
+    const formatPhone = (raw: string) => {
+      const digits = raw.replace(/\D/g, '').slice(0, 10);
+      const part1 = digits.slice(0, 3);
+      const part2 = digits.slice(3, 6);
+      const part3 = digits.slice(6, 10);
+      if (digits.length > 6) return `(${part1}) ${part2}-${part3}`;
+      if (digits.length > 3) return `(${part1}) ${part2}`;
+      if (digits.length > 0) return `(${part1}`;
+      return '';
+    };
+
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: name === 'phone' ? formatPhone(value) : value
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission logic here
-    // TODO: Implement form submission to backend or EmailJS
+    setIsSubmitting(true);
+    setFormStatus('submitting');
+
+    // Basic client-side validation
+    const emailValid = /[^@\s]+@[^@\s]+\.[^@\s]+/.test(formData.email);
+    const phoneDigits = formData.phone.replace(/\D/g, '');
+    const phoneValid = phoneDigits.length === 10;
+    const nameValid = formData.name.trim().length > 1;
+    const addressValid = formData.address.trim().length > 5;
+    const serviceValid = formData.serviceType.length > 0;
+    const propertyValid = formData.propertyType.length > 0;
+
+    if (!emailValid || !phoneValid || !nameValid || !addressValid || !serviceValid || !propertyValid) {
+      setIsSubmitting(false);
+      setFormStatus('error');
+      toast({
+        title: "Please check the form",
+        description: !emailValid
+          ? 'Enter a valid email address.'
+          : !phoneValid
+          ? 'Enter a valid 10-digit phone number.'
+          : !nameValid
+          ? 'Please provide your full name.'
+          : !addressValid
+          ? 'Please provide a valid property address.'
+          : !serviceValid
+          ? 'Please select a service type.'
+          : 'Please select a property type.',
+        variant: 'destructive'
+      });
+      return;
+    }
+    
+    // Create the email data object
+    const emailData = {
+      to_email: 'lou@pureaircalifornia.com',
+      from_name: formData.name,
+      from_email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+      service_type: formData.serviceType,
+      property_type: formData.propertyType,
+      square_footage: formData.squareFootage,
+      urgency: formData.urgency,
+      preferred_date: formData.preferredDate,
+      message: formData.message,
+      subject: `New Quote Request - ${formData.serviceType}`
+    };
+    
+    try {
+      // Check if environment variables are available
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const userId = import.meta.env.VITE_EMAILJS_USER_ID;
+      
+      if (!serviceId || !templateId || !userId) {
+        throw new Error('EmailJS configuration missing. Please check your .env file.');
+      }
+      
+      console.log('Sending email with EmailJS:', { serviceId, templateId, userId });
+      console.log('Email data:', emailData);
+      
+      // Send email using EmailJS
+      const result = await emailjs.send(serviceId, templateId, emailData, userId);
+      console.log('Email sent successfully:', result);
+      
+      setIsSubmitting(false);
+      setFormStatus('success');
+      
+      toast({
+        title: "Quote Request Sent Successfully!",
+        description: "Thank you for your request. We'll contact you within 24 hours with a detailed quote.",
+      });
+      
+      // Reset form after 2 seconds
+      setTimeout(() => {
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          address: '',
+          serviceType: '',
+          propertyType: '',
+          squareFootage: '',
+          preferredDate: '',
+          message: '',
+          urgency: 'standard'
+        });
+        setFormStatus('idle');
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setIsSubmitting(false);
+      setFormStatus('error');
+      
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      
+      toast({
+        title: "Error Sending Request",
+        description: `There was a problem sending your quote request: ${errorMessage}. Please try again or call us at (213) 792-4145.`,
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -48,16 +170,25 @@ const Quote = () => {
 
       <NavBar />
       
-      <div className="bg-gray-50 py-12 flex-grow">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">Get Your Free Quote</h1>
-            <p className="text-xl text-gray-600">
-              Professional air duct cleaning, dryer vent cleaning, and HVAC services at competitive prices.
-            </p>
+    {/* HERO SECTION */}
+    <section className="relative bg-gradient-to-r from-brand-700 to-brand-500 text-white py-20 mb-[-60px]">
+      <div className="container mx-auto px-4 text-center">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex justify-center mb-6">
+            <Send size={48} className="text-white drop-shadow-lg" />
           </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Get Your Free Quote</h1>
+          <p className="text-xl md:text-2xl text-brand-100 mb-8">
+            Fast, professional air duct & dryer vent cleaning. No obligation, no hassle.
+          </p>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+        </div>
+      </div>
+      {/* Optional: Decorative SVG or background pattern here */}
+    </section>
+    <div className="bg-gray-50 flex-grow pt-24 pb-12">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <div className="grid lg:grid-cols-3 gap-8">
             {/* Form Section */}
             <div className="lg:col-span-2">
               <div className="bg-white shadow-lg rounded-lg p-8">
@@ -252,8 +383,26 @@ const Quote = () => {
                     />
                   </div>
 
-                  <Button type="submit" className="w-full bg-brand-600 hover:bg-brand-700 text-white py-3 px-6 rounded-lg font-medium">
-                    Get Free Quote
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-brand-600 hover:bg-brand-700 text-white py-3 px-6 rounded-lg font-medium"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <div className="flex items-center gap-2">
+                        <motion.div
+                          className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        />
+                        <span>Sending Request...</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 justify-center">
+                        <span>Get Free Quote</span>
+                        <Send size={18} />
+                      </div>
+                    )}
                   </Button>
                 </form>
               </div>
@@ -322,8 +471,10 @@ const Quote = () => {
               </div>
             </div>
           </div>
-        </div>
+          </div>
       </div>
+    
+     
 
       <Footer />
     </div>

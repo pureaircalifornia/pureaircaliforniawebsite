@@ -228,8 +228,8 @@ const ResidentialAirDuctCleaning = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" variant="secondary">Get a Free Quote</Button>
-            <Button size="lg" variant="outline" className="bg-transparent border-white hover:bg-white hover:text-brand-600">
-              Call (213) 792-4145
+            <Button asChild size="lg" variant="outline" className="bg-transparent border-white hover:bg-white hover:text-brand-600">
+              <a href="tel:+12137924145">Call (213) 792-4145</a>
             </Button>
             <a href="tel:+12137924145" className="inline-block mt-2 text-brand-600 hover:text-brand-800 transition-colors font-medium">Call Now</a>
           </div>

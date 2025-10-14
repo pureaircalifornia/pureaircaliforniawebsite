@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AirVent, Check } from 'lucide-react';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 const ResidentialAirDuctCleaning = () => {
   return (
@@ -69,11 +70,13 @@ const ResidentialAirDuctCleaning = () => {
             </div>
             
             <div>
-              <img
-                src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80"
+              <ResponsiveImage
+                src="/images/services/residential-air-duct-cleaning-progress.jpg"
                 alt="Professional technician cleaning residential air ducts"
-                className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
+                className="w-full h-64 md:h-96 rounded-lg shadow-lg"
                 loading="lazy"
+                width={700}
+                height={500}
               />
             </div>
           </div>

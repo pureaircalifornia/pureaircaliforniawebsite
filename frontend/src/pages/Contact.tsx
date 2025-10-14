@@ -9,6 +9,7 @@ import TrustBadges from '@/components/TrustBadges';
 import { motion } from 'framer-motion';
 import { ScrollReveal, StaggerContainer } from '@/components/ui/scroll-reveal';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import ResponsiveImage from '@/components/ResponsiveImage';
 import '../index.css';
 
 const Contact = () => {
@@ -230,10 +231,13 @@ const Contact = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-20">
-          <img
-            src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?auto=format&fit=crop&w=2070&q=80"
+          <ResponsiveImage
+            src="/images/hero/contact-hero-office-exterior.jpg"
             alt="Professional customer service team"
-            className="w-full h-full object-cover"
+            className="w-full h-full"
+            loading="eager"
+            width={1920}
+            height={1080}
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-brand-700/90 to-brand-900/90 z-0"></div>

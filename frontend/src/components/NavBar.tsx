@@ -211,7 +211,7 @@ const NavBar = () => {
           <Link to="/" className="flex items-center gap-3" onClick={(e) => handleLinkClick(e)}>
             <div className={`p-1 rounded ${isScrolled ? 'bg-white' : 'bg-transparent'}`}>
               <img 
-                src="/logo/pac-logo.png" 
+                src="/images/logo/pac-logo.png" 
                 alt="Pure Air California Logo" 
                 className={`h-8 w-auto ${isScrolled ? '' : 'filter brightness-0 invert'}`} 
                 loading="eager"

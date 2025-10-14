@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Shield, Clock, CheckCircle, Award, Users, Building, Star, Phone, Mail, MapPin } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 const About = () => {
   return (
@@ -26,10 +27,13 @@ const About = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-20">
-          <img
-            src="https://images.unsplash.com/photo-1581578731548-c6a0c3f2fcc0?auto=format&fit=crop&w=2070&q=80"
+          <ResponsiveImage
+            src="/images/hero/about-hero-team-group.jpg"
             alt="Professional air duct cleaning team"
-            className="w-full h-full object-cover"
+            className="w-full h-full"
+            loading="eager"
+            width={1920}
+            height={1080}
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-brand-700/90 to-brand-900/90 z-0"></div>
@@ -112,11 +116,13 @@ const About = () => {
             
             <ScrollReveal animation="fadeInRight">
               <div className="relative">
-                <img
-                  src="/gallery/lou.jpeg"
+                <ResponsiveImage
+                  src="/images/team/team-lou-founder-ceo.jpg"
                   alt="Pure Air California team at work"
-                  className="w-full h-96 object-cover rounded-lg shadow-lg"
+                  className="w-full h-96 rounded-lg shadow-lg"
                   loading="lazy"
+                  width={400}
+                  height={400}
                 />
                 <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm p-4 rounded-lg">
                   <div className="flex items-center gap-2">
@@ -223,11 +229,13 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <ScrollReveal animation="fadeInUp" delay={0.1}>
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-                  <img
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"
+                  <ResponsiveImage
+                    src="/images/team/team-lou-founder-ceo.jpg"
                     alt="Lou, Founder & CEO"
-                    className="w-full h-64 object-cover"
+                    className="w-full h-64"
                     loading="lazy"
+                    width={400}
+                    height={400}
                   />
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-2">Lou</h3>
@@ -242,10 +250,13 @@ const About = () => {
               
               <ScrollReveal animation="fadeInUp" delay={0.2}>
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-                  <img
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80"
+                  <ResponsiveImage
+                    src="/images/team/team-lead-technician.jpg"
                     alt="Mike, Lead Technician"
-                    className="w-full h-64 object-cover"
+                    className="w-full h-64"
+                    loading="lazy"
+                    width={400}
+                    height={400}
                   />
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-2">Mike</h3>
@@ -260,10 +271,13 @@ const About = () => {
               
               <ScrollReveal animation="fadeInUp" delay={0.3}>
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-                  <img
-                    src="https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=400&q=80"
+                  <ResponsiveImage
+                    src="/images/team/team-customer-relations-manager.jpg"
                     alt="Sarah, Customer Relations"
-                    className="w-full h-64 object-cover"
+                    className="w-full h-64"
+                    loading="lazy"
+                    width={400}
+                    height={400}
                   />
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-2">Sarah</h3>

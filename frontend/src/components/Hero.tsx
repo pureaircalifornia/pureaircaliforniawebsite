@@ -2,16 +2,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 const Hero = () => {
   return (
     <div className="relative bg-gray-900 text-white">
       {/* Background image with overlay */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="/gallery/jason-hawke-fu7pSuUa2PE-unsplash (Large).jpg"
+        <ResponsiveImage
+          src="/images/hero/homepage-hero-professional-cleaning.jpg"
           alt="Professional air duct cleaning services in California"
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full opacity-40"
+          loading="eager"
+          width={1920}
+          height={1080}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent"></div>
       </div>

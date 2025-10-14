@@ -6,6 +6,7 @@ import { Building, Check, Users, Clock, Shield, Award, ArrowRight } from 'lucide
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 const CommercialAirDuctCleaning = () => {
   return (

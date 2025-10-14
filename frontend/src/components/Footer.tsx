@@ -87,7 +87,7 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-lg mb-4">Contact Info</h4>
             <p className="text-gray-400">
-              Address: 123 Main Street, Los Angeles, CA 90001
+              Address: 1550 N Poinsettia Pl, Los Angeles, CA 90046
             </p>
             <p className="text-gray-400">
               <a href="tel:+12137924145" className="hover:text-white transition-colors">Phone: (213) 792-4145</a>

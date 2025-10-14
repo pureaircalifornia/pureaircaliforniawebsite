@@ -1,4 +1,3 @@
-
 import React from 'react';
 import IndustryPageLayout from '@/components/IndustryPageLayout';
 import { Check, Shield, Star, Building, Factory } from 'lucide-react';

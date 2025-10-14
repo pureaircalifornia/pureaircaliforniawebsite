@@ -20,7 +20,7 @@ const CTASection = () => {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
               <Button asChild size="xl" variant="white" className="font-medium shadow-md">
-                <Link to="/Quote" className="flex items-center">
+                <Link to="/quote" className="flex items-center">
                   Get a Free Quote <ArrowRight className="ml-1" />
                 </Link>
               </Button>

@@ -24,7 +24,23 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   height,
   sizes = '(max-width: 640px) 640px, (max-width: 1024px) 1024px, 1920px'
 }) => {
-  // Extract base name without extension
+  // Allow direct passthrough for SVGs and placeholder.svg without imagetools
+  const isSvg = /\.svg$/i.test(src);
+  if (isSvg) {
+    return (
+      <img
+        src={src}
+        alt={alt}
+        loading={loading}
+        width={width}
+        height={height}
+        className={cn('object-cover', className)}
+        decoding="async"
+      />
+    );
+  }
+
+  // Extract base name without extension for imagetools-driven formats
   const baseName = src.replace(/\.(jpg|jpeg|png|webp)$/i, '');
   
   return (

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { LucideIcon } from 'lucide-react';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 export interface ServiceCardProps {
   title: string;
@@ -15,8 +16,18 @@ const ServiceCard = ({ title, description, link, icon: Icon, slug }: ServiceCard
   const finalLink = link || (slug ? `/services/${slug}` : '#');
   
   return (
-    <div className="bg-white border rounded-lg shadow-sm hover:shadow-md transition-shadow p-6">
-      {Icon && <Icon className="h-10 w-10 text-blue-600 mb-4" />}
+    <div className="bg-white border rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+      <div className="relative h-40 w-full bg-gray-100">
+        <ResponsiveImage
+          src="/images/services/placeholder.jpg"
+          alt={title}
+          className="w-full h-full"
+          width={800}
+          height={400}
+        />
+      </div>
+      <div className="p-6">
+        {Icon && <Icon className="h-10 w-10 text-blue-600 mb-4" />}
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
       <p className="text-gray-600 mb-4">{description}</p>
       {(link || slug) && (
@@ -30,6 +41,7 @@ const ServiceCard = ({ title, description, link, icon: Icon, slug }: ServiceCard
           </svg>
         </Link>
       )}
+      </div>
     </div>
   );
 };

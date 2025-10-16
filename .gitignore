@@ -77,4 +77,23 @@ agenthub/agents/youtube/db
 .cache/
 
 # Mobile development
-android-sdk/ 
+android-sdk/
+
+# Original/unoptimized images (keep these out of git)
+**/images/**/*-original.jpg
+**/images/**/*-original.png
+**/images/**/*-original.jpeg
+**/images/**/*-unoptimized.*
+
+# Temporary image processing files
+**/images/**/*.tmp
+**/images/**/temp-*
+
+# Image editor files
+**/*.psd
+**/*.ai
+**/*.sketch
+**/*.xcf
+
+# Large source files (>5MB)
+# Consider using Git LFS for these if needed 

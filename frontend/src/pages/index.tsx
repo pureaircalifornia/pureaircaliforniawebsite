@@ -49,6 +49,26 @@ const HomePage = () => {
         </div>
         
         <FeaturedServices />
+
+        {/* Simple before/after preview with placeholders to convey results */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-3">See the Difference</h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">Clean, healthy vents help you breathe easy. Here’s a sample before and after to preview the layout.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-gray-50 border rounded-lg p-4">
+                <h3 className="font-semibold mb-2">Before</h3>
+                <img src="/images/before-after/placeholder-before.jpg" alt="Before placeholder" className="w-full h-auto rounded" />
+              </div>
+              <div className="bg-gray-50 border rounded-lg p-4">
+                <h3 className="font-semibold mb-2">After</h3>
+                <img src="/images/before-after/placeholder-after.jpg" alt="After placeholder" className="w-full h-auto rounded" />
+              </div>
+            </div>
+          </div>
+        </section>
         <WhyChooseUs />
         <ServiceArea />
         <TestimonialSection />

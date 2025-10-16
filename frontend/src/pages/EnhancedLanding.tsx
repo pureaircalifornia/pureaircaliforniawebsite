@@ -17,6 +17,105 @@ import CTASection from '@/components/CTASection';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
+// Enhanced cloud background component for hero section
+const EnhancedCloudBackground = () => (
+  <div className="absolute inset-0 overflow-hidden">
+    {/* Primary background image */}
+    <motion.img
+      src="/gallery/jason-hawke-fu7pSuUa2PE-unsplash (Large).jpg"
+      alt="Professional air duct cleaning services in California"
+      className="w-full h-full object-cover"
+      loading="eager"
+      width="1920"
+      height="1080"
+      decoding="async"
+      fetchPriority="high"
+      initial={{ scale: 1 }}
+      animate={{ scale: 1.05 }}
+      transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+    />
+
+    {/* Overlay gradient */}
+    <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+
+    {/* Additional cloud layer for depth */}
+    <motion.div
+      className="absolute inset-0 opacity-20"
+      style={{
+        backgroundImage: `url('/gallery/jeremy-bishop-zCFt2Rzcv_c-unsplash (Large).jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        mixBlendMode: 'multiply'
+      }}
+      animate={{
+        scale: [1, 1.1, 1],
+        opacity: [0.2, 0.3, 0.2]
+      }}
+      transition={{
+        duration: 15,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 3
+      }}
+    />
+
+    {/* Floating cloud elements */}
+    <motion.div
+      className="absolute top-20 left-10 opacity-10"
+      animate={{
+        y: [0, -20, 0],
+        x: [0, 15, 0],
+        opacity: [0.1, 0.2, 0.1]
+      }}
+      transition={{
+        duration: 12,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }}
+    >
+      <div className="w-64 h-32 bg-white/20 rounded-full blur-xl"></div>
+      <div className="absolute -top-4 -left-8 w-40 h-24 bg-white/15 rounded-full blur-lg"></div>
+      <div className="absolute -top-2 left-12 w-48 h-28 bg-white/10 rounded-full blur-xl"></div>
+    </motion.div>
+
+    <motion.div
+      className="absolute top-32 right-20 opacity-8"
+      animate={{
+        y: [0, 15, 0],
+        x: [0, -10, 0],
+        opacity: [0.08, 0.15, 0.08]
+      }}
+      transition={{
+        duration: 18,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 5
+      }}
+    >
+      <div className="w-56 h-28 bg-white/20 rounded-full blur-xl"></div>
+      <div className="absolute -top-2 left-8 w-36 h-20 bg-white/15 rounded-full blur-lg"></div>
+    </motion.div>
+
+    <motion.div
+      className="absolute bottom-20 left-1/4 opacity-12"
+      animate={{
+        y: [0, -10, 0],
+        opacity: [0.12, 0.18, 0.12]
+      }}
+      transition={{
+        duration: 14,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 7
+      }}
+    >
+      <div className="w-72 h-36 bg-white/25 rounded-full blur-2xl"></div>
+      <div className="absolute -top-3 left-6 w-44 h-24 bg-white/20 rounded-full blur-xl"></div>
+      <div className="absolute -top-1 -left-4 w-28 h-16 bg-white/15 rounded-full blur-lg"></div>
+    </motion.div>
+  </div>
+);
+
 const EnhancedLanding = () => {
   return (
     <div className="min-h-screen flex flex-col">
@@ -43,21 +142,9 @@ const EnhancedLanding = () => {
       <NavBar />
       <main>
         {/* Enhanced Hero Section */}
-        <div className="relative bg-gray-900 text-white">
-          {/* Background image with overlay */}
-          <div className="absolute inset-0 z-0">
-            <img
-              src="/gallery/jason-hawke-fu7pSuUa2PE-unsplash (Large).jpg"
-              alt="Professional air duct cleaning services in California"
-              className="w-full h-full object-cover opacity-40"
-              loading="eager"
-              width="1920"
-              height="1080"
-              decoding="async"
-              fetchPriority="high"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent"></div>
-          </div>
+        <div className="relative bg-gray-900 text-white min-h-screen flex items-center">
+          {/* Enhanced cloud background */}
+          <EnhancedCloudBackground />
 
           {/* Hero content */}
           <div className="container mx-auto px-4 py-24 md:py-32 relative z-10">
@@ -150,22 +237,69 @@ const EnhancedLanding = () => {
           </div>
         </div>
         
-        {/* Benefits Banner */}
-        <div className="bg-[#0A3D7C] text-white py-4">
-          <div className="container mx-auto px-4">
+        {/* Benefits Banner with Cloud Theme */}
+        <div className="relative bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600 text-white py-6 overflow-hidden">
+          {/* Cloud elements in banner */}
+          <div className="absolute inset-0">
+            <motion.div
+              className="absolute top-2 left-10 opacity-10"
+              animate={{
+                x: [0, 30, 0],
+                opacity: [0.1, 0.2, 0.1]
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <div className="w-32 h-16 bg-white rounded-full blur-sm"></div>
+              <div className="absolute -top-1 -left-2 w-20 h-12 bg-white rounded-full blur-sm"></div>
+            </motion.div>
+
+            <motion.div
+              className="absolute top-1 right-16 opacity-8"
+              animate={{
+                x: [0, -20, 0],
+                opacity: [0.08, 0.15, 0.08]
+              }}
+              transition={{
+                duration: 12,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 3
+              }}
+            >
+              <div className="w-28 h-14 bg-white rounded-full blur-sm"></div>
+            </motion.div>
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center text-center">
-              <div className="flex items-center justify-center gap-2">
-                <Phone size={20} />
-                <span>24/7 Emergency Service</span>
-              </div>
-              <div className="flex items-center justify-center gap-2">
-                <Calendar size={20} />
-                <span>Flexible Scheduling</span>
-              </div>
-              <div className="flex items-center justify-center gap-2">
-                <CheckCircle size={20} />
-                <span>100% Satisfaction Guaranteed</span>
-              </div>
+              <motion.div
+                className="flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg py-2 px-4"
+                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)" }}
+                transition={{ duration: 0.3 }}
+              >
+                <Phone size={20} className="text-sky-300" />
+                <span className="font-medium">24/7 Emergency Service</span>
+              </motion.div>
+              <motion.div
+                className="flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg py-2 px-4"
+                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)" }}
+                transition={{ duration: 0.3 }}
+              >
+                <Calendar size={20} className="text-sky-300" />
+                <span className="font-medium">Flexible Scheduling</span>
+              </motion.div>
+              <motion.div
+                className="flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg py-2 px-4"
+                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)" }}
+                transition={{ duration: 0.3 }}
+              >
+                <CheckCircle size={20} className="text-sky-300" />
+                <span className="font-medium">100% Satisfaction Guaranteed</span>
+              </motion.div>
             </div>
           </div>
         </div>

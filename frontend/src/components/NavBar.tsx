@@ -4,6 +4,64 @@ import { Button } from '@/components/ui/button';
 import { Phone, Menu, X, ChevronDown, ChevronRight, Shield, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Cloud background component for header
+const CloudBackground = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {/* Animated cloud elements */}
+    <motion.div
+      className="absolute top-2 left-10 opacity-10"
+      animate={{
+        x: [0, 20, 0],
+        opacity: [0.1, 0.15, 0.1]
+      }}
+      transition={{
+        duration: 8,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }}
+    >
+      <div className="w-32 h-16 bg-white rounded-full blur-sm"></div>
+      <div className="absolute -top-2 -left-4 w-20 h-12 bg-white rounded-full blur-sm"></div>
+      <div className="absolute -top-1 left-8 w-24 h-14 bg-white rounded-full blur-sm"></div>
+    </motion.div>
+
+    <motion.div
+      className="absolute top-4 right-16 opacity-8"
+      animate={{
+        x: [0, -15, 0],
+        opacity: [0.08, 0.12, 0.08]
+      }}
+      transition={{
+        duration: 10,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 2
+      }}
+    >
+      <div className="w-28 h-14 bg-white rounded-full blur-sm"></div>
+      <div className="absolute -top-1 left-6 w-18 h-10 bg-white rounded-full blur-sm"></div>
+    </motion.div>
+
+    <motion.div
+      className="absolute top-6 left-1/3 opacity-6"
+      animate={{
+        x: [0, 25, 0],
+        opacity: [0.06, 0.1, 0.06]
+      }}
+      transition={{
+        duration: 12,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 4
+      }}
+    >
+      <div className="w-36 h-18 bg-white rounded-full blur-sm"></div>
+      <div className="absolute -top-2 left-4 w-22 h-12 bg-white rounded-full blur-sm"></div>
+      <div className="absolute -top-1 -left-2 w-16 h-8 bg-white rounded-full blur-sm"></div>
+    </motion.div>
+  </div>
+);
+
 const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -196,9 +254,12 @@ const NavBar = () => {
     }
   };
 
-  return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-gradient-to-b from-black/60 to-transparent py-4'}`}>
-      <motion.div 
-        className="container mx-auto flex items-center justify-between px-4"
+  return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg py-2' : 'bg-gradient-to-b from-slate-900/80 via-slate-800/60 to-transparent py-4'}`}>
+      {/* Cloud Background - only visible when not scrolled */}
+      {!isScrolled && <CloudBackground />}
+
+      <motion.div
+        className="container mx-auto flex items-center justify-between px-4 relative z-10"
         initial="hidden"
         animate="visible"
         variants={navbarVariants}

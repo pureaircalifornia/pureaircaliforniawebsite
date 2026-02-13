@@ -1,45 +1,50 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import ResponsiveImage from '@/components/ResponsiveImage';
+import Gallery from '@/components/Gallery';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { AirVent, Check, Building, ArrowRight, Shield, Award, Clock, Users, Home, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import { Check, AirVent, Building, Zap, Home, Shield, Users, Award, Clock, ArrowRight } from 'lucide-react';
 
 const HVACSystemCleaning = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>HVAC System Cleaning Services | Pure Air California</title>
-        <meta name="description" content="Professional HVAC system cleaning services for residential and commercial properties. Improve efficiency, indoor air quality, and extend system life. Get a free quote today." />
-        <meta name="keywords" content="HVAC system cleaning, air conditioning cleaning, heating system cleaning, HVAC maintenance, indoor air quality, system efficiency" />
-        <meta property="og:title" content="HVAC System Cleaning Services | Pure Air California" />
-        <meta property="og:description" content="Professional HVAC system cleaning services for residential and commercial properties. Improve efficiency, indoor air quality, and extend system life." />
+        <title>HVAC System Cleaning Los Angeles | Improve Efficiency | Pure Air California</title>
+        <meta name="description" content="Complete HVAC system cleaning in Los Angeles. Clean coils, blowers & ducts to improve efficiency and air quality. Extend system life. Free quotes! (213) 792-4145" />
+        <meta name="keywords" content="HVAC system cleaning Los Angeles, AC cleaning LA, furnace cleaning Los Angeles, HVAC maintenance, coil cleaning, blower motor cleaning" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta name="geo.region" content="US-CA" />
+        <meta name="geo.placename" content="Los Angeles" />
+        <meta property="og:title" content="HVAC System Cleaning Los Angeles | Pure Air California" />
+        <meta property="og:description" content="Professional HVAC system cleaning services in Los Angeles. Improve efficiency, indoor air quality, and extend system life." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://pureairca.com/services/hvac-system-cleaning" />
-        <link rel="canonical" href="https://pureairca.com/services/hvac-system-cleaning" />
+        <meta property="og:url" content="https://www.pureaircalifornia.com/services/hvac-system-cleaning" />
+        <meta property="og:site_name" content="Pure Air California" />
+        <link rel="canonical" href="https://www.pureaircalifornia.com/services/hvac-system-cleaning" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Service",
             "serviceType": "HVAC System Cleaning",
             "provider": {
-              "@type": "LocalBusiness",
+              "@type": "HVACBusiness",
               "name": "Pure Air California",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "123 Airway Blvd",
+                "streetAddress": "1550 N Poinsettia Pl",
                 "addressLocality": "Los Angeles",
                 "addressRegion": "CA",
-                "postalCode": "90001",
+                "postalCode": "90046",
                 "addressCountry": "US"
               },
-              "telephone": "+18005551234"
+              "telephone": "+1-213-792-4145"
             },
-            "description": "Professional HVAC system cleaning services for residential and commercial properties. Improve efficiency, indoor air quality, and extend system life.",
+            "description": "Professional HVAC system cleaning services for residential and commercial properties in Los Angeles. Improve efficiency, indoor air quality, and extend system life.",
             "areaServed": {
-              "@type": "State",
-              "name": "California"
+              "@type": "City",
+              "name": "Los Angeles"
             }
           })}
         </script>
@@ -51,9 +56,9 @@ const HVACSystemCleaning = () => {
       <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">HVAC System Cleaning Services</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>HVAC System Cleaning Services</h1>
             <p className="text-xl mb-8">
-              Complete cleaning and maintenance for your heating and cooling system. Improve efficiency, 
+              Complete cleaning and maintenance for your heating and cooling system. Improve efficiency,
               indoor air quality, and extend the life of your HVAC equipment with our professional cleaning services.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -75,11 +80,11 @@ const HVACSystemCleaning = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6">Complete HVAC System Cleaning & Maintenance</h2>
               <p className="text-lg text-gray-600 mb-6">
-                Your HVAC system is the heart of your home's comfort and air quality. Over time, dust, debris, 
-                and contaminants accumulate throughout the system, reducing efficiency and potentially causing 
+                Your HVAC system is the heart of your home's comfort and air quality. Over time, dust, debris,
+                and contaminants accumulate throughout the system, reducing efficiency and potentially causing
                 health issues. Our comprehensive HVAC cleaning service restores your system to peak performance.
               </p>
-              
+
               <div className="space-y-4 mb-8">
                 <div className="flex items-start gap-3">
                   <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
@@ -87,21 +92,21 @@ const HVACSystemCleaning = () => {
                   </div>
                   <p><span className="font-medium">Improved Efficiency</span> - Clean systems operate more efficiently, reducing energy costs by 15-25%</p>
                 </div>
-                
+
                 <div className="flex items-start gap-3">
                   <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
                     <Check size={14} className="text-brand-600" />
                   </div>
                   <p><span className="font-medium">Better Air Quality</span> - Remove allergens, dust, and contaminants from your indoor air</p>
                 </div>
-                
+
                 <div className="flex items-start gap-3">
                   <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
                     <Check size={14} className="text-brand-600" />
                   </div>
                   <p><span className="font-medium">Extended Equipment Life</span> - Reduce wear and tear, potentially adding years to your system's lifespan</p>
                 </div>
-                
+
                 <div className="flex items-start gap-3">
                   <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
                     <Check size={14} className="text-brand-600" />
@@ -110,10 +115,10 @@ const HVACSystemCleaning = () => {
                 </div>
               </div>
             </div>
-            
+
             <div>
-              <img
-                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80"
+              <ResponsiveImage
+                src="/images/services/hvac-cleaning-technician.jpg"
                 alt="Professional technician cleaning HVAC system"
                 className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
                 loading="lazy"
@@ -123,13 +128,15 @@ const HVACSystemCleaning = () => {
         </div>
       </section>
 
+      <Gallery />
+
       {/* What We Clean */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">What We Clean</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Our comprehensive HVAC cleaning service addresses every component of your heating and cooling system 
+              Our comprehensive HVAC cleaning service addresses every component of your heating and cooling system
               to ensure optimal performance and air quality.
             </p>
           </div>
@@ -139,7 +146,7 @@ const HVACSystemCleaning = () => {
               <AirVent size={48} className="text-brand-600 mb-4" />
               <h3 className="text-xl font-semibold mb-3">Air Ducts & Vents</h3>
               <p className="text-gray-600">
-                Thorough cleaning of all supply and return air ducts, removing dust, debris, and contaminants 
+                Thorough cleaning of all supply and return air ducts, removing dust, debris, and contaminants
                 that can affect air quality and system efficiency.
               </p>
             </div>
@@ -148,7 +155,7 @@ const HVACSystemCleaning = () => {
               <Building size={48} className="text-brand-600 mb-4" />
               <h3 className="text-xl font-semibold mb-3">Air Handlers & Coils</h3>
               <p className="text-gray-600">
-                Deep cleaning of evaporator and condenser coils to improve heat transfer efficiency 
+                Deep cleaning of evaporator and condenser coils to improve heat transfer efficiency
                 and prevent system strain and breakdowns.
               </p>
             </div>
@@ -157,7 +164,7 @@ const HVACSystemCleaning = () => {
               <Zap size={48} className="text-brand-600 mb-4" />
               <h3 className="text-xl font-semibold mb-3">Blower Motors & Fans</h3>
               <p className="text-gray-600">
-                Cleaning of blower assemblies and fan blades to ensure proper airflow and reduce 
+                Cleaning of blower assemblies and fan blades to ensure proper airflow and reduce
                 energy consumption while improving system performance.
               </p>
             </div>
@@ -166,7 +173,7 @@ const HVACSystemCleaning = () => {
               <Home size={48} className="text-brand-600 mb-4" />
               <h3 className="text-xl font-semibold mb-3">Drain Pans & Lines</h3>
               <p className="text-gray-600">
-                Cleaning and sanitizing of condensate drain pans and lines to prevent clogs, 
+                Cleaning and sanitizing of condensate drain pans and lines to prevent clogs,
                 water damage, and mold growth in your system.
               </p>
             </div>
@@ -175,7 +182,7 @@ const HVACSystemCleaning = () => {
               <Shield size={48} className="text-brand-600 mb-4" />
               <h3 className="text-xl font-semibold mb-3">Filters & Media</h3>
               <p className="text-gray-600">
-                Inspection and replacement of air filters, plus cleaning of electrostatic filter media 
+                Inspection and replacement of air filters, plus cleaning of electrostatic filter media
                 to maintain optimal filtration efficiency.
               </p>
             </div>
@@ -184,7 +191,7 @@ const HVACSystemCleaning = () => {
               <Users size={48} className="text-brand-600 mb-4" />
               <h3 className="text-xl font-semibold mb-3">Registers & Grilles</h3>
               <p className="text-gray-600">
-                Cleaning of all air registers, grilles, and diffusers to ensure proper air distribution 
+                Cleaning of all air registers, grilles, and diffusers to ensure proper air distribution
                 and improve the appearance of your vents.
               </p>
             </div>
@@ -198,7 +205,7 @@ const HVACSystemCleaning = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Our Professional Cleaning Process</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              We follow a comprehensive, step-by-step process to ensure your HVAC system is thoroughly cleaned 
+              We follow a comprehensive, step-by-step process to ensure your HVAC system is thoroughly cleaned
               and operating at peak efficiency.
             </p>
           </div>
@@ -386,8 +393,8 @@ const HVACSystemCleaning = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-3">How often should I have my HVAC system cleaned?</h3>
               <p className="text-gray-600">
-                We recommend cleaning every 3-5 years for most residential properties. However, if you have pets, 
-                allergies, or live in a dusty environment, more frequent cleaning may be necessary. Commercial 
+                We recommend cleaning every 3-5 years for most residential properties. However, if you have pets,
+                allergies, or live in a dusty environment, more frequent cleaning may be necessary. Commercial
                 properties typically need cleaning every 1-3 years depending on usage and industry.
               </p>
             </div>
@@ -395,7 +402,7 @@ const HVACSystemCleaning = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-3">How long does HVAC system cleaning take?</h3>
               <p className="text-gray-600">
-                The duration depends on the size and complexity of your system. Most residential cleanings take 4-8 hours, 
+                The duration depends on the size and complexity of your system. Most residential cleanings take 4-8 hours,
                 while larger commercial systems may require multiple days. We'll provide a time estimate during our initial assessment.
               </p>
             </div>
@@ -403,8 +410,8 @@ const HVACSystemCleaning = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-3">What equipment do you use for cleaning?</h3>
               <p className="text-gray-600">
-                We use professional-grade equipment including HEPA vacuums, rotary brushes, compressed air systems, 
-                and specialized cleaning tools designed specifically for HVAC systems. All equipment is designed to 
+                We use professional-grade equipment including HEPA vacuums, rotary brushes, compressed air systems,
+                and specialized cleaning tools designed specifically for HVAC systems. All equipment is designed to
                 clean thoroughly without damaging your system.
               </p>
             </div>
@@ -412,7 +419,7 @@ const HVACSystemCleaning = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-3">Will the cleaning process disrupt my home or business?</h3>
               <p className="text-gray-600">
-                We minimize disruption by working efficiently and cleanly. For residential services, we can work around 
+                We minimize disruption by working efficiently and cleanly. For residential services, we can work around
                 your schedule. For commercial properties, we offer after-hours service to avoid disrupting business operations.
               </p>
             </div>
@@ -420,7 +427,7 @@ const HVACSystemCleaning = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-3">Do you provide maintenance programs?</h3>
               <p className="text-gray-600">
-                Yes, we offer comprehensive maintenance programs that include regular inspections, cleaning schedules, 
+                Yes, we offer comprehensive maintenance programs that include regular inspections, cleaning schedules,
                 and priority service. These programs help maintain optimal system performance and prevent costly repairs.
               </p>
             </div>
@@ -428,8 +435,8 @@ const HVACSystemCleaning = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-3">How much does HVAC system cleaning cost?</h3>
               <p className="text-gray-600">
-                Our pricing is competitive and depends on the size and complexity of your system. We provide free, 
-                no-obligation quotes and transparent pricing with no hidden fees. The investment typically pays for 
+                Our pricing is competitive and depends on the size and complexity of your system. We provide free,
+                no-obligation quotes and transparent pricing with no hidden fees. The investment typically pays for
                 itself through energy savings and extended equipment life.
               </p>
             </div>
@@ -437,8 +444,8 @@ const HVACSystemCleaning = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-3">What's included in your HVAC cleaning service?</h3>
               <p className="text-gray-600">
-                Our service includes cleaning of all major system components: air ducts, coils, blower assemblies, 
-                drain pans, filters, and registers. We also provide a comprehensive inspection and performance testing 
+                Our service includes cleaning of all major system components: air ducts, coils, blower assemblies,
+                drain pans, filters, and registers. We also provide a comprehensive inspection and performance testing
                 to ensure optimal operation.
               </p>
             </div>
@@ -446,7 +453,7 @@ const HVACSystemCleaning = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-3">Do you offer emergency service?</h3>
               <p className="text-gray-600">
-                Yes, we offer emergency HVAC cleaning services for urgent situations such as mold contamination, 
+                Yes, we offer emergency HVAC cleaning services for urgent situations such as mold contamination,
                 water damage, or severe air quality issues. Contact us immediately for same-day service availability.
               </p>
             </div>
@@ -459,7 +466,7 @@ const HVACSystemCleaning = () => {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Improve Your HVAC System Performance Today</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Experience the benefits of professional HVAC system cleaning. Contact us for a free consultation 
+            Experience the benefits of professional HVAC system cleaning. Contact us for a free consultation
             and quote to restore your system to peak performance.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

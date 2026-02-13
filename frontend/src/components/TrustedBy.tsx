@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import ResponsiveImage from './ResponsiveImage';
 
 // Updated client list with available logo files
 const clients = [
@@ -37,31 +38,15 @@ const clients = [
     name: 'Pure Air California',
     logo: '/logo/pac-logo.png',
     alt: 'Pure Air California logo',
-  },
-  // Placeholder for remaining logos - will use name fallback when images fail to load
-  {
-    name: 'Beverly Hills Hotel',
-    logo: '/placeholder.svg',
-    alt: 'Beverly Hills Hotel logo',
-  },
-  {
-    name: 'Kaiser Permanente',
-    logo: '/placeholder.svg',
-    alt: 'Kaiser Permanente logo',
-  },
-  {
-    name: 'Cedars-Sinai',
-    logo: '/placeholder.svg',
-    alt: 'Cedars-Sinai Medical Center logo',
   }
 ];
 
 const TrustedBy = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
-      transition: { 
+      transition: {
         staggerChildren: 0.1,
         delayChildren: 0.2
       }
@@ -70,8 +55,8 @@ const TrustedBy = () => {
 
   const logoVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: { duration: 0.5 }
     }
@@ -81,7 +66,7 @@ const TrustedBy = () => {
     <section className="py-8 bg-white border-b border-gray-100">
       <div className="container mx-auto px-4">
         <h2 className="text-center text-lg font-semibold text-gray-700 mb-6 tracking-wide uppercase">Trusted by Leading Brands</h2>
-        <motion.div 
+        <motion.div
           className="flex flex-wrap justify-center items-center gap-8 md:gap-12"
           variants={containerVariants}
           initial="hidden"
@@ -101,17 +86,11 @@ const TrustedBy = () => {
                 title={client.name}
                 tabIndex={0}
               >
-                <img 
-                  src={client.logo} 
-                  alt={client.alt} 
-                  className="h-8 md:h-10 w-auto mx-auto object-contain" 
+                <ResponsiveImage
+                  src={client.logo}
+                  alt={client.alt}
+                  className="h-8 md:h-10 w-auto mx-auto object-contain"
                   loading="lazy"
-                  onError={(e) => {
-                    // Fallback to a colored div with text if image fails to load
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    target.parentElement!.innerHTML = `<div class="h-8 md:h-10 w-24 bg-gray-100 rounded flex items-center justify-center text-xs font-medium text-gray-500">${client.name}</div>`;
-                  }}
                 />
               </div>
             </motion.div>

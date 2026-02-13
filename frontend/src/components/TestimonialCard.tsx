@@ -1,5 +1,6 @@
 import { Star, Quote } from "lucide-react";
 import { motion } from "framer-motion";
+import ResponsiveImage from "./ResponsiveImage";
 
 type TestimonialCardProps = {
   name: string;
@@ -45,7 +46,7 @@ const TestimonialCard = ({
             transition={{ duration: 0.2 }}
           >
             {image ? (
-              <img src={image} alt={name} className="w-full h-full object-cover" />
+              <ResponsiveImage src={image} alt={name} className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full bg-brand-600 flex items-center justify-center">
                 <span className="text-white text-lg font-semibold">{name.charAt(0)}</span>

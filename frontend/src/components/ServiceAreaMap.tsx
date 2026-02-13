@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { MapPin, Clock, Car, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -62,14 +62,14 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
   const officeLocationRef = useRef({ lat: 34.0984, lng: -118.3301 }); // LA center
   const scriptElementRef = useRef<HTMLScriptElement | null>(null);
   const scriptLoadedRef = useRef<boolean>(false);
-  
+
   // Function to initialize map
-  const initializeMap = () => {
+  const initializeMap = useCallback(() => {
     if (!window.google?.maps || !mapContainerRef.current) {
       setLoadError(true);
       return;
     }
-    
+
     try {
       // Create map
       const mapOptions = {
@@ -95,16 +95,16 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
           }
         ]
       };
-      
+
       // Create map instance
       mapInstanceRef.current = new window.google.maps.Map(
         mapContainerRef.current,
         mapOptions
       );
-      
+
       // Check if AdvancedMarkerElement is available - preferred method
       const useAdvancedMarker = !!window.google.maps.marker?.AdvancedMarkerElement;
-      
+
       // Add office marker
       if (useAdvancedMarker) {
         try {
@@ -116,19 +116,19 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
               </svg>
             </div>
           `;
-          
+
           const officeMarker = new window.google.maps.marker.AdvancedMarkerElement({
             position: officeLocationRef.current,
             map: mapInstanceRef.current,
             content: markerElement,
             title: "Pure Air California Office"
           });
-          
+
           // Store marker reference for cleanup
-          markersRef.current.push({ 
-            marker: officeMarker, 
+          markersRef.current.push({
+            marker: officeMarker,
             infoWindow: null,
-            areaName: "office" 
+            areaName: "office"
           });
         } catch (error) {
           // Fallback to regular marker
@@ -143,12 +143,12 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
             },
             title: "Pure Air California Office"
           });
-          
+
           // Store marker reference for cleanup
-          markersRef.current.push({ 
-            marker: officeMarker, 
+          markersRef.current.push({
+            marker: officeMarker,
             infoWindow: null,
-            areaName: "office" 
+            areaName: "office"
           });
         }
       } else {
@@ -164,19 +164,19 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
           },
           title: "Pure Air California Office"
         });
-        
+
         // Store marker reference for cleanup
-        markersRef.current.push({ 
-          marker: officeMarker, 
+        markersRef.current.push({
+          marker: officeMarker,
           infoWindow: null,
-          areaName: "office" 
+          areaName: "office"
         });
       }
-      
+
       // Add area markers
       serviceAreas.forEach(area => {
         let marker;
-        
+
         if (useAdvancedMarker) {
           try {
             const markerElement = document.createElement('div');
@@ -187,7 +187,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
                 </svg>
               </div>
             `;
-            
+
             marker = new window.google.maps.marker.AdvancedMarkerElement({
               position: area.coordinates,
               map: mapInstanceRef.current,
@@ -222,7 +222,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
             title: area.name
           });
         }
-        
+
         // Create info window
         const infoWindow = new window.google.maps.InfoWindow({
           content: `
@@ -235,7 +235,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
             </div>
           `
         });
-        
+
         // Add click listener (works for both marker types)
         try {
           marker.addListener('click', () => {
@@ -243,7 +243,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
             markersRef.current.forEach(m => {
               if (m.infoWindow) m.infoWindow.close();
             });
-            
+
             // Open the info window - handle differences between marker types
             if (useAdvancedMarker && 'position' in marker) {
               infoWindow.open({
@@ -257,21 +257,21 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
         } catch (error) {
           // Error adding marker click listener
         }
-        
+
         // Store marker reference
-        markersRef.current.push({ 
-          marker, 
-          infoWindow, 
-          areaName: area.name 
+        markersRef.current.push({
+          marker,
+          infoWindow,
+          areaName: area.name
         });
       });
-      
+
       setMapLoaded(true);
-          } catch (error) {
-        setLoadError(true);
-      }
-  };
-  
+    } catch (error) {
+      setLoadError(true);
+    }
+  }, []);
+
   // Function to load Google Maps API
   const loadGoogleMapsAPI = useCallback(() => {
     try {
@@ -283,29 +283,29 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
           cleanupMapResources();
         };
       }
-      
+
       // Already attempted to load script but failed
       if (scriptLoadedRef.current) {
         setLoadError(true);
         return;
       }
-      
+
       // Set script as loaded to prevent duplicate attempts
       scriptLoadedRef.current = true;
-      
+
       // Create a unique callback name
       const callbackName = 'initializeGoogleMapsCallback';
       window[callbackName] = initializeMap;
-      
+
       // Get API key from environment variable
-          const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-    
-    if (!apiKey) {
-      // Google Maps API key is missing - show fallback UI
-      setLoadError(true);
-      return;
-    }
-      
+      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+      if (!apiKey) {
+        // Google Maps API key is missing - show fallback UI
+        setLoadError(true);
+        return;
+      }
+
       // Create script element
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=${callbackName}&loading=async`;
@@ -313,25 +313,25 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
       script.defer = true;
       script.id = 'google-maps-api-script';
       script.crossOrigin = 'anonymous'; // Add crossOrigin attribute
-      
+
       script.onerror = (error) => {
         setLoadError(true);
         // Clean up callback
         if (window[callbackName]) delete window[callbackName];
       };
-      
+
       // Store reference to the script element for cleanup
       scriptElementRef.current = script;
       document.head.appendChild(script);
-      
+
       return () => {
         cleanupMapResources();
-        
+
         // Clean up script and globals
         if (scriptElementRef.current && document.head.contains(scriptElementRef.current)) {
           document.head.removeChild(scriptElementRef.current);
         }
-        
+
         // Clean up callback
         if (window[callbackName]) delete window[callbackName];
       };
@@ -339,8 +339,8 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
       setLoadError(true);
       return undefined;
     }
-  }, []);
-  
+  }, [initializeMap]);
+
   // Helper function to clean up map resources
   const cleanupMapResources = () => {
     // Clean up markers and listeners
@@ -352,13 +352,13 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
             if (typeof m.marker.setMap === 'function') {
               m.marker.setMap(null);
             }
-            
+
             // Remove all event listeners
             if (window.google?.maps?.event?.clearInstanceListeners) {
               window.google.maps.event.clearInstanceListeners(m.marker);
             }
           }
-          
+
           // Close and clean up info windows
           if (m.infoWindow) {
             m.infoWindow.close();
@@ -371,25 +371,25 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
         }
       });
     }
-    
+
     // Clear marker references
     markersRef.current = [];
-    
+
     // Clear map instance
     mapInstanceRef.current = null;
   };
-  
+
   // Effect to load map
   useEffect(() => {
     // Create and store a cleanup function
     let cleanup: (() => void) | undefined;
-    
+
     try {
       cleanup = loadGoogleMapsAPI();
     } catch (e) {
       setLoadError(true);
     }
-    
+
     // Return cleanup function
     return () => {
       if (typeof cleanup === 'function') {
@@ -399,35 +399,35 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
       }
     };
   }, [loadGoogleMapsAPI]);
-  
+
   // Effect to update selected area
   useEffect(() => {
     if (!selectedArea || !mapInstanceRef.current || !window.google?.maps) return;
-    
+
     const selectedMarker = markersRef.current.find(
       m => m.areaName === selectedArea
     );
-    
+
     if (selectedMarker) {
       try {
         // Close all info windows
         markersRef.current.forEach(m => {
           if (m.infoWindow) m.infoWindow.close();
         });
-        
+
         // Handle both marker types
         const marker = selectedMarker.marker;
         const infoWindow = selectedMarker.infoWindow;
-        
+
         if (infoWindow) {
           // Check if it's a regular marker or advanced marker
           if (typeof marker.getPosition === 'function') {
             // Regular Marker
             infoWindow.open(mapInstanceRef.current, marker);
-            
+
             // Pan to marker
             mapInstanceRef.current.panTo(marker.getPosition());
-            
+
             // Bounce animation if supported
             if (window.google.maps.Animation && typeof marker.setAnimation === 'function') {
               marker.setAnimation(window.google.maps.Animation.BOUNCE);
@@ -443,7 +443,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
               anchor: marker,
               map: mapInstanceRef.current
             });
-            
+
             // Pan to marker
             mapInstanceRef.current.panTo(marker.position);
           }
@@ -453,7 +453,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
       }
     }
   }, [selectedArea]);
-  
+
   // Render fallback UI if map fails to load
   if (loadError) {
     return (
@@ -463,8 +463,8 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
         <p className="text-gray-600 text-center mb-4">
           We couldn't load the map. This may be due to an ad blocker or network issue.
         </p>
-        <a 
-          href="tel:2137924145" 
+        <a
+          href="tel:2137924145"
           className="inline-flex items-center gap-2 bg-brand-600 text-white px-4 py-2 rounded-md hover:bg-brand-700 transition-colors"
         >
           <MapPin className="w-4 h-4" />
@@ -473,11 +473,11 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
       </div>
     );
   }
-  
+
   return (
     <div className="relative h-full">
       <div ref={mapContainerRef} className="h-full w-full" />
-      
+
       {!mapLoaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-50 bg-opacity-80">
           <div className="text-center">
@@ -508,27 +508,26 @@ const ServiceAreaMap = () => {
           these premium locations.
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Map Container */}
-          <div className="bg-gray-100 rounded-lg overflow-hidden h-[500px] relative shadow-lg">
+          <div className="bg-gray-100 rounded-lg overflow-hidden h-[350px] sm:h-[400px] lg:h-[500px] relative shadow-lg order-2 lg:order-1">
             <GoogleMap selectedArea={selectedArea} />
           </div>
 
           {/* Area Information */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 order-1 lg:order-2">
             {serviceAreas.map((area) => (
               <motion.div
                 key={area.name}
-                className={`p-6 rounded-lg border ${
-                  selectedArea === area.name
-                    ? 'border-brand-600 bg-brand-50 shadow-md'
-                    : 'border-gray-200 hover:border-brand-300 hover:bg-brand-50/50'
-                } transition-all duration-200 cursor-pointer`}
+                className={`p-6 rounded-lg border ${selectedArea === area.name
+                  ? 'border-brand-600 bg-brand-50 shadow-md'
+                  : 'border-gray-200 hover:border-brand-300 hover:bg-brand-50/50'
+                  } transition-all duration-200 cursor-pointer`}
                 onClick={() => setSelectedArea(area.name)}
                 whileHover={{ y: -3 }}
-                animate={{ 
+                animate={{
                   scale: selectedArea === area.name ? 1.02 : 1,
-                  transition: { duration: 0.2 } 
+                  transition: { duration: 0.2 }
                 }}
               >
                 <h3 className="text-xl font-semibold mb-2 flex items-center">

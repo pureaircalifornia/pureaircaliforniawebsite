@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Play, Image } from 'lucide-react';
+import ResponsiveImage from './ResponsiveImage';
 
 const Gallery = () => {
   const [activeTab, setActiveTab] = useState('before-after');
@@ -62,36 +63,33 @@ const Gallery = () => {
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">Our Work in Action</h2>
-        
+        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8">Our Work in Action</h2>
+
         {/* Tabs */}
-        <div className="flex justify-center gap-4 mb-8">
+        <div className="flex justify-start sm:justify-center gap-2 sm:gap-4 mb-6 sm:mb-8 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
           <button
-            className={`px-6 py-2 rounded-full ${
-              activeTab === 'before-after'
+            className={`px-4 sm:px-6 py-2 rounded-full whitespace-nowrap text-sm sm:text-base flex-shrink-0 ${activeTab === 'before-after'
                 ? 'bg-brand-600 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
+              }`}
             onClick={() => setActiveTab('before-after')}
           >
             Before & After
           </button>
           <button
-            className={`px-6 py-2 rounded-full ${
-              activeTab === 'process'
+            className={`px-4 sm:px-6 py-2 rounded-full whitespace-nowrap text-sm sm:text-base flex-shrink-0 ${activeTab === 'process'
                 ? 'bg-brand-600 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
+              }`}
             onClick={() => setActiveTab('process')}
           >
             Our Process
           </button>
           <button
-            className={`px-6 py-2 rounded-full ${
-              activeTab === 'videos'
+            className={`px-4 sm:px-6 py-2 rounded-full whitespace-nowrap text-sm sm:text-base flex-shrink-0 ${activeTab === 'videos'
                 ? 'bg-brand-600 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
+              }`}
             onClick={() => setActiveTab('videos')}
           >
             Videos
@@ -105,13 +103,13 @@ const Gallery = () => {
               {beforeAfterPhotos.map((photo, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden">
                   <div className="relative h-64">
-                    <img
+                    <ResponsiveImage
                       src={photo.before}
                       alt={`Before cleaning - ${photo.description}`}
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                     />
-                    <img
+                    <ResponsiveImage
                       src={photo.after}
                       alt={`After cleaning - ${photo.description}`}
                       className="absolute inset-0 w-full h-full object-cover opacity-0 hover:opacity-100 transition-opacity duration-300"
@@ -131,7 +129,7 @@ const Gallery = () => {
               {processPhotos.map((photo, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden">
                   <div className="relative h-48">
-                    <img
+                    <ResponsiveImage
                       src={photo.image}
                       alt={`${photo.title} - ${photo.description}`}
                       className="w-full h-full object-cover"
@@ -152,7 +150,7 @@ const Gallery = () => {
               {videos.map((video, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden">
                   <div className="relative h-64">
-                    <img
+                    <ResponsiveImage
                       src={video.thumbnail}
                       alt={`${video.title} - ${video.description}`}
                       className="w-full h-full object-cover"

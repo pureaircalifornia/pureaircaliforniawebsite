@@ -3,10 +3,10 @@ export const localSEO = {
   business: {
     name: 'Pure Air California',
     address: {
-      streetAddress: '123 Main Street',
+      streetAddress: '1550 N Poinsettia Pl',
       addressLocality: 'Los Angeles',
       addressRegion: 'CA',
-      postalCode: '90001',
+      postalCode: '90046',
       addressCountry: 'US'
     },
     telephone: '+12137924145',
@@ -113,10 +113,29 @@ export const localSEO = {
     }
   },
 
+  // Flattened Service Areas for Schema
+  serviceAreas: [
+    { name: 'Los Angeles' },
+    { name: 'Beverly Hills' },
+    { name: 'Santa Monica' },
+    { name: 'Pasadena' },
+    { name: 'Glendale' },
+    { name: 'Burbank' },
+    { name: 'West Hollywood' },
+    { name: 'Culver City' },
+    { name: 'North Hollywood' },
+    { name: 'Sherman Oaks' },
+    { name: 'Encino' },
+    { name: 'Studio City' },
+    { name: 'Van Nuys' },
+    { name: 'Woodland Hills' }
+  ],
+
   // Enhanced Local Citations
+  // Note: Set these IDs in your .env file (VITE_GMB_ID, VITE_YELP_ID, etc.)
   citations: {
     googleMyBusiness: {
-      id: 'YOUR_GMB_ID',
+      id: import.meta.env.VITE_GMB_ID || '',
       url: 'https://g.page/pureaircalifornia',
       categories: [
         'Home Services',
@@ -130,7 +149,7 @@ export const localSEO = {
       }
     },
     yelp: {
-      id: 'YOUR_YELP_ID',
+      id: import.meta.env.VITE_YELP_ID || '',
       url: 'https://www.yelp.com/biz/pure-air-california',
       categories: [
         'Home Services',
@@ -139,13 +158,13 @@ export const localSEO = {
       ]
     },
     bbb: {
-      id: 'YOUR_BBB_ID',
+      id: import.meta.env.VITE_BBB_ID || '',
       url: 'https://www.bbb.org/pureaircalifornia',
       accreditation: true,
       rating: 'A+'
     },
     angiesList: {
-      id: 'YOUR_ANGIES_LIST_ID',
+      id: import.meta.env.VITE_ANGIES_LIST_ID || '',
       url: 'https://www.angieslist.com/pureaircalifornia',
       categories: [
         'Home Services',

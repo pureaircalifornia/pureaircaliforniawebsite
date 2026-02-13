@@ -4,9 +4,10 @@ import { serviceSchema } from '@/utils/seo/serviceSchema';
 
 interface SchemaMarkupProps {
   serviceType?: 'airDuctCleaning' | 'dryerVentCleaning' | 'moldRemoval';
+  schema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
-const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ serviceType }) => {
+const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ serviceType, schema }) => {
   return (
     <>
       {/* Local Business Schema */}
@@ -15,7 +16,7 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ serviceType }) => {
           '@context': 'https://schema.org',
           '@type': 'LocalBusiness',
           name: localSEO.business.name,
-          image: 'https://pureaircalifornia.com/logo.png',
+          image: 'https://www.pureaircalifornia.com/logo/pac-logo.png',
           '@id': 'https://pureaircalifornia.com/#business',
           url: 'https://pureaircalifornia.com',
           telephone: localSEO.business.telephone,
@@ -59,10 +60,10 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ serviceType }) => {
           '@type': 'AggregateRating',
           '@id': 'https://pureaircalifornia.com/#aggregateRating',
           ratingValue: 4.9,
-          reviewCount: 500,
+          reviewCount: 1200,
           bestRating: 5,
           worstRating: 1,
-          ratingExplanation: 'Based on 500+ customer reviews'
+          ratingExplanation: 'Based on 1,200+ customer reviews on Google'
         })}
       </script>
 
@@ -121,6 +122,12 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ serviceType }) => {
           serviceType: 'Air Duct Cleaning, Dryer Vent Cleaning, Mold Removal'
         })}
       </script>
+      {/* Custom Schema */}
+      {schema && (
+        <script type="application/ld+json">
+          {JSON.stringify(schema)}
+        </script>
+      )}
     </>
   );
 };

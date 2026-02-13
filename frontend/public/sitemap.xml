@@ -1,28 +1,284 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
   <url>
-    <loc>https://pureaircalifornia.com/</loc>
+    <loc>https://www.pureaircalifornia.com/</loc>
+    <lastmod>2026-01-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Core Pages -->
   <url>
-    <loc>https://pureaircalifornia.com/services</loc>
+    <loc>https://www.pureaircalifornia.com/services</loc>
+    <lastmod>2026-01-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://pureaircalifornia.com/locations</loc>
+    <loc>https://www.pureaircalifornia.com/locations</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/about</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/contact</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/quote</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/health-benefits</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Service Pages -->
+  <url>
+    <loc>https://www.pureaircalifornia.com/services/residential-air-duct-cleaning</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/services/commercial-air-duct-cleaning</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/services/residential-dryer-vent-cleaning</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/services/commercial-dryer-vent-cleaning</loc>
+    <lastmod>2026-01-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://pureaircalifornia.com/contact</loc>
+    <loc>https://www.pureaircalifornia.com/services/hvac-system-cleaning</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/services/dryer-vent-maintenance-program</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/services/residential-electrostatic-filter</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/services/commercial-electrostatic-filter</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Location Pages (53 cities) -->
+  <url><loc>https://www.pureaircalifornia.com/locations/beverly-hills</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/glendale</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/malibu</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/century-city</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/hollywood</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/downtown-la</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/ventura</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/pasadena</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/burbank</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/studio-city</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/encino</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/tarzana</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/reseda</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/canoga-park</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/woodland-hills</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/calabasas</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/valley-village</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/van-nuys</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/panorama-city</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/northridge</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/sun-valley</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/central-la</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/pacific-palisades</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/brentwood</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/los-feliz</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/culver-city</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/west-hollywood</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/chatsworth</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/laurel-canyon</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/fairfax</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/larchmont</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/koreatown</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/west-la</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/westwood</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/north-of-montana</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/sawtelle</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/beverly-glen</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/mid-wilshire</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/sherman-oaks</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/encino-village</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/lake-balboa</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/valley-glen</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/magnolia-park</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/toluca-lake</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/sherwood-forest</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/winnetka</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/granada-hills</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/mission-hills</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/porter-ranch</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/north-hollywood</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/sepulveda-basin</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/hidden-hills</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/deer-lake-highlands</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pureaircalifornia.com/locations/santa-monica</loc><lastmod>2026-01-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Industry Pages -->
+  <url>
+    <loc>https://www.pureaircalifornia.com/industries/healthcare</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/industries/hospitality</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/industries/restaurants</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/industries/education</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/industries/retail</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/industries/manufacturing</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/industries/commercial-real-estate</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Landing Pages -->
+  <url>
+    <loc>https://www.pureaircalifornia.com/dryer-safety</loc>
+    <lastmod>2026-01-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://pureaircalifornia.com/blog</loc>
+    <loc>https://www.pureaircalifornia.com/compare</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/commercial-services</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog -->
+  <url>
+    <loc>https://www.pureaircalifornia.com/blog</loc>
+    <lastmod>2026-01-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>
+  
+  <!-- Individual Blog Posts -->
+  <url>
+    <loc>https://www.pureaircalifornia.com/blog/air-duct-cleaning-faq</loc>
+    <lastmod>2026-01-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/blog/clean-air-ducts-allergy-relief</loc>
+    <lastmod>2026-01-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/blog/commercial-indoor-air-quality-guide</loc>
+    <lastmod>2026-01-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/blog/dryer-vent-safety-guide</loc>
+    <lastmod>2026-01-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/blog/health-benefits-air-duct-cleaning</loc>
+    <lastmod>2026-01-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/blog/importance-of-regular-air-duct-cleaning</loc>
+    <lastmod>2026-01-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/blog/signs-air-ducts-need-cleaning</loc>
+    <lastmod>2026-01-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://www.pureaircalifornia.com/privacy-policy</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.pureaircalifornia.com/terms-of-service</loc>
+    <lastmod>2026-01-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

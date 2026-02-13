@@ -10,9 +10,9 @@ const Hero = () => {
       {/* Soft trust-focused background */}
       <div className="absolute inset-0 z-0">
         <ResponsiveImage
-          src="/images/hero/placeholder.jpg"
-          alt="Calm blue background representing clean, healthy air"
-          className="w-full h-full opacity-35"
+          src="/images/hero/california-nature-v2.png"
+          alt="Breathtaking California nature landscape representing clean air"
+          className="w-full h-full object-cover opacity-60"
           loading="eager"
           width={1920}
           height={1080}
@@ -23,7 +23,10 @@ const Hero = () => {
       {/* Hero content */}
       <div className="container mx-auto px-4 py-24 md:py-36 relative z-10">
         <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+          <h1
+            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
+            style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}
+          >
             Feel Safe. Breathe Easy.
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-white/90">

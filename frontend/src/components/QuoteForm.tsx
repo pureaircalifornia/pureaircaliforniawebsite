@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Shield, Clock, CheckCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import { submitFormWithBackend } from '@/utils/api';
+import { trackFormSubmission, trackFormStep, trackPhoneCall } from '@/utils/analytics';
 
 type FormData = {
   service: string;
@@ -54,10 +56,35 @@ const QuoteForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Create the email data object for the quote request
+
+    // Track form submission conversion for Google Ads
+    trackFormSubmission('quote_form', {
+      service: formData.service,
+      propertyType: formData.propertyType,
+      squareFootage: formData.squareFootage,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+    });
+
+    // First, save to backend (primary storage)
+    const backendResult = await submitFormWithBackend({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+      service: formData.service,
+      property_type: formData.propertyType,
+      square_footage: formData.squareFootage,
+      address: formData.address,
+      preferred_date: formData.preferredDate,
+      source: 'quote_form',
+    });
+
+    // Then, try to send email notification (secondary)
     const emailData = {
-      to_email: 'lou@pureaircalifornia.com',
+      to_email: 'info@pureaircalifornia.com',
       service: formData.service,
       property_type: formData.propertyType,
       square_footage: formData.squareFootage,
@@ -69,45 +96,39 @@ const QuoteForm = () => {
       preferred_date: formData.preferredDate,
       subject: `Quote Request: ${formData.service} - ${formData.name}`
     };
-    
+
     try {
-      // Check if environment variables are available
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_QUOTE_TEMPLATE_ID || import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
       const userId = import.meta.env.VITE_EMAILJS_USER_ID;
-      
-      if (!serviceId || !templateId || !userId) {
-        throw new Error('EmailJS configuration missing. Please check your .env file.');
+
+      if (serviceId && templateId && userId) {
+        await emailjs.send(serviceId, templateId, emailData, userId);
       }
-      
-      console.log('Sending email with EmailJS:', { serviceId, templateId, userId });
-      console.log('Email data:', emailData);
-      
-      // Send email using EmailJS
-      const result = await emailjs.send(serviceId, templateId, emailData, userId);
-      console.log('Email sent successfully:', result);
-      
-      // Show success message
-      alert('Thank you for your quote request! We will contact you shortly.');
-      
-      // Reset form
-      setStep(1);
-      setFormData({
-        service: '',
-        propertyType: '',
-        squareFootage: '',
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
-        message: '',
-        preferredDate: '',
-      });
-    } catch (error) {
-      console.error('Error sending email:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-      alert(`There was a problem sending your request: ${errorMessage}. Please try again or call us at (213) 792-4145.`);
+    } catch (emailError) {
+      // Email notification failed, but lead is saved in backend
     }
+
+    // Show success if backend saved OR if we got this far
+    if (backendResult.success) {
+      alert('Thank you for your quote request! We will contact you shortly.');
+    } else {
+      alert('Thank you for your quote request! We will contact you shortly. (Note: Please call us at (213) 792-4145 if you don\'t hear back within 24 hours.)');
+    }
+
+    // Reset form
+    setStep(1);
+    setFormData({
+      service: '',
+      propertyType: '',
+      squareFootage: '',
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      message: '',
+      preferredDate: '',
+    });
   };
 
   const renderStep = () => {
@@ -246,17 +267,15 @@ const QuoteForm = () => {
           {[1, 2, 3].map((num) => (
             <div key={num} className="flex items-center">
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  step >= num ? 'bg-brand-600 text-white' : 'bg-gray-200'
-                }`}
+                className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= num ? 'bg-brand-600 text-white' : 'bg-gray-200'
+                  }`}
               >
                 {num}
               </div>
               {num < 3 && (
                 <div
-                  className={`h-1 w-24 ${
-                    step > num ? 'bg-brand-600' : 'bg-gray-200'
-                  }`}
+                  className={`h-1 w-24 ${step > num ? 'bg-brand-600' : 'bg-gray-200'
+                    }`}
                 />
               )}
             </div>
@@ -296,7 +315,10 @@ const QuoteForm = () => {
             <Button
               type="button"
               variant="outline"
-              onClick={() => setStep((prev) => prev - 1)}
+              onClick={() => {
+                trackFormStep('quote_form', step - 1, step === 2 ? 'Service Details' : 'Contact Info');
+                setStep((prev) => prev - 1);
+              }}
             >
               Previous
             </Button>
@@ -305,7 +327,10 @@ const QuoteForm = () => {
             <Button
               type="button"
               className="ml-auto"
-              onClick={() => setStep((prev) => prev + 1)}
+              onClick={() => {
+                trackFormStep('quote_form', step + 1, step === 1 ? 'Contact Info' : 'Schedule');
+                setStep((prev) => prev + 1);
+              }}
             >
               Next
             </Button>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Shield, Award, Star, CheckCircle, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
+import ResponsiveImage from './ResponsiveImage';
 
 const TrustBadges = () => {
   const clientLogos = [
@@ -25,7 +26,7 @@ const TrustBadges = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-6">
           <div className="text-center md:text-left">
-            <p className="text-2xl font-bold text-brand-600 mb-2">138K+ Satisfied Customers</p>
+            <p className="text-2xl font-bold text-brand-600 mb-2">184K+ Satisfied Customers</p>
             <p className="text-gray-600">Trusted by Los Angeles homeowners and businesses</p>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
@@ -39,11 +40,11 @@ const TrustBadges = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Certifications */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           {certifications.map((cert, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               className="flex flex-col items-center bg-gray-50 p-4 rounded-lg shadow-sm"
               initial={{ opacity: 0, y: 20 }}
@@ -56,14 +57,14 @@ const TrustBadges = () => {
             </motion.div>
           ))}
         </div>
-        
+
         {/* Client Logos */}
         <div className="pt-4 border-t border-gray-100">
           <p className="text-center text-sm font-medium text-gray-500 mb-4">Trusted by leading brands</p>
           <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10">
             {clientLogos.map((client, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 className="h-12 grayscale hover:grayscale-0 transition-all duration-300"
                 whileHover={{ scale: 1.05 }}
                 initial={{ opacity: 0 }}
@@ -71,9 +72,9 @@ const TrustBadges = () => {
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <img 
-                  src={client.logo} 
-                  alt={client.alt} 
+                <ResponsiveImage
+                  src={client.logo}
+                  alt={client.alt}
                   className="h-full w-auto object-contain"
                 />
               </motion.div>

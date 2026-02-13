@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Calendar, User, Tag } from 'lucide-react';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 const CleanAirDuctsAllergyRelief = () => {
   return (
@@ -38,8 +39,8 @@ const CleanAirDuctsAllergyRelief = () => {
               </div>
             </div>
             
-            <img 
-              src="https://images.unsplash.com/photo-1599619585752-c3edb42a414c" 
+            <ResponsiveImage 
+              src="/images/blog/person-with-allergies.jpg" 
               alt="Person with allergies" 
               className="w-full h-auto rounded-lg mb-8 object-cover"
               style={{ maxHeight: '400px' }}

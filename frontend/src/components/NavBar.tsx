@@ -1,676 +1,356 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Phone, Menu, X, ChevronDown, ChevronRight, Shield, Clock } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Phone, Menu, X, ChevronDown, ChevronRight, Shield, Clock, MapPin, Star } from 'lucide-react';
+import { Button } from './ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import ResponsiveImage from './ResponsiveImage';
+import { trackPhoneCall, trackCTAClick } from '@/utils/analytics';
 
-// Cloud background component for header
-const CloudBackground = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {/* Animated cloud elements */}
-    <motion.div
-      className="absolute top-2 left-10 opacity-10"
-      animate={{
-        x: [0, 20, 0],
-        opacity: [0.1, 0.15, 0.1]
-      }}
-      transition={{
-        duration: 8,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }}
-    >
-      <div className="w-32 h-16 bg-white rounded-full blur-sm"></div>
-      <div className="absolute -top-2 -left-4 w-20 h-12 bg-white rounded-full blur-sm"></div>
-      <div className="absolute -top-1 left-8 w-24 h-14 bg-white rounded-full blur-sm"></div>
-    </motion.div>
+interface NavBarProps {
+  alwaysOpaque?: boolean;
+}
 
-    <motion.div
-      className="absolute top-4 right-16 opacity-8"
-      animate={{
-        x: [0, -15, 0],
-        opacity: [0.08, 0.12, 0.08]
-      }}
-      transition={{
-        duration: 10,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: 2
-      }}
-    >
-      <div className="w-28 h-14 bg-white rounded-full blur-sm"></div>
-      <div className="absolute -top-1 left-6 w-18 h-10 bg-white rounded-full blur-sm"></div>
-    </motion.div>
-
-    <motion.div
-      className="absolute top-6 left-1/3 opacity-6"
-      animate={{
-        x: [0, 25, 0],
-        opacity: [0.06, 0.1, 0.06]
-      }}
-      transition={{
-        duration: 12,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: 4
-      }}
-    >
-      <div className="w-36 h-18 bg-white rounded-full blur-sm"></div>
-      <div className="absolute -top-2 left-4 w-22 h-12 bg-white rounded-full blur-sm"></div>
-      <div className="absolute -top-1 -left-2 w-16 h-8 bg-white rounded-full blur-sm"></div>
-    </motion.div>
-  </div>
-);
-
-const NavBar = () => {
+const NavBar = ({ alwaysOpaque = false }: NavBarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const isOpaque = alwaysOpaque || isScrolled;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isIndustriesDropdownOpen, setIsIndustriesDropdownOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
   const [openMobileSubmenu, setOpenMobileSubmenu] = useState<string | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleIndustriesMouseEnter = () => {
-    if (dropdownTimeout) {
-      clearTimeout(dropdownTimeout);
-      setDropdownTimeout(null);
-    }
-    setIsIndustriesDropdownOpen(true);
-    setIsServicesDropdownOpen(false);
-  };
-
-  const handleIndustriesMouseLeave = () => {
-    const timeout = setTimeout(() => {
-      setIsIndustriesDropdownOpen(false);
-    }, 300); // 300ms delay before closing
-    setDropdownTimeout(timeout);
-  };
-
-  const handleServicesMouseEnter = () => {
-    if (dropdownTimeout) {
-      clearTimeout(dropdownTimeout);
-      setDropdownTimeout(null);
-    }
-    setIsServicesDropdownOpen(true);
-    setIsIndustriesDropdownOpen(false);
-  };
-
-  const handleServicesMouseLeave = () => {
-    const timeout = setTimeout(() => {
-      setIsServicesDropdownOpen(false);
-    }, 300); // 300ms delay before closing
-    setDropdownTimeout(timeout);
-  };
-
-  const handleDropdownMouseEnter = () => {
-    if (dropdownTimeout) {
-      clearTimeout(dropdownTimeout);
-      setDropdownTimeout(null);
-    }
-  };
-
-  const handleDropdownMouseLeave = () => {
-    const timeout = setTimeout(() => {
-      setIsIndustriesDropdownOpen(false);
-      setIsServicesDropdownOpen(false);
-    }, 300);
-    setDropdownTimeout(timeout);
-  };
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const headerOffset = 100; // Adjust this value based on your header height
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId?: string, targetPath?: string) => {
-    const currentPath = window.location.pathname;
-    // If a sectionId is provided and we're on the correct page, scroll to section
-    if (sectionId && currentPath === (targetPath || currentPath)) {
-      e.preventDefault();
-      scrollToSection(sectionId);
-    }
-    // If a sectionId is provided and we're NOT on the correct page, let the router handle navigation (do not preventDefault)
-    // For all other links, let the router handle navigation
-  };
-
-  // Handle hash changes for direct URL navigation
+  // Close mobile menu when route changes
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.slice(1);
-      if (hash) {
-        scrollToSection(hash);
-      }
-    };
+    setIsMobileMenuOpen(false);
+  }, [location]);
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
-  // Animation variants
-  const navbarVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        duration: 0.4,
-        when: "beforeChildren",
-        staggerChildren: 0.1
-      }
+  const handleDropdownHover = (
+    setter: React.Dispatch<React.SetStateAction<boolean>>,
+    isOpen: boolean
+  ) => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    if (isOpen) {
+      // Close other dropdowns
+      if (setter === setIsIndustriesDropdownOpen) setIsServicesDropdownOpen(false);
+      if (setter === setIsServicesDropdownOpen) setIsIndustriesDropdownOpen(false);
+      setter(true);
+    } else {
+      const timeout = setTimeout(() => {
+        setter(false);
+      }, 300);
+      setDropdownTimeout(timeout);
     }
   };
 
   const navItemVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut"
-      }
-    }
+    hidden: { opacity: 0, y: -5 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } }
   };
 
   const dropdownVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: -10,
-      scale: 0.95
-    },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      scale: 1,
-      transition: {
-        duration: 0.3,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    },
-    exit: { 
-      opacity: 0, 
-      y: -10, 
-      scale: 0.95,
-      transition: {
-        duration: 0.2,
-        ease: "easeIn"
-      }
-    }
+    hidden: { opacity: 0, y: 10, scale: 0.95, pointerEvents: 'none' as const },
+    visible: { opacity: 1, y: 0, scale: 1, pointerEvents: 'auto' as const, transition: { duration: 0.2, ease: "easeOut" } },
+    exit: { opacity: 0, y: 5, scale: 0.98, transition: { duration: 0.15, ease: "easeIn" } }
   };
 
-  const mobileMenuVariants = {
-    hidden: { 
-      x: "100%",
-      opacity: 0.4
-    },
-    visible: { 
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.3,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    },
-    exit: { 
-      x: "100%",
-      opacity: 0.4,
-      transition: {
-        duration: 0.25,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    }
-  };
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${isOpaque
+        ? 'bg-white/80 backdrop-blur-2xl border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] py-1'
+        : 'bg-transparent border-transparent py-4'
+        }`}
+    >
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="flex items-center justify-between">
 
-  const logoContainerVariants = {
-    normal: {
-      scale: 1,
-      transition: { duration: 0.3 }
-    },
-    hover: {
-      scale: 1.05,
-      transition: { duration: 0.3 }
-    }
-  };
-
-  return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg py-2' : 'bg-gradient-to-b from-slate-900/80 via-slate-800/60 to-transparent py-4'}`}>
-      {/* Cloud Background - only visible when not scrolled */}
-      {!isScrolled && <CloudBackground />}
-
-      <motion.div
-        className="container mx-auto flex items-center justify-between px-4 relative z-10"
-        initial="hidden"
-        animate="visible"
-        variants={navbarVariants}
-      >
-        <motion.div
-          initial="normal"
-          whileHover="hover"
-          variants={logoContainerVariants}
-        >
-          <Link to="/" className="flex items-center gap-3" onClick={(e) => handleLinkClick(e)}>
-            <div className={`p-1 rounded ${isScrolled ? 'bg-white' : 'bg-transparent'}`}>
-              <img 
-                src="/images/logo/pac-logo.png" 
-                alt="Pure Air California Logo" 
-                className={`h-8 w-auto ${isScrolled ? '' : 'filter brightness-0 invert'}`} 
+          {/* Logo Section */}
+          <Link to="/" className="relative z-50 group">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center gap-2"
+            >
+              <ResponsiveImage
+                src="/logo/pac-logo.png"
+                alt="Pure Air California"
+                className={`h-10 w-auto transition-all duration-300 ${isOpaque ? '' : 'brightness-0 invert'}`}
                 loading="eager"
               />
-            </div>
+            </motion.div>
           </Link>
-        </motion.div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          {[
-            { path: '/', label: 'Home', id: null }
-          ].map((item, index) => (
-            <motion.div key={item.path} variants={navItemVariants}>
-              <Link 
-                to={item.path} 
-                className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} 
-                onClick={(e) => handleLinkClick(e, item.id, item.path)}
-              >
-                {item.label}
-              </Link>
-            </motion.div>
-          ))}
-          
-          {/* Services Dropdown */}
-          <motion.div 
-            className="relative"
-            onMouseEnter={handleServicesMouseEnter}
-            onMouseLeave={handleServicesMouseLeave}
-            variants={navItemVariants}
-          >
-            <Link 
-              to="/services"
-              className={`font-medium hover:text-brand-500 transition flex items-center ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}
-            >
-              Services
-              <motion.div
-                animate={{ rotate: isServicesDropdownOpen ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1"><path d="m6 9 6 6 6-6"/></svg>
-              </motion.div>
-            </Link>
-            
-            <AnimatePresence>
-              {isServicesDropdownOpen && (
-                <motion.div 
-                  className="absolute left-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 overflow-hidden"
-                  onMouseEnter={handleDropdownMouseEnter}
-                  onMouseLeave={handleDropdownMouseLeave}
-                  variants={dropdownVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
+          {/* Desktop Navigation - Centered */}
+          <nav className="hidden lg:flex items-center space-x-1 bg-gray-100/5 backdrop-blur-md rounded-full px-2 py-1 mx-4">
+            {[
+              { path: '/', label: 'Home' },
+              { path: '/about', label: 'About' },
+              { path: '/health-benefits', label: 'Health Benefits' },
+              {
+                label: 'Services',
+                type: 'dropdown',
+                isOpen: isServicesDropdownOpen,
+                setIsOpen: setIsServicesDropdownOpen,
+                items: [
+                  { path: '/services/residential-air-duct-cleaning', label: 'Residential Air Duct Cleaning' },
+                  { path: '/services/commercial-air-duct-cleaning', label: 'Commercial Air Duct Cleaning' },
+                  { path: '/services/hvac-system-cleaning', label: 'HVAC System Cleaning' },
+                  { path: '/services/dryer-vent-maintenance-program', label: 'Dryer Vent Maintenance' },
+                  { path: '/services/residential-dryer-vent-cleaning', label: 'Residential Dryer Vent' },
+                  { path: '/services/commercial-dryer-vent-cleaning', label: 'Commercial Dryer Vent' }
+                ]
+              },
+              {
+                label: 'Industries',
+                type: 'dropdown',
+                isOpen: isIndustriesDropdownOpen,
+                setIsOpen: setIsIndustriesDropdownOpen,
+                items: [
+                  { path: '/industries/healthcare', label: 'Healthcare' },
+                  { path: '/industries/hospitality', label: 'Hospitality' },
+                  { path: '/industries/restaurants', label: 'Restaurants' },
+                  { path: '/industries/education', label: 'Education' },
+                  { path: '/industries/commercial-real-estate', label: 'Commercial Real Estate' } // Fixed label
+                ]
+              },
+              { path: '/locations', label: 'Locations' },
+              { path: '/blog', label: 'Blog' }
+            ].map((item, idx) => (
+              item.type === 'dropdown' ? (
+                <div
+                  key={idx}
+                  className="relative group"
+                  onMouseEnter={() => handleDropdownHover(item.setIsOpen!, true)}
+                  onMouseLeave={() => handleDropdownHover(item.setIsOpen!, false)}
                 >
-                  <div className="py-1" role="menu" aria-orientation="vertical">
-                    {[
-                      { path: '/services/residential-air-duct-cleaning', label: 'Residential Air Duct Cleaning' },
-                      { path: '/services/commercial-air-duct-cleaning', label: 'Commercial Air Duct Cleaning' },
-                      { path: '/services/residential-dryer-vent-cleaning', label: 'Residential Dryer Vent Cleaning' },
-                      { path: '/services/commercial-dryer-vent-cleaning', label: 'Commercial Dryer Vent Cleaning' },
-                      { path: '/services/residential-electrostatic-filter', label: 'Residential Electrostatic Filter' },
-                      { path: '/services/commercial-electrostatic-filter', label: 'Commercial Electrostatic Filter' },
-                      { path: '/services/dryer-vent-maintenance-program', label: 'Dryer Vent Maintenance Program' },
-                      { path: '/services/hvac-system-cleaning', label: 'HVAC System Cleaning' }
-                    ].map((item, index) => (
-                      <motion.div
-                        key={item.path}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ 
-                          delay: index * 0.05,
-                          duration: 0.2
-                        }}
-                      >
-                        <Link 
-                          to={item.path} 
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
-                          onClick={() => setIsServicesDropdownOpen(false)}
-                        >
-                          {item.label}
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-          
-          <motion.div 
-            className="relative"
-            onMouseEnter={handleIndustriesMouseEnter}
-            onMouseLeave={handleIndustriesMouseLeave}
-            variants={navItemVariants}
-          >
-            <button className={`font-medium hover:text-brand-500 transition flex items-center ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`}>
-              Industries
-              <motion.div
-                animate={{ rotate: isIndustriesDropdownOpen ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1"><path d="m6 9 6 6 6-6"/></svg>
-              </motion.div>
-            </button>
-            
-            <AnimatePresence>
-              {isIndustriesDropdownOpen && (
-                <motion.div 
-                  className="absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 overflow-hidden"
-                  onMouseEnter={handleDropdownMouseEnter}
-                  onMouseLeave={handleDropdownMouseLeave}
-                  variants={dropdownVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <div className="py-1" role="menu" aria-orientation="vertical">
-                    {[
-                      { path: '/industries/healthcare', label: 'Healthcare Facilities' },
-                      { path: '/industries/hospitality', label: 'Hospitality' },
-                      { path: '/industries/restaurants', label: 'Restaurants' },
-                      { path: '/industries/education', label: 'Educational Institutions' },
-                      { path: '/industries/retail', label: 'Retail Spaces' },
-                      { path: '/industries/manufacturing', label: 'Manufacturing' }
-                    ].map((item, index) => (
-                      <motion.div
-                        key={item.path}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ 
-                          delay: index * 0.05,
-                          duration: 0.2
-                        }}
-                      >
-                        <Link 
-                          to={item.path} 
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
-                          onClick={() => setIsIndustriesDropdownOpen(false)}
-                        >
-                          {item.label}
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-          
-          <motion.div variants={navItemVariants}>
-            <Link 
-              to="/locations" 
-              className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} 
-            >
-              Locations
-            </Link>
-          </motion.div>
-          
-          {[
-            { path: '/health-benefits', label: 'Health Benefits', id: 'health-benefits' },
-            { path: '/about', label: 'About Us', id: 'about' },
-            { path: '/contact', label: 'Contact', id: 'contact' }
-          ].map((item, index) => (
-            <motion.div key={item.path} variants={navItemVariants}>
-              <Link 
-                to={item.path} 
-                className={`font-medium hover:text-brand-500 transition ${isScrolled ? 'text-gray-700' : 'text-white drop-shadow-md'}`} 
-                onClick={(e) => handleLinkClick(e, item.id, item.path)}
-              >
-                {item.label}
-              </Link>
-            </motion.div>
-          ))}
-        </nav>
+                  <button
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-1
+                      ${isOpaque
+                        ? 'text-gray-700 hover:text-brand-600 hover:bg-brand-50'
+                        : 'text-white hover:text-brand-200 hover:bg-white/10'}`}
+                  >
+                    {item.label}
+                    <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${item.isOpen ? 'rotate-180' : ''}`} />
+                  </button>
 
-        <motion.div className="hidden md:flex items-center space-x-4" variants={navItemVariants}>
-          <a href="tel:2137924145" className="text-decoration-none">
-            <Button variant="ghost" className="flex items-center gap-2 transition-all hover:scale-105">
-              <Phone size={18} />
-              <span className={isScrolled ? "text-gray-800" : "text-white drop-shadow-md"}>
-                (213) 792-4145
-              </span>
+                  <AnimatePresence>
+                    {item.isOpen && (
+                      <motion.div
+                        variants={dropdownVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="absolute top-full left-0 mt-2 w-72 p-2 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-100 ring-1 ring-black/5 overflow-hidden"
+                      >
+                        <div className="flex flex-col gap-1">
+                          {item.items?.map((subItem) => (
+                            <Link
+                              key={subItem.path}
+                              to={subItem.path}
+                              className="block px-4 py-3 text-sm font-medium text-gray-600 hover:text-brand-600 hover:bg-brand-50/80 rounded-xl transition-all duration-200 flex items-center justify-between group"
+                            >
+                              {subItem.label}
+                              <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-200" />
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <Link
+                  key={idx}
+                  to={item.path!}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 relative group
+                    ${isOpaque
+                      ? 'text-gray-700 hover:text-brand-600 hover:bg-brand-50'
+                      : 'text-white hover:text-brand-200 hover:bg-white/10'}`}
+                >
+                  {item.label}
+                  {location.pathname === item.path && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className={`absolute bottom-1.5 left-4 right-4 h-0.5 rounded-full ${isOpaque ? 'bg-brand-600' : 'bg-white'}`}
+                    />
+                  )}
+                </Link>
+              )
+            ))}
+          </nav>
+
+          {/* Right Section: Call to Action */}
+          <div className="flex items-center gap-4 lg:gap-6">
+
+            {/* Phone Number - The Highlight */}
+            <a
+              href="tel:2137924145"
+              onClick={() => trackPhoneCall('navbar_desktop')}
+              className="hidden lg:flex flex-col items-end group text-right"
+            >
+              <div className="hidden xl:flex items-center gap-1.5 mb-0.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                </span>
+                <span className={`text-[10px] font-bold tracking-widest uppercase ${isOpaque ? 'text-sky-600' : 'text-sky-400'}`}>
+                  24/7 Premium Support
+                </span>
+              </div>
+              <div className={`flex items-center gap-2 font-black text-lg xl:text-2xl leading-none transition-all duration-300 ${isOpaque ? 'text-slate-900 group-hover:text-sky-600' : 'text-white group-hover:text-sky-300 drop-shadow-md'}`}>
+                <Phone className={`w-5 h-5 fill-current transition-transform duration-300 group-hover:rotate-12 ${isOpaque ? 'text-sky-500' : 'text-sky-400'}`} />
+                <span>(213) 792-4145</span>
+              </div>
+            </a>
+
+            {/* CTA Button */}
+            <Button
+              className={`hidden md:flex items-center gap-2 rounded-full px-6 py-6 font-bold text-base shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-0.5 ${isOpaque
+                ? 'btn-premium text-white'
+                : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'
+                }`}
+              asChild
+            >
+              <Link to="/quote">
+                Get a Quote
+                <ChevronRight className="w-4 h-4" />
+              </Link>
             </Button>
-          </a>
-          <Button 
-            variant="default" 
-            className="bg-brand-600 hover:bg-brand-700 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
-            asChild
-          >
-            <Link to="/quote">Get a Quote</Link>
-          </Button>
-        </motion.div>
 
-        {/* Mobile menu button */}
-        <motion.button 
-          className="md:hidden p-2 rounded-lg hover:bg-gray-100/10 transition-colors"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-          whileTap={{ scale: 0.95 }}
-        >
-          {isMobileMenuOpen ? (
-            <X className={`h-6 w-6 ${isScrolled ? 'text-gray-800' : 'text-white'}`} />
-          ) : (
-            <Menu className={`h-6 w-6 ${isScrolled ? 'text-gray-800' : 'text-white'}`} />
-          )}
-        </motion.button>
-      </motion.div>
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className={`lg:hidden p-2 rounded-xl transition-colors ${isOpaque ? 'text-gray-800 hover:bg-gray-100' : 'text-white hover:bg-white/20'
+                }`}
+            >
+              <Menu className="w-7 h-7" />
+            </button>
+          </div>
+        </div>
+      </div>
 
-      {/* Enhanced Mobile Navigation */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
-            className={`md:hidden fixed inset-0 bg-white z-40`}
-            style={{ top: '64px' }}
-            variants={mobileMenuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            <div className="h-full overflow-y-auto pb-32">
-              <nav className="px-4 py-2">
-                <div className="space-y-1">
-                  <Link 
-                    to="/" 
-                    className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] lg:hidden"
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed inset-y-0 right-0 w-full max-w-sm bg-white z-[70] shadow-2xl lg:hidden overflow-hidden flex flex-col"
+            >
+              {/* Mobile Menu Header */}
+              <div className="p-5 flex items-center justify-between border-b border-gray-100 bg-gray-50/50">
+                <span className="font-bold text-xl text-gray-900 flex items-center gap-2">
+                  <Star className="w-5 h-5 text-brand-500 fill-brand-500" />
+                  Menu
+                </span>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 rounded-full hover:bg-gray-200/50 transition-colors text-gray-500"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Mobile Menu Content */}
+              <div className="flex-1 overflow-y-auto p-5 space-y-2">
+
+                {/* Primary Nav Links */}
+                {[
+                  { path: '/', label: 'Home' },
+                  { path: '/about', label: 'About Us' },
+                  { path: '/locations', label: 'Service Areas' },
+                  { path: '/health-benefits', label: 'Health Benefits' },
+                  { path: '/blog', label: 'Blog' },
+                ].map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
                     onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between p-3.5 rounded-xl text-gray-700 hover:bg-brand-50 hover:text-brand-700 font-medium transition-all"
                   >
-                    Home
+                    {link.label}
+                    <ChevronRight className="w-4 h-4 text-gray-400" />
                   </Link>
-                  
-                  {/* Services Dropdown */}
-                  <div className="relative">
-                    <button
-                      className="w-full px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg flex items-center justify-between"
-                      onClick={() => setOpenMobileSubmenu(openMobileSubmenu === 'services' ? null : 'services')}
+                ))}
+
+                <hr className="my-4 border-gray-100" />
+
+                {/* Services Section */}
+                <div className="space-y-2">
+                  <div className="px-3.5 text-xs font-bold text-gray-400 uppercase tracking-wider">Services</div>
+                  {[
+                    ['Residential Air Ducts', '/services/residential-air-duct-cleaning'],
+                    ['Commercial Air Ducts', '/services/commercial-air-duct-cleaning'],
+                    ['Dryer Vent Cleaning', '/services/residential-dryer-vent-cleaning'],
+                    ['HVAC Cleaning', '/services/hvac-system-cleaning'],
+                  ].map(([label, path]) => (
+                    <Link
+                      key={path}
+                      to={path}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block p-3.5 rounded-xl text-gray-600 hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-all text-sm font-medium"
                     >
-                      Services
-                      <motion.div
-                        animate={{ rotate: openMobileSubmenu === 'services' ? 180 : 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <ChevronDown className="ml-2 h-5 w-5" />
-                      </motion.div>
-                    </button>
-                    <AnimatePresence>
-                      {openMobileSubmenu === 'services' && (
-                        <motion.div 
-                          className="pl-4 space-y-1 overflow-hidden"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        >
-                          {[
-                            ['Residential Air Duct Cleaning', '/services/residential-air-duct-cleaning'],
-                            ['Commercial Air Duct Cleaning', '/services/commercial-air-duct-cleaning'],
-                            ['Residential Dryer Vent Cleaning', '/services/residential-dryer-vent-cleaning'],
-                            ['Commercial Dryer Vent Cleaning', '/services/commercial-dryer-vent-cleaning'],
-                            ['Dryer Vent Maintenance Program', '/services/dryer-vent-maintenance-program'],
-                            ['Electrostatic Filter Program', '/services/electrostatic-filter-program'],
-                            ['Electrostatic Filter Program', '/services/electrostatic-filter-program']
-                          ].map(([name, path], index) => (
-                            <motion.div
-                              key={path}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: index * 0.05, duration: 0.2 }}
-                            >
-                              <Link
-                                to={path}
-                                className="flex items-center px-4 py-2 text-gray-600 hover:text-brand-600 hover:bg-gray-50 rounded-lg"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                              >
-                                <ChevronRight className="h-4 w-4 mr-2" />
-                                {name}
-                              </Link>
-                            </motion.div>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                  
-                  <Link 
-                    to="/locations" 
-                    className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Locations
-                  </Link>
-
-                  {/* Industries Dropdown */}
-                  <div className="relative">
-                    <button
-                      className="w-full px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg flex items-center justify-between"
-                      onClick={() => setOpenMobileSubmenu(openMobileSubmenu === 'industries' ? null : 'industries')}
-                    >
-                      Industries
-                      <motion.div
-                        animate={{ rotate: openMobileSubmenu === 'industries' ? 180 : 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <ChevronDown className="ml-2 h-5 w-5" />
-                      </motion.div>
-                    </button>
-                    <AnimatePresence>
-                      {openMobileSubmenu === 'industries' && (
-                        <motion.div 
-                          className="pl-4 space-y-1 overflow-hidden"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        >
-                          {[
-                            ['Healthcare Facilities', '/industries/healthcare'],
-                            ['Hospitality', '/industries/hospitality'],
-                            ['Restaurants', '/industries/restaurants'],
-                            ['Educational Institutions', '/industries/education'],
-                            ['Retail Spaces', '/industries/retail'],
-                            ['Manufacturing', '/industries/manufacturing']
-                          ].map(([name, path], index) => (
-                            <motion.div
-                              key={path}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: index * 0.05, duration: 0.2 }}
-                            >
-                              <Link
-                                to={path}
-                                className="flex items-center px-4 py-2 text-gray-600 hover:text-brand-600 hover:bg-gray-50 rounded-lg"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                              >
-                                <ChevronRight className="h-4 w-4 mr-2" />
-                                {name}
-                              </Link>
-                            </motion.div>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  <Link 
-                    to="/health-benefits" 
-                    className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Health Benefits
-                  </Link>
-                  <Link 
-                    to="/about" 
-                    className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    About Us
-                  </Link>
-                  <Link 
-                    to="/contact" 
-                    className="block px-4 py-3 text-lg font-medium text-gray-900 hover:bg-gray-50 rounded-lg"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Contact
-                  </Link>
-                </div>
-
-                {/* Quick Actions */}
-                <div className="mt-6 space-y-4 border-t border-gray-200 pt-6">
-                  <Button className="w-full bg-brand-600 hover:bg-brand-700 text-lg py-6 shadow-md" asChild>
-                    <Link to="/quote" onClick={() => setIsMobileMenuOpen(false)}>
-                      Get a Free Quote
+                      {label}
                     </Link>
-                  </Button>
-                  <Button variant="outline" className="w-full text-lg py-6 border-brand-600" asChild>
-                    <a href="tel:2137924145">
-                      <Phone size={20} className="mr-2" />
-                      (213) 792-4145
-                    </a>
-                  </Button>
+                  ))}
+                  <Link
+                    to="/services"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-3.5 py-2 text-brand-600 text-sm font-bold hover:underline"
+                  >
+                    View All Services →
+                  </Link>
                 </div>
 
-                {/* Trust Badges */}
-                <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm text-gray-500">
-                  <div className="flex items-center">
-                    <Shield className="w-4 h-4 mr-1 text-brand-600" />
+              </div>
+
+              {/* Mobile Menu Footer */}
+              <div className="p-5 border-t border-gray-100 bg-gray-50 space-y-4">
+                <Button className="w-full bg-brand-600 text-white font-bold py-6 rounded-xl shadow-lg" asChild>
+                  <a href="tel:2137924145" onClick={() => trackPhoneCall('navbar_mobile')} className="flex items-center justify-center gap-2">
+                    <Phone className="w-5 h-5 fill-current" />
+                    Call (213) 792-4145
+                  </a>
+                </Button>
+                <div className="grid grid-cols-2 gap-3 text-center text-xs text-gray-500 font-medium">
+                  <div className="flex flex-col items-center gap-1 bg-white p-2 rounded-lg border border-gray-100">
+                    <Clock className="w-4 h-4 text-brand-500" />
+                    24/7 Available
+                  </div>
+                  <div className="flex flex-col items-center gap-1 bg-white p-2 rounded-lg border border-gray-100">
+                    <Shield className="w-4 h-4 text-brand-500" />
                     Licensed & Insured
                   </div>
-                  <div className="flex items-center">
-                    <Clock className="w-4 h-4 mr-1 text-brand-600" />
-                    24/7 Service
-                  </div>
                 </div>
-              </nav>
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
-    </header>;
+    </header>
+  );
 };
+
 export default NavBar;

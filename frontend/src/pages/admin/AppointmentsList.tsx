@@ -1,0 +1,376 @@
+/**
+ * Appointments List Page
+ * Displays appointments with calendar view and dispatch board
+ */
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+    Calendar,
+    Plus,
+    Search,
+    Filter,
+    ChevronLeft,
+    ChevronRight,
+    Clock,
+    MapPin,
+    User,
+    Phone,
+    MoreVertical,
+    List,
+    Grid,
+    CheckCircle,
+    AlertCircle,
+    Truck,
+} from 'lucide-react';
+
+interface Appointment {
+    id: string;
+    customerName: string;
+    customerPhone: string;
+    address: string;
+    city: string;
+    serviceTypes: string[];
+    scheduledStart: string;
+    scheduledEnd: string;
+    technicianName: string | null;
+    status: 'scheduled' | 'confirmed' | 'en_route' | 'in_progress' | 'completed' | 'cancelled';
+    estimatedDuration: number;
+}
+
+const mockAppointments: Appointment[] = [
+    {
+        id: '1',
+        customerName: 'John Smith',
+        customerPhone: '(213) 555-1234',
+        address: '1234 Wilshire Blvd',
+        city: 'Los Angeles',
+        serviceTypes: ['Air Duct Cleaning'],
+        scheduledStart: '2024-12-24T09:00:00',
+        scheduledEnd: '2024-12-24T11:00:00',
+        technicianName: 'Mike Johnson',
+        status: 'confirmed',
+        estimatedDuration: 120,
+    },
+    {
+        id: '2',
+        customerName: 'Maria Garcia',
+        customerPhone: '(310) 555-5678',
+        address: '456 Oak Ave',
+        city: 'Santa Monica',
+        serviceTypes: ['Dryer Vent Cleaning', 'Inspection'],
+        scheduledStart: '2024-12-24T10:00:00',
+        scheduledEnd: '2024-12-24T11:00:00',
+        technicianName: 'Sarah Wilson',
+        status: 'in_progress',
+        estimatedDuration: 60,
+    },
+    {
+        id: '3',
+        customerName: 'David Chen',
+        customerPhone: '(818) 555-9012',
+        address: '789 Pine Blvd',
+        city: 'Burbank',
+        serviceTypes: ['HVAC System Cleaning'],
+        scheduledStart: '2024-12-24T13:00:00',
+        scheduledEnd: '2024-12-24T16:00:00',
+        technicianName: null,
+        status: 'scheduled',
+        estimatedDuration: 180,
+    },
+    {
+        id: '4',
+        customerName: 'Sarah Johnson',
+        customerPhone: '(626) 555-3456',
+        address: '321 Elm Way',
+        city: 'Pasadena',
+        serviceTypes: ['Air Duct Cleaning', 'Sanitization'],
+        scheduledStart: '2024-12-24T14:00:00',
+        scheduledEnd: '2024-12-24T17:00:00',
+        technicianName: 'Mike Johnson',
+        status: 'scheduled',
+        estimatedDuration: 180,
+    },
+];
+
+const technicians = [
+    { id: '1', name: 'Mike Johnson', color: 'bg-blue-500' },
+    { id: '2', name: 'Sarah Wilson', color: 'bg-green-500' },
+    { id: '3', name: 'Tom Davis', color: 'bg-purple-500' },
+];
+
+const statusStyles: Record<string, { bg: string; text: string; icon: React.ElementType }> = {
+    scheduled: { bg: 'bg-gray-100', text: 'text-gray-700', icon: Clock },
+    confirmed: { bg: 'bg-blue-100', text: 'text-blue-700', icon: CheckCircle },
+    en_route: { bg: 'bg-yellow-100', text: 'text-yellow-700', icon: Truck },
+    in_progress: { bg: 'bg-purple-100', text: 'text-purple-700', icon: AlertCircle },
+    completed: { bg: 'bg-green-100', text: 'text-green-700', icon: CheckCircle },
+    cancelled: { bg: 'bg-red-100', text: 'text-red-700', icon: AlertCircle },
+};
+
+export default function AppointmentsList() {
+    const [view, setView] = useState<'list' | 'calendar'>('list');
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState<string>('all');
+
+    const formatTime = (dateString: string) => {
+        return new Date(dateString).toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+        });
+    };
+
+    const filteredAppointments = mockAppointments.filter((apt) => {
+        const matchesSearch = apt.customerName.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesStatus = selectedStatus === 'all' || apt.status === selectedStatus;
+        return matchesSearch && matchesStatus;
+    });
+
+    return (
+        <div className="space-y-6">
+            {/* Page header */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h1 className="text-2xl font-bold text-gray-900">Appointments</h1>
+                    <p className="text-gray-600">Schedule and manage service appointments</p>
+                </div>
+                <Link
+                    to="/admin/appointments/new"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 rounded-lg text-sm font-medium text-white hover:bg-sky-700 transition-colors"
+                >
+                    <Plus className="w-4 h-4" />
+                    New Appointment
+                </Link>
+            </div>
+
+            {/* Date navigation and view toggle */}
+            <div className="bg-white rounded-xl border border-gray-200 p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                            <button className="p-2 hover:bg-gray-100 rounded-lg">
+                                <ChevronLeft className="w-5 h-5" />
+                            </button>
+                            <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-lg">
+                                <Calendar className="w-5 h-5 text-gray-600" />
+                                <span className="font-medium">
+                                    {selectedDate.toLocaleDateString('en-US', {
+                                        weekday: 'long',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        year: 'numeric',
+                                    })}
+                                </span>
+                            </div>
+                            <button className="p-2 hover:bg-gray-100 rounded-lg">
+                                <ChevronRight className="w-5 h-5" />
+                            </button>
+                        </div>
+                        <button className="px-4 py-2 text-sm font-medium text-sky-600 hover:bg-sky-50 rounded-lg">
+                            Today
+                        </button>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => setView('list')}
+                            className={`p-2 rounded-lg ${view === 'list' ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-100'
+                                }`}
+                        >
+                            <List className="w-5 h-5" />
+                        </button>
+                        <button
+                            onClick={() => setView('calendar')}
+                            className={`p-2 rounded-lg ${view === 'calendar' ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-100'
+                                }`}
+                        >
+                            <Grid className="w-5 h-5" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Search and filters */}
+            <div className="bg-white rounded-xl border border-gray-200 p-4">
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <input
+                            type="text"
+                            placeholder="Search appointments..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                        />
+                    </div>
+                    <select
+                        value={selectedStatus}
+                        onChange={(e) => setSelectedStatus(e.target.value)}
+                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                    >
+                        <option value="all">All Statuses</option>
+                        <option value="scheduled">Scheduled</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="en_route">En Route</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+            </div>
+
+            {/* Appointments list */}
+            {view === 'list' && (
+                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                    <div className="divide-y divide-gray-100">
+                        {filteredAppointments.map((apt) => {
+                            const StatusIcon = statusStyles[apt.status].icon;
+                            return (
+                                <div key={apt.id} className="p-4 hover:bg-gray-50 transition-colors">
+                                    <div className="flex items-start justify-between gap-4">
+                                        <div className="flex items-start gap-4">
+                                            {/* Time column */}
+                                            <div className="text-center min-w-[80px]">
+                                                <p className="text-lg font-bold text-gray-900">{formatTime(apt.scheduledStart)}</p>
+                                                <p className="text-sm text-gray-500">{apt.estimatedDuration} min</p>
+                                            </div>
+
+                                            {/* Status indicator */}
+                                            <div className={`mt-1 p-1.5 rounded-full ${statusStyles[apt.status].bg}`}>
+                                                <StatusIcon className={`w-4 h-4 ${statusStyles[apt.status].text}`} />
+                                            </div>
+
+                                            {/* Main content */}
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-3 mb-1">
+                                                    <Link
+                                                        to={`/admin/appointments/${apt.id}`}
+                                                        className="font-semibold text-gray-900 hover:text-sky-600"
+                                                    >
+                                                        {apt.customerName}
+                                                    </Link>
+                                                    <span
+                                                        className={`px-2 py-0.5 text-xs font-medium rounded-full ${statusStyles[apt.status].bg} ${statusStyles[apt.status].text}`}
+                                                    >
+                                                        {apt.status.replace('_', ' ')}
+                                                    </span>
+                                                </div>
+                                                <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                                                    <div className="flex items-center gap-1">
+                                                        <MapPin className="w-4 h-4 text-gray-400" />
+                                                        {apt.address}, {apt.city}
+                                                    </div>
+                                                    <div className="flex items-center gap-1">
+                                                        <Phone className="w-4 h-4 text-gray-400" />
+                                                        {apt.customerPhone}
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-wrap gap-2 mt-2">
+                                                    {apt.serviceTypes.map((service, idx) => (
+                                                        <span
+                                                            key={idx}
+                                                            className="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded"
+                                                        >
+                                                            {service}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Right side - technician and actions */}
+                                        <div className="flex items-center gap-4">
+                                            {apt.technicianName ? (
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                                        <span className="text-white text-xs font-medium">
+                                                            {apt.technicianName.split(' ').map((n) => n[0]).join('')}
+                                                        </span>
+                                                    </div>
+                                                    <span className="text-sm font-medium text-gray-700">{apt.technicianName}</span>
+                                                </div>
+                                            ) : (
+                                                <button className="px-3 py-1.5 text-sm font-medium text-sky-600 border border-sky-600 rounded-lg hover:bg-sky-50">
+                                                    Assign
+                                                </button>
+                                            )}
+                                            <button className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
+                                                <MoreVertical className="w-5 h-5" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {filteredAppointments.length === 0 && (
+                        <div className="p-8 text-center">
+                            <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                            <h3 className="text-lg font-medium text-gray-900 mb-2">No appointments found</h3>
+                            <p className="text-gray-600 mb-4">There are no appointments matching your criteria.</p>
+                            <Link
+                                to="/admin/appointments/new"
+                                className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 rounded-lg text-sm font-medium text-white hover:bg-sky-700"
+                            >
+                                <Plus className="w-4 h-4" />
+                                Schedule Appointment
+                            </Link>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Calendar view placeholder */}
+            {view === 'calendar' && (
+                <div className="bg-white rounded-xl border border-gray-200 p-6">
+                    <div className="text-center py-12">
+                        <Grid className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                        <h3 className="text-lg font-medium text-gray-900 mb-2">Calendar View</h3>
+                        <p className="text-gray-600">
+                            Full calendar view with drag-and-drop scheduling coming soon.
+                        </p>
+                    </div>
+                </div>
+            )}
+
+            {/* Dispatch board summary */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {technicians.map((tech) => {
+                    const techAppointments = mockAppointments.filter((apt) => apt.technicianName === tech.name);
+                    return (
+                        <div key={tech.id} className="bg-white rounded-xl border border-gray-200 p-4">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className={`w-10 h-10 ${tech.color} rounded-full flex items-center justify-center`}>
+                                    <span className="text-white font-medium">
+                                        {tech.name.split(' ').map((n) => n[0]).join('')}
+                                    </span>
+                                </div>
+                                <div>
+                                    <p className="font-medium text-gray-900">{tech.name}</p>
+                                    <p className="text-sm text-gray-600">{techAppointments.length} appointments today</p>
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                {techAppointments.slice(0, 3).map((apt) => (
+                                    <div key={apt.id} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                                        <div>
+                                            <p className="text-sm font-medium text-gray-900">{formatTime(apt.scheduledStart)}</p>
+                                            <p className="text-xs text-gray-600">{apt.customerName}</p>
+                                        </div>
+                                        <span
+                                            className={`px-2 py-0.5 text-xs font-medium rounded-full ${statusStyles[apt.status].bg} ${statusStyles[apt.status].text}`}
+                                        >
+                                            {apt.status}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Shield, Award, Star, CheckCircle, ShieldCheck, Users, ThumbsUp, BadgeCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
+import ResponsiveImage from './ResponsiveImage';
 
 const EnhancedTrustBadges = () => {
   const clientLogos = [
@@ -27,8 +28,8 @@ const EnhancedTrustBadges = () => {
   ];
 
   const trustMetrics = [
-    { icon: Users, value: '138K+', label: 'Satisfied Customers' },
-    { icon: CheckCircle, value: '15+', label: 'Years Experience' },
+    { icon: Users, value: '184K+', label: 'Satisfied Customers' },
+    { icon: CheckCircle, value: '40+', label: 'Years Experience' },
     { icon: ThumbsUp, value: '99%', label: 'Customer Satisfaction' },
   ];
 
@@ -38,7 +39,7 @@ const EnhancedTrustBadges = () => {
         {/* Trust Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {trustMetrics.map((metric, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               className="flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg shadow-sm"
               initial={{ opacity: 0, y: 20 }}
@@ -52,13 +53,13 @@ const EnhancedTrustBadges = () => {
             </motion.div>
           ))}
         </div>
-        
+
         {/* Certifications with descriptions */}
         <div className="mb-8">
           <h3 className="text-center text-lg font-semibold text-gray-800 mb-4">Industry Certifications & Standards</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {certifications.map((cert, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 className="flex flex-col items-center bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
@@ -74,13 +75,13 @@ const EnhancedTrustBadges = () => {
             ))}
           </div>
         </div>
-        
+
         {/* Testimonial Highlights */}
         <div className="mb-8">
           <h3 className="text-center text-lg font-semibold text-gray-800 mb-4">What Our Customers Say</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {testimonialHighlights.map((testimonial, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 className="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -110,10 +111,10 @@ const EnhancedTrustBadges = () => {
             </a>
           </div>
         </div>
-        
+
         {/* Satisfaction Guarantee */}
         <div className="flex justify-center mb-8">
-          <motion.div 
+          <motion.div
             className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full border border-green-100 shadow-sm"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -124,14 +125,14 @@ const EnhancedTrustBadges = () => {
             <span className="font-semibold text-green-700">100% Satisfaction Guarantee</span>
           </motion.div>
         </div>
-        
+
         {/* Client Logos */}
         <div className="pt-4 border-t border-gray-100">
           <p className="text-center text-sm font-medium text-gray-500 mb-4">Trusted by leading brands and organizations</p>
           <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10">
             {clientLogos.map((client, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 className="h-12 grayscale hover:grayscale-0 transition-all duration-300"
                 whileHover={{ scale: 1.05 }}
                 initial={{ opacity: 0 }}
@@ -139,19 +140,19 @@ const EnhancedTrustBadges = () => {
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <img 
-                  src={client.logo} 
-                  alt={client.alt} 
+                <ResponsiveImage
+                  src={client.logo}
+                  alt={client.alt}
                   className="h-full w-auto object-contain"
                 />
               </motion.div>
             ))}
           </div>
         </div>
-        
+
         {/* Security Badges */}
         <div className="mt-8 flex flex-wrap justify-center items-center gap-4">
-          <motion.div 
+          <motion.div
             className="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded text-xs font-medium text-gray-600 border border-gray-200"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -160,8 +161,8 @@ const EnhancedTrustBadges = () => {
             <Shield size={14} className="text-gray-500" />
             <span>Secure Payments</span>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             className="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded text-xs font-medium text-gray-600 border border-gray-200"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -171,8 +172,8 @@ const EnhancedTrustBadges = () => {
             <CheckCircle size={14} className="text-gray-500" />
             <span>Privacy Protected</span>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             className="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded text-xs font-medium text-gray-600 border border-gray-200"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}

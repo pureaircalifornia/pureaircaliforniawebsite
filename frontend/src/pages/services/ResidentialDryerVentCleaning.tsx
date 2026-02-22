@@ -91,7 +91,7 @@ const ResidentialDryerVentCleaning = () => {
         <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Residential Dryer Vent Cleaning Services</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Residential Dryer Vent Cleaning Services</h1>
               <p className="text-xl mb-8">
                 Prevent fire hazards and improve dryer efficiency with our professional dryer vent cleaning service.
                 Licensed technicians, same-day service available, and comprehensive safety inspection included.

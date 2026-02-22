@@ -1,5 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import SEOProvider from '@/components/SEOProvider';
+import SchemaMarkup from '@/components/SchemaMarkup';
+import { seoConfig } from '@/utils/seo/seoConfig';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -15,41 +18,29 @@ import WhyChooseUs from '@/components/WhyChooseUs';
 import FAQSection from '@/components/FAQSection';
 import CTASection from '@/components/CTASection';
 import HeroSlider from '@/components/HeroSlider';
+import ReviewMarquee from '@/components/ReviewMarquee';
+import AirQualityQuiz from '@/components/AirQualityQuiz';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
 const EnhancedLanding = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>#1 Air Duct Cleaning Company in Los Angeles | Pure Air California | (213) 792-4145</title>
-        <meta
-          name="description"
-          content="Los Angeles' top-rated air duct & dryer vent cleaning company. NADCA certified, 1,200+ 5-star reviews, same-day service available. Free estimates! Call (213) 792-4145."
+      <SEOProvider
+        title="#1 Air Duct Cleaning Company in Los Angeles | Pure Air California | (213) 792-4145"
+        description="Los Angeles' top-rated air duct & dryer vent cleaning company. NADCA certified, 1,200+ 5-star reviews, same-day service available. Free estimates! Call (213) 792-4145."
+        keywords={["air duct cleaning Los Angeles", "best air duct cleaning company Los Angeles", "dryer vent cleaning Los Angeles", "HVAC cleaning Los Angeles", "air duct cleaning near me", "duct cleaning LA", "indoor air quality Los Angeles", "NADCA certified air duct cleaning"]}
+        path="/"
+        disableDefaultSchema // We will provide LocalBusiness schema explicitly
+      >
+        <SchemaMarkup
+          schema={seoConfig.schema.localBusiness}
+          showLocalBusiness={false} // Disable default LocalBusiness to avoid duplication with 'schema' prop
+          showReviews={true}
+          showServiceArea={true}
+          showFAQ={true}
         />
-        <meta name="keywords" content="air duct cleaning Los Angeles, best air duct cleaning company Los Angeles, dryer vent cleaning Los Angeles, HVAC cleaning Los Angeles, air duct cleaning near me, duct cleaning LA, indoor air quality Los Angeles, NADCA certified air duct cleaning" />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-        <meta name="author" content="Pure Air California" />
-        <meta name="geo.region" content="US-CA" />
-        <meta name="geo.placename" content="Los Angeles" />
-        <meta name="geo.position" content="34.0522;-118.2437" />
-        <meta name="ICBM" content="34.0522, -118.2437" />
-        <meta property="og:title" content="#1 Air Duct Cleaning Company in Los Angeles | Pure Air California" />
-        <meta property="og:description" content="Los Angeles' top-rated air duct & dryer vent cleaning company. NADCA certified, 1,200+ 5-star reviews, same-day service. Free estimates!" />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://www.pureaircalifornia.com/gallery/jason-hawke-fu7pSuUa2PE-unsplash.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:url" content="https://www.pureaircalifornia.com/" />
-        <meta property="og:site_name" content="Pure Air California" />
-        <meta property="og:locale" content="en_US" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@pureaircalifornia" />
-        <meta name="twitter:title" content="#1 Air Duct Cleaning Company in Los Angeles | Pure Air California" />
-        <meta name="twitter:description" content="Los Angeles' top-rated air duct & dryer vent cleaning company. NADCA certified, 1,200+ 5-star reviews, same-day service." />
-        <meta name="twitter:image" content="https://www.pureaircalifornia.com/gallery/jason-hawke-fu7pSuUa2PE-unsplash.jpg" />
-        <link rel="canonical" href="https://www.pureaircalifornia.com/" />
-      </Helmet>
+      </SEOProvider>
 
       <NavBar />
       <main>
@@ -160,9 +151,12 @@ const EnhancedLanding = () => {
         {/* Enhanced Trust Badges */}
         <EnhancedTrustBadges />
 
+        {/* Dynamic Social Proof Marquee */}
+        <ReviewMarquee />
+
         {/* Inspirational Quotes About Breath & Air */}
         <section className="py-20 bg-gradient-to-br from-slate-900 via-brand-900 to-slate-900 text-white overflow-hidden relative">
-          <div className="absolute inset-0 opacity-10 bg-[url('/patterns/topography.svg')]"></div>
+          <div className="absolute inset-0 opacity-10"></div>
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl"></div>
 
@@ -262,11 +256,26 @@ const EnhancedLanding = () => {
           </div>
         </div>
 
+        {/* Gamified Lead Gen: Air Quality Check */}
+        <section className="py-20 bg-white relative overflow-hidden">
+          <div className="container mx-auto px-4 relative z-10">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Are you breathing clean air?</h2>
+                <p className="text-lg text-slate-600 max-w-2xl mx-auto">Take our quick 30-second assessment to find out if your home's air quality is putting your health at risk.</p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={0.2}>
+              <AirQualityQuiz />
+            </ScrollReveal>
+          </div>
+        </section>
+
         <FeaturedServices />
 
         {/* Interstitial Call CTA */}
         <section className="bg-brand-700 py-12 text-white overflow-hidden relative">
-          <div className="absolute inset-0 opacity-10 bg-[url('/patterns/circuit-board.svg')]"></div>
+          <div className="absolute inset-0 opacity-10"></div>
           <div className="container mx-auto px-4 relative z-10 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Need an Estimate Right Now?</h2>
             <p className="text-xl mb-8 text-brand-100 max-w-2xl mx-auto">Skip the form and talk to a certified expert immediately. We provide free, accurate quotes over the phone.</p>

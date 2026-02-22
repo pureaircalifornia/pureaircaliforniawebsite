@@ -11,6 +11,7 @@ interface SEOProps {
   image?: string;
   path?: string;
   children?: React.ReactNode;
+  disableDefaultSchema?: boolean;
 }
 
 const SEOProvider: React.FC<SEOProps> = ({
@@ -19,7 +20,8 @@ const SEOProvider: React.FC<SEOProps> = ({
   keywords,
   image,
   path,
-  children
+  children,
+  disableDefaultSchema = false
 }) => {
   const location = useLocation();
   const { schema, keywords: configKeywords, siteUrl, defaultTitle, defaultDescription } = seoConfig;
@@ -78,7 +80,7 @@ const SEOProvider: React.FC<SEOProps> = ({
         <meta name="twitter:image" content={image || seoConfig.defaultImage} />
 
         {/* Organization Schema */}
-        {generateSchema('Organization') && (
+        {!disableDefaultSchema && generateSchema('Organization') && (
           <script type="application/ld+json" dangerouslySetInnerHTML={{
             __html: generateSchema('Organization') || ''
           }} />

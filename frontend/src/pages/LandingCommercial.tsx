@@ -44,7 +44,7 @@ const LandingCommercial = () => {
                         <div className="flex flex-col lg:flex-row gap-16">
                             <div className="lg:w-1/2">
                                 <span className="text-brand-400 font-bold tracking-widest uppercase text-sm mb-4 block">Commercial & Industrial Division</span>
-                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
                                     Commercial HVAC Restoration Experts
                                 </h1>
                                 <p className="text-xl text-gray-300 mb-8 max-w-xl">

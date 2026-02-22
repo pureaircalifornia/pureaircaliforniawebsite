@@ -197,21 +197,12 @@ const Contact = () => {
   return (
     <HelmetProvider>
       <div className="min-h-screen flex flex-col">
-        <Helmet>
-          <title>Contact Pure Air California | Air Duct Cleaning Los Angeles | (213) 792-4145</title>
-          <meta name="description" content="Contact Pure Air California for air duct & dryer vent cleaning in Los Angeles. Call (213) 792-4145 or fill out our form for a free estimate today! NADCA certified." />
-          <meta name="keywords" content="contact pure air california, air duct cleaning quote Los Angeles, Los Angeles air duct cleaning phone, free estimate duct cleaning LA, professional air duct cleaning contact" />
-          <meta name="robots" content="index, follow, max-image-preview:large" />
-          <meta name="geo.region" content="US-CA" />
-          <meta name="geo.placename" content="Los Angeles" />
-          <meta property="og:title" content="Contact Pure Air California | Air Duct Cleaning Los Angeles" />
-          <meta property="og:description" content="Contact Pure Air California for professional air duct cleaning services. Call (213) 792-4145 or request a free quote online." />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://www.pureaircalifornia.com/contact" />
-          <meta property="og:site_name" content="Pure Air California" />
-          <link rel="canonical" href="https://www.pureaircalifornia.com/contact" />
-        </Helmet>
-        <SEOProvider>
+        <SEOProvider
+          title="Contact Pure Air California | Air Duct Cleaning Los Angeles | (213) 792-4145"
+          description="Contact Pure Air California for air duct & dryer vent cleaning in Los Angeles. Call (213) 792-4145 or fill out our form for a free estimate today! NADCA certified."
+          keywords={["contact pure air california", "air duct cleaning quote Los Angeles", "Los Angeles air duct cleaning phone", "free estimate duct cleaning LA", "professional air duct cleaning contact"]}
+          path="/contact"
+        >
           <SchemaMarkup schema={{
             "@context": "https://schema.org",
             "@type": "ContactPage",
@@ -248,7 +239,7 @@ const Contact = () => {
                 </span>
                 <span className="text-brand-200 font-medium">Get in Touch</span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 font-heading" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Contact Pure Air California</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 font-heading text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Contact Pure Air California</h1>
               <p className="text-xl text-brand-100 mb-8 max-w-3xl">
                 Ready to improve your indoor air quality? Contact us today for a free consultation and quote.
                 Our team is standing by to help you breathe cleaner, healthier air.

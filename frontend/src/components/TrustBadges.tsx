@@ -35,7 +35,7 @@ const TrustBadges = () => {
               <span className="font-semibold text-green-700">100% Satisfaction Guarantee</span>
             </div>
             <div className="flex items-center gap-2">
-              <Star className="text-yellow-500" size={24} />
+              <Star className="text-yellow-500 fill-current" size={24} />
               <span className="font-semibold">4.9/5 Rating</span>
             </div>
           </div>

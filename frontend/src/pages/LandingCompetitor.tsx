@@ -39,7 +39,7 @@ const LandingCompetitor = () => {
                         <span className="inline-block py-1 px-3 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 text-sm font-bold mb-6">
                             1,200+ 5-Star Reviews
                         </span>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight text-white">
                             Tired of Hidden Fees & <br className="hidden md:block" /> No-Show Contractors?
                         </h1>
                         <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10">

@@ -7,24 +7,17 @@ import EnhancedQuoteForm from '@/components/EnhancedQuoteForm';
 import { Helmet } from 'react-helmet';
 import { locationData } from './locations/data';
 import ResponsiveImage from '@/components/ResponsiveImage';
+import SEOProvider from '@/components/SEOProvider';
 
 const Locations = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>Air Duct Cleaning Locations | Los Angeles County Service Areas | Pure Air California</title>
-        <meta name="description" content="Pure Air California serves all of Los Angeles County. Find professional air duct & dryer vent cleaning in Beverly Hills, Santa Monica, Pasadena, Burbank, Glendale & more. Call (213) 792-4145!" />
-        <meta name="keywords" content="air duct cleaning Los Angeles County, dryer vent cleaning near me, air duct cleaning Beverly Hills, air duct cleaning Santa Monica, air duct cleaning Pasadena, air duct cleaning Burbank, air duct cleaning Glendale, HVAC cleaning Los Angeles" />
-        <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta name="geo.region" content="US-CA" />
-        <meta name="geo.placename" content="Los Angeles County" />
-        <meta property="og:title" content="Air Duct Cleaning Locations | Los Angeles County | Pure Air California" />
-        <meta property="og:description" content="Professional air duct cleaning services throughout Los Angeles County. Beverly Hills, Santa Monica, Pasadena, Burbank & more." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.pureaircalifornia.com/locations" />
-        <meta property="og:site_name" content="Pure Air California" />
-        <link rel="canonical" href="https://www.pureaircalifornia.com/locations" />
-      </Helmet>
+      <SEOProvider
+        title="Air Duct Cleaning Locations | Los Angeles County | Pure Air California"
+        description="Pure Air California serves all of Los Angeles County. Find professional air duct & dryer vent cleaning in Beverly Hills, Santa Monica, Pasadena, Burbank, Glendale & more."
+        keywords={["air duct cleaning locations", "Los Angeles service areas", "duct cleaning near me"]}
+        path="/locations"
+      />
 
       <NavBar />
 

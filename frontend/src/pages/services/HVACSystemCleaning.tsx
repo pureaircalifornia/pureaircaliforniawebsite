@@ -56,7 +56,7 @@ const HVACSystemCleaning = () => {
       <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>HVAC System Cleaning Services</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>HVAC System Cleaning Services</h1>
             <p className="text-xl mb-8">
               Complete cleaning and maintenance for your heating and cooling system. Improve efficiency,
               indoor air quality, and extend the life of your HVAC equipment with our professional cleaning services.
@@ -90,14 +90,14 @@ const HVACSystemCleaning = () => {
                   <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
                     <Check size={14} className="text-brand-600" />
                   </div>
-                  <p><span className="font-medium">Improved Efficiency</span> - Clean systems operate more efficiently, reducing energy costs by 15-25%</p>
+                  <p><span className="font-medium">Better Air Quality</span> - Remove allergens, dust, and contaminants from your indoor air</p>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
                     <Check size={14} className="text-brand-600" />
                   </div>
-                  <p><span className="font-medium">Better Air Quality</span> - Remove allergens, dust, and contaminants from your indoor air</p>
+                  <p><span className="font-medium">Improved Efficiency</span> - Clean systems operate more efficiently, reducing energy costs by 15-25%</p>
                 </div>
 
                 <div className="flex items-start gap-3">
@@ -266,18 +266,18 @@ const HVACSystemCleaning = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-              <Award size={48} className="text-brand-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-3">Energy Savings</h3>
-              <p className="text-gray-600">
-                Clean systems operate more efficiently, reducing energy consumption and lowering utility bills by 15-25%.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
               <Shield size={48} className="text-brand-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-3">Better Air Quality</h3>
               <p className="text-gray-600">
                 Remove allergens, dust, mold spores, and other contaminants that can affect respiratory health.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <Award size={48} className="text-brand-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-3">Energy Savings</h3>
+              <p className="text-gray-600">
+                Clean systems operate more efficiently, reducing energy consumption and lowering utility bills by 15-25%.
               </p>
             </div>
 

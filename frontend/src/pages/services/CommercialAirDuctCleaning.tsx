@@ -62,13 +62,13 @@ const CommercialAirDuctCleaning = () => {
         <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Commercial Air Duct Cleaning Services</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Commercial Air Duct Cleaning Services</h1>
               <p className="text-xl mb-8">
                 Professional air duct cleaning services for offices, retail spaces, restaurants, healthcare facilities, and all commercial properties. Improve indoor air quality, reduce energy costs, and ensure compliance with industry standards.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-                  <Link to="/quote">Request Commercial Quote</Link>
+                  <Link to="/quote?service=Commercial+Air+Duct+Cleaning">Request Commercial Quote</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-700">
                   <Link to="/contact">Schedule Consultation</Link>
@@ -541,7 +541,7 @@ const CommercialAirDuctCleaning = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-                <Link to="/quote">Get Free Quote</Link>
+                <Link to="/quote?service=Commercial+Air+Duct+Cleaning">Get Free Quote</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-700">
                 <Link to="/contact">Contact Us</Link>

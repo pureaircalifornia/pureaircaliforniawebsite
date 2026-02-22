@@ -18,21 +18,12 @@ const About = () => {
   return (
     <HelmetProvider>
       <div className="min-h-screen flex flex-col">
-        <Helmet>
-          <title>About Pure Air California | #1 NADCA Certified Air Duct Cleaning Los Angeles</title>
-          <meta name="description" content="Learn about Pure Air California, Los Angeles' trusted air duct cleaning experts with over 40 years of experience. NADCA certified, licensed & insured with 184,000+ satisfied customers. Meet our team!" />
-          <meta name="keywords" content="about pure air california, air duct cleaning company Los Angeles, NADCA certified Los Angeles, best air duct cleaning team LA, professional HVAC cleaning Los Angeles" />
-          <meta name="robots" content="index, follow, max-image-preview:large" />
-          <meta name="geo.region" content="US-CA" />
-          <meta name="geo.placename" content="Los Angeles" />
-          <meta property="og:title" content="About Pure Air California | NADCA Certified Air Duct Cleaning Experts" />
-          <meta property="og:description" content="40+ years of experience in professional air duct cleaning. NADCA certified, fully insured, serving Los Angeles with excellence." />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://www.pureaircalifornia.com/about" />
-          <meta property="og:site_name" content="Pure Air California" />
-          <link rel="canonical" href="https://www.pureaircalifornia.com/about" />
-        </Helmet>
-        <SEOProvider>
+        <SEOProvider
+          title="About Pure Air California | #1 NADCA Certified Air Duct Cleaning Los Angeles"
+          description="Learn about Pure Air California, Los Angeles' trusted air duct cleaning experts with over 40 years of experience. NADCA certified, licensed & insured with 184,000+ satisfied customers. Meet our team!"
+          keywords={["about pure air california", "air duct cleaning company Los Angeles", "NADCA certified Los Angeles", "best air duct cleaning team LA", "professional HVAC cleaning Los Angeles"]}
+          path="/about"
+        >
           <SchemaMarkup schema={seoConfig.schema.organization} />
           <SchemaMarkup schema={{
             "@context": "https://schema.org",
@@ -49,18 +40,18 @@ const About = () => {
         <NavBar />
 
         {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white relative overflow-hidden">
-          <div className="absolute inset-0 z-0 opacity-20">
+        <section className="relative pt-32 pb-16 text-white overflow-hidden">
+          <div className="absolute inset-0 z-0">
             <ResponsiveImage
-              src="/images/hero/hvac-technicians.jpg"
-              alt="Professional air duct cleaning team"
-              className="w-full h-full"
+              src="/images/sortanduse/martin-adams-pTCcJSBOTxY-unsplash.jpg"
+              alt="Los Angeles Skyline Sunset by Martin Adams"
+              className="w-full h-full object-cover"
               loading="eager"
-              width={1920}
-              height={1080}
+              fetchPriority="high"
             />
+            {/* Reduced opacity gradient overlay for better image visibility */}
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-900/80 via-brand-800/60 to-transparent"></div>
           </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-700/90 to-brand-900/90 z-0"></div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl">
               <div className="flex items-center gap-3 mb-6">
@@ -69,7 +60,7 @@ const About = () => {
                 </span>
                 <span className="text-brand-200 font-medium">About Our Company</span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 font-heading" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>About Pure Air California</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 font-heading text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>About Pure Air California</h1>
               <p className="text-xl text-brand-100 mb-8 max-w-3xl">
                 For over 40 years, Pure Air California has been Southern California's trusted name in professional air duct cleaning.
                 We're committed to improving indoor air quality for homes and businesses throughout Los Angeles and surrounding areas.
@@ -96,7 +87,7 @@ const About = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
               {[
                 { label: 'Years of Experience', value: '40+' },
-                { label: 'Happy Customers', value: '184,000+' },
+                { label: 'Satisfied Clients', value: '448,000+' },
                 { label: 'Satisfaction Guarantee', value: '100%' },
                 { label: 'Emergency Service', value: '24/7' }
               ].map((stat, i) => (
@@ -113,7 +104,7 @@ const About = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
               <ScrollReveal animation="slideInLeft">
                 <div>
-                  <h2 className="text-3xl font-bold mb-6">Our Story</h2>
+                  <h2 className="text-3xl font-bold mb-6 text-slate-900 drop-shadow-sm">Our Story</h2>
                   <p className="text-lg text-gray-600 mb-6">
                     Pure Air California was founded over 40 years ago with a simple mission: to provide the highest quality air duct cleaning services
                     to Southern California residents and businesses. What started as a small family business has grown into one of the region's
@@ -135,9 +126,9 @@ const About = () => {
                   <div className="absolute -inset-2 bg-gradient-to-r from-brand-500 to-sky-500 rounded-2xl opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500"></div>
                   <div className="relative glass-premium p-2 rounded-2xl overflow-hidden shadow-2xl">
                     <ResponsiveImage
-                      src="/images/team/team-lou-founder-ceo.jpg"
-                      alt="Pure Air California team at work"
-                      className="w-full h-96 rounded-xl shadow-inner group-hover:scale-105 transition-transform duration-700"
+                      src="/images/logo/pac-logo.png"
+                      alt="Pure Air California"
+                      className="w-full h-64 object-contain rounded-xl p-8 bg-white group-hover:scale-105 transition-transform duration-700"
                       loading="lazy"
                       width={400}
                       height={400}
@@ -232,7 +223,7 @@ const About = () => {
             <div className="mb-16">
               <ScrollReveal animation="fadeInUp">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl font-bold mb-4">Meet Our Team</h2>
+                  <h2 className="text-3xl font-bold mb-4 text-slate-900 drop-shadow-sm">Meet Our Team</h2>
                   <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                     Our experienced professionals are dedicated to providing exceptional service and maintaining the highest standards of air quality.
                   </p>
@@ -242,17 +233,17 @@ const About = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {[
                   {
-                    name: 'Lou',
+                    name: 'Lou Chanab',
                     role: 'Founder & CEO',
-                    image: '/images/team/team-lou-founder-ceo.jpg',
+                    image: '/images/team/team-lou-chanab-headshot-professional.png',
                     desc: 'With over 40 years of experience in the air quality industry, Lou founded Pure Air California with a passion for helping families breathe cleaner air.',
                     delay: 0.1
                   },
                   {
-                    name: 'Mike',
-                    role: 'Lead Technician',
-                    image: '/images/team/team-lead-technician.jpg',
-                    desc: 'Mike brings 12 years of technical expertise and is NADCA certified. He leads our team in providing thorough and efficient cleaning services.',
+                    name: 'Maya Chanab',
+                    role: 'VP Client Relations',
+                    image: '/images/team/team-maya-chanab-headshot-professional.png',
+                    desc: 'Maya brings a wealth of empathy and expertise, leading our customer relationship strategies to ensure every client has a positive, stress-free experience.',
                     delay: 0.2
                   },
                   {
@@ -293,7 +284,7 @@ const About = () => {
             <div className="bg-gray-50 rounded-xl p-8 mb-16">
               <ScrollReveal animation="fadeInUp">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl font-bold mb-4">Certifications & Awards</h2>
+                  <h2 className="text-3xl font-bold mb-4 text-slate-900 drop-shadow-sm">Certifications & Awards</h2>
                   <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                     We maintain the highest industry standards and are proud of our certifications and recognition.
                   </p>
@@ -324,7 +315,7 @@ const About = () => {
                 <ScrollReveal animation="fadeInUp" delay={0.3}>
                   <div className="text-center">
                     <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                      <Star className="h-10 w-10 text-yellow-500" />
+                      <Star className="h-10 w-10 text-yellow-500 fill-current" />
                     </div>
                     <h3 className="font-semibold mb-2">5-Star Rating</h3>
                     <p className="text-sm text-gray-600">Consistently rated 5 stars by our customers across all platforms</p>
@@ -347,7 +338,7 @@ const About = () => {
             <div className="mb-16">
               <ScrollReveal animation="fadeInUp">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl font-bold mb-4">What Our Customers Say</h2>
+                  <h2 className="text-3xl font-bold mb-4 text-slate-900 drop-shadow-sm">What Our Customers Say</h2>
                   <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                     Don't just take our word for it. Here's what our satisfied customers have to say about our services.
                   </p>
@@ -386,9 +377,9 @@ const About = () => {
 
             {/* Contact CTA */}
             <ScrollReveal animation="fadeInUp">
-              <div className="bg-gradient-to-r from-brand-600 to-brand-700 rounded-xl p-8 text-white text-center">
-                <h2 className="text-3xl font-bold mb-4">Ready to Experience Pure Air?</h2>
-                <p className="text-xl mb-8 max-w-2xl mx-auto">
+              <div className="bg-gradient-to-r from-brand-600 to-brand-700 rounded-xl p-8 text-white text-center shadow-lg">
+                <h2 className="text-3xl font-bold mb-4 drop-shadow-md text-shadow-sm">Ready to Experience Pure Air?</h2>
+                <p className="text-xl mb-8 max-w-2xl mx-auto text-brand-50">
                   Join thousands of satisfied customers who trust Pure Air California for their air duct cleaning needs.
                   Contact us today for a free consultation and quote.
                 </p>

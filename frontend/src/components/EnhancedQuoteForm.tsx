@@ -57,9 +57,24 @@ const EnhancedQuoteForm = () => {
     preferredDate: '',
   });
 
+  // Read URL params on mount to pre-fill industry/service
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const serviceParam = params.get('service');
+    const propertyParam = params.get('property');
+
+    if (serviceParam || propertyParam) {
+      setFormData(prev => ({
+        ...prev,
+        service: serviceParam || prev.service,
+        propertyType: propertyParam || prev.propertyType
+      }));
+    }
+  }, []);
+
   const services = [
-    'Residential Air Duct Cleaning',
     'Commercial Air Duct Cleaning',
+    'Residential Air Duct Cleaning',
     'Dryer Vent Cleaning',
     'Electrostatic Filter Service',
   ];
@@ -169,12 +184,12 @@ const EnhancedQuoteForm = () => {
 
     // Base pricing by service type
     if (formData.service.includes('Residential Air Duct')) {
-      basePrice = Math.max(199, sqft * 0.15);
+      basePrice = Math.max(199, sqft - 500);
       if (sqft > 2500) {
         additionalFees.push({ name: 'Large Home Premium', amount: 50 });
       }
     } else if (formData.service.includes('Commercial Air Duct')) {
-      basePrice = Math.max(399, sqft * 0.12);
+      basePrice = Math.max(399, (sqft - 500) * 1.5);
       additionalFees.push({ name: 'Commercial Rate', amount: 100 });
     } else if (formData.service.includes('Dryer Vent')) {
       basePrice = 149;
@@ -311,14 +326,18 @@ const EnhancedQuoteForm = () => {
               <label className="block text-sm font-bold text-slate-700 mb-3">Service Type</label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {services.map((service) => (
-                  <div
+                  <label
                     key={service}
-                    className={`glass-premium p-4 rounded-xl cursor-pointer transition-all border-white/50 ${formData.service === service ? 'ring-2 ring-sky-500 bg-sky-50/50' : 'hover:bg-white/60'} ${formErrors.service ? 'ring-2 ring-red-300' : ''}`}
-                    onClick={() => {
-                      setFormData(prev => ({ ...prev, service }));
-                      if (formErrors.service) setFormErrors(prev => ({ ...prev, service: '' }));
-                    }}
+                    className={`glass-premium p-4 rounded-xl cursor-pointer transition-all border-white/50 block relative ${formData.service === service ? 'ring-2 ring-sky-500 bg-sky-50/50' : 'hover:bg-white/60'} ${formErrors.service ? 'ring-2 ring-red-300' : ''}`}
                   >
+                    <input
+                      type="radio"
+                      name="service"
+                      value={service}
+                      checked={formData.service === service}
+                      onChange={handleInputChange}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10 m-0 p-0"
+                    />
                     <div className="flex items-center">
                       {service.includes('Residential') ? (
                         <Home className="mr-3 h-5 w-5 text-sky-600" />
@@ -329,7 +348,7 @@ const EnhancedQuoteForm = () => {
                       )}
                       <span className="text-sm font-bold text-slate-800">{service}</span>
                     </div>
-                  </div>
+                  </label>
                 ))}
               </div>
               {formErrors.service && (
@@ -637,13 +656,13 @@ const EnhancedQuoteForm = () => {
         <AnimatePresence mode="wait">
           {renderStep()}
         </AnimatePresence>
-        <div className="flex justify-between items-center gap-4 pt-4">
+        <div className="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-4 pt-4">
           {step > 1 && (
             <Button
               type="button"
               variant="outline"
               onClick={prevStep}
-              className="bg-white/50 backdrop-blur-md border-white/50 text-slate-600 font-bold px-6 py-6 h-auto rounded-2xl hover:bg-white/80"
+              className="bg-white/50 backdrop-blur-md border-white/50 text-slate-600 font-bold px-6 py-6 h-auto rounded-2xl hover:bg-white/80 w-full sm:w-auto"
             >
               <ArrowRight className="rotate-180 mr-2 h-4 w-4" />
               Back

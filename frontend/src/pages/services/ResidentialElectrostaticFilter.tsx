@@ -91,7 +91,7 @@ const ResidentialElectrostaticFilter = () => {
         <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Residential Electrostatic Air Filter Services</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Residential Electrostatic Air Filter Services</h1>
               <p className="text-xl mb-8">
                 Upgrade your home's air filtration with advanced electrostatic air filters for superior indoor air quality.
                 Washable, reusable filters that capture microscopic particles and improve your family's health.
@@ -126,28 +126,14 @@ const ResidentialElectrostaticFilter = () => {
                     <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
                       <Check size={14} className="text-brand-600" />
                     </div>
-                    <p><span className="font-medium">Superior Filtration</span> - Capture particles as small as 0.1 microns with 95%+ efficiency</p>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
-                    </div>
-                    <p><span className="font-medium">Cost Effective</span> - Washable and reusable filters eliminate ongoing replacement costs</p>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
-                    </div>
-                    <p><span className="font-medium">Eco-Friendly</span> - Reduce waste by eliminating disposable filters and their packaging</p>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
-                    </div>
                     <p><span className="font-medium">Improved Air Quality</span> - Breathe cleaner, healthier air in your home</p>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
+                      <Check size={14} className="text-brand-600" />
+                    </div>
+                    <p><span className="font-medium">Superior Filtration</span> - Capture particles as small as 0.1 microns with 95%+ efficiency</p>
                   </div>
                 </div>
               </div>
@@ -260,18 +246,18 @@ const ResidentialElectrostaticFilter = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               <div className="bg-white p-6 rounded-lg shadow-sm">
-                <Filter size={48} className="text-brand-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Superior Filtration Efficiency</h3>
-                <p className="text-gray-600">
-                  Capture particles as small as 0.1 microns with 95%+ efficiency, far exceeding standard disposable filters.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-sm">
                 <Shield size={48} className="text-brand-600 mb-4" />
                 <h3 className="text-xl font-semibold mb-3">Health Benefits</h3>
                 <p className="text-gray-600">
                   Reduce allergens, asthma triggers, and respiratory irritants for improved family health and comfort.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow-sm">
+                <Filter size={48} className="text-brand-600 mb-4" />
+                <h3 className="text-xl font-semibold mb-3">Superior Filtration Efficiency</h3>
+                <p className="text-gray-600">
+                  Capture particles as small as 0.1 microns with 95%+ efficiency, far exceeding standard disposable filters.
                 </p>
               </div>
 

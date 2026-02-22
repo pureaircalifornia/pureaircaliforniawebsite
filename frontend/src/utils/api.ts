@@ -20,6 +20,7 @@ export interface LeadCreate {
     address?: string;
     preferred_date?: string;
     source?: LeadSource;
+    estimated_price?: number;
 }
 
 export interface Lead extends LeadCreate {
@@ -169,7 +170,43 @@ export async function submitFormWithBackend(
     options?: { silent?: boolean }
 ): Promise<{ success: boolean; lead?: Lead; error?: string }> {
     try {
-        const lead = await createLead(formData);
+        let lead: Lead | undefined;
+        try {
+            lead = await createLead(formData);
+        } catch (dbError) {
+            console.warn('Backend DB submission failed:', dbError);
+        }
+
+        // Always send email via FormSubmit as a bulletproof fallback for notifications
+        try {
+            await fetch('https://formsubmit.co/ajax/lou@pureaircalifornia.com', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    Name: formData.name,
+                    Email: formData.email,
+                    Phone: formData.phone,
+                    Service: formData.service || 'Not specified',
+                    Property_Type: formData.property_type || 'Not specified',
+                    Square_Footage: formData.square_footage || 'Not specified',
+                    Estimated_Price: formData.estimated_price ? `$${formData.estimated_price.toFixed(2)}` : 'Not generated yet',
+                    Address: formData.address || 'Not specified',
+                    Preferred_Date: formData.preferred_date || 'Not specified',
+                    Message: formData.message || 'No message provided',
+                    Source: formData.source || 'Website Form',
+                    _subject: `[Pure Air] New Lead: ${formData.source || 'Form'} - ${formData.name}`,
+                    _template: "table",
+                    _replyto: formData.email,
+                    _captcha: "false"
+                })
+            });
+        } catch (emailErr) {
+            console.warn('FormSubmit notification failed:', emailErr);
+        }
+
         return { success: true, lead };
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';

@@ -78,6 +78,10 @@ export const industryData = {
         <h3 className="text-xl font-semibold mb-2">Benefits for Hospitality Businesses:</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-brand-600 mb-2">Allergen Reduction</h4>
+            <p className="text-sm text-gray-600">Eliminates dust, pollen, and allergens that can trigger guest complaints.</p>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-lg">
             <h4 className="font-semibold text-brand-600 mb-2">Guest Satisfaction</h4>
             <p className="text-sm text-gray-600">Clean, fresh air improves guest comfort and leads to better reviews and repeat bookings.</p>
           </div>
@@ -136,6 +140,10 @@ export const industryData = {
 
         <h3 className="text-xl font-semibold mb-2">Benefits for Restaurants:</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-brand-600 mb-2">Customer Experience</h4>
+            <p className="text-sm text-gray-600">Eliminates cooking odors and smoke, creating a more pleasant dining atmosphere for customers. Studies show 68% of diners are influenced by restaurant air quality.</p>
+          </div>
           <div className="bg-gray-50 p-4 rounded-lg">
             <h4 className="font-semibold text-brand-600 mb-2">Fire Safety</h4>
             <p className="text-sm text-gray-600">Reduces fire risk by removing grease buildup that can ignite, protecting your business and employees. According to NFPA, 22% of restaurant fires are caused by grease buildup in exhaust systems.</p>

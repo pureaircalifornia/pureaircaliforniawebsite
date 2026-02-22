@@ -122,7 +122,7 @@ const Education = () => {
             
             <div className="text-center">
               <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mx-auto mb-4">
-                <Star size={28} className="text-brand-600" />
+                <Star size={28} className="text-brand-600 fill-current" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Budget-Friendly Solutions</h3>
               <p className="text-gray-600">

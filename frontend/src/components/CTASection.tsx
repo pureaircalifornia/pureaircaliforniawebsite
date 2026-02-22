@@ -7,7 +7,7 @@ import { Phone, ArrowRight } from 'lucide-react';
 
 const CTASection = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-[#061E3A] to-[#0A3D7C] text-white shadow-lg relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-[#0a529b] to-[#0A3D7C] text-white shadow-lg relative overflow-hidden">
       <div className="absolute inset-0 bg-white/5"></div>
       <div className="container mx-auto px-4">
         <ScrollReveal>

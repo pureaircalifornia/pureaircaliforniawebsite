@@ -28,6 +28,7 @@ import GoogleAnalytics from './components/GoogleAnalytics';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import ExitIntentPopup from './components/ExitIntentPopup';
+import SMSLeadWidget from './components/SMSLeadWidget';
 
 // Import individual service pages
 import CommercialAirDuctCleaning from './pages/services/CommercialAirDuctCleaning';
@@ -148,12 +149,13 @@ const ScrollToTopOnRouteChange = () => {
 
 // Main website layout with NavBar
 const MainLayout = ({ children }: { children: React.ReactNode }) => (
-  <div className="min-h-screen bg-gray-50">
+  <div className="min-h-screen pb-24 md:pb-0 bg-gray-50">
     <NavBar />
     <ScrollToTopOnRouteChange />
     <ScrollToTop />
     {children}
     <StickyServiceButton />
+    <SMSLeadWidget />
     <ExitIntentPopup />
   </div>
 );
@@ -165,48 +167,47 @@ function App() {
         <TooltipProvider>
           <BrowserRouter>
             <GoogleAnalytics />
-            <SEOProvider>
-              <Suspense fallback={<LoadingFallback />}>
-                <Routes>
-                  {/* Admin Login (no layout) */}
-                  <Route path="/admin/login" element={<AdminLogin />} />
+            <Suspense fallback={<LoadingFallback />}>
+              <Routes>
+                {/* Admin Login (no layout) */}
+                <Route path="/admin/login" element={<AdminLogin />} />
 
-                  {/* Admin Portal Routes */}
-                  <Route path="/admin" element={<AdminLayout />}>
-                    <Route index element={<AdminDashboard />} />
-                    <Route path="leads" element={<LeadList />} />
-                    <Route path="leads/:id" element={<LeadDetail />} />
-                    <Route path="customers" element={<CustomersList />} />
-                    <Route path="customers/:id" element={<CustomerDetail />} />
-                    <Route path="appointments" element={<AppointmentsList />} />
-                    <Route path="invoices" element={<InvoicesList />} />
-                    <Route path="reports" element={<ReportsDashboard />} />
-                    {/* Placeholder routes for other admin sections */}
-                    <Route path="estimates" element={<div className="p-6"><h1 className="text-2xl font-bold">Estimates</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
-                    <Route path="payments" element={<div className="p-6"><h1 className="text-2xl font-bold">Payments</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
-                    <Route path="documents" element={<div className="p-6"><h1 className="text-2xl font-bold">Documents</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
-                    <Route path="team" element={<div className="p-6"><h1 className="text-2xl font-bold">Team</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
-                    <Route path="settings" element={<div className="p-6"><h1 className="text-2xl font-bold">Settings</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
-                  </Route>
+                {/* Admin Portal Routes */}
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="leads" element={<LeadList />} />
+                  <Route path="leads/:id" element={<LeadDetail />} />
+                  <Route path="customers" element={<CustomersList />} />
+                  <Route path="customers/:id" element={<CustomerDetail />} />
+                  <Route path="appointments" element={<AppointmentsList />} />
+                  <Route path="invoices" element={<InvoicesList />} />
+                  <Route path="reports" element={<ReportsDashboard />} />
+                  {/* Placeholder routes for other admin sections */}
+                  <Route path="estimates" element={<div className="p-6"><h1 className="text-2xl font-bold">Estimates</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
+                  <Route path="payments" element={<div className="p-6"><h1 className="text-2xl font-bold">Payments</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
+                  <Route path="documents" element={<div className="p-6"><h1 className="text-2xl font-bold">Documents</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
+                  <Route path="team" element={<div className="p-6"><h1 className="text-2xl font-bold">Team</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
+                  <Route path="settings" element={<div className="p-6"><h1 className="text-2xl font-bold">Settings</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
+                </Route>
 
-                  {/* Main Website Routes */}
-                  {routes.map((route) => (
-                    <Route
-                      key={route.path}
-                      path={route.path}
-                      element={<MainLayout>{route.element}</MainLayout>}
-                    />
-                  ))}
+                {/* Main Website Routes */}
+                {routes.map((route) => (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={<MainLayout>{route.element}</MainLayout>}
+                  />
+                ))}
 
-                  {/* Catch-all redirect */}
-                  <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-              </Suspense>
-            </SEOProvider>
+                {/* Catch-all redirect */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
+
           </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>
-    </HelmetProvider>
+    </HelmetProvider >
   );
 }
 

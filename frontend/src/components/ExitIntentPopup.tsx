@@ -99,16 +99,16 @@ const ExitIntentPopup = () => {
                         className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200]"
                     />
 
-                    {/* Popup */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-1.5rem)] sm:w-[90%] max-w-md z-[201] max-h-[85vh] overflow-y-auto"
-                        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
-                    >
-                        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden">
+                    {/* Popup Container */}
+                    <div className="fixed inset-0 z-[201] flex items-center justify-center p-4 sm:p-6 pointer-events-none">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                            className="w-full max-w-md max-h-full flex flex-col pointer-events-auto"
+                            style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+                        >
                             {/* Header with gradient */}
                             <div className="bg-gradient-to-r from-brand-600 to-brand-700 p-4 sm:p-6 text-white relative">
                                 <button
@@ -188,7 +188,7 @@ const ExitIntentPopup = () => {
                                         <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs text-gray-500">
                                             <span className="flex items-center gap-1">
                                                 <CheckCircle className="w-4 h-4 text-green-500" />
-                                                1,200+ happy customers
+                                                448,000+ satisfied clients
                                             </span>
                                             <span className="flex items-center gap-1">
                                                 <CheckCircle className="w-4 h-4 text-green-500" />
@@ -198,8 +198,8 @@ const ExitIntentPopup = () => {
                                     </div>
                                 )}
                             </div>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    </div>
                 </>
             )}
         </AnimatePresence>

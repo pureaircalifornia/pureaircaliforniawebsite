@@ -3,6 +3,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ResponsiveImage from '@/components/ResponsiveImage';
+import ReviewMarquee from '@/components/ReviewMarquee';
 import { Home, Building, Fan, Filter, AirVent, ShieldCheck, Wind, CheckCircle, ArrowRight } from 'lucide-react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
@@ -127,28 +128,22 @@ const Services = () => {
   return (
     <HelmetProvider>
       <div className="min-h-screen flex flex-col bg-slate-50">
-        <Helmet>
-          <title>{pageTitle}</title>
-          <meta name="description" content={pageDescription} />
-          <meta name="keywords" content="air duct cleaning services Los Angeles, dryer vent cleaning Los Angeles, electrostatic filters LA, HVAC cleaning Los Angeles, indoor air quality services, commercial duct cleaning LA, residential duct cleaning Los Angeles" />
-          <meta name="robots" content="index, follow, max-image-preview:large" />
-          <meta name="geo.region" content="US-CA" />
-          <meta name="geo.placename" content="Los Angeles" />
-          <meta property="og:type" content="website" />
-          <meta property="og:title" content={pageTitle} />
-          <meta property="og:description" content={pageDescription} />
-          <meta property="og:url" content={pageUrl} />
-          <meta property="og:site_name" content="Pure Air California" />
-          <link rel="canonical" href={pageUrl} />
-        </Helmet>
-        <SEOProvider>
+        <SEOProvider
+          title={pageTitle}
+          description={pageDescription}
+          keywords={["air duct cleaning services Los Angeles", "dryer vent cleaning Los Angeles", "electrostatic filters LA", "HVAC cleaning Los Angeles", "indoor air quality services", "commercial duct cleaning LA", "residential duct cleaning Los Angeles"]}
+          path="/services"
+        >
           <SchemaMarkup schema={{
             "@context": "https://schema.org",
             "@type": "WebPage",
             "url": pageUrl,
             "name": pageTitle,
             "description": pageDescription,
-          }} />
+          }}
+            showReviews={true}
+            showServiceArea={true}
+          />
           <SchemaMarkup schema={{
             "@context": "https://schema.org",
             "@type": "ItemList",
@@ -177,6 +172,8 @@ const Services = () => {
                 className="w-full h-full object-cover opacity-30 mix-blend-overlay"
                 width={1920}
                 height={1080}
+                loading="eager"
+                fetchPriority="high"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900/90 to-brand-900/80"></div>
             </div>
@@ -211,6 +208,8 @@ const Services = () => {
             <TrustBadges />
           </div>
 
+          <ReviewMarquee />
+
           {/* Services Grid */}
           <section className="py-24 relative overflow-hidden bg-slate-50">
             <div className="absolute inset-0 bg-mesh opacity-40"></div>
@@ -239,6 +238,79 @@ const Services = () => {
                     />
                   </ScrollReveal>
                 ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Real-World Results Gallery */}
+          <section className="py-24 relative overflow-hidden bg-slate-100">
+            <div className="container mx-auto px-4 relative z-10">
+              <ScrollReveal>
+                <div className="text-center mb-16">
+                  <h2 className="text-4xl md:text-5xl font-black mb-6 text-slate-900 tracking-tight">
+                    Real-World <span className="text-brand-600">Results</span>
+                  </h2>
+                  <div className="w-24 h-1.5 bg-brand-600 mx-auto rounded-full mb-8"></div>
+                  <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                    What our clients actually experience in their homes before and after our premium service.
+                  </p>
+                </div>
+              </ScrollReveal>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Gallery Item 1 */}
+                <ScrollReveal animation="fadeInUp" delay={0.1}>
+                  <div className="group relative overflow-hidden rounded-2xl shadow-xl aspect-square">
+                    <ResponsiveImage
+                      src="/images/before-after/gallery-dirty-duct-1.jpg"
+                      alt="Severely clogged residential dryer vent before cleaning"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <span className="inline-block px-3 py-1 bg-red-500/90 backdrop-blur text-white text-xs font-bold rounded-full mb-3 shadow-lg">BEFORE</span>
+                      <h3 className="text-white font-bold text-xl drop-shadow-md">Hazardous Lint Buildup</h3>
+                    </div>
+                  </div>
+                </ScrollReveal>
+
+                {/* Gallery Item 2 */}
+                <ScrollReveal animation="fadeInUp" delay={0.2}>
+                  <div className="group relative overflow-hidden rounded-2xl shadow-xl aspect-square">
+                    <ResponsiveImage
+                      src="/images/before-after/gallery-dirty-duct-2.jpg"
+                      alt="Thick dust lining an HVAC air duct before cleaning"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <span className="inline-block px-3 py-1 bg-red-500/90 backdrop-blur text-white text-xs font-bold rounded-full mb-3 shadow-lg">BEFORE</span>
+                      <h3 className="text-white font-bold text-xl drop-shadow-md">Heavy Duct Contamination</h3>
+                    </div>
+                  </div>
+                </ScrollReveal>
+
+                {/* Gallery Item 3 */}
+                <ScrollReveal animation="fadeInUp" delay={0.3}>
+                  <div className="group relative overflow-hidden rounded-2xl shadow-xl aspect-square">
+                    <ResponsiveImage
+                      src="/images/before-after/gallery-clean-duct-1.jpg"
+                      alt="Sparkling clean interior of an HVAC air duct after service"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <span className="inline-block px-3 py-1 bg-green-500/90 backdrop-blur text-white text-xs font-bold rounded-full mb-3 shadow-lg">AFTER</span>
+                      <h3 className="text-white font-bold text-xl drop-shadow-md">Pristine Restored Airflow</h3>
+                    </div>
+                  </div>
+                </ScrollReveal>
+              </div>
+
+              <div className="mt-12 text-center">
+                <Button asChild size="lg" className="btn-premium text-white px-8 py-6 h-auto text-lg rounded-xl shadow-xl">
+                  <Link to="/contact">Clear My Air Ducts Today</Link>
+                </Button>
               </div>
             </div>
           </section>

@@ -1,18 +1,36 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
+Allow: /*.js
+Allow: /*.css
 Disallow: /admin/
-Disallow: /admin
+Disallow: /api/
 
 Sitemap: https://www.pureaircalifornia.com/sitemap.xml
+
+# Google News
+User-agent: Googlebot-News
+Allow: /
+
+# Bingbot
+User-agent: bingbot
+Allow: /
+
+# Yandex
+User-agent: Yandex
+Allow: /
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+
+# Block specific directories
+Disallow: /admin/
+Disallow: /api/
+Disallow: /node_modules/
+
+# Files to block (documents that shouldn't be indexed)
+Disallow: /*.pdf$
+Disallow: /*.doc$
+Disallow: /*.docx$
+Disallow: /*.xls$
+Disallow: /*.xlsx$

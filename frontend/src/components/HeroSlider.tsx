@@ -187,7 +187,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({
                     />
                 </>
             ) : (
-                <div className="absolute inset-0 bg-[url('/images/texture-noise.png')] opacity-[0.03] mix-blend-overlay pointer-events-none"></div>
+                <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none"></div>
             )}
 
             {/* Custom Overlay Content (passed as children) */}

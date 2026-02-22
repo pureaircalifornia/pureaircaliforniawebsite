@@ -72,7 +72,8 @@ const LocationDetail = () => {
               "@type": "City",
               "name": location.name,
               "sameAs": `https://en.wikipedia.org/wiki/${location.name.replace(/ /g, '_')},_California`
-            }
+            },
+            hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.name + ', CA')}`
           }} />
           {/* BreadcrumbList Schema */}
           <SchemaMarkup schema={{
@@ -131,7 +132,7 @@ const LocationDetail = () => {
           </div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Air Duct Cleaning in {location.name}</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Air Duct Cleaning in {location.name}</h1>
               <p className="text-xl mb-8 text-gray-100">
                 Your trusted local experts for professional air duct cleaning services in {location.name}, {location.county}.
               </p>
@@ -169,12 +170,29 @@ const LocationDetail = () => {
                 </div>
               </div>
               <div>
-                <ResponsiveImage
-                  src={location.image}
-                  alt={`Pure Air California service area in ${location.name}`}
-                  className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
-                  loading="lazy"
-                />
+                <div className="rounded-xl overflow-hidden shadow-xl h-64 md:h-96 relative border border-gray-100">
+                  <iframe
+                    title={`Map of ${location.name}, CA`}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                    src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY || ''}&q=${encodeURIComponent(location.name + ', CA')}`}
+                  ></iframe>
+                  {/* Fallback image if API key is missing */}
+                  {!import.meta.env.VITE_GOOGLE_MAPS_API_KEY && (
+                    <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-100">
+                      <ResponsiveImage
+                        src={location.image}
+                        alt={`Pure Air California service area in ${location.name}`}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

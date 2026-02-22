@@ -156,7 +156,7 @@ const Footer = () => {
               </a>
             </p>
             <p className="text-gray-400">
-              <a href="mailto:info@pureaircalifornia.com" className="hover:text-white transition-colors">Email: info@pureaircalifornia.com</a>
+              <a href="mailto:info@pureaircalifornia.com" className="hover:text-white transition-colors break-all">Email: info@pureaircalifornia.com</a>
             </p>
           </div>
         </div>

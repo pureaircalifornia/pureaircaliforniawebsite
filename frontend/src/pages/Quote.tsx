@@ -1,32 +1,23 @@
 import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider } from 'react-helmet-async';
 import PricingEstimator from '@/components/PricingEstimator';
-import { seoConfig } from '@/utils/seo/seoConfig';
+import SEOProvider from '@/components/SEOProvider';
 
 const QuotePage = () => {
   const pageTitle = "Get a Free Air Duct Cleaning Quote | Los Angeles | Pure Air California";
   const pageDescription = "Request your free air duct cleaning quote in Los Angeles. No obligation, same-day estimates available. Instant pricing! Call (213) 792-4145 or submit online.";
-  const pageUrl = `${seoConfig.siteUrl}/quote`;
 
   return (
     <HelmetProvider>
       <div className="min-h-screen flex flex-col">
-        <Helmet>
-          <title>{pageTitle}</title>
-          <meta name="description" content={pageDescription} />
-          <meta name="keywords" content="free air duct cleaning quote Los Angeles, air duct cleaning estimate LA, instant quote duct cleaning, how much does air duct cleaning cost Los Angeles" />
-          <meta name="robots" content="index, follow, max-image-preview:large" />
-          <meta name="geo.region" content="US-CA" />
-          <meta name="geo.placename" content="Los Angeles" />
-          <meta property="og:title" content={pageTitle} />
-          <meta property="og:description" content={pageDescription} />
-          <meta property="og:url" content={pageUrl} />
-          <meta property="og:type" content="website" />
-          <meta property="og:site_name" content="Pure Air California" />
-          <link rel="canonical" href={pageUrl} />
-        </Helmet>
+        <SEOProvider
+          title={pageTitle}
+          description={pageDescription}
+          keywords={["free air duct cleaning quote Los Angeles", "air duct cleaning estimate LA", "instant quote duct cleaning", "how much does air duct cleaning cost Los Angeles"]}
+          path="/quote"
+        />
 
         <NavBar alwaysOpaque />
 

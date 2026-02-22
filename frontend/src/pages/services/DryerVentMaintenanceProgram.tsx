@@ -57,7 +57,7 @@ const DryerVentMaintenanceProgram = () => {
       <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Dryer Vent Maintenance Program</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Dryer Vent Maintenance Program</h1>
             <p className="text-xl mb-8">
               Prevent fire hazards and maintain optimal efficiency with our comprehensive dryer vent maintenance program.
               Annual inspections, priority scheduling, and preventive maintenance to keep your home safe and your dryer running efficiently.

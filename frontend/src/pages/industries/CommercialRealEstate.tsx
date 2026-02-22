@@ -89,7 +89,7 @@ const CommercialRealEstate = () => {
 
                         <div className="bg-white p-6 rounded-lg shadow-sm">
                             <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-4">
-                                <Star size={24} className="text-brand-600" />
+                                <Star size={24} className="text-brand-600 fill-current" />
                             </div>
                             <h3 className="text-xl font-semibold mb-3">Asset Protection</h3>
                             <p className="text-gray-600">

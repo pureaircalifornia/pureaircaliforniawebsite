@@ -24,7 +24,7 @@ const Retail = () => {
             <div className="mt-8 p-6 bg-brand-50 rounded-lg border border-brand-100">
               <div className="flex gap-4 items-start">
                 <div className="w-12 h-12 rounded-full bg-brand-100 flex-shrink-0 flex items-center justify-center">
-                  <Star size={24} className="text-brand-600" />
+                  <Star size={24} className="text-brand-600 fill-current" />
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-2">Minimal Disruption Service</h3>
@@ -112,7 +112,7 @@ const Retail = () => {
             
             <div className="text-center">
               <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mx-auto mb-4">
-                <Star size={28} className="text-brand-600" />
+                <Star size={28} className="text-brand-600 fill-current" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Flexible Scheduling</h3>
               <p className="text-gray-600">

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, Security
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Security, Request, BackgroundTasks
 from fastapi.security.api_key import APIKeyHeader
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
@@ -11,6 +11,11 @@ from typing import List, Optional
 import uuid
 from datetime import datetime
 from enum import Enum
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+
+from housecallpro import housecall_pro
 
 
 ROOT_DIR = Path(__file__).parent
@@ -41,6 +46,11 @@ app = FastAPI(
     description="Backend API for Pure Air California website",
     version="1.0.0"
 )
+
+# Rate Limiting
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 
 # Create a router with the /api prefix
@@ -115,7 +125,8 @@ async def root():
     return {"message": "Pure Air California API", "version": "1.0.0"}
 
 @api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
+@limiter.limit("10/minute")
+async def create_status_check(request: Request, input: StatusCheckCreate):
     status_dict = input.dict()
     status_obj = StatusCheck(**status_dict)
     _ = await db.status_checks.insert_one(status_obj.dict())
@@ -129,12 +140,17 @@ async def get_status_checks():
 
 # Lead Management Endpoints
 @api_router.post("/leads", response_model=Lead)
-async def create_lead(lead_input: LeadCreate):
+@limiter.limit("5/minute")
+async def create_lead(request: Request, background_tasks: BackgroundTasks, lead_input: LeadCreate):
     """Create a new lead from form submission"""
     lead = Lead(**lead_input.dict())
     lead_dict = lead.dict()
     await db.leads.insert_one(lead_dict)
     logger.info(f"New lead created: {lead.id} - {lead.name} ({lead.email})")
+    
+    # Push to Housecall Pro in the background
+    background_tasks.add_task(housecall_pro.create_customer, lead_dict)
+    
     return lead
 
 
@@ -241,6 +257,30 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Custom Security Headers Middleware
+@app.middleware("http")
+async def add_security_headers(request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    
+    # Restrictive CSP tailored for a React+FastAPI app
+    csp = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://www.googletagmanager.com; "
+        "connect-src 'self' http://localhost:3000 http://127.0.0.1:3000 https://www.google-analytics.com https://api.pureaircalifornia.com; "
+        "img-src 'self' data: https:; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' data: https://fonts.gstatic.com; "
+        "frame-src 'self' https://www.googletagmanager.com; "
+        "object-src 'none';"
+    )
+    response.headers["Content-Security-Policy"] = csp
+    return response
 
 # Configure logging
 logging.basicConfig(

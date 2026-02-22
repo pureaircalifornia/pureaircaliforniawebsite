@@ -68,7 +68,7 @@ const Manufacturing = () => {
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-4">
-                <Star size={24} className="text-brand-600" />
+                <Star size={24} className="text-brand-600 fill-current" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Improved Product Quality</h3>
               <p className="text-gray-600">
@@ -237,7 +237,7 @@ const Manufacturing = () => {
             
             <div className="text-center">
               <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mx-auto mb-4">
-                <Star size={28} className="text-brand-600" />
+                <Star size={28} className="text-brand-600 fill-current" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Minimal Production Disruption</h3>
               <p className="text-gray-600">

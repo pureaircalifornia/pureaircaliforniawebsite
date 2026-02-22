@@ -163,6 +163,32 @@
   }
 }
 
+/* Map embed iframe styling */
+iframe {
+  color-scheme: light;
+}
+
+/* Base interactive elements */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Animations */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-50% - 1.5rem));
+    /* Adjust for gap */
+  }
+}
+
+.animate-marquee {
+  animation: marquee 35s linear infinite;
+}
+
 @keyframes pulse-subtle {
 
   0%,

@@ -49,6 +49,16 @@ const Restaurants = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-4">
+                <Star size={24} className="text-brand-600 fill-current" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Improved Dining Experience</h3>
+              <p className="text-gray-600">
+                Clean air systems help eliminate cooking odors and improve the overall atmosphere for your guests.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-4">
                 <Shield size={24} className="text-brand-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Fire Risk Reduction</h3>
@@ -69,7 +79,7 @@ const Restaurants = () => {
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-4">
-                <Star size={24} className="text-brand-600" />
+                <Star size={24} className="text-brand-600 fill-current" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Improved Dining Experience</h3>
               <p className="text-gray-600">
@@ -99,7 +109,7 @@ const Restaurants = () => {
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-4">
-                <Star size={24} className="text-brand-600" />
+                <Star size={24} className="text-brand-600 fill-current" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Energy Efficiency</h3>
               <p className="text-gray-600">
@@ -214,7 +224,7 @@ const Restaurants = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-10 text-center">Why Restaurants Trust Pure Air California</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="text-center">
               <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mx-auto mb-4">
@@ -225,17 +235,17 @@ const Restaurants = () => {
                 We understand the unique challenges and requirements of restaurant ventilation systems and the critical importance of cleanliness.
               </p>
             </div>
-            
+
             <div className="text-center">
               <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mx-auto mb-4">
-                <Star size={28} className="text-brand-600" />
+                <Star size={28} className="text-brand-600 fill-current" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Restaurant-Friendly Scheduling</h3>
               <p className="text-gray-600">
                 We work around your business hours to minimize disruption, with overnight and early morning service options available.
               </p>
             </div>
-            
+
             <div className="text-center">
               <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center mx-auto mb-4">
                 <Building size={28} className="text-brand-600" />

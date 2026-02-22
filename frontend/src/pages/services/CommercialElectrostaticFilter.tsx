@@ -91,7 +91,7 @@ const CommercialElectrostaticFilter = () => {
         <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Commercial Electrostatic Air Filter Systems</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Commercial Electrostatic Air Filter Systems</h1>
               <p className="text-xl mb-8">
                 Advanced air filtration solutions for businesses seeking superior indoor air quality and HVAC efficiency.
                 Reduce operating costs, improve employee health, and ensure compliance with industry standards.
@@ -365,18 +365,18 @@ const CommercialElectrostaticFilter = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-                <Award size={48} className="text-brand-600 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Cost Savings</h3>
-                <p className="text-gray-600">
-                  Eliminate ongoing filter replacement costs and reduce energy consumption by up to 25%, providing significant long-term savings.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                 <Users size={48} className="text-brand-600 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold mb-3">Employee Health</h3>
                 <p className="text-gray-600">
                   Improve employee health and productivity by reducing allergens, respiratory irritants, and airborne contaminants.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+                <Award size={48} className="text-brand-600 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold mb-3">Cost Savings</h3>
+                <p className="text-gray-600">
+                  Eliminate ongoing filter replacement costs and reduce energy consumption by up to 25%, providing significant long-term savings.
                 </p>
               </div>
 

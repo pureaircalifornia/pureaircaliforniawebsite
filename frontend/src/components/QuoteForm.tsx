@@ -34,8 +34,8 @@ const QuoteForm = () => {
   });
 
   const services = [
-    'Residential Air Duct Cleaning',
     'Commercial Air Duct Cleaning',
+    'Residential Air Duct Cleaning',
     'Dryer Vent Cleaning',
     'Electrostatic Filter Service',
   ];

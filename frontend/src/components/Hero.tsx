@@ -24,7 +24,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 py-24 md:py-36 relative z-10">
         <div className="max-w-3xl">
           <h1
-            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white"
             style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}
           >
             Feel Safe. Breathe Easy.

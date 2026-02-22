@@ -5,6 +5,7 @@ interface ResponsiveImageProps {
   src: string;
   alt: string;
   loading?: 'lazy' | 'eager';
+  fetchPriority?: 'high' | 'low' | 'auto';
   className?: string;
   width?: number;
   height?: number;
@@ -22,6 +23,7 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   src,
   alt,
   loading = 'lazy',
+  fetchPriority,
   className,
   width,
   height,
@@ -48,11 +50,12 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
       src={imageSrc}
       alt={alt}
       loading={loading}
+      {...(fetchPriority ? { fetchpriority: fetchPriority } as any : {})}
       width={width}
       height={height}
       sizes={sizes}
       className={cn('w-full h-full object-cover transition-opacity duration-300', className)}
-      decoding="async"
+      decoding={loading === 'eager' ? 'sync' : 'async'}
       onError={handleError}
     />
   );

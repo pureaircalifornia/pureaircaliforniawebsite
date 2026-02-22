@@ -1,127 +1,119 @@
 import React from 'react';
-import { localSEO } from '@/utils/seo/localSEO';
+import { seoConfig } from '@/utils/seo/seoConfig';
 import { serviceSchema } from '@/utils/seo/serviceSchema';
 
 interface SchemaMarkupProps {
   serviceType?: 'airDuctCleaning' | 'dryerVentCleaning' | 'moldRemoval';
   schema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  showLocalBusiness?: boolean;
+  showFAQ?: boolean;
+  showReviews?: boolean;
+  showServiceArea?: boolean;
 }
 
-const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ serviceType, schema }) => {
+const SchemaMarkup: React.FC<SchemaMarkupProps> = ({
+  serviceType,
+  schema,
+  showLocalBusiness = true,
+  showFAQ = false,
+  showReviews = false,
+  showServiceArea = false
+}) => {
+  const { localBusiness } = seoConfig.schema;
+  const { local } = seoConfig;
+
   return (
     <>
       {/* Local Business Schema */}
-      <script type="application/ld+json">
-        {JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'LocalBusiness',
-          name: localSEO.business.name,
-          image: 'https://www.pureaircalifornia.com/logo/pac-logo.png',
-          '@id': 'https://pureaircalifornia.com/#business',
-          url: 'https://pureaircalifornia.com',
-          telephone: localSEO.business.telephone,
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: localSEO.business.address.streetAddress,
-            addressLocality: localSEO.business.address.addressLocality,
-            addressRegion: localSEO.business.address.addressRegion,
-            postalCode: localSEO.business.address.postalCode,
-            addressCountry: localSEO.business.address.addressCountry
-          },
-          geo: {
-            '@type': 'GeoCoordinates',
-            latitude: localSEO.business.geo.latitude,
-            longitude: localSEO.business.geo.longitude
-          },
-          openingHoursSpecification: Object.entries(localSEO.business.openingHours).map(([day, hours]) => ({
-            '@type': 'OpeningHoursSpecification',
-            dayOfWeek: day.charAt(0).toUpperCase() + day.slice(1),
-            opens: hours[0].split('-')[0],
-            closes: hours[0].split('-')[1]
-          })),
-          sameAs: localSEO.citations.googleMyBusiness.url,
-          priceRange: '$$',
-          currenciesAccepted: 'USD',
-          paymentAccepted: 'Cash, Credit Card, Debit Card'
-        })}
-      </script>
+      {showLocalBusiness && (
+        <script type="application/ld+json">
+          {JSON.stringify(localBusiness)}
+        </script>
+      )}
 
       {/* Service Schema */}
-      {serviceType && (
+      {serviceType && serviceSchema[serviceType] && (
         <script type="application/ld+json">
           {JSON.stringify(serviceSchema[serviceType])}
         </script>
       )}
 
       {/* Reviews Schema */}
-      <script type="application/ld+json">
-        {JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'AggregateRating',
-          '@id': 'https://pureaircalifornia.com/#aggregateRating',
-          ratingValue: 4.9,
-          reviewCount: 1200,
-          bestRating: 5,
-          worstRating: 1,
-          ratingExplanation: 'Based on 1,200+ customer reviews on Google'
-        })}
-      </script>
+      {showReviews && (
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'AggregateRating',
+            '@id': 'https://pureaircalifornia.com/#aggregateRating',
+            ratingValue: localBusiness.aggregateRating.ratingValue,
+            reviewCount: localBusiness.aggregateRating.reviewCount,
+            bestRating: localBusiness.aggregateRating.bestRating,
+            worstRating: localBusiness.aggregateRating.worstRating,
+            ratingExplanation: `Based on ${localBusiness.aggregateRating.reviewCount}+ customer reviews on Google`
+          })}
+        </script>
+      )}
 
       {/* FAQ Schema */}
-      <script type="application/ld+json">
-        {JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'FAQPage',
-          mainEntity: [
-            {
-              '@type': 'Question',
-              name: 'How often should I clean my air ducts?',
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'We recommend cleaning your air ducts every 3-5 years, depending on your home\'s specific needs.'
+      {showFAQ && (
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              {
+                '@type': 'Question',
+                name: 'How often should I clean my air ducts?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'We recommend cleaning your air ducts every 3-5 years, depending on your home\'s specific needs. Homes with pets, allergies, or recent renovations may benefit from more frequent cleaning.'
+                }
+              },
+              {
+                '@type': 'Question',
+                name: 'How long does air duct cleaning take?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'A typical residential air duct cleaning takes about 2-4 hours, depending on the size of your system and the level of contamination.'
+                }
+              },
+              {
+                '@type': 'Question',
+                name: 'Is air duct cleaning worth it?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Yes, professional air duct cleaning can significantly improve indoor air quality, reduce allergy symptoms, lower energy bills by improving HVAC efficiency, and extend the lifespan of your system.'
+                }
               }
-            },
-            {
-              '@type': 'Question',
-              name: 'How long does air duct cleaning take?',
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'A typical residential air duct cleaning takes about 2-4 hours, depending on the size of your system.'
-              }
-            },
-            {
-              '@type': 'Question',
-              name: 'Is air duct cleaning worth it?',
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: 'Yes, air duct cleaning can improve indoor air quality, reduce energy costs, and extend the life of your HVAC system.'
-              }
-            }
-          ]
-        })}
-      </script>
+            ]
+          })}
+        </script>
+      )}
 
       {/* Service Area Schema */}
-      <script type="application/ld+json">
-        {JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'ServiceArea',
-          provider: {
-            '@type': 'Organization',
-            name: localSEO.business.name
-          },
-          areaServed: localSEO.serviceAreas.map(area => ({
-            '@type': 'Place',
-            name: area.name,
-            address: {
-              '@type': 'PostalAddress',
-              addressRegion: 'CA',
-              addressCountry: 'US'
-            }
-          })),
-          serviceType: 'Air Duct Cleaning, Dryer Vent Cleaning, Mold Removal'
-        })}
-      </script>
+      {showServiceArea && (
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'ServiceArea',
+            provider: {
+              '@type': 'Organization',
+              name: localBusiness.name
+            },
+            areaServed: local.serviceAreas.map(area => ({
+              '@type': 'City',
+              name: area,
+              address: {
+                '@type': 'PostalAddress',
+                addressRegion: 'CA',
+                addressCountry: 'US'
+              }
+            })),
+            serviceType: 'Air Duct Cleaning, Dryer Vent Cleaning, Mold Removal'
+          })}
+        </script>
+      )}
+
       {/* Custom Schema */}
       {schema && (
         <script type="application/ld+json">
@@ -133,3 +125,4 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ serviceType, schema }) => {
 };
 
 export default SchemaMarkup;
+

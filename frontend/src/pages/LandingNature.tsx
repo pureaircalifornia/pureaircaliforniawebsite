@@ -1,5 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import SEOProvider from '@/components/SEOProvider';
+import SchemaMarkup from '@/components/SchemaMarkup';
+import { seoConfig } from '@/utils/seo/seoConfig';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -78,20 +81,21 @@ const LandingNature = () => {
 
     return (
         <div className="min-h-screen flex flex-col">
-            <Helmet>
-                <title>Breathe Easier Today | Pure Air California | Professional Air Duct Cleaning LA</title>
-                <meta
-                    name="description"
-                    content="Breathe fresher, cleaner air in your home. Pure Air California offers expert air duct & dryer vent cleaning in Los Angeles. NADCA certified. Free estimates! (213) 792-4145"
+            <SEOProvider
+                title="Breathe Easier Today | Pure Air California | Professional Air Duct Cleaning LA"
+                description="Breathe fresher, cleaner air in your home. Pure Air California offers expert air duct & dryer vent cleaning in Los Angeles. NADCA certified. Free estimates! (213) 792-4145"
+                keywords={["breathe easier", "clean air home", "air duct cleaning Los Angeles", "fresh air Los Angeles", "indoor air quality", "healthy home air", "NADCA certified air duct cleaning"]}
+                path="/"
+                disableDefaultSchema
+            >
+                <SchemaMarkup
+                    schema={seoConfig.schema.localBusiness}
+                    showLocalBusiness={false}
+                    showReviews={true}
+                    showServiceArea={true}
+                    showFAQ={true}
                 />
-                <meta name="keywords" content="breathe easier, clean air home, air duct cleaning Los Angeles, fresh air Los Angeles, indoor air quality, healthy home air, NADCA certified air duct cleaning" />
-                <meta name="robots" content="index, follow, max-image-preview:large" />
-                <meta property="og:title" content="Breathe Easier Today | Pure Air California" />
-                <meta property="og:description" content="Breathe fresher, cleaner air in your home. Expert air duct cleaning in Los Angeles." />
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content="https://www.pureaircalifornia.com/" />
-                <link rel="canonical" href="https://www.pureaircalifornia.com/" />
-            </Helmet>
+            </SEOProvider>
 
             <NavBar />
             <main>

@@ -106,7 +106,7 @@ const ExitIntentPopup = () => {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: 20 }}
                             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                            className="w-full max-w-md max-h-full flex flex-col pointer-events-auto"
+                            className="w-full max-w-md max-h-full flex flex-col pointer-events-auto bg-white rounded-2xl shadow-2xl overflow-hidden"
                             style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
                         >
                             {/* Header with gradient */}
@@ -188,7 +188,7 @@ const ExitIntentPopup = () => {
                                         <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs text-gray-500">
                                             <span className="flex items-center gap-1">
                                                 <CheckCircle className="w-4 h-4 text-green-500" />
-                                                448,000+ satisfied clients
+                                                448K+ satisfied customers
                                             </span>
                                             <span className="flex items-center gap-1">
                                                 <CheckCircle className="w-4 h-4 text-green-500" />

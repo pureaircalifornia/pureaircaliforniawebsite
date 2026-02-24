@@ -26,6 +26,16 @@ const FeaturedServices = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <ScrollReveal animation="slideInLeft" delay={0.1}>
             <ServiceCard
+              title="Commercial Air Duct Cleaning"
+              description="Ensure a healthy environment for your employees and customers."
+              link="/services/commercial-air-duct-cleaning"
+              icon={Filter}
+              imageSrc="/images/hero/commercial-duct-v2.png"
+            />
+          </ScrollReveal>
+
+          <ScrollReveal animation="fadeInUp" delay={0.2}>
+            <ServiceCard
               title="Residential Air Duct Cleaning"
               description="Improve your home's air quality with our thorough air duct cleaning services."
               link="/services/residential-air-duct-cleaning"
@@ -34,23 +44,13 @@ const FeaturedServices = () => {
             />
           </ScrollReveal>
 
-          <ScrollReveal animation="fadeInUp" delay={0.2}>
+          <ScrollReveal animation="slideInRight" delay={0.3}>
             <ServiceCard
               title="Residential Dryer Vent Cleaning"
               description="Protect your home from fire hazards with our professional dryer vent cleaning."
               link="/services/residential-dryer-vent-cleaning"
               icon={Wind}
               imageSrc="/images/hero/dryer-vent-v2.png"
-            />
-          </ScrollReveal>
-
-          <ScrollReveal animation="slideInRight" delay={0.3}>
-            <ServiceCard
-              title="Commercial Air Duct Cleaning"
-              description="Ensure a healthy environment for your employees and customers."
-              link="/services/commercial-air-duct-cleaning"
-              icon={Filter}
-              imageSrc="/images/hero/commercial-duct-v2.png"
             />
           </ScrollReveal>
         </div>

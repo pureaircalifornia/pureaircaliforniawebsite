@@ -138,19 +138,33 @@ async def get_status_checks():
     return [StatusCheck(**status_check) for status_check in status_checks]
 
 
+import asyncio
+
+# Check if the service exists or can be imported. We use a try/except to avoid breaking the monolith file
+# if it is run standalone without the app module structure.
+try:
+    from app.services.housecall_pro import housecall_pro_service
+except ImportError:
+    housecall_pro_service = None
+
 # Lead Management Endpoints
 @api_router.post("/leads", response_model=Lead)
-@limiter.limit("5/minute")
-async def create_lead(request: Request, background_tasks: BackgroundTasks, lead_input: LeadCreate):
+async def create_lead(lead_input: LeadCreate):
     """Create a new lead from form submission"""
     lead = Lead(**lead_input.dict())
     lead_dict = lead.dict()
+    
+    # Try to insert into MongoDB first
     await db.leads.insert_one(lead_dict)
     logger.info(f"New lead created: {lead.id} - {lead.name} ({lead.email})")
     
-    # Push to Housecall Pro in the background
-    background_tasks.add_task(housecall_pro.create_customer, lead_dict)
-    
+    # Try syncing to Housecall Pro in background
+    if housecall_pro_service:
+        # Run sync in background task to not block the response
+        asyncio.create_task(housecall_pro_service.create_customer(lead_dict))
+    else:
+        logger.warning("HousecallProService not found or disabled. Sync skipped.")
+        
     return lead
 
 
@@ -206,6 +220,26 @@ async def delete_lead(lead_id: str):
         raise HTTPException(status_code=404, detail="Lead not found")
     logger.info(f"Lead deleted: {lead_id}")
     return {"message": "Lead deleted successfully"}
+
+
+@api_router.post("/leads/{lead_id}/sync", dependencies=[Depends(get_admin_user)])
+async def sync_lead_to_housecall(lead_id: str):
+    """Manually push a lead to Housecall Pro"""
+    if not housecall_pro_service:
+        raise HTTPException(status_code=503, detail="Housecall Pro integration is not configured")
+        
+    lead = await db.leads.find_one({"id": lead_id})
+    if not lead:
+        raise HTTPException(status_code=404, detail="Lead not found")
+        
+    lead_dict = {k: v for k, v in lead.items() if k != "_id"}
+    result = await housecall_pro_service.create_customer(lead_dict)
+    
+    if not result:
+        raise HTTPException(status_code=500, detail="Failed to sync lead to Housecall Pro API")
+        
+    return {"message": "Sync successful", "housecall_pro_data": result}
+
 
 
 @api_router.get("/leads/stats/summary")

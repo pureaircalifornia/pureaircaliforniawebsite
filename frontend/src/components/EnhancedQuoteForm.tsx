@@ -20,6 +20,7 @@ import emailjs from '@emailjs/browser';
 import { submitFormWithBackend } from '@/utils/api';
 import { useABVariant } from './ABTestRouter';
 import { quoteFormSchema } from '@/utils/validation';
+import { trackQuoteSubmission } from '@/utils/tracking';
 
 type FormData = {
   service: string;
@@ -268,6 +269,16 @@ const EnhancedQuoteForm = () => {
         customer_type: formData.service.toLowerCase().includes('commercial') ? 'commercial' : 'residential',
         value: 50.00, // Estimated lead value
         currency: 'USD'
+      });
+    }
+
+    // Call our centralized tracking utility
+    trackQuoteSubmission();
+
+    // Explicit Google Ads Conversion
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-1120420693/1b2c3d4e5f' // Placeholder label for Quote Submit 
       });
     }
 

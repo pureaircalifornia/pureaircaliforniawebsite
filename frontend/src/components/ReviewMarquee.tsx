@@ -20,7 +20,7 @@ const ReviewMarquee = () => {
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-900 to-transparent z-10 pointer-events-none"></div>
 
             <div className="container mx-auto px-4 mb-8 text-center relative z-10">
-                <h2 className="text-2xl font-bold text-white mb-2">Join 448,000+ Satisfied Los Angeles Residents</h2>
+                <h2 className="text-2xl font-bold text-white mb-2">Join 448K+ Satisfied Customers</h2>
                 <p className="text-gray-400">Real reviews from your neighbors</p>
             </div>
 

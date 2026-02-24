@@ -103,6 +103,13 @@ export const trackPhoneCall = (location: string) => {
         phone_number: '(213) 792-4145',
         conversion_type: 'phone_call',
     });
+
+    // Explicit Google Ads Conversion
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'conversion', {
+            'send_to': 'AW-1120420693/phoneClickLabel' // User to replace with actual conversion label
+        });
+    }
 };
 
 /**

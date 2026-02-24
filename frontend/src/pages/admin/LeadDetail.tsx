@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getLead, updateLead, deleteLead, Lead, LeadStatus } from '@/utils/api';
+import { getLead, updateLead, deleteLead, syncLeadToHousecallPro, Lead, LeadStatus } from '@/utils/api';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -19,6 +19,7 @@ const LeadDetail = () => {
     const [saving, setSaving] = useState(false);
     const [notes, setNotes] = useState('');
     const [status, setStatus] = useState<LeadStatus>('new');
+    const [syncing, setSyncing] = useState(false);
 
     const adminSecret = sessionStorage.getItem('adminSecret') || '';
 
@@ -211,19 +212,57 @@ const LeadDetail = () => {
                                 />
                             </div>
 
-                            <Button onClick={handleSave} disabled={saving} className="w-full">
-                                {saving ? (
-                                    <>
-                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                        Saving...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Save className="mr-2 h-4 w-4" />
-                                        Save Changes
-                                    </>
-                                )}
-                            </Button>
+                            <div className="flex flex-col gap-2">
+                                <Button onClick={handleSave} disabled={saving || syncing} className="w-full">
+                                    {saving ? (
+                                        <>
+                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                            Saving...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="mr-2 h-4 w-4" />
+                                            Save Changes
+                                        </>
+                                    )}
+                                </Button>
+
+                                <Button
+                                    onClick={async () => {
+                                        if (!id) return;
+                                        setSyncing(true);
+                                        try {
+                                            await syncLeadToHousecallPro(id, adminSecret);
+                                            toast({
+                                                title: "Success",
+                                                description: "Lead manually synced to Housecall Pro",
+                                            });
+                                        } catch (e) {
+                                            toast({
+                                                title: "Sync Failed",
+                                                description: e instanceof Error ? e.message : "Failed to sync to Housecall Pro",
+                                                variant: "destructive"
+                                            });
+                                        } finally {
+                                            setSyncing(false);
+                                        }
+                                    }}
+                                    variant="outline"
+                                    disabled={saving || syncing}
+                                    className="w-full text-brand-700 border-brand-200 hover:bg-brand-50"
+                                >
+                                    {syncing ? (
+                                        <>
+                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                            Syncing to Housecall Pro...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Push to Housecall Pro
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 </div>

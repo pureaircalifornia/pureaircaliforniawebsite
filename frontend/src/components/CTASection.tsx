@@ -12,7 +12,7 @@ const CTASection = () => {
       <div className="container mx-auto px-4">
         <ScrollReveal>
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 drop-shadow-sm">Your Air, Cared For.</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white" style={{ textShadow: '0 0 15px rgba(255,255,255,0.6)' }}>Your Air, Cared For.</h2>
             <p className="text-lg md:text-xl text-white/90 mb-10 leading-relaxed max-w-2xl mx-auto">
               Friendly experts. Respect for your home. Clear communication. Schedule a visit when it feels right for you.
             </p>

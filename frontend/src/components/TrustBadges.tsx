@@ -41,21 +41,54 @@ const TrustBadges = () => {
           </div>
         </div>
 
-        {/* Certifications */}
+        {/* Certifications and Trust Markers */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          {certifications.map((cert, index) => (
-            <motion.div
-              key={index}
-              className="flex flex-col items-center bg-gray-50 p-4 rounded-lg shadow-sm"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <cert.icon className="text-brand-600 mb-2" size={28} />
-              <span className="text-center font-medium text-gray-800">{cert.text}</span>
-            </motion.div>
-          ))}
+          <motion.div
+            className="flex flex-col items-center justify-center bg-blue-50 border border-blue-100 p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <Award className="text-blue-600 mb-2" size={32} />
+            <span className="text-center font-bold text-blue-900">NADCA Certified</span>
+            <span className="text-center text-xs text-blue-700 mt-1">Air Duct Cleaners Association</span>
+          </motion.div>
+
+          <motion.div
+            className="flex flex-col items-center justify-center bg-yellow-50 border border-yellow-100 p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1 }}
+            viewport={{ once: true }}
+          >
+            <Star className="text-yellow-500 fill-yellow-500 mb-2" size={32} />
+            <span className="text-center font-bold text-yellow-900">5-Star Rated</span>
+            <span className="text-center text-xs text-yellow-700 mt-1">1,200+ Google Reviews</span>
+          </motion.div>
+
+          <motion.div
+            className="flex flex-col items-center justify-center bg-green-50 border border-green-100 p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <Shield className="text-green-600 mb-2" size={32} />
+            <span className="text-center font-bold text-green-900">Licensed & Insured</span>
+            <span className="text-center text-xs text-green-700 mt-1">Full Coverage Protection</span>
+          </motion.div>
+
+          <motion.div
+            className="flex flex-col items-center justify-center bg-gray-50 border border-gray-200 p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <CheckCircle className="text-gray-600 mb-2" size={32} />
+            <span className="text-center font-bold text-gray-900">BBB Accredited</span>
+            <span className="text-center text-xs text-gray-600 mt-1">A+ Rating</span>
+          </motion.div>
         </div>
 
         {/* Client Logos */}

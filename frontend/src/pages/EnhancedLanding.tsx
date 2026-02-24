@@ -54,10 +54,11 @@ const EnhancedLanding = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <motion.h1
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
+                  style={{ textShadow: '0 0 15px rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.5)' }}
                 >
                   Breathe Easier with Professional Air Duct & Dryer Vent Cleaning
                 </motion.h1>
@@ -98,7 +99,7 @@ const EnhancedLanding = () => {
                 >
                   {[
                     { icon: Shield, label: "Licensed", sub: "Fully Insured" },
-                    { icon: Star, label: "5-Star", sub: "Top Rated", color: "text-yellow-400" },
+                    { icon: Star, label: "5-Star", sub: "Top Rated", color: "text-yellow-400 fill-yellow-400" },
                     { icon: Award, label: "NADCA", sub: "Certified Pro" },
                     { icon: Clock, label: "Same-Day", sub: "Emergency" }
                   ].map((item, i) => (
@@ -166,7 +167,7 @@ const EnhancedLanding = () => {
                 <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-sky-300 text-sm font-medium mb-4">
                   Words of Wisdom
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white" style={{ textShadow: '0 0 15px rgba(255,255,255,0.6)' }}>
                   The Importance of <span className="text-gradient-shine">Clean Air</span>
                 </h2>
                 <p className="text-lg text-gray-300 max-w-2xl mx-auto">
@@ -277,7 +278,7 @@ const EnhancedLanding = () => {
         <section className="bg-brand-700 py-12 text-white overflow-hidden relative">
           <div className="absolute inset-0 opacity-10"></div>
           <div className="container mx-auto px-4 relative z-10 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Need an Estimate Right Now?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white" style={{ textShadow: '0 0 15px rgba(255,255,255,0.6)' }}>Need an Estimate Right Now?</h2>
             <p className="text-xl mb-8 text-brand-100 max-w-2xl mx-auto">Skip the form and talk to a certified expert immediately. We provide free, accurate quotes over the phone.</p>
             <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100 font-bold text-lg px-8 py-6 h-auto shadow-lg hover:scale-105 transition-transform">
               <a href="tel:2137924145" className="flex items-center gap-2">

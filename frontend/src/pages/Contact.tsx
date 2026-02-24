@@ -18,6 +18,7 @@ import SEOProvider from '@/components/SEOProvider';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import { seoConfig } from '@/utils/seo/seoConfig';
 import { submitFormWithBackend } from '@/utils/api';
+import { trackContactSubmission } from '@/utils/tracking';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -120,11 +121,21 @@ const Contact = () => {
       description: "Thank you for contacting us. We'll get back to you shortly.",
     });
 
-    // Track conversion
+    // Track conversion using global gtag if available
     if (window.gtag) {
       window.gtag('event', 'generate_lead', {
         event_category: 'form',
         event_label: 'contact_form'
+      });
+    }
+
+    // Call our centralized Google Ads / Analytics utility
+    trackContactSubmission();
+
+    // Explicit Google Ads Conversion
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-1120420693/aBcDeFgHiJ' // Placeholder label for Contact Submit 
       });
     }
 

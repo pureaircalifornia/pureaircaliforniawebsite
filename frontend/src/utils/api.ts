@@ -147,6 +147,26 @@ export async function deleteLead(leadId: string, adminSecret: string): Promise<v
 }
 
 /**
+ * Manually sync a lead to Housecall Pro
+ */
+export async function syncLeadToHousecallPro(leadId: string, adminSecret: string): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}/leads/${leadId}/sync`, {
+        method: 'POST',
+        headers: {
+            'x-admin-secret': adminSecret,
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({ detail: 'Failed to sync' }));
+        throw new Error(error.detail || `HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+}
+
+/**
  * Check if the backend API is available
  */
 export async function checkApiHealth(): Promise<boolean> {

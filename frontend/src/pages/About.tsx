@@ -87,7 +87,7 @@ const About = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
               {[
                 { label: 'Years of Experience', value: '40+' },
-                { label: 'Satisfied Clients', value: '448,000+' },
+                { label: 'Satisfied Clients', value: '448K+' },
                 { label: 'Satisfaction Guarantee', value: '100%' },
                 { label: 'Emergency Service', value: '24/7' }
               ].map((stat, i) => (

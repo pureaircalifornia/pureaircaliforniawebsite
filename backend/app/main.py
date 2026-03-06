@@ -4,8 +4,10 @@ Main FastAPI Application Entry Point
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 import logging
+import os
 
 from .config import get_settings
 from .database import connect_to_database, close_database_connection
@@ -19,6 +21,9 @@ from .routers import (
     payments_router,
     documents_router,
     reports_router,
+    leads_router,
+    lead_scanner_router,
+    settings_router,
 )
 
 # Configure logging
@@ -49,35 +54,19 @@ def create_app() -> FastAPI:
     """Create and configure the FastAPI application."""
     settings = get_settings()
     
+    # Disable API docs in production for security
+    docs_url = "/api/docs" if settings.DEBUG else None
+    redoc_url = "/api/redoc" if settings.DEBUG else None
+    openapi_url = "/api/openapi.json" if settings.DEBUG else None
+    
     app = FastAPI(
         title=settings.APP_NAME,
         version=settings.APP_VERSION,
-        description="""
-        ## Pure Air California Business Management System
-        
-        A comprehensive business management platform for air duct cleaning services.
-        
-        ### Features:
-        - **Authentication**: JWT-based authentication with role-based access control
-        - **CRM**: Customer and lead management
-        - **Scheduling**: Appointment scheduling and dispatching
-        - **Estimates**: Quote creation and management
-        - **Invoicing**: Billing and payment tracking
-        - **Payments**: Stripe integration for payment processing
-        - **Documents**: W9, insurance, and certification management
-        - **Reports**: Business analytics and reporting
-        
-        ### Roles:
-        - **Super Admin**: Full system access (franchise owner)
-        - **Admin**: Full location access
-        - **Manager**: Staff and operations management
-        - **Technician**: Field operations
-        - **Customer**: Self-service portal
-        """,
+        description="Pure Air California Business Management System API",
         lifespan=lifespan,
-        docs_url="/api/docs",
-        redoc_url="/api/redoc",
-        openapi_url="/api/openapi.json"
+        docs_url=docs_url,
+        redoc_url=redoc_url,
+        openapi_url=openapi_url
     )
     
     # Add CORS middleware
@@ -85,7 +74,7 @@ def create_app() -> FastAPI:
         CORSMiddleware,
         allow_origins=settings.CORS_ORIGINS,
         allow_credentials=True,
-        allow_methods=["*"],
+        allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         allow_headers=["*"],
     )
     
@@ -99,6 +88,14 @@ def create_app() -> FastAPI:
     app.include_router(payments_router, prefix="/api")
     app.include_router(documents_router, prefix="/api")
     app.include_router(reports_router, prefix="/api")
+    app.include_router(leads_router, prefix="/api")
+    app.include_router(lead_scanner_router, prefix="/api")
+    app.include_router(settings_router, prefix="/api")
+    
+    # Mount local uploads directory for documents
+    uploads_dir = os.path.join(os.getcwd(), "uploads")
+    os.makedirs(uploads_dir, exist_ok=True)
+    app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
     
     @app.get("/api/health")
     async def health_check():

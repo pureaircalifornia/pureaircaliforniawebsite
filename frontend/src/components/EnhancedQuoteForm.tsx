@@ -339,7 +339,7 @@ const EnhancedQuoteForm = () => {
                 {services.map((service) => (
                   <label
                     key={service}
-                    className={`glass-premium p-4 rounded-xl cursor-pointer transition-all border-white/50 block relative ${formData.service === service ? 'ring-2 ring-sky-500 bg-sky-50/50' : 'hover:bg-white/60'} ${formErrors.service ? 'ring-2 ring-red-300' : ''}`}
+                    className={`bg-white p-4 rounded-xl cursor-pointer transition-all border border-gray-200 shadow-sm block relative ${formData.service === service ? 'ring-2 ring-sky-500 bg-sky-50' : 'hover:bg-gray-50'} ${formErrors.service ? 'ring-2 ring-red-300' : ''}`}
                   >
                     <input
                       type="radio"
@@ -376,7 +376,7 @@ const EnhancedQuoteForm = () => {
                 name="propertyType"
                 value={formData.propertyType}
                 onChange={handleInputChange}
-                className={`w-full p-4 glass-premium rounded-xl border-white/50 focus:ring-2 focus:ring-sky-500 outline-none text-slate-800 font-medium ${formErrors.propertyType ? 'ring-2 ring-red-300' : ''}`}
+                className={`w-full p-4 bg-white rounded-xl border border-gray-200 shadow-sm focus:ring-2 focus:ring-sky-500 outline-none text-slate-800 font-medium ${formErrors.propertyType ? 'ring-2 ring-red-300' : ''}`}
                 required
               >
                 <option value="">Select property type</option>
@@ -402,7 +402,7 @@ const EnhancedQuoteForm = () => {
                 value={formData.squareFootage}
                 onChange={handleInputChange}
                 placeholder="e.g., 2000"
-                className={`p-6 glass-premium rounded-xl border-white/50 focus:ring-2 focus:ring-sky-500 text-slate-800 placeholder:text-slate-400 font-medium ${formErrors.squareFootage ? 'ring-2 ring-red-300' : ''}`}
+                className={`p-6 bg-white rounded-xl border border-gray-200 shadow-sm focus:ring-2 focus:ring-sky-500 text-slate-800 placeholder:text-slate-400 font-medium ${formErrors.squareFootage ? 'ring-2 ring-red-300' : ''}`}
                 required
               />
               {formErrors.squareFootage && (
@@ -417,7 +417,7 @@ const EnhancedQuoteForm = () => {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mt-6 p-6 glass-premium rounded-2xl border-sky-100 bg-sky-50/30"
+                className="mt-6 p-6 bg-sky-50 rounded-2xl border border-sky-200 shadow-sm"
               >
                 <div className="flex items-center mb-4">
                   <div className="p-2 bg-sky-600 rounded-lg mr-3 shadow-lg">
@@ -657,7 +657,7 @@ const EnhancedQuoteForm = () => {
   }
 
   return (
-    <div className="glass-premium p-8 rounded-3xl border-white/60 shadow-2xl relative overflow-hidden">
+    <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-2xl relative overflow-hidden">
       <div className="absolute top-0 right-0 p-4 opacity-5">
         <Calculator size={80} />
       </div>
@@ -673,7 +673,7 @@ const EnhancedQuoteForm = () => {
               type="button"
               variant="outline"
               onClick={prevStep}
-              className="bg-white/50 backdrop-blur-md border-white/50 text-slate-600 font-bold px-6 py-6 h-auto rounded-2xl hover:bg-white/80 w-full sm:w-auto"
+              className="bg-gray-100 border-gray-200 text-slate-600 font-bold px-6 py-6 h-auto rounded-2xl hover:bg-gray-200 w-full sm:w-auto"
             >
               <ArrowRight className="rotate-180 mr-2 h-4 w-4" />
               Back

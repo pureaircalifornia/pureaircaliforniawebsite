@@ -21,13 +21,12 @@ const LeadDetail = () => {
     const [status, setStatus] = useState<LeadStatus>('new');
     const [syncing, setSyncing] = useState(false);
 
-    const adminSecret = sessionStorage.getItem('adminSecret') || '';
 
     useEffect(() => {
         const fetchLead = async () => {
             if (!id) return;
             try {
-                const data = await getLead(id, adminSecret);
+                const data = await getLead(id);
                 setLead(data);
                 setNotes(data.notes || '');
                 setStatus(data.status);
@@ -43,13 +42,13 @@ const LeadDetail = () => {
             }
         };
         fetchLead();
-    }, [id, navigate, toast, adminSecret]);
+    }, [id, navigate, toast]);
 
     const handleSave = async () => {
         if (!id || !lead) return;
         setSaving(true);
         try {
-            await updateLead(id, adminSecret, { status, notes });
+            await updateLead(id, '', { status, notes });
             toast({
                 title: "Saved",
                 description: "Lead updated successfully.",
@@ -69,7 +68,7 @@ const LeadDetail = () => {
     const handleDelete = async () => {
         if (!id || !confirm('Are you sure you want to delete this lead? This cannot be undone.')) return;
         try {
-            await deleteLead(id, adminSecret);
+            await deleteLead(id);
             toast({
                 title: "Deleted",
                 description: "Lead deleted successfully.",
@@ -232,7 +231,7 @@ const LeadDetail = () => {
                                         if (!id) return;
                                         setSyncing(true);
                                         try {
-                                            await syncLeadToHousecallPro(id, adminSecret);
+                                            await syncLeadToHousecallPro(id);
                                             toast({
                                                 title: "Success",
                                                 description: "Lead manually synced to Housecall Pro",

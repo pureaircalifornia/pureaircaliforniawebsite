@@ -49,20 +49,31 @@ import Retail from './pages/industries/Retail';
 import Manufacturing from './pages/industries/Manufacturing';
 import CommercialRealEstate from './pages/industries/CommercialRealEstate';
 
-// Import admin pages
 import {
   AdminLayout,
   AdminLogin,
   AdminDashboard,
+  LeadScanner,
+  Prospects,
   LeadList,
   LeadDetail,
   CustomersList,
   CustomerDetail,
   AppointmentsList,
+  AppointmentForm,
   InvoicesList,
+  InvoiceDetail,
+  Inbox,
   ReportsDashboard,
+  Estimates,
+  EstimateDetail,
+  Payments,
+  Documents,
+  Team,
+  Settings,
 } from './pages/admin';
 
+import CustomerForm from './pages/admin/CustomerForm';
 // Create query client
 const queryClient = new QueryClient();
 
@@ -147,10 +158,9 @@ const ScrollToTopOnRouteChange = () => {
   return null;
 };
 
-// Main website layout with NavBar
+// Main website layout (NavBar is rendered by individual pages that need it)
 const MainLayout = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen pb-24 md:pb-0 bg-gray-50">
-    <NavBar />
     <ScrollToTopOnRouteChange />
     <ScrollToTop />
     {children}
@@ -175,19 +185,26 @@ function App() {
                 {/* Admin Portal Routes */}
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route index element={<AdminDashboard />} />
+                  <Route path="lead-scanner" element={<LeadScanner />} />
+                  <Route path="prospects" element={<Prospects />} />
                   <Route path="leads" element={<LeadList />} />
                   <Route path="leads/:id" element={<LeadDetail />} />
                   <Route path="customers" element={<CustomersList />} />
+                  <Route path="customers/new" element={<CustomerForm />} />
                   <Route path="customers/:id" element={<CustomerDetail />} />
+                  <Route path="inbox" element={<Inbox />} />
                   <Route path="appointments" element={<AppointmentsList />} />
+                  <Route path="appointments/new" element={<AppointmentForm />} />
                   <Route path="invoices" element={<InvoicesList />} />
+                  <Route path="invoices/:id" element={<InvoiceDetail />} />
                   <Route path="reports" element={<ReportsDashboard />} />
                   {/* Placeholder routes for other admin sections */}
-                  <Route path="estimates" element={<div className="p-6"><h1 className="text-2xl font-bold">Estimates</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
-                  <Route path="payments" element={<div className="p-6"><h1 className="text-2xl font-bold">Payments</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
-                  <Route path="documents" element={<div className="p-6"><h1 className="text-2xl font-bold">Documents</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
-                  <Route path="team" element={<div className="p-6"><h1 className="text-2xl font-bold">Team</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
-                  <Route path="settings" element={<div className="p-6"><h1 className="text-2xl font-bold">Settings</h1><p className="text-gray-600 mt-2">Coming soon...</p></div>} />
+                  <Route path="estimates" element={<Estimates />} />
+                  <Route path="estimates/:id" element={<EstimateDetail />} />
+                  <Route path="payments" element={<Payments />} />
+                  <Route path="documents" element={<Documents />} />
+                  <Route path="team" element={<Team />} />
+                  <Route path="settings" element={<Settings />} />
                 </Route>
 
                 {/* Main Website Routes */}
@@ -199,8 +216,8 @@ function App() {
                   />
                 ))}
 
-                {/* Catch-all redirect */}
-                <Route path="*" element={<Navigate to="/" replace />} />
+                {/* Catch-all 404 */}
+                <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
               </Routes>
             </Suspense>
 

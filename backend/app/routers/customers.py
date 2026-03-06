@@ -93,10 +93,12 @@ async def create_customer(
     customers = get_customers_collection()
     user_role = UserRole(current_user.get("role", "customer"))
     
-    # Franchise handling
+    franchise_id = customer_data.franchise_id
     if user_role != UserRole.SUPER_ADMIN:
-        customer_data.franchise_id = current_user.get("franchise_id")
-    
+        franchise_id = current_user.get("franchise_id", "default")
+    elif not franchise_id:
+        franchise_id = "default"
+        
     # Create customer document
     customer_id = str(uuid.uuid4())
     
@@ -109,13 +111,13 @@ async def create_customer(
         "email": customer_data.email,
         "first_name": customer_data.first_name,
         "last_name": customer_data.last_name,
-        "phone": customer_data.phone,
+        "phone": customer_data.phone or "",
         "secondary_phone": customer_data.secondary_phone,
         "preferred_contact": customer_data.preferred_contact,
-        "lead_source": customer_data.lead_source.value,
-        "lead_status": customer_data.lead_status.value,
+        "lead_source": customer_data.lead_source.value if hasattr(customer_data.lead_source, 'value') else customer_data.lead_source,
+        "lead_status": customer_data.lead_status.value if hasattr(customer_data.lead_status, 'value') else customer_data.lead_status,
         "tags": customer_data.tags,
-        "franchise_id": customer_data.franchise_id,
+        "franchise_id": franchise_id,
         "properties": properties,
         "notes": notes,
         "total_spent": 0.0,

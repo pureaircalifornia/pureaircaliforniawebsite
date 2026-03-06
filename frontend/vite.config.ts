@@ -13,9 +13,8 @@ export default defineConfig(({ mode }) => ({
     host: '0.0.0.0', // Explicitly bind to all interfaces
     allowedHosts: true,
     proxy: {
-      // Handle API requests if needed
       '/api': {
-        target: 'http://localhost:3000', // Update this if you have a backend
+        target: 'http://localhost:8000',
         changeOrigin: true,
       },
     },

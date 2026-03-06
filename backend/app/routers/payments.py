@@ -9,7 +9,8 @@ import uuid
 
 from ..models.payment import (
     Payment, PaymentCreate, PaymentRefund, PaymentStatus,
-    PaymentMethod, PaymentSearch, PaymentSummary, StripePaymentIntent
+    PaymentMethod, PaymentSearch, PaymentSummary, StripePaymentIntent,
+    StripeCheckoutSession
 )
 from ..models.invoice import InvoiceStatus
 from ..models.user import UserRole
@@ -145,6 +146,73 @@ async def create_payment_intent(
         )
 
 
+@router.post("/checkout-session", response_model=StripeCheckoutSession)
+async def create_checkout_session(
+    invoice_id: str,
+    current_user: dict = Depends(require_permission(Permission.PAYMENT_PROCESS))
+):
+    """Create a Stripe Checkout Session (Shareable Payment Link) for an invoice."""
+    settings = get_settings()
+    invoices = get_invoices_collection()
+    
+    invoice = await invoices.find_one({"_id": invoice_id})
+    if not invoice:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invoice not found")
+    
+    if invoice.get("status") in [InvoiceStatus.PAID.value, InvoiceStatus.VOID.value]:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invoice is already paid or voided")
+    
+    amount_due = invoice.get("amount_due", 0)
+    if amount_due <= 0:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invoice has no amount due")
+    
+    amount_cents = int(amount_due * 100)
+    
+    if not settings.STRIPE_SECRET_KEY:
+        # Mock for development
+        return StripeCheckoutSession(
+            url=f"https://checkout.stripe.mock/pay/{invoice_id}",
+            session_id=f"cs_mock_{uuid.uuid4().hex[:24]}"
+        )
+    
+    try:
+        import stripe
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                        'name': f"Invoice {invoice.get('invoice_number', invoice_id)}",
+                    },
+                    'unit_amount': amount_cents,
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
+            success_url=f"{settings.FRONTEND_URL}/admin/invoices/{invoice_id}?payment=success",
+            cancel_url=f"{settings.FRONTEND_URL}/admin/invoices/{invoice_id}?payment=cancelled",
+            metadata={
+                "invoice_id": invoice_id,
+                "customer_id": invoice.get("customer_id"),
+                "franchise_id": invoice.get("franchise_id")
+            }
+        )
+        
+        return StripeCheckoutSession(
+            url=session.url,
+            session_id=session.id
+        )
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to create checkout session: {str(e)}"
+        )
+
+
 @router.post("", response_model=Payment, status_code=status.HTTP_201_CREATED)
 async def record_payment(
     payment_data: PaymentCreate,
@@ -267,6 +335,19 @@ async def stripe_webhook(request: Request):
     if event["type"] == "payment_intent.succeeded":
         payment_intent = event["data"]["object"]
         await handle_successful_payment(payment_intent)
+        
+    elif event["type"] == "checkout.session.completed":
+        session = event["data"]["object"]
+        # checkout session succeeded
+        # Check if we already handled the payment intent
+        if session.get("payment_intent"):
+            import stripe
+            try:
+                pi = stripe.PaymentIntent.retrieve(session["payment_intent"])
+                # We can handle it here or let the payment_intent.succeeded event handle it.
+                # Usually better to let payment_intent.succeeded handle it if both are sent.
+            except Exception:
+                pass
     
     elif event["type"] == "payment_intent.payment_failed":
         payment_intent = event["data"]["object"]
@@ -356,9 +437,33 @@ async def handle_successful_payment(payment_intent: dict):
 
 
 async def handle_failed_payment(payment_intent: dict):
-    """Log failed payment attempt."""
-    # TODO: Send notification to admin
-    pass
+    """Log failed payment attempt and notify admin."""
+    from ..config import get_settings
+    from ..services.email_outreach import send_email
+    
+    settings = get_settings()
+    admin_email = settings.FROM_EMAIL
+    
+    amount = payment_intent.get("amount", 0) / 100
+    customer_id = payment_intent.get("metadata", {}).get("customer_id", "Unknown")
+    invoice_id = payment_intent.get("metadata", {}).get("invoice_id", "Unknown")
+    
+    body = f"""A Stripe payment intent has failed.
+    
+Amount: ${amount:.2f}
+Customer ID: {customer_id}
+Invoice ID: {invoice_id}
+Payment Intent ID: {payment_intent.get("id")}
+Reason: {payment_intent.get("last_payment_error", {}).get("message", "Unknown")}
+
+Please review this in the Stripe Dashboard.
+"""
+    await send_email(
+        to_email=admin_email,
+        to_name="Pure Air Admin",
+        subject=f"Failed Payment Alert (${amount:.2f})",
+        body=body
+    )
 
 
 @router.post("/{payment_id}/refund", response_model=Payment)

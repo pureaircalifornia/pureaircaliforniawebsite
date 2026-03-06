@@ -21,6 +21,10 @@ import {
     Building2,
     ClipboardList,
     Receipt,
+    Search,
+    Target,
+    Inbox as InboxIcon,
+    MessageSquare
 } from 'lucide-react';
 
 interface NavItem {
@@ -32,6 +36,10 @@ interface NavItem {
 
 const navigation: NavItem[] = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+    { name: 'Lead Scanner', href: '/admin/lead-scanner', icon: Search },
+    { name: 'Prospects', href: '/admin/prospects', icon: Target },
+    { name: 'Leads', href: '/admin/leads', icon: InboxIcon },
+    { name: 'Inbox', href: '/admin/inbox', icon: MessageSquare },
     { name: 'Customers', href: '/admin/customers', icon: Users },
     { name: 'Appointments', href: '/admin/appointments', icon: Calendar },
     {
@@ -56,6 +64,14 @@ export default function AdminLayout() {
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
+
+    // Check authentication status
+    React.useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            navigate('/admin/login');
+        }
+    }, [navigate, location.pathname]);
 
     const handleLogout = () => {
         localStorage.removeItem('accessToken');
@@ -106,8 +122,8 @@ export default function AdminLayout() {
                             key={item.name}
                             to={item.href}
                             className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive(item.href)
-                                    ? 'bg-sky-600 text-white'
-                                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                                ? 'bg-sky-600 text-white'
+                                : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                                 }`}
                         >
                             <item.icon className="w-5 h-5" />

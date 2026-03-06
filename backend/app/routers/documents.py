@@ -16,6 +16,7 @@ from ..core.dependencies import get_current_user, require_permission
 from ..core.permissions import Permission
 from ..database import get_documents_collection, get_users_collection
 from ..config import get_settings
+from ..services.storage import upload_file, delete_file
 
 router = APIRouter(prefix="/documents", tags=["Documents"])
 
@@ -137,10 +138,8 @@ async def upload_document(
     file_ext = file.filename.split(".")[-1] if "." in file.filename else ""
     unique_filename = f"{uuid.uuid4().hex}.{file_ext}"
     
-    # Store file
-    # TODO: Implement S3 storage
-    # For now, store locally or use placeholder URL
-    file_url = f"/uploads/documents/{unique_filename}"
+    # Upload to storage (S3 or local fallback)
+    file_url = await upload_file(file_content, unique_filename, file.content_type)
     
     # If technician, can only upload for themselves
     if user_role == UserRole.TECHNICIAN:
@@ -313,7 +312,9 @@ async def delete_document(
             detail="Document not found"
         )
     
-    # TODO: Also delete file from storage
+    # Delete file from storage
+    if document.get("file_url"):
+        await delete_file(document.get("file_url"))
     
     await documents.delete_one({"_id": document_id})
     

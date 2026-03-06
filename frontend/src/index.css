@@ -220,11 +220,11 @@ html {
 }
 
 .glass-premium {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
 }
 
 .glass-dark {
@@ -232,7 +232,7 @@ html {
 }
 
 .glass-card {
-  @apply bg-white/40 backdrop-blur-md border border-white/60 shadow-lg hover:shadow-2xl hover:bg-white/60 transition-all duration-500 rounded-2xl;
+  @apply bg-white/90 backdrop-blur-md border border-white/70 shadow-lg hover:shadow-2xl hover:bg-white transition-all duration-500 rounded-2xl;
 }
 
 .bg-mesh {

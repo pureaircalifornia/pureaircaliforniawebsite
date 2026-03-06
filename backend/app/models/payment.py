@@ -126,6 +126,12 @@ class StripePaymentIntent(BaseModel):
     status: str
 
 
+class StripeCheckoutSession(BaseModel):
+    """Stripe checkout session creation response."""
+    url: str
+    session_id: str
+
+
 class PaymentSummary(BaseModel):
     """Payment summary for reporting."""
     total_payments: int = 0

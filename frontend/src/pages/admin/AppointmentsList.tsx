@@ -1,102 +1,15 @@
 /**
  * Appointments List Page
- * Displays appointments with calendar view and dispatch board
+ * Displays appointments with dispatch board fetching real data
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-    Calendar,
-    Plus,
-    Search,
-    Filter,
-    ChevronLeft,
-    ChevronRight,
-    Clock,
-    MapPin,
-    User,
-    Phone,
-    MoreVertical,
-    List,
-    Grid,
-    CheckCircle,
-    AlertCircle,
-    Truck,
+    Calendar, Plus, Search, ChevronLeft, ChevronRight,
+    Clock, MapPin, Phone, MoreVertical, List, Grid,
+    CheckCircle, AlertCircle, Truck, Loader2
 } from 'lucide-react';
-
-interface Appointment {
-    id: string;
-    customerName: string;
-    customerPhone: string;
-    address: string;
-    city: string;
-    serviceTypes: string[];
-    scheduledStart: string;
-    scheduledEnd: string;
-    technicianName: string | null;
-    status: 'scheduled' | 'confirmed' | 'en_route' | 'in_progress' | 'completed' | 'cancelled';
-    estimatedDuration: number;
-}
-
-const mockAppointments: Appointment[] = [
-    {
-        id: '1',
-        customerName: 'John Smith',
-        customerPhone: '(213) 555-1234',
-        address: '1234 Wilshire Blvd',
-        city: 'Los Angeles',
-        serviceTypes: ['Air Duct Cleaning'],
-        scheduledStart: '2024-12-24T09:00:00',
-        scheduledEnd: '2024-12-24T11:00:00',
-        technicianName: 'Mike Johnson',
-        status: 'confirmed',
-        estimatedDuration: 120,
-    },
-    {
-        id: '2',
-        customerName: 'Maria Garcia',
-        customerPhone: '(310) 555-5678',
-        address: '456 Oak Ave',
-        city: 'Santa Monica',
-        serviceTypes: ['Dryer Vent Cleaning', 'Inspection'],
-        scheduledStart: '2024-12-24T10:00:00',
-        scheduledEnd: '2024-12-24T11:00:00',
-        technicianName: 'Sarah Wilson',
-        status: 'in_progress',
-        estimatedDuration: 60,
-    },
-    {
-        id: '3',
-        customerName: 'David Chen',
-        customerPhone: '(818) 555-9012',
-        address: '789 Pine Blvd',
-        city: 'Burbank',
-        serviceTypes: ['HVAC System Cleaning'],
-        scheduledStart: '2024-12-24T13:00:00',
-        scheduledEnd: '2024-12-24T16:00:00',
-        technicianName: null,
-        status: 'scheduled',
-        estimatedDuration: 180,
-    },
-    {
-        id: '4',
-        customerName: 'Sarah Johnson',
-        customerPhone: '(626) 555-3456',
-        address: '321 Elm Way',
-        city: 'Pasadena',
-        serviceTypes: ['Air Duct Cleaning', 'Sanitization'],
-        scheduledStart: '2024-12-24T14:00:00',
-        scheduledEnd: '2024-12-24T17:00:00',
-        technicianName: 'Mike Johnson',
-        status: 'scheduled',
-        estimatedDuration: 180,
-    },
-];
-
-const technicians = [
-    { id: '1', name: 'Mike Johnson', color: 'bg-blue-500' },
-    { id: '2', name: 'Sarah Wilson', color: 'bg-green-500' },
-    { id: '3', name: 'Tom Davis', color: 'bg-purple-500' },
-];
+import { getAppointments, getCustomers, getUsers } from '@/utils/api';
 
 const statusStyles: Record<string, { bg: string; text: string; icon: React.ElementType }> = {
     scheduled: { bg: 'bg-gray-100', text: 'text-gray-700', icon: Clock },
@@ -105,6 +18,8 @@ const statusStyles: Record<string, { bg: string; text: string; icon: React.Eleme
     in_progress: { bg: 'bg-purple-100', text: 'text-purple-700', icon: AlertCircle },
     completed: { bg: 'bg-green-100', text: 'text-green-700', icon: CheckCircle },
     cancelled: { bg: 'bg-red-100', text: 'text-red-700', icon: AlertCircle },
+    no_show: { bg: 'bg-orange-100', text: 'text-orange-700', icon: AlertCircle },
+    rescheduled: { bg: 'bg-indigo-100', text: 'text-indigo-700', icon: Clock },
 };
 
 export default function AppointmentsList() {
@@ -113,19 +28,63 @@ export default function AppointmentsList() {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedStatus, setSelectedStatus] = useState<string>('all');
 
+    const [appointments, setAppointments] = useState<any[]>([]);
+    const [customers, setCustomers] = useState<Record<string, any>>({});
+    const [technicians, setTechnicians] = useState<Record<string, any>>({});
+    const [loading, setLoading] = useState(true);
+
     const formatTime = (dateString: string) => {
+        if (!dateString) return 'TBD';
         return new Date(dateString).toLocaleTimeString('en-US', {
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: true,
+            hour: 'numeric', minute: '2-digit', hour12: true,
         });
     };
 
-    const filteredAppointments = mockAppointments.filter((apt) => {
-        const matchesSearch = apt.customerName.toLowerCase().includes(searchQuery.toLowerCase());
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const [aptData, custData, techData] = await Promise.all([
+                    getAppointments(),
+                    getCustomers(),
+                    getUsers().catch(() => []) // Fallback if team fails
+                ]);
+
+                setAppointments(aptData);
+
+                const custMap = custData.reduce((acc: any, c: any) => {
+                    acc[c.id || c._id] = c;
+                    return acc;
+                }, {});
+                setCustomers(custMap);
+
+                const techMap = techData.reduce((acc: any, t: any) => {
+                    acc[t.id || t._id] = t;
+                    return acc;
+                }, {});
+                setTechnicians(techMap);
+            } catch (err) {
+                console.error("Failed to fetch appointments data", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, [selectedDate]); // Refetch if date context changes (currently simplistic)
+
+    const filteredAppointments = appointments.filter((apt) => {
+        const cust = customers[apt.customer_id];
+        const custName = cust ? `${cust.first_name} ${cust.last_name}` : 'Unknown';
+        const matchesSearch = custName.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesStatus = selectedStatus === 'all' || apt.status === selectedStatus;
         return matchesSearch && matchesStatus;
     });
+
+    const activeTechs = Object.values(technicians).filter((t: any) => ['admin', 'manager', 'technician'].includes(t.role));
+
+    if (loading) {
+        return <div className="flex justify-center py-12"><Loader2 className="w-8 h-8 animate-spin text-sky-500" /></div>;
+    }
 
     return (
         <div className="space-y-6">
@@ -135,12 +94,8 @@ export default function AppointmentsList() {
                     <h1 className="text-2xl font-bold text-gray-900">Appointments</h1>
                     <p className="text-gray-600">Schedule and manage service appointments</p>
                 </div>
-                <Link
-                    to="/admin/appointments/new"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 rounded-lg text-sm font-medium text-white hover:bg-sky-700 transition-colors"
-                >
-                    <Plus className="w-4 h-4" />
-                    New Appointment
+                <Link to="/admin/appointments/new" className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 rounded-lg text-sm font-medium text-white hover:bg-sky-700">
+                    <Plus className="w-4 h-4" /> New Appointment
                 </Link>
             </div>
 
@@ -149,44 +104,21 @@ export default function AppointmentsList() {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
-                            <button className="p-2 hover:bg-gray-100 rounded-lg">
-                                <ChevronLeft className="w-5 h-5" />
-                            </button>
+                            <button className="p-2 hover:bg-gray-100 rounded-lg"><ChevronLeft className="w-5 h-5" /></button>
                             <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-lg">
                                 <Calendar className="w-5 h-5 text-gray-600" />
                                 <span className="font-medium">
-                                    {selectedDate.toLocaleDateString('en-US', {
-                                        weekday: 'long',
-                                        month: 'long',
-                                        day: 'numeric',
-                                        year: 'numeric',
-                                    })}
+                                    {selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
                                 </span>
                             </div>
-                            <button className="p-2 hover:bg-gray-100 rounded-lg">
-                                <ChevronRight className="w-5 h-5" />
-                            </button>
+                            <button className="p-2 hover:bg-gray-100 rounded-lg"><ChevronRight className="w-5 h-5" /></button>
                         </div>
-                        <button className="px-4 py-2 text-sm font-medium text-sky-600 hover:bg-sky-50 rounded-lg">
-                            Today
-                        </button>
+                        <button onClick={() => setSelectedDate(new Date())} className="px-4 py-2 text-sm font-medium text-sky-600 hover:bg-sky-50 rounded-lg">Today</button>
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <button
-                            onClick={() => setView('list')}
-                            className={`p-2 rounded-lg ${view === 'list' ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-100'
-                                }`}
-                        >
-                            <List className="w-5 h-5" />
-                        </button>
-                        <button
-                            onClick={() => setView('calendar')}
-                            className={`p-2 rounded-lg ${view === 'calendar' ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-100'
-                                }`}
-                        >
-                            <Grid className="w-5 h-5" />
-                        </button>
+                        <button onClick={() => setView('list')} className={`p-2 rounded-lg ${view === 'list' ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-100'}`}><List className="w-5 h-5" /></button>
+                        <button onClick={() => setView('calendar')} className={`p-2 rounded-lg ${view === 'calendar' ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-100'}`}><Grid className="w-5 h-5" /></button>
                     </div>
                 </div>
             </div>
@@ -197,18 +129,12 @@ export default function AppointmentsList() {
                     <div className="relative flex-1">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <input
-                            type="text"
-                            placeholder="Search appointments..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                            type="text" placeholder="Search appointments by customer..."
+                            value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500"
                         />
                     </div>
-                    <select
-                        value={selectedStatus}
-                        onChange={(e) => setSelectedStatus(e.target.value)}
-                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                    >
+                    <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500">
                         <option value="all">All Statuses</option>
                         <option value="scheduled">Scheduled</option>
                         <option value="confirmed">Confirmed</option>
@@ -225,54 +151,59 @@ export default function AppointmentsList() {
                 <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
                     <div className="divide-y divide-gray-100">
                         {filteredAppointments.map((apt) => {
-                            const StatusIcon = statusStyles[apt.status].icon;
+                            const StatusIcon = statusStyles[apt.status]?.icon || statusStyles['scheduled'].icon;
+                            const statusBg = statusStyles[apt.status]?.bg || 'bg-gray-100';
+                            const statusText = statusStyles[apt.status]?.text || 'text-gray-700';
+
+                            const cust = customers[apt.customer_id];
+                            const prop = cust?.properties?.find((p: any) => p.id === apt.property_id || p._id === apt.property_id) || cust?.properties?.[0];
+                            const tech = technicians[apt.technician_id];
+
                             return (
-                                <div key={apt.id} className="p-4 hover:bg-gray-50 transition-colors">
+                                <div key={apt.id || apt._id} className="p-4 hover:bg-gray-50 transition-colors">
                                     <div className="flex items-start justify-between gap-4">
                                         <div className="flex items-start gap-4">
                                             {/* Time column */}
                                             <div className="text-center min-w-[80px]">
-                                                <p className="text-lg font-bold text-gray-900">{formatTime(apt.scheduledStart)}</p>
-                                                <p className="text-sm text-gray-500">{apt.estimatedDuration} min</p>
+                                                <p className="text-lg font-bold text-gray-900">{formatTime(apt.scheduled_start)}</p>
+                                                <p className="text-sm text-gray-500">{apt.estimated_duration} min</p>
                                             </div>
 
                                             {/* Status indicator */}
-                                            <div className={`mt-1 p-1.5 rounded-full ${statusStyles[apt.status].bg}`}>
-                                                <StatusIcon className={`w-4 h-4 ${statusStyles[apt.status].text}`} />
+                                            <div className={`mt-1 p-1.5 rounded-full ${statusBg}`}>
+                                                <StatusIcon className={`w-4 h-4 ${statusText}`} />
                                             </div>
 
                                             {/* Main content */}
                                             <div className="flex-1">
                                                 <div className="flex items-center gap-3 mb-1">
-                                                    <Link
-                                                        to={`/admin/appointments/${apt.id}`}
-                                                        className="font-semibold text-gray-900 hover:text-sky-600"
-                                                    >
-                                                        {apt.customerName}
+                                                    <Link to={`/admin/customers/${apt.customer_id}`} className="font-semibold text-gray-900 hover:text-sky-600">
+                                                        {cust ? `${cust.first_name} ${cust.last_name}` : 'Unknown Customer'}
                                                     </Link>
-                                                    <span
-                                                        className={`px-2 py-0.5 text-xs font-medium rounded-full ${statusStyles[apt.status].bg} ${statusStyles[apt.status].text}`}
-                                                    >
-                                                        {apt.status.replace('_', ' ')}
+                                                    <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${statusBg} ${statusText} capitalize`}>
+                                                        {(apt.status || 'scheduled').replace(/_/g, ' ')}
                                                     </span>
                                                 </div>
                                                 <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                                                    <div className="flex items-center gap-1">
-                                                        <MapPin className="w-4 h-4 text-gray-400" />
-                                                        {apt.address}, {apt.city}
-                                                    </div>
-                                                    <div className="flex items-center gap-1">
-                                                        <Phone className="w-4 h-4 text-gray-400" />
-                                                        {apt.customerPhone}
-                                                    </div>
+                                                    {prop ? (
+                                                        <div className="flex items-center gap-1">
+                                                            <MapPin className="w-4 h-4 text-gray-400" />
+                                                            {prop.address_line1}, {prop.city}
+                                                        </div>
+                                                    ) : (
+                                                        <span className="text-gray-400 italic">No address selected</span>
+                                                    )}
+                                                    {cust?.phone && (
+                                                        <div className="flex items-center gap-1">
+                                                            <Phone className="w-4 h-4 text-gray-400" />
+                                                            {cust.phone}
+                                                        </div>
+                                                    )}
                                                 </div>
                                                 <div className="flex flex-wrap gap-2 mt-2">
-                                                    {apt.serviceTypes.map((service, idx) => (
-                                                        <span
-                                                            key={idx}
-                                                            className="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded"
-                                                        >
-                                                            {service}
+                                                    {apt.service_types?.map((service: string, idx: number) => (
+                                                        <span key={idx} className="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded capitalize">
+                                                            {service.replace(/_/g, ' ')}
                                                         </span>
                                                     ))}
                                                 </div>
@@ -281,18 +212,18 @@ export default function AppointmentsList() {
 
                                         {/* Right side - technician and actions */}
                                         <div className="flex items-center gap-4">
-                                            {apt.technicianName ? (
+                                            {tech ? (
                                                 <div className="flex items-center gap-2">
                                                     <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                                                         <span className="text-white text-xs font-medium">
-                                                            {apt.technicianName.split(' ').map((n) => n[0]).join('')}
+                                                            {tech.first_name?.[0]}{tech.last_name?.[0]}
                                                         </span>
                                                     </div>
-                                                    <span className="text-sm font-medium text-gray-700">{apt.technicianName}</span>
+                                                    <span className="text-sm font-medium text-gray-700">{tech.first_name} {tech.last_name}</span>
                                                 </div>
                                             ) : (
                                                 <button className="px-3 py-1.5 text-sm font-medium text-sky-600 border border-sky-600 rounded-lg hover:bg-sky-50">
-                                                    Assign
+                                                    Assign Tech
                                                 </button>
                                             )}
                                             <button className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
@@ -310,12 +241,8 @@ export default function AppointmentsList() {
                             <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-4" />
                             <h3 className="text-lg font-medium text-gray-900 mb-2">No appointments found</h3>
                             <p className="text-gray-600 mb-4">There are no appointments matching your criteria.</p>
-                            <Link
-                                to="/admin/appointments/new"
-                                className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 rounded-lg text-sm font-medium text-white hover:bg-sky-700"
-                            >
-                                <Plus className="w-4 h-4" />
-                                Schedule Appointment
+                            <Link to="/admin/appointments/new" className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 rounded-lg text-sm font-medium text-white hover:bg-sky-700">
+                                <Plus className="w-4 h-4" /> Schedule Appointment
                             </Link>
                         </div>
                     )}
@@ -328,44 +255,48 @@ export default function AppointmentsList() {
                     <div className="text-center py-12">
                         <Grid className="w-12 h-12 text-gray-300 mx-auto mb-4" />
                         <h3 className="text-lg font-medium text-gray-900 mb-2">Calendar View</h3>
-                        <p className="text-gray-600">
-                            Full calendar view with drag-and-drop scheduling coming soon.
-                        </p>
+                        <p className="text-gray-600">Full calendar view with drag-and-drop scheduling coming soon.</p>
                     </div>
                 </div>
             )}
 
             {/* Dispatch board summary */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {technicians.map((tech) => {
-                    const techAppointments = mockAppointments.filter((apt) => apt.technicianName === tech.name);
+                {activeTechs.map((tech: any, idx: number) => {
+                    const techId = tech.id || tech._id;
+                    const techAppointments = appointments.filter((apt) => apt.technician_id === techId);
+                    const colors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-orange-500'];
+                    const color = colors[idx % colors.length];
+
                     return (
-                        <div key={tech.id} className="bg-white rounded-xl border border-gray-200 p-4">
+                        <div key={techId} className="bg-white rounded-xl border border-gray-200 p-4">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className={`w-10 h-10 ${tech.color} rounded-full flex items-center justify-center`}>
-                                    <span className="text-white font-medium">
-                                        {tech.name.split(' ').map((n) => n[0]).join('')}
-                                    </span>
+                                <div className={`w-10 h-10 ${color} rounded-full flex items-center justify-center`}>
+                                    <span className="text-white font-medium">{tech.first_name?.[0]}{tech.last_name?.[0]}</span>
                                 </div>
                                 <div>
-                                    <p className="font-medium text-gray-900">{tech.name}</p>
-                                    <p className="text-sm text-gray-600">{techAppointments.length} appointments today</p>
+                                    <p className="font-medium text-gray-900">{tech.first_name} {tech.last_name}</p>
+                                    <p className="text-sm text-gray-600">{techAppointments.length} appointments</p>
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                {techAppointments.slice(0, 3).map((apt) => (
-                                    <div key={apt.id} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
-                                        <div>
-                                            <p className="text-sm font-medium text-gray-900">{formatTime(apt.scheduledStart)}</p>
-                                            <p className="text-xs text-gray-600">{apt.customerName}</p>
+                                {techAppointments.slice(0, 3).map((apt) => {
+                                    const cust = customers[apt.customer_id];
+                                    const statusStyle = statusStyles[apt.status] || statusStyles['scheduled'];
+                                    return (
+                                        <div key={apt.id || apt._id} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                                            <div>
+                                                <p className="text-sm font-medium text-gray-900">{formatTime(apt.scheduled_start)}</p>
+                                                <p className="text-xs text-gray-600 truncate max-w-[120px]">
+                                                    {cust ? `${cust.first_name} ${cust.last_name}` : 'Unknown'}
+                                                </p>
+                                            </div>
+                                            <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${statusStyle.bg} ${statusStyle.text} capitalize`}>
+                                                {(apt.status || 'scheduled').replace(/_/g, ' ')}
+                                            </span>
                                         </div>
-                                        <span
-                                            className={`px-2 py-0.5 text-xs font-medium rounded-full ${statusStyles[apt.status].bg} ${statusStyles[apt.status].text}`}
-                                        >
-                                            {apt.status}
-                                        </span>
-                                    </div>
-                                ))}
+                                    )
+                                })}
                             </div>
                         </div>
                     );

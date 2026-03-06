@@ -8,6 +8,9 @@ from .invoices import router as invoices_router
 from .payments import router as payments_router
 from .documents import router as documents_router
 from .reports import router as reports_router
+from .leads import router as leads_router
+from .lead_scanner import router as lead_scanner_router
+from .settings import router as settings_router
 
 __all__ = [
     "auth_router",
@@ -19,4 +22,7 @@ __all__ = [
     "payments_router",
     "documents_router",
     "reports_router",
+    "leads_router",
+    "lead_scanner_router",
+    "settings_router",
 ]

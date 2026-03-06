@@ -33,6 +33,12 @@ dist/
 dist
 
 # Environment files (comprehensive coverage)
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
 
 *token.json*
 *credentials.json*
@@ -59,6 +65,14 @@ chainlit.md
 .chainlit
 .ipynb_checkpoints/
 .ac
+
+# Temporary debug / fix scripts (security)
+fix_db.py
+test_api*.py
+list_users.py
+
+# Uploaded documents (local file storage)
+uploads/
 
 # Deployment
 .vercel

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, Gift, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { submitFormWithBackend } from '@/utils/api';
 
 const ExitIntentPopup = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -68,9 +69,15 @@ const ExitIntentPopup = () => {
             });
         }
 
-        // TODO: Replace with your actual newsletter API endpoint
-        // For now, we'll just simulate success
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Submit to the CRM via our backend
+        await submitFormWithBackend({
+            name: 'Newsletter Subscriber', // Backend requires name
+            phone: '000-000-0000', // Backend requires phone
+            email: email,
+            source: 'other', // Or a new ExitIntent source if added later
+            message: 'Lead captured via Exit Intent Popup offering $25 discount.',
+            service: 'General Inquiry',
+        }, { silent: true }); // Silent fail to not disrupt user experience
 
         localStorage.setItem('pac_newsletter_subscribed', 'true');
         setIsSubmitting(false);

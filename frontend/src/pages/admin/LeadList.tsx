@@ -11,9 +11,8 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, RefreshCw, Eye, Search } from 'lucide-react';
+import { Loader2, RefreshCw, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const LeadList = () => {
@@ -27,15 +26,13 @@ const LeadList = () => {
         setLoading(true);
         setError(null);
         try {
-            const adminSecret = sessionStorage.getItem('adminSecret') || '';
             const params = filterStatus !== 'all' ? { status: filterStatus } : undefined;
-            const data = await getLeads(adminSecret, params);
+            const data = await getLeads(params);
             setLeads(data);
         } catch (err) {
-            setError('Failed to load leads. Please check your PIN and try again.');
-            if (err instanceof Error && err.message.includes('403')) {
-                sessionStorage.removeItem('adminSecret');
-                window.location.reload();
+            setError('Failed to load leads. Please check your authentication.');
+            if (err instanceof Error && err.message.includes('401')) {
+                navigate('/admin/login');
             }
         } finally {
             setLoading(false);
@@ -89,6 +86,12 @@ const LeadList = () => {
                     </Select>
                 </div>
             </div>
+
+            {error && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm">
+                    {error}
+                </div>
+            )}
 
             <div className="bg-white rounded-lg border shadow-sm overflow-hidden">
                 <Table>

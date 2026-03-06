@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     DB_NAME: str = "pureaircalifornia"
     
     # Authentication
-    JWT_SECRET_KEY: str = "your-super-secret-key-change-in-production"
+    JWT_SECRET_KEY: str  # REQUIRED — must be set in .env
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
@@ -30,8 +30,9 @@ class Settings(BaseSettings):
     STRIPE_WEBHOOK_SECRET: Optional[str] = None
     STRIPE_PUBLISHABLE_KEY: Optional[str] = None
     
-    # SendGrid (Email)
+    # Email Services (SendGrid / Resend)
     SENDGRID_API_KEY: Optional[str] = None
+    RESEND_API_KEY: Optional[str] = None
     FROM_EMAIL: str = "noreply@pureaircalifornia.com"
     
     # Twilio (SMS)
@@ -45,11 +46,19 @@ class Settings(BaseSettings):
     S3_BUCKET_NAME: str = "pac-documents"
     AWS_REGION: str = "us-west-2"
     
+    # Google Places API (Lead Scanner)
+    GOOGLE_PLACES_API_KEY: Optional[str] = None
+    
+    # Admin Secret (backward compat)
+    ADMIN_SECRET: Optional[str] = None
+    
     # CORS
     CORS_ORIGINS: list = [
         "http://localhost:3000",
+        "http://localhost:3001",
         "http://localhost:5173",
         "http://127.0.0.1:3000",
+        "http://127.0.0.1:3001",
         "http://127.0.0.1:5173",
         "https://pureaircalifornia.com",
         "https://www.pureaircalifornia.com"

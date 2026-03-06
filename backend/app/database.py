@@ -92,6 +92,22 @@ async def create_indexes() -> None:
     await _database.documents.create_index("document_type")
     await _database.documents.create_index("expiration_date")
     
+    # Leads collection indexes
+    await _database.leads.create_index("status")
+    await _database.leads.create_index("source")
+    await _database.leads.create_index("created_at")
+    await _database.leads.create_index("email")
+    
+    # Prospects collection indexes
+    await _database.prospects.create_index("business_category")
+    await _database.prospects.create_index("outreach_status")
+    await _database.prospects.create_index("place_id", unique=True, sparse=True)
+    await _database.prospects.create_index("created_at")
+    
+    # Outreach collection indexes
+    await _database.outreach.create_index("prospect_id")
+    await _database.outreach.create_index("sent_at")
+    
     logger.info("Database indexes created successfully")
 
 
@@ -140,3 +156,19 @@ def get_franchises_collection():
 
 def get_audit_logs_collection():
     return get_database().audit_logs
+
+
+def get_leads_collection():
+    return get_database().leads
+
+
+def get_prospects_collection():
+    return get_database().prospects
+
+
+def get_outreach_collection():
+    return get_database().outreach
+
+def get_settings_collection():
+    return get_database().settings
+

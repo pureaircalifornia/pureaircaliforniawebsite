@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Lock, Mail, AlertCircle } from 'lucide-react';
+import { loginUser } from '@/utils/api';
 
 export default function AdminLogin() {
     const navigate = useNavigate();
@@ -20,34 +21,16 @@ export default function AdminLogin() {
         setLoading(true);
 
         try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
-            });
+            const data = await loginUser(email, password);
 
-            if (!response.ok) {
-                const data = await response.json();
-                throw new Error(data.detail || 'Invalid credentials');
-            }
-
-            const data = await response.json();
-
-            // Store tokens
+            // Store tokens securely
             localStorage.setItem('accessToken', data.access_token);
             localStorage.setItem('refreshToken', data.refresh_token);
 
             // Redirect to dashboard
             navigate('/admin');
         } catch (err: any) {
-            // Development fallback: allow login without API if backend is unreachable
-            if (email && password && (process.env.NODE_ENV === 'development' || !import.meta.env.PROD)) {
-                console.warn('Backend invalid, using demo login');
-                localStorage.setItem('accessToken', 'demo-token');
-                navigate('/admin');
-                return;
-            }
-            setError(err.message || 'Failed to login. Please try again.');
+            setError(err.message || 'Failed to login. Please check your credentials.');
         } finally {
             setLoading(false);
         }
@@ -106,6 +89,7 @@ export default function AdminLogin() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
                                     required
+                                    minLength={8}
                                     className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
                                 />
                                 <button
@@ -126,9 +110,6 @@ export default function AdminLogin() {
                                 />
                                 <span className="text-sm text-gray-600">Remember me</span>
                             </label>
-                            <Link to="/admin/forgot-password" className="text-sm text-sky-600 hover:text-sky-700">
-                                Forgot password?
-                            </Link>
                         </div>
 
                         <button
@@ -139,13 +120,6 @@ export default function AdminLogin() {
                             {loading ? 'Signing in...' : 'Sign In'}
                         </button>
                     </form>
-
-                    {/* Demo credentials */}
-                    <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                        <p className="text-xs text-gray-500 text-center">
-                            <strong>Demo:</strong> Enter any email and password to access the dashboard
-                        </p>
-                    </div>
                 </div>
 
                 {/* Back to website link */}

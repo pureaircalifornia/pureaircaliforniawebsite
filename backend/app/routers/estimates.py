@@ -15,6 +15,7 @@ from ..models.user import UserRole
 from ..core.dependencies import get_current_user, require_permission
 from ..core.permissions import Permission
 from ..database import get_estimates_collection, get_customers_collection
+from ..services.email_outreach import send_email
 
 router = APIRouter(prefix="/estimates", tags=["Estimates"])
 
@@ -266,8 +267,29 @@ async def send_estimate(
             detail="Estimate not found"
         )
     
-    # TODO: Send email to customer
-    # email_service.send_estimate(estimate)
+    customers = get_customers_collection()
+    customer = await customers.find_one({"_id": estimate.get("customer_id")})
+    
+    if customer and customer.get("email"):
+        body = f"""Dear {customer.get('first_name')},
+
+Your estimate for Pure Air California services is ready for review.
+
+Estimate Amount: ${estimate.get('total', 0):.2f}
+Estimate Number: {estimate.get('estimate_number')}
+
+Please reply to this email or call us at (213) 792-4145 if you have any questions or to approve this estimate.
+
+Thank you,
+Lou
+Pure Air California
+"""
+        await send_email(
+            to_email=customer.get("email"),
+            to_name=f"{customer.get('first_name')} {customer.get('last_name')}",
+            subject=f"Your Estimate from Pure Air California ({estimate.get('estimate_number')})",
+            body=body
+        )
     
     await estimates.update_one(
         {"_id": estimate_id},

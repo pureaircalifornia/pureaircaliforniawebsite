@@ -16,6 +16,7 @@ from ..models.user import UserRole
 from ..core.dependencies import get_current_user, require_permission
 from ..core.permissions import Permission
 from ..database import get_invoices_collection, get_customers_collection
+from ..services.email_outreach import send_email
 
 router = APIRouter(prefix="/invoices", tags=["Invoices"])
 
@@ -331,8 +332,30 @@ async def send_invoice(
             detail="Invoice not found"
         )
     
-    # TODO: Send email to customer
-    # email_service.send_invoice(invoice)
+    customers = get_customers_collection()
+    customer = await customers.find_one({"_id": invoice.get("customer_id")})
+    
+    if customer and customer.get("email"):
+        body = f"""Dear {customer.get('first_name')},
+
+Your invoice from Pure Air California is ready.
+
+Amount Due: ${invoice.get('amount_due', 0):.2f}
+Invoice Number: {invoice.get('invoice_number')}
+Due Date: {invoice.get('due_date').strftime('%B %d, %Y') if invoice.get('due_date') else 'Upon Receipt'}
+
+We appreciate your business! Please reply to this email or call us at (213) 792-4145 with any questions.
+
+Thank you,
+Lou
+Pure Air California
+"""
+        await send_email(
+            to_email=customer.get("email"),
+            to_name=f"{customer.get('first_name')} {customer.get('last_name')}",
+            subject=f"Invoice from Pure Air California ({invoice.get('invoice_number')})",
+            body=body
+        )
     
     await invoices.update_one(
         {"_id": invoice_id},

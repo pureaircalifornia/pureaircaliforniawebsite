@@ -58,7 +58,7 @@ const EnhancedLanding = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  style={{ textShadow: '0 0 15px rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.5)' }}
+                  style={{ textShadow: '0 0 10px rgba(255,255,255,0.6), 0 0 30px rgba(56,189,248,0.4), 0 0 60px rgba(56,189,248,0.25), 0 0 100px rgba(56,189,248,0.15), 0 2px 4px rgba(0,0,0,0.5)' }}
                 >
                   Breathe Easier with Professional Air Duct & Dryer Vent Cleaning
                 </motion.h1>
@@ -103,7 +103,7 @@ const EnhancedLanding = () => {
                     { icon: Award, label: "NADCA", sub: "Certified Pro" },
                     { icon: Clock, label: "Same-Day", sub: "Emergency" }
                   ].map((item, i) => (
-                    <div key={i} className="glass-premium p-4 rounded-2xl flex flex-col items-center text-center group hover:scale-105 transition-transform duration-300">
+                    <div key={i} className="bg-white/20 backdrop-blur-lg p-4 rounded-2xl flex flex-col items-center text-center group hover:scale-105 transition-transform duration-300 border border-white/20 shadow-lg">
                       <item.icon className={`mb-2 ${item.color || 'text-sky-400'} group-hover:scale-110 transition-transform`} size={24} />
                       <span className="text-sm font-bold block text-white">{item.label}</span>
                       <p className="text-[10px] text-white/70 uppercase tracking-tighter">{item.sub}</p>
@@ -138,7 +138,7 @@ const EnhancedLanding = () => {
               ].map((item, i) => (
                 <motion.div
                   key={i}
-                  className="flex items-center justify-center gap-3 glass-premium py-4 px-6 rounded-2xl border-white/5"
+                  className="flex items-center justify-center gap-3 bg-white/15 backdrop-blur-lg py-4 px-6 rounded-2xl border border-white/10 shadow-lg"
                   whileHover={{ y: -5, backgroundColor: "rgba(255,255,255,0.05)" }}
                 >
                   <item.icon size={24} className={item.color} />
@@ -211,7 +211,7 @@ const EnhancedLanding = () => {
               ].map((item, i) => (
                 <ScrollReveal key={i} delay={i * 0.1}>
                   <motion.div
-                    className="glass-premium p-8 rounded-3xl h-full flex flex-col justify-between group hover:scale-[1.02] transition-all duration-500 border border-white/10"
+                    className="bg-slate-800/90 backdrop-blur-lg p-8 rounded-3xl h-full flex flex-col justify-between group hover:scale-[1.02] transition-all duration-500 border border-white/15 shadow-xl"
                     whileHover={{ y: -5 }}
                   >
                     <div>

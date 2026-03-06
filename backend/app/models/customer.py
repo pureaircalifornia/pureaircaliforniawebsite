@@ -45,11 +45,11 @@ class PropertyType(str, Enum):
 class Property(BaseModel):
     """Customer property model."""
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    address_line1: str
+    address_line1: Optional[str] = None
     address_line2: Optional[str] = None
-    city: str
+    city: Optional[str] = None
     state: str = "CA"
-    zip_code: str
+    zip_code: Optional[str] = None
     property_type: PropertyType = PropertyType.RESIDENTIAL
     square_footage: Optional[int] = None
     num_floors: Optional[int] = None
@@ -75,7 +75,7 @@ class CustomerBase(BaseModel):
     email: Optional[EmailStr] = None
     first_name: str = Field(..., min_length=1, max_length=100)
     last_name: str = Field(..., min_length=1, max_length=100)
-    phone: str = Field(..., min_length=10, max_length=20)
+    phone: Optional[str] = Field(None, max_length=20)
     secondary_phone: Optional[str] = None
     preferred_contact: str = "phone"  # phone, email, text
     lead_source: LeadSource = LeadSource.WEBSITE
@@ -85,7 +85,7 @@ class CustomerBase(BaseModel):
 
 class CustomerCreate(CustomerBase):
     """Customer creation model."""
-    franchise_id: str
+    franchise_id: Optional[str] = None
     properties: List[Property] = []
     notes: List[Note] = []
 

@@ -175,3 +175,193 @@ async def delete_lead(
     
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Lead not found")
+
+
+# ── Webhook for External Integrations (n8n, Zapier) ──────────────
+from pydantic import BaseModel, EmailStr as WebhookEmail
+from ..config import get_settings
+
+
+class WebhookLeadPayload(BaseModel):
+    """Incoming lead from external webhook (n8n, Zapier, etc.)."""
+    name: str
+    email: str
+    phone: str
+    message: Optional[str] = None
+    service: Optional[str] = None
+    address: Optional[str] = None
+    source: str = "other"
+    webhook_secret: Optional[str] = None  # For simple auth
+
+
+@router.post("/webhook", response_model=dict, status_code=status.HTTP_201_CREATED)
+async def webhook_create_lead(payload: WebhookLeadPayload, request: Request):
+    """
+    Webhook endpoint for external lead sources (n8n, Zapier, CRM integrations).
+    Authenticates via x-admin-secret header OR webhook_secret in body.
+    """
+    settings = get_settings()
+    admin_secret = settings.ADMIN_SECRET
+
+    # Validate webhook auth
+    header_secret = request.headers.get("x-admin-secret", "")
+    body_secret = payload.webhook_secret or ""
+
+    if admin_secret and header_secret != admin_secret and body_secret != admin_secret:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid webhook secret"
+        )
+
+    # Rate limit check
+    client_ip = request.client.host if request.client else "unknown"
+    if not _check_rate_limit(client_ip):
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail="Too many submissions. Please try again later."
+        )
+
+    collection = get_leads_collection()
+
+    # Map source string to enum (fallback to "other")
+    try:
+        lead_source = LeadSource(payload.source)
+    except ValueError:
+        lead_source = LeadSource.other
+
+    lead_id = str(uuid.uuid4())
+    now = datetime.utcnow()
+
+    lead_dict = {
+        "id": lead_id,
+        "name": payload.name,
+        "email": payload.email,
+        "phone": payload.phone,
+        "message": payload.message,
+        "service": payload.service,
+        "address": payload.address,
+        "source": lead_source.value,
+        "status": LeadStatus.new.value,
+        "created_at": now.isoformat(),
+        "updated_at": now.isoformat(),
+        "property_type": None,
+        "square_footage": None,
+        "preferred_date": None,
+        "notes": "Received via webhook",
+        "estimated_price": None,
+    }
+
+    await collection.insert_one(lead_dict)
+
+    import logging
+    logging.getLogger(__name__).info(
+        f"Webhook lead created: {lead_id} - {payload.name} ({payload.email})"
+    )
+
+    lead_dict.pop("_id", None)
+    return lead_dict
+
+
+# ── Lead → Customer Conversion ───────────────────────────────────
+from ..database import get_customers_collection
+
+
+@router.post("/{lead_id}/convert", response_model=dict)
+async def convert_lead_to_customer(
+    lead_id: str,
+    current_user: dict = Depends(get_current_user),
+):
+    """
+    Convert a lead into a customer record.
+    Sets lead status to 'completed' and creates a customer document.
+    """
+    leads_collection = get_leads_collection()
+    customers_collection = get_customers_collection()
+
+    lead = await leads_collection.find_one({"id": lead_id})
+    if not lead:
+        raise HTTPException(status_code=404, detail="Lead not found")
+
+    # Check if customer already exists with this email
+    existing_customer = await customers_collection.find_one({"email": lead.get("email")})
+    if existing_customer:
+        # Update lead status to completed
+        await leads_collection.update_one(
+            {"id": lead_id},
+            {"$set": {"status": "completed", "updated_at": datetime.utcnow().isoformat()}}
+        )
+        existing_customer.pop("_id", None)
+        return {
+            "message": "Customer already exists with this email",
+            "customer": existing_customer,
+            "created": False,
+        }
+
+    # Parse name into first/last
+    name_parts = (lead.get("name") or "").strip().split(" ", 1)
+    first_name = name_parts[0] if name_parts else "Unknown"
+    last_name = name_parts[1] if len(name_parts) > 1 else ""
+
+    now = datetime.utcnow()
+    customer_id = str(uuid.uuid4())
+
+    customer_doc = {
+        "_id": customer_id,
+        "email": lead.get("email"),
+        "first_name": first_name,
+        "last_name": last_name,
+        "phone": lead.get("phone"),
+        "secondary_phone": None,
+        "preferred_contact": "phone",
+        "lead_source": "website",
+        "lead_status": "converted",
+        "tags": ["from_lead"],
+        "franchise_id": current_user.get("franchise_id", "default"),
+        "properties": [],
+        "notes": [{
+            "id": str(uuid.uuid4()),
+            "content": f"Converted from lead. Original message: {lead.get('message', 'N/A')}",
+            "created_by": current_user.get("_id", "system"),
+            "created_at": now.isoformat(),
+            "note_type": "general",
+        }],
+        "total_spent": 0.0,
+        "total_appointments": 0,
+        "last_appointment_date": None,
+        "next_appointment_date": None,
+        "lifetime_value": 0.0,
+        "created_at": now,
+        "updated_at": now,
+        "is_active": True,
+    }
+
+    # Add address as property if available
+    if lead.get("address"):
+        customer_doc["properties"].append({
+            "id": str(uuid.uuid4()),
+            "address_line1": lead["address"],
+            "city": None,
+            "state": "CA",
+            "zip_code": None,
+            "property_type": lead.get("property_type", "residential"),
+            "square_footage": int(lead["square_footage"]) if lead.get("square_footage") else None,
+            "is_primary": True,
+        })
+
+    await customers_collection.insert_one(customer_doc)
+
+    # Update lead status to completed
+    await leads_collection.update_one(
+        {"id": lead_id},
+        {"$set": {"status": "completed", "updated_at": now.isoformat()}}
+    )
+
+    customer_doc.pop("_id", None)
+    customer_doc["id"] = customer_id
+
+    return {
+        "message": "Lead successfully converted to customer",
+        "customer": customer_doc,
+        "created": True,
+    }
+

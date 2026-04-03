@@ -10,21 +10,23 @@ import uuid
 
 
 class BusinessCategory(str, Enum):
-    hoa = "Home Owner Association"
-    building_management = "Building Management Company"
-    hotel = "Hotel"
-    senior_living = "Senior Living / Assisted Living"
-    hospital = "Hospital / Medical Facility"
-    restaurant = "Restaurant"
-    property_manager = "Property Management Company"
-    office_building = "Office Building"
-    school = "School / University"
-    gym = "Gym / Fitness Center"
-    shopping_center = "Shopping Center / Mall"
-    warehouse = "Warehouse / Industrial"
-    church = "Church / Religious Building"
-    daycare = "Daycare / Childcare Center"
-    other = "Other"
+    hoa = "hoa"
+    property_manager = "property_manager"
+    building_management = "building_management"
+    restaurant = "restaurant"
+    gym = "gym"
+    salon = "salon"
+    dental = "dental"
+    medical = "medical"
+    hotel = "hotel"
+    senior_living = "senior_living"
+    school = "school"
+    church = "church"
+    office_building = "office_building"
+    retail = "retail"
+    warehouse = "warehouse"
+    daycare = "daycare"
+    other = "other"
 
 
 class OutreachStatus(str, Enum):
@@ -100,7 +102,7 @@ class EmailTemplate(BaseModel):
 
 
 class PlaceSearchRequest(BaseModel):
-    query: str  # e.g., "hotels in Los Angeles"
+    query: Optional[str] = None  # e.g., "hotels in Los Angeles"
     category: BusinessCategory
     location: str = "Los Angeles, CA"
     radius_miles: int = 25

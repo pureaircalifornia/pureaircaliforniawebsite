@@ -3,6 +3,7 @@ Email Outreach Service
 Composes and sends outreach emails via SendGrid for lead generation.
 """
 import logging
+import httpx
 from typing import Optional
 from ..config import get_settings
 from ..models.prospect import BusinessCategory
@@ -10,232 +11,50 @@ from ..models.prospect import BusinessCategory
 logger = logging.getLogger(__name__)
 
 # Category-specific email templates
+
+# Configure signature with Document Links if they exist
+from app.config import get_settings
+settings = get_settings()
+
+def get_vendor_documents_html() -> str:
+    links = []
+    if settings.W9_DOCUMENT_LINK:
+        links.append(f'<a href="{settings.W9_DOCUMENT_LINK}" style="color: #0ea5e9; text-decoration: none; font-weight: bold;">[Download Our W-9]</a>')
+    if settings.INSURANCE_DOCUMENT_LINK:
+        links.append(f'<a href="{settings.INSURANCE_DOCUMENT_LINK}" style="color: #0ea5e9; text-decoration: none; font-weight: bold;">[Download Our Certificate of Insurance]</a>')
+    
+    if not links:
+        return ""
+    
+    return "<br><br><b>Vendor Setup Documents:</b><br>" + "<br>".join(links)
+
+DEFAULT_TEMPLATE = {
+    "id": "general_vendor_intro",
+    "name": "General Vendor Introduction",
+    "subject": "Vendor Setup: Premium Air Duct & HVAC Cleaning for {business_name}",
+    "body": """Dear {contact_name},<br><br>I'm Lou, the owner of <b>Pure Air California</b>. We are the premier NADCA-certified air duct, HVAC system, and dryer vent cleaning company serving Los Angeles.<br><br>We care deeply about the quality of the air you and your tenants breathe. We specialize in partnering with commercial facilities like {business_name} to guarantee compliance, eliminate fire hazards, and drastically improve indoor air quality.<br><br>I would love to be set up as an approved vendor for your property. To make the onboarding process completely seamless, I have attached our secure links to our W-9 and Certificate of Insurance below.<br><br>Please let me know what else is required to get Pure Air California added to your vendor list.<br><br>Best regards,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br>NADCA Certified | Fully Licensed & Insured{vendor_docs}"""
+}
+
 EMAIL_TEMPLATES = {
     BusinessCategory.hoa: {
-        "id": "hoa_intro",
-        "name": "HOA Introduction",
-        "subject": "Professional Air Duct Cleaning for {business_name}",
-        "body": """Dear {contact_name},
-
-I hope this message finds you well. My name is Lou, and I am the owner of Pure Air California, a NADCA-certified air duct cleaning company serving the {location} area.
-
-I'm reaching out because we specialize in providing comprehensive air duct and HVAC cleaning services for homeowner associations and residential communities like {business_name}. Clean air ducts are essential for:
-
-• **Improved indoor air quality** for all residents
-• **Reduced energy costs** — clean ducts improve HVAC efficiency by up to 30%
-• **Extended HVAC system lifespan** — preventing costly replacements
-• **Compliance with health and safety standards**
-
-We currently serve several HOA communities in the {location} area and would love the opportunity to provide a complimentary assessment of your building's air duct system.
-
-We offer competitive group pricing for HOA communities and can work around your residents' schedules to minimize disruption.
-
-Would you have 15 minutes this week for a quick call to discuss how we can help improve the air quality for your community?
-
-Best regards,
-Lou
-Pure Air California
-📞 (213) 792-4145
-🌐 www.pureaircalifornia.com
-NADCA Certified | Licensed & Insured""",
-    },
-    BusinessCategory.building_management: {
-        "id": "building_mgmt_intro",
-        "name": "Building Management Introduction",
-        "subject": "Air Duct Cleaning Services for Your Managed Properties",
-        "body": """Dear {contact_name},
-
-I hope this message finds you well. My name is Lou from Pure Air California, a NADCA-certified air duct cleaning company serving {location}.
-
-As a building management company, you understand the importance of maintaining healthy, efficient building systems. I'd like to introduce our professional air duct cleaning services that can benefit your managed properties:
-
-• **Improved tenant satisfaction** through better air quality
-• **Lower HVAC maintenance costs** and extended equipment life
-• **Compliance with indoor air quality regulations**
-• **Professional documentation** for property records
-
-We work with several property management firms in the area and offer flexible scheduling and competitive volume pricing across multiple properties.
-
-I'd love to schedule a brief call to discuss your portfolio's air quality needs. Would you have 15 minutes available this week?
-
-Best regards,
-Lou
-Pure Air California
-📞 (213) 792-4145
-🌐 www.pureaircalifornia.com
-NADCA Certified | Licensed & Insured""",
-    },
-    BusinessCategory.hotel: {
-        "id": "hotel_intro",
-        "name": "Hotel Introduction",
-        "subject": "Enhance Guest Experience at {business_name} with Clean Air",
-        "body": """Dear {contact_name},
-
-I'm Lou from Pure Air California, and I specialize in providing air duct cleaning services for hospitality properties in {location}.
-
-Guest comfort and satisfaction are paramount in the hospitality industry. Clean air ducts directly impact:
-
-• **Guest reviews and satisfaction** — clean air = better stays
-• **Reduced allergen complaints** from guests with sensitivities
-• **Energy efficiency** — lowering your utility costs by up to 30%
-• **Fire safety compliance** — clean dryer vents reduce fire risk
-• **Health department compliance** for HVAC systems
-
-We work with several hotels in the {location} area, providing discreet, efficient service with minimal disruption to your operations. We can schedule cleaning during low-occupancy periods.
-
-Would you be open to a complimentary assessment of your property's air duct system?
-
-Best regards,
-Lou
-Pure Air California
-📞 (213) 792-4145
-🌐 www.pureaircalifornia.com
-NADCA Certified | Licensed & Insured""",
-    },
-    BusinessCategory.senior_living: {
-        "id": "senior_living_intro",
-        "name": "Senior Living Introduction",
-        "subject": "Clean Air Solutions for {business_name} Residents",
-        "body": """Dear {contact_name},
-
-I'm Lou from Pure Air California, a NADCA-certified air duct cleaning company. I'm reaching out because indoor air quality is especially critical for the health and wellbeing of seniors.
-
-At {business_name}, your residents' health is your top priority. Professional air duct cleaning can:
-
-• **Reduce airborne allergens and contaminants** that affect respiratory health
-• **Minimize the spread of airborne illness** in communal living environments
-• **Improve HVAC efficiency** — reducing energy costs
-• **Meet healthcare facility air quality standards**
-• **Provide peace of mind** to residents and their families
-
-We have extensive experience working with senior living facilities and understand the sensitivity of serving this population. Our team is background-checked, uniformed, and trained to work quietly and efficiently.
-
-Would you have time for a brief consultation? We offer complimentary air quality assessments.
-
-Best regards,
-Lou
-Pure Air California
-📞 (213) 792-4145
-🌐 www.pureaircalifornia.com
-NADCA Certified | Licensed & Insured""",
-    },
-    BusinessCategory.hospital: {
-        "id": "hospital_intro",
-        "name": "Hospital/Medical Introduction",
-        "subject": "NADCA-Certified Air Duct Cleaning for {business_name}",
-        "body": """Dear {contact_name},
-
-I'm Lou from Pure Air California, a NADCA-certified air duct cleaning company serving healthcare facilities in {location}.
-
-Healthcare environments require the highest standard of indoor air quality. Our services help {business_name} maintain:
-
-• **Compliance with Joint Commission and OSHA air quality standards**
-• **Reduction of hospital-acquired infections** through cleaner air circulation
-• **Proper isolation room ventilation maintenance**
-• **HVAC system efficiency** — reducing operational costs
-• **Full documentation and certification** for compliance records
-
-We are experienced in working within healthcare environments, following all infection control protocols and scheduling work to minimize disruption to patient care.
-
-I'd welcome the opportunity to discuss your facility's air quality maintenance needs. May I schedule a brief call?
-
-Best regards,
-Lou
-Pure Air California
-📞 (213) 792-4145
-🌐 www.pureaircalifornia.com
-NADCA Certified | Licensed & Insured""",
-    },
-    BusinessCategory.restaurant: {
-        "id": "restaurant_intro",
-        "name": "Restaurant Introduction",
-        "subject": "Kitchen Air Duct & Dryer Vent Cleaning for {business_name}",
-        "body": """Dear {contact_name},
-
-I'm Lou from Pure Air California. I specialize in air duct and dryer vent cleaning for restaurants and food service establishments in {location}.
-
-As a restaurant operator, clean air systems are critical for:
-
-• **Health department compliance** — clean ducts are an inspection requirement
-• **Fire prevention** — grease buildup in ducts is a leading cause of restaurant fires
-• **Better dining experience** — eliminate odors and improve air quality
-• **Energy savings** — clean HVAC systems run up to 30% more efficiently
-• **Dryer vent cleaning** — essential for laundry operations safety
-
-We serve many restaurants in the {location} area and offer after-hours scheduling so we never disrupt your service.
-
-Would you be interested in a complimentary assessment? I can stop by at a time that works for you.
-
-Best regards,
-Lou
-Pure Air California
-📞 (213) 792-4145
-🌐 www.pureaircalifornia.com
-NADCA Certified | Licensed & Insured""",
+        "id": "hoa_vendor_intro",
+        "name": "HOA Vendor Setup",
+        "subject": "Vendor Approval: Premium Air Duct Cleaning for {business_name}",
+        "body": """Dear {contact_name},<br><br>I'm Lou, the owner of <b>Pure Air California</b>. We are the leading NADCA-certified air duct, HVAC system, and dryer vent cleaning provider for Homeowner Associations across Los Angeles.<br><br>We care deeply about the quality of the air your community breathes. We strictly specialize in HOA residential infrastructures, ensuring maximum dryer vent safety (fire prevention) and drastic improvements in indoor air quality for your residents.<br><br>I am reaching out to formally request to be added as your approved preferred vendor for {business_name}. We offer aggressive group pricing, and to make it easy for you, our W-9 and Insurance Certificate are linked securely below.<br><br>Please let me know if there is a vendor application I can fill out.<br><br>Best regards,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br>NADCA Certified | Fully Licensed & Insured{vendor_docs}"""
     },
     BusinessCategory.property_manager: {
-        "id": "property_mgr_intro",
-        "name": "Property Manager Introduction",
-        "subject": "Air Duct Cleaning Partnership for Your Properties",
-        "body": """Dear {contact_name},
-
-I'm Lou from Pure Air California. We provide NADCA-certified air duct cleaning services for property management companies in {location}.
-
-As a property manager, you know that tenant comfort and building maintenance are key to retention. Our services help you:
-
-• **Reduce tenant complaints** about air quality, dust, and allergies
-• **Lower HVAC repair costs** through preventive maintenance
-• **Increase property value** with documented maintenance records
-• **Offer a premium amenity** that sets your properties apart
-• **Volume pricing** across your entire portfolio
-
-We currently partner with several property management firms in {location} and would love to discuss how we can support your portfolio.
-
-Can we schedule a 15-minute call to explore a partnership?
-
-Best regards,
-Lou
-Pure Air California
-📞 (213) 792-4145
-🌐 www.pureaircalifornia.com
-NADCA Certified | Licensed & Insured""",
+        "id": "property_mgmt_vendor",
+        "name": "Property Management Vendor Setup",
+        "subject": "Vendor Setup: HVAC & Air Duct Cleaning for {business_name}",
+        "body": """Dear {contact_name},<br><br>My name is Lou, owner of <b>Pure Air California</b>. As the premier air duct, HVAC system, and dryer vent cleaning company in Los Angeles, we exclusively service high-volume property management portfolios.<br><br>We know that managing tenant expectations while ensuring building safety is your priority. We care incredibly about the air your tenants breathe. Clean HVAC systems reduce your overhead by 30% while guaranteeing health code compliance.<br><br>I want to make onboarding us as an approved vendor frictionless for {business_name}. You will find our secure W-9 and full Certificate of Insurance linked directly below.<br><br>What is the next step to get Pure Air California on your approved vendor list?<br><br>Best regards,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br>NADCA Certified | Fully Licensed & Insured{vendor_docs}"""
     },
+     BusinessCategory.office_building: {
+        "id": "cre_vendor",
+        "name": "Commercial Real Estate Vendor Setup",
+        "subject": "Vendor Setup: Commercial HVAC Cleaning for {business_name}",
+        "body": """Dear {contact_name},<br><br>My name is Lou, owner of <b>Pure Air California</b>. We are Los Angeles' most trusted commercial air duct and HVAC system cleaning provider.<br><br>Large commercial footprints require pristine air quality. We care about the air your occupants breathe and the efficiency of your massive HVAC infrastructures. Professional NADCA-certified cleaning extends your equipment lifespan by years.<br><br>I would like to be added to {business_name}'s approved vendor system for all current and future property needs. My W-9 and comprehensive Insurance Certificate are linked below.<br><br>Please let me know the next steps for vendor onboarding.<br><br>Best regards,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br>NADCA Certified | Fully Licensed & Insured{vendor_docs}"""
+    }
 }
-
-# Default template for categories without a specific one
-DEFAULT_TEMPLATE = {
-    "id": "general_intro",
-    "name": "General Introduction",
-    "subject": "Professional Air Duct Cleaning Services for {business_name}",
-    "body": """Dear {contact_name},
-
-I'm Lou from Pure Air California, a NADCA-certified air duct cleaning company serving {location}.
-
-I'm reaching out because we specialize in providing professional air duct and HVAC cleaning services for commercial properties like {business_name}. Our services include:
-
-• **Air Duct Cleaning** — Remove dust, allergens, and contaminants
-• **Dryer Vent Cleaning** — Fire prevention and efficiency
-• **HVAC System Cleaning** — Extend equipment life by years
-• **Electrostatic Filter Installation** — Ongoing air quality improvement
-
-Benefits for your facility:
-✅ Improved indoor air quality for occupants
-✅ Energy cost reduction of up to 30%
-✅ Extended HVAC system lifespan
-✅ Compliance with health and safety standards
-
-We offer complimentary air quality assessments and competitive commercial pricing.
-
-Would you have 15 minutes for a quick call this week?
-
-Best regards,
-Lou
-Pure Air California
-📞 (213) 792-4145
-🌐 www.pureaircalifornia.com
-NADCA Certified | Licensed & Insured""",
-}
-
 
 def get_email_template(category: BusinessCategory) -> dict:
     """Get the email template for a given business category."""
@@ -297,6 +116,7 @@ def compose_email(
         "{business_name}": business_name,
         "{contact_name}": contact_name or "Hiring Manager",
         "{location}": location,
+        "{vendor_docs}": get_vendor_documents_html(),
     }
     
     for var, value in variables.items():

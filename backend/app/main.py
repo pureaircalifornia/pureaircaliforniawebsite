@@ -25,6 +25,7 @@ from .routers import (
     lead_scanner_router,
     settings_router,
 )
+from .routers.webhooks import router as webhooks_router
 
 # Configure logging
 logging.basicConfig(
@@ -70,9 +71,16 @@ def create_app() -> FastAPI:
     )
     
     # Add CORS middleware
+    # Production domains for CORS
+    production_origins = [
+        "https://pureaircalifornia.com",
+        "https://www.pureaircalifornia.com",
+        "https://admin.pureaircalifornia.com",
+    ]
+    
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.CORS_ORIGINS,
+        allow_origins=["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173", "http://127.0.0.1:5174"] + production_origins,
         allow_credentials=True,
         allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         allow_headers=["*"],
@@ -91,6 +99,7 @@ def create_app() -> FastAPI:
     app.include_router(leads_router, prefix="/api")
     app.include_router(lead_scanner_router, prefix="/api")
     app.include_router(settings_router, prefix="/api")
+    app.include_router(webhooks_router, prefix="/api")
     
     # Mount local uploads directory for documents
     uploads_dir = os.path.join(os.getcwd(), "uploads")

@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     # Application
     APP_NAME: str = "Pure Air California Business Management"
     APP_VERSION: str = "1.0.0"
-    DEBUG: bool = False
+    DEBUG: bool = True
     
     # Database
     MONGO_URL: str
@@ -29,6 +29,10 @@ class Settings(BaseSettings):
     STRIPE_SECRET_KEY: Optional[str] = None
     STRIPE_WEBHOOK_SECRET: Optional[str] = None
     STRIPE_PUBLISHABLE_KEY: Optional[str] = None
+    
+    # Advanced Outreach Configuration
+    W9_DOCUMENT_LINK: Optional[str] = None
+    INSURANCE_DOCUMENT_LINK: Optional[str] = None
     
     # Email Services (SendGrid / Resend)
     SENDGRID_API_KEY: Optional[str] = None
@@ -57,11 +61,14 @@ class Settings(BaseSettings):
         "http://localhost:3000",
         "http://localhost:3001",
         "http://localhost:5173",
+        "http://localhost:5174",
         "http://127.0.0.1:3000",
         "http://127.0.0.1:3001",
         "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
         "https://pureaircalifornia.com",
-        "https://www.pureaircalifornia.com"
+        "https://www.pureaircalifornia.com",
+        "https://admin.pureaircalifornia.com",
     ]
     
     class Config:

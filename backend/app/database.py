@@ -22,7 +22,16 @@ async def connect_to_database() -> None:
     settings = get_settings()
     
     try:
-        _client = AsyncIOMotorClient(settings.MONGO_URL)
+        _client = AsyncIOMotorClient(
+            settings.MONGO_URL,
+            serverSelectionTimeoutMS=10000,
+            connectTimeoutMS=10000,
+            socketTimeoutMS=20000,
+            maxPoolSize=10,
+            minPoolSize=1,
+            retryWrites=True,
+            retryReads=True,
+        )
         _database = _client[settings.DB_NAME]
         
         # Verify connection

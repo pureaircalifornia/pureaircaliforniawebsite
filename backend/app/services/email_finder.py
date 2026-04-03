@@ -60,6 +60,7 @@ async def find_emails_for_business(
     Returns dict with:
         - emails: list of {email, source, confidence} dicts
         - domain: the business domain
+        - top_contact_name: optional, best guess for contact name
         - pages_scraped: number of pages checked
     """
     if not website_url:
@@ -78,6 +79,7 @@ async def find_emails_for_business(
     email_domain = domain.replace("www.", "")
     
     found_emails: Dict[str, Dict] = {}  # email -> {source, confidence}
+    found_names: Dict[str, int] = {}    # name -> confidence score
     pages_scraped = 0
     
     headers = {
@@ -93,7 +95,7 @@ async def find_emails_for_business(
         verify=False,  # Some business sites have bad SSL
     ) as client:
         # 1. Scrape homepage
-        emails_from_page = await _scrape_page_for_emails(client, website_url)
+        emails_from_page, names_from_page = await _scrape_page_for_emails_and_names(client, website_url)
         pages_scraped += 1
         for email in emails_from_page:
             if _is_valid_business_email(email, email_domain):
@@ -101,12 +103,14 @@ async def find_emails_for_business(
                     "source": "homepage",
                     "confidence": _score_email(email, email_domain),
                 }
-        
+        for name, score in names_from_page.items():
+            found_names[name] = max(found_names.get(name, 0), score)
+
         # 2. Scrape contact/about pages
         for path in CONTACT_PATHS:
             contact_url = urljoin(website_url, path)
             try:
-                emails_from_page = await _scrape_page_for_emails(client, contact_url)
+                emails_from_page, names_from_page = await _scrape_page_for_emails_and_names(client, contact_url)
                 pages_scraped += 1
                 for email in emails_from_page:
                     if _is_valid_business_email(email, email_domain):
@@ -117,14 +121,39 @@ async def find_emails_for_business(
                                 "source": f"contact page ({path})",
                                 "confidence": score,
                             }
+                for name, score in names_from_page.items():
+                    found_names[name] = max(found_names.get(name, 0), score + 10) # Bonus for contact page
             except Exception:
                 continue  # Skip pages that don't exist
             
             # Stop if we found enough emails
-            if len(found_emails) >= 5:
+            if len(found_emails) >= 5 and len(found_names) > 0:
                 break
     
-    # 3. Generate common pattern guesses if we found NO emails
+    # 3. Fallback: DuckDuckGo Deep Search if no emails found natively
+    if not found_emails:
+        logger.info(f"Native site scrape failed for {email_domain}. Falling back to DuckDuckGo search.")
+        try:
+            from duckduckgo_search import AsyncDDGS
+            search_query = f'"{business_name}" email OR contact "@{email_domain}"' if business_name else f'contact email "@{email_domain}"'
+            async with AsyncDDGS() as ddgs:
+                results = [r async for r in ddgs.text(search_query, max_results=5)]
+                for r in results:
+                    snippet = r.get("body", "") + " " + r.get("title", "")
+                    ddg_emails = EMAIL_REGEX.findall(snippet)
+                    for email in ddg_emails:
+                        if _is_valid_business_email(email, email_domain):
+                            existing = found_emails.get(email.lower())
+                            score = _score_email(email, email_domain) + 15  # Good confidence for public web listing
+                            if not existing or existing["confidence"] < score:
+                                found_emails[email.lower()] = {
+                                    "source": "web directory search",
+                                    "confidence": score,
+                                }
+        except Exception as e:
+            logger.warning(f"DuckDuckGo fallback failed: {e}")
+            
+    # 4. Generate common pattern guesses if STILL no emails found
     if not found_emails:
         for prefix in ROLE_PREFIXES[:8]:  # Top 8 most likely
             guess = f"{prefix}@{email_domain}"
@@ -143,34 +172,50 @@ async def find_emails_for_business(
         )
     ]
     
+    # Extract best name
+    top_contact_name = None
+    if found_names:
+        top_name_tuple = sorted(found_names.items(), key=lambda x: x[1], reverse=True)[0]
+        if top_name_tuple[1] > 20: # Must be somewhat confident
+            top_contact_name = top_name_tuple[0]
+
     # Return top 10
     return {
         "emails": email_list[:10],
         "domain": email_domain,
+        "top_contact_name": top_contact_name,
         "pages_scraped": pages_scraped,
     }
 
 
-async def _scrape_page_for_emails(
+async def _scrape_page_for_emails_and_names(
     client: httpx.AsyncClient,
     url: str,
-) -> List[str]:
-    """Fetch a page and extract email addresses."""
+) -> tuple[List[str], Dict[str, int]]:
+    """Fetch a page and extract email addresses and potential contact names."""
     try:
         response = await client.get(url, timeout=10.0)
         if response.status_code != 200:
-            return []
+            return [], {}
         
         content_type = response.headers.get("content-type", "")
         if "text/html" not in content_type and "text/plain" not in content_type:
-            return []
+            return [], {}
         
         html = response.text
         
         # Extract from raw HTML (catches mailto: links and text)
         raw_emails = EMAIL_REGEX.findall(html)
         
-        # Also parse with BeautifulSoup for mailto: links specifically
+        # Extract names using heuristic approach near target titles
+        found_names = {}
+        target_roles = [
+            "facilities manager", "property manager", "facility manager",
+            "director of operations", "general manager", "president",
+            "hoa president", "community manager", "maintenance manager",
+            "building manager", "chief engineer",
+        ]
+        
         try:
             soup = BeautifulSoup(html, "html.parser")
             for link in soup.find_all("a", href=True):
@@ -179,14 +224,31 @@ async def _scrape_page_for_emails(
                     email = href.replace("mailto:", "").split("?")[0].strip()
                     if email and "@" in email:
                         raw_emails.append(email)
+                        
+            # Simplistic Name Extraction: look for elements containing target roles
+            for elem in soup.find_all(['div', 'p', 'span', 'li', 'td', 'h3', 'h4', 'strong', 'b']):
+                text = elem.get_text().strip()
+                if len(text) < 150: # Short block of text (like a team card)
+                    text_lower = text.lower()
+                    for role in target_roles:
+                        if role in text_lower:
+                            # Use regex to find capitalized words near the role
+                            import re
+                            # Looks for 2-3 capitalized words
+                            names = re.findall(r'([A-Z][a-z]+ [A-Z][a-z]+(?: [A-Z][a-z]+)?)', text)
+                            for name in names:
+                                # Penalize very short or very long
+                                if 4 < len(name) < 25 and not any(x in name.lower() for x in ["manager", "president", "director", "welcome", "about", "contact", "home"]):
+                                    found_names[name] = found_names.get(name, 0) + 50
+                            break
         except Exception:
             pass
         
-        return list(set(raw_emails))
+        return list(set(raw_emails)), found_names
         
     except Exception as e:
         logger.debug(f"Could not scrape {url}: {e}")
-        return []
+        return [], {}
 
 
 def _is_valid_business_email(email: str, expected_domain: str) -> bool:

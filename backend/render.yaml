@@ -1,21 +1,29 @@
-# Render.com deployment config
-# Docs: https://render.com/docs/blueprint-spec
-
 services:
   - type: web
-    name: pac-backend
-    runtime: python
+    name: pac-crm-backend
+    env: python
+    region: oregon # Or whichever region the user selects on Render
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port 10000"
     plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
-      - key: MONGO_URL
-        sync: false  # Set manually in Render dashboard
-      - key: DB_NAME
-        value: pureaircalifornia
-      - key: JWT_SECRET_KEY
-        generateValue: true  # Render auto-generates a secure secret
-      - key: DEBUG
-        value: "False"
-      - key: PYTHON_VERSION
-        value: "3.11.6"
+      - key: APP_NAME
+        value: "Pure Air California CRM API"
+      - key: APP_VERSION
+        value: "1.0.0"
+      - key: CORS_ORIGINS
+        value: '["https://pureaircalifornia.com", "https://www.pureaircalifornia.com", "https://admin.pureaircalifornia.com", "http://localhost:5173", "http://localhost:5174"]'
+      - key: MONGODB_URL
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: GOOGLE_PLACES_API_KEY
+        sync: false
+      - key: W9_DOCUMENT_LINK
+        sync: false
+      - key: INSURANCE_DOCUMENT_LINK
+        sync: false

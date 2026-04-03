@@ -107,9 +107,21 @@ async def _background_find_emails(prospect_id: str, website_url: str, business_n
         results = await find_emails_for_business(website_url, business_name, phone)
         if results.get("emails"):
             collection = get_prospects_collection()
+            
+            # Fetch the prospect to check existing fields
+            prospect = await collection.find_one({"id": prospect_id}) or {}
+            
+            updates = {"found_emails": [e["email"] for e in results["emails"]]}
+            
+            if not prospect.get("contact_email") and results["emails"]:
+                updates["contact_email"] = results["emails"][0]["email"]
+                
+            if results.get("top_contact_name") and not prospect.get("contact_name"):
+                updates["contact_name"] = results["top_contact_name"]
+                
             await collection.update_one(
                 {"id": prospect_id},
-                {"$set": {"found_emails": results["emails"]}}
+                {"$set": updates}
             )
     except Exception as e:
         import logging
@@ -186,9 +198,18 @@ async def find_emails_for_prospect(
     )
     
     if results.get("emails"):
+        updates = {"found_emails": [e["email"] for e in results["emails"]]}
+        # If we didn't have a contact email mapped manually, assign the best one
+        if not prospect.get("contact_email") and results["emails"]:
+            updates["contact_email"] = results["emails"][0]["email"]
+            
+        # If the web scraper successfully extracted a contact name, save it
+        if results.get("top_contact_name") and not prospect.get("contact_name"):
+            updates["contact_name"] = results["top_contact_name"]
+            
         await collection.update_one(
             {"id": prospect_id},
-            {"$set": {"found_emails": results["emails"]}}
+            {"$set": updates}
         )
         
     return results

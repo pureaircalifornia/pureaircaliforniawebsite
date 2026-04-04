@@ -76,6 +76,8 @@ def create_app() -> FastAPI:
         "https://pureaircalifornia.com",
         "https://www.pureaircalifornia.com",
         "https://admin.pureaircalifornia.com",
+        "https://pureaircaliforniawebsite.vercel.app",
+        "https://pureaircaliforniawe-git-df9b1b-pureaircalifornia-3562s-projects.vercel.app",
     ]
     
     app.add_middleware(

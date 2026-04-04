@@ -127,6 +127,30 @@ export default function ScannerPage() {
           for (const [pid, info] of Object.entries(check.status_map)) {
             map[pid] = info.prospect_id;
           }
+          
+          // Auto-save unsaved
+          const unsaved = data.filter(r => r.place_id && !map[r.place_id]);
+          if (unsaved.length > 0) {
+            toast.info(`Auto-saving ${unsaved.length} new prospects to CRM...`, { duration: 3000 });
+            for (const place of unsaved) {
+              try {
+                const res = await api.post<{ id: string }>('/lead-scanner/prospects', {
+                  place_id: place.place_id,
+                  business_name: place.business_name || place.name || 'Unknown Business',
+                  address: place.address,
+                  phone: place.phone,
+                  website: place.website,
+                  business_category: category,
+                });
+                map[place.place_id] = res.id;
+              } catch (e) {
+                console.error('Auto-save failed for', place.business_name, e);
+              }
+            }
+            qc.invalidateQueries({ queryKey: ['prospects'] });
+            toast.success(`Successfully added ${unsaved.length} new prospects!`);
+          }
+          
           setSavedMap(map);
         } catch { /* ignore */ }
       }
@@ -350,34 +374,45 @@ export default function ScannerPage() {
           </div>
 
           {/* Results */}
-          {results.length > 0 && (
-            <div>
-              <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-medium text-surface-400">
-                Found {results.length} results
-              </h3>
-              {results.length > 0 && results.filter(r => !savedMap[r.place_id]).length > 0 && (
-                <button
-                  onClick={async () => {
-                    const unsaved = results.filter(r => !savedMap[r.place_id]);
-                    for (const place of unsaved) {
-                      await saveMutation.mutateAsync(place);
-                    }
-                    toast.success(`Bulk saved ${unsaved.length} prospects!`);
-                  }}
-                  disabled={saveMutation.isPending}
-                  className="btn-secondary text-xs py-1.5 flex items-center gap-2"
-                >
-                  <BookmarkPlus className="w-3.5 h-3.5" />
-                  Save All Unsaved to CRM
-                </button>
-              )}
-            </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                {results.map((place, i) => {
-                  const isSaved = !!savedMap[place.place_id];
-                  return (
-                    <div
+          {results.length > 0 && (() => {
+            const displayResults = results.filter(r => !savedMap[r.place_id]);
+            const alreadySavedCount = results.length - displayResults.length;
+            
+            return (
+              <div>
+                <div className="flex flex-col md:flex-row items-center justify-between mb-4 gap-3">
+                  <h3 className="text-sm font-medium text-surface-400">
+                    Found {displayResults.length} new prospects
+                    {alreadySavedCount > 0 && <span className="ml-2 text-xs text-surface-500">({alreadySavedCount} already in CRM)</span>}
+                  </h3>
+                  {displayResults.length > 0 && (
+                    <button
+                      onClick={async () => {
+                        for (const place of displayResults) {
+                          await saveMutation.mutateAsync(place);
+                        }
+                        toast.success(`Bulk saved ${displayResults.length} prospects!`);
+                      }}
+                      disabled={saveMutation.isPending}
+                      className="btn-secondary text-xs py-1.5 flex items-center gap-2"
+                    >
+                      <BookmarkPlus className="w-3.5 h-3.5" />
+                      Save {displayResults.length} Prospects to CRM
+                    </button>
+                  )}
+                </div>
+                
+                {displayResults.length === 0 ? (
+                  <div className="text-center py-10 bg-surface-800/30 rounded-xl border border-dashed border-surface-700/50">
+                    <p className="text-surface-400">All results from this search are already in your CRM.</p>
+                    <p className="text-sm text-surface-500 mt-1">Try expanding the radius or changing the location.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    {displayResults.map((place, i) => {
+                      const isSaved = !!savedMap[place.place_id];
+                      return (
+                        <div
                       key={place.place_id || i}
                       className="glass-card p-5 animate-slide-up"
                       style={{ animationDelay: `${i * 40}ms` }}
@@ -441,8 +476,10 @@ export default function ScannerPage() {
                   );
                 })}
               </div>
+              )}
             </div>
-          )}
+          );
+        })()}
 
           {results.length === 0 && !searchMutation.isPending && (
             <div className="glass-card p-16 text-center">
@@ -463,13 +500,14 @@ export default function ScannerPage() {
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-surface-700/50 pt-4">
-            {/* Columns: Follow Up, Opened, Responded */}
-            {['follow_up', 'opened', 'responded'].map(status => {
-              const colProspects = prospects.filter((p: Prospect) => p.outreach_status === status);
-              const label = OUTREACH_LABELS[status];
-              return (
-                <div key={status} className="glass-card p-4 min-h-[300px]">
+          <div className="flex overflow-x-auto pb-4 pt-4 hide-scrollbar snap-x">
+            <div className="flex gap-4 min-w-max border-t border-surface-700/50 pt-4">
+              {/* Columns: Follow Up, Contacted, Opened, Responded */}
+              {['follow_up', 'email_sent', 'opened', 'responded'].map(status => {
+                const colProspects = prospects.filter((p: Prospect) => p.outreach_status === status);
+                const label = OUTREACH_LABELS[status];
+                return (
+                  <div key={status} className="glass-card p-4 min-h-[300px] w-72 shrink-0 snap-start">
                   <h3 className={`text-sm font-bold mb-4 px-3 py-1.5 rounded-md w-fit ${label.cls}`}>
                     {label.text} ({colProspects.length})
                   </h3>
@@ -493,6 +531,7 @@ export default function ScannerPage() {
                 </div>
               );
             })}
+            </div>
           </div>
         </div>
       )}

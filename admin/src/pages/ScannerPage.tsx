@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import {
   Radar, Search, MapPin, Globe, Phone, Star, Mail,
   Save, Send, Eye, ChevronDown, Loader2, Building2,
-  ExternalLink, RefreshCw, X, Inbox, FileText, ArrowRight,
+  ExternalLink, RefreshCw, X, Inbox, FileText, ArrowRight, BookmarkPlus,
 } from 'lucide-react';
 import api from '../api/client';
 
@@ -100,6 +100,7 @@ export default function ScannerPage() {
   const [emailPreview, setEmailPreview] = useState<EmailPreview | null>(null);
   const [sendEmail, setSendEmail] = useState('');
   const [sendName, setSendName] = useState('');
+  const [expandedHistory, setExpandedHistory] = useState<Record<string, boolean>>({});
 
   /* ── Search mutation ─────────────────────────────────── */
 
@@ -224,6 +225,7 @@ export default function ScannerPage() {
     prospect_id: string;
     to_email: string;
     subject: string;
+    body: string;
     sent_at: string;
     status: string;
     dry_run?: boolean;
@@ -350,9 +352,27 @@ export default function ScannerPage() {
           {/* Results */}
           {results.length > 0 && (
             <div>
-              <h3 className="text-base font-semibold text-white mb-3">
-                {results.length} Results
+              <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-medium text-surface-400">
+                Found {results.length} results
               </h3>
+              {results.length > 0 && results.filter(r => !savedMap[r.place_id]).length > 0 && (
+                <button
+                  onClick={async () => {
+                    const unsaved = results.filter(r => !savedMap[r.place_id]);
+                    for (const place of unsaved) {
+                      await saveMutation.mutateAsync(place);
+                    }
+                    toast.success(`Bulk saved ${unsaved.length} prospects!`);
+                  }}
+                  disabled={saveMutation.isPending}
+                  className="btn-secondary text-xs py-1.5 flex items-center gap-2"
+                >
+                  <BookmarkPlus className="w-3.5 h-3.5" />
+                  Save All Unsaved to CRM
+                </button>
+              )}
+            </div>
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                 {results.map((place, i) => {
                   const isSaved = !!savedMap[place.place_id];
@@ -621,9 +641,10 @@ export default function ScannerPage() {
                 </div>
                 <div className="p-4 rounded-xl bg-surface-800/50 border border-surface-700/50 max-h-[300px] overflow-y-auto">
                   <p className="text-xs text-surface-500 mb-2">Body</p>
-                  <div className="text-sm text-surface-300 whitespace-pre-wrap leading-relaxed">
-                    {emailPreview.body}
-                  </div>
+                  <div 
+                    className="text-sm text-surface-300 font-sans leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: emailPreview.body }}
+                  />
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button
@@ -683,7 +704,22 @@ export default function ScannerPage() {
                       </span>
                     </div>
                     <p className="text-xs text-surface-400 mt-1 truncate">{entry.subject}</p>
-                    <p className="text-[11px] text-surface-500 mt-1">{formatDate(entry.sent_at)}</p>
+                    <div className="flex justify-between items-center mt-1">
+                      <p className="text-[11px] text-surface-500">{formatDate(entry.sent_at)}</p>
+                      {entry.body && (
+                        <button 
+                          onClick={() => setExpandedHistory(prev => ({ ...prev, [entry.id]: !prev[entry.id] }))}
+                          className="text-[11px] text-brand-400 hover:text-brand-300 underline"
+                        >
+                          {expandedHistory[entry.id] ? 'Hide Mail' : 'View Mail'}
+                        </button>
+                      )}
+                    </div>
+                    {expandedHistory[entry.id] && entry.body && (
+                      <div className="mt-3 p-3 bg-surface-900/50 rounded-lg border border-surface-700/30 text-xs text-surface-300 max-h-64 overflow-y-auto font-sans leading-relaxed">
+                        <div dangerouslySetInnerHTML={{ __html: entry.body }} />
+                      </div>
+                    )}
                   </div>
                 ))
               )}

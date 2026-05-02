@@ -31,28 +31,28 @@ def get_vendor_documents_html() -> str:
 DEFAULT_TEMPLATE = {
     "id": "general_vendor_intro",
     "name": "General Vendor Introduction",
-    "subject": "Vendor Setup: Premium Air Duct & HVAC Cleaning for {business_name}",
-    "body": """Dear {contact_name},<br><br>I'm Lou, the owner of <b>Pure Air California</b>. We are the premier NADCA-certified air duct, HVAC system, and dryer vent cleaning company serving Los Angeles.<br><br>We care deeply about the quality of the air you and your tenants breathe. We specialize in partnering with commercial facilities like {business_name} to guarantee compliance, eliminate fire hazards, and drastically improve indoor air quality.<br><br>I would love to be set up as an approved vendor for your property. To make the onboarding process completely seamless, I have attached our secure links to our W-9 and Certificate of Insurance below.<br><br>Please let me know what else is required to get Pure Air California added to your vendor list.<br><br>Best regards,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br>NADCA Certified | Fully Licensed & Insured{vendor_docs}"""
+    "subject": "Quick question about {business_name}'s HVAC & Air Quality",
+    "body": """Hi {contact_name},<br><br>I'm Lou, owner of Pure Air California.<br><br>I'm reaching out because we help properties like {business_name} reduce HVAC energy costs by up to 30% and ensure full safety compliance through professional air duct and dryer vent cleaning.<br><br>Many of our clients in Los Angeles didn't realize how much buildup was in their systems until they saw our before/after photos.<br><br>Are you open to a brief chat to see if we'd be a good fit for your vendor list?<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. To make things frictionless, I've included our vendor setup documents below if you'd like to keep us on file.</span>{vendor_docs}"""
 }
 
 EMAIL_TEMPLATES = {
     BusinessCategory.hoa: {
         "id": "hoa_vendor_intro",
         "name": "HOA Vendor Setup",
-        "subject": "Vendor Approval: Premium Air Duct Cleaning for {business_name}",
-        "body": """Dear {contact_name},<br><br>I'm Lou, the owner of <b>Pure Air California</b>. We are the leading NADCA-certified air duct, HVAC system, and dryer vent cleaning provider for Homeowner Associations across Los Angeles.<br><br>We care deeply about the quality of the air your community breathes. We strictly specialize in HOA residential infrastructures, ensuring maximum dryer vent safety (fire prevention) and drastic improvements in indoor air quality for your residents.<br><br>I am reaching out to formally request to be added as your approved preferred vendor for {business_name}. We offer aggressive group pricing, and to make it easy for you, our W-9 and Insurance Certificate are linked securely below.<br><br>Please let me know if there is a vendor application I can fill out.<br><br>Best regards,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br>NADCA Certified | Fully Licensed & Insured{vendor_docs}"""
+        "subject": "Dryer Vent & HVAC Safety for {business_name}",
+        "body": """Hi {contact_name},<br><br>I'm Lou, owner of Pure Air California. We specialize in partnering with HOAs across Los Angeles to prevent dryer vent fires and improve resident air quality.<br><br>We handle the heavy lifting of coordinating with residents while offering aggressive group pricing that keeps your board happy.<br><br>Would you be open to keeping our information on file for your next HOA meeting or upcoming maintenance needs?<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've attached our W-9 and Insurance below so you have everything you need upfront.</span>{vendor_docs}"""
     },
     BusinessCategory.property_manager: {
         "id": "property_mgmt_vendor",
         "name": "Property Management Vendor Setup",
-        "subject": "Vendor Setup: HVAC & Air Duct Cleaning for {business_name}",
-        "body": """Dear {contact_name},<br><br>My name is Lou, owner of <b>Pure Air California</b>. As the premier air duct, HVAC system, and dryer vent cleaning company in Los Angeles, we exclusively service high-volume property management portfolios.<br><br>We know that managing tenant expectations while ensuring building safety is your priority. We care incredibly about the air your tenants breathe. Clean HVAC systems reduce your overhead by 30% while guaranteeing health code compliance.<br><br>I want to make onboarding us as an approved vendor frictionless for {business_name}. You will find our secure W-9 and full Certificate of Insurance linked directly below.<br><br>What is the next step to get Pure Air California on your approved vendor list?<br><br>Best regards,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br>NADCA Certified | Fully Licensed & Insured{vendor_docs}"""
+        "subject": "HVAC Cleaning Vendor for {business_name}",
+        "body": """Hi {contact_name},<br><br>I'm Lou, owner of Pure Air California. We help property managers in Los Angeles reduce tenant complaints and lower HVAC overhead by keeping air ducts and dryer vents pristine.<br><br>We know managing multiple properties is stressful, so we make our vendor process completely frictionless—we handle the tenant scheduling and guarantee compliance.<br><br>Are you open to comparing our rates against your current provider?<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've included our W-9 and Insurance links below if you'd like to add us to your approved list.</span>{vendor_docs}"""
     },
      BusinessCategory.office_building: {
         "id": "cre_vendor",
         "name": "Commercial Real Estate Vendor Setup",
-        "subject": "Vendor Setup: Commercial HVAC Cleaning for {business_name}",
-        "body": """Dear {contact_name},<br><br>My name is Lou, owner of <b>Pure Air California</b>. We are Los Angeles' most trusted commercial air duct and HVAC system cleaning provider.<br><br>Large commercial footprints require pristine air quality. We care about the air your occupants breathe and the efficiency of your massive HVAC infrastructures. Professional NADCA-certified cleaning extends your equipment lifespan by years.<br><br>I would like to be added to {business_name}'s approved vendor system for all current and future property needs. My W-9 and comprehensive Insurance Certificate are linked below.<br><br>Please let me know the next steps for vendor onboarding.<br><br>Best regards,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br>NADCA Certified | Fully Licensed & Insured{vendor_docs}"""
+        "subject": "HVAC Efficiency at {business_name}",
+        "body": """Hi {contact_name},<br><br>I'm Lou, owner of Pure Air California. We help commercial facilities like {business_name} extend the lifespan of massive HVAC infrastructures through NADCA-certified cleaning.<br><br>Clean systems drastically improve indoor air quality for your occupants while lowering energy consumption by up to 30%.<br><br>Would you be opposed to a quick introductory call to see if we'd be a valuable addition to your vendor roster?<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've linked our compliance documents (W-9 and Insurance) below for your records.</span>{vendor_docs}"""
     }
 }
 
@@ -160,7 +160,7 @@ async def _send_email_resend(to_email: str, to_name: str, subject: str, body: st
     import re
     
     resend.api_key = settings.RESEND_API_KEY
-    from_email = settings.FROM_EMAIL
+    from_email = "lou@pureaircalifornia.com"
     
     # Format HTML body
     html_body = body.replace("\n", "<br>")
@@ -198,7 +198,7 @@ async def _send_email_sendgrid(to_email: str, to_name: str, subject: str, body: 
     import re
     
     api_key = settings.SENDGRID_API_KEY
-    from_email = settings.FROM_EMAIL
+    from_email = "lou@pureaircalifornia.com"
     
     # Format HTML body
     html_body = body.replace("\n", "<br>")

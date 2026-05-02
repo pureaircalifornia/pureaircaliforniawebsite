@@ -28,31 +28,56 @@ def get_vendor_documents_html() -> str:
     
     return "<br><br><b>Vendor Setup Documents:</b><br>" + "<br>".join(links)
 
+import random
+
+def spin(options):
+    return random.choice(options)
+
 DEFAULT_TEMPLATE = {
     "id": "general_vendor_intro",
     "name": "General Vendor Introduction",
-    "subject": "Quick question about {business_name}'s HVAC & Air Quality",
-    "body": """Hi {contact_name},<br><br>I'm Lou, owner of Pure Air California.<br><br>I'm reaching out because we help properties like {business_name} reduce HVAC energy costs by up to 30% and ensure full safety compliance through professional air duct and dryer vent cleaning.<br><br>Many of our clients in Los Angeles didn't realize how much buildup was in their systems until they saw our before/after photos.<br><br>Are you open to a brief chat to see if we'd be a good fit for your vendor list?<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. To make things frictionless, I've included our vendor setup documents below if you'd like to keep us on file.</span>{vendor_docs}"""
+    "subject": lambda: spin([
+        "Quick question about {business_name}'s HVAC & Air Quality",
+        "HVAC compliance at {business_name}",
+        "Vendor intro: {business_name} HVAC maintenance",
+        "Quick question for {contact_name}"
+    ]),
+    "body": lambda: f"""{spin(['Hi', 'Hello', 'Hey'])} {{contact_name}},<br><br>{spin(["I'm Lou, owner of Pure Air California.", "My name is Lou, I run Pure Air California.", "Lou here from Pure Air California."])}<br><br>I'm reaching out because we help properties like {{business_name}} reduce HVAC energy costs by up to 30% and ensure full safety compliance through professional air duct and dryer vent cleaning.<br><br>Many of our clients in Los Angeles didn't realize how much buildup was in their systems until they saw our before/after photos.<br><br>{spin(["Are you open to a brief chat to see if we'd be a good fit for your vendor list?", "Would you be opposed to keeping our info on file?", "Can I send over some of our rates for comparison?"])}<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. To make things frictionless, I've included our vendor setup documents below if you'd like to keep us on file.</span>{{vendor_docs}}"""
 }
 
 EMAIL_TEMPLATES = {
     BusinessCategory.hoa: {
         "id": "hoa_vendor_intro",
         "name": "HOA Vendor Setup",
-        "subject": "Dryer Vent & HVAC Safety for {business_name}",
-        "body": """Hi {contact_name},<br><br>I'm Lou, owner of Pure Air California. We specialize in partnering with HOAs across Los Angeles to prevent dryer vent fires and improve resident air quality.<br><br>We handle the heavy lifting of coordinating with residents while offering aggressive group pricing that keeps your board happy.<br><br>Would you be open to keeping our information on file for your next HOA meeting or upcoming maintenance needs?<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've attached our W-9 and Insurance below so you have everything you need upfront.</span>{vendor_docs}"""
+        "subject": lambda: spin([
+            "Dryer Vent & HVAC Safety for {business_name}",
+            "HOA maintenance for {business_name}",
+            "Vendor intro: {business_name} air quality",
+            "{business_name} dryer vent compliance"
+        ]),
+        "body": lambda: f"""{spin(['Hi', 'Hello', 'Hey'])} {{contact_name}},<br><br>{spin(["I'm Lou, owner of Pure Air California.", "My name is Lou, I run Pure Air California.", "Lou here from Pure Air California."])} We specialize in partnering with HOAs across Los Angeles to prevent dryer vent fires and improve resident air quality.<br><br>We handle the heavy lifting of coordinating with residents while offering aggressive group pricing that keeps your board happy.<br><br>{spin(["Would you be open to keeping our information on file for your next HOA meeting?", "Are you open to comparing our HOA group rates?", "Can I send over a quick capabilities deck for your board?"])}<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've attached our W-9 and Insurance below so you have everything you need upfront.</span>{{vendor_docs}}"""
     },
     BusinessCategory.property_manager: {
         "id": "property_mgmt_vendor",
         "name": "Property Management Vendor Setup",
-        "subject": "HVAC Cleaning Vendor for {business_name}",
-        "body": """Hi {contact_name},<br><br>I'm Lou, owner of Pure Air California. We help property managers in Los Angeles reduce tenant complaints and lower HVAC overhead by keeping air ducts and dryer vents pristine.<br><br>We know managing multiple properties is stressful, so we make our vendor process completely frictionless—we handle the tenant scheduling and guarantee compliance.<br><br>Are you open to comparing our rates against your current provider?<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've included our W-9 and Insurance links below if you'd like to add us to your approved list.</span>{vendor_docs}"""
+        "subject": lambda: spin([
+            "HVAC Cleaning Vendor for {business_name}",
+            "Property maintenance intro: {business_name}",
+            "Tenant air quality at {business_name}",
+            "Quick question for {contact_name}"
+        ]),
+        "body": lambda: f"""{spin(['Hi', 'Hello', 'Hey'])} {{contact_name}},<br><br>{spin(["I'm Lou, owner of Pure Air California.", "My name is Lou, I run Pure Air California.", "Lou here from Pure Air California."])} We help property managers in Los Angeles reduce tenant complaints and lower HVAC overhead by keeping air ducts and dryer vents pristine.<br><br>We know managing multiple properties is stressful, so we make our vendor process completely frictionless—we handle the tenant scheduling and guarantee compliance.<br><br>{spin(["Are you open to comparing our rates against your current provider?", "Would you be opposed to keeping our info on file?", "Can we set up a quick 5-minute intro?"])}<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've included our W-9 and Insurance links below if you'd like to add us to your approved list.</span>{{vendor_docs}}"""
     },
      BusinessCategory.office_building: {
         "id": "cre_vendor",
         "name": "Commercial Real Estate Vendor Setup",
-        "subject": "HVAC Efficiency at {business_name}",
-        "body": """Hi {contact_name},<br><br>I'm Lou, owner of Pure Air California. We help commercial facilities like {business_name} extend the lifespan of massive HVAC infrastructures through NADCA-certified cleaning.<br><br>Clean systems drastically improve indoor air quality for your occupants while lowering energy consumption by up to 30%.<br><br>Would you be opposed to a quick introductory call to see if we'd be a valuable addition to your vendor roster?<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've linked our compliance documents (W-9 and Insurance) below for your records.</span>{vendor_docs}"""
+        "subject": lambda: spin([
+            "HVAC Efficiency at {business_name}",
+            "Commercial HVAC maintenance: {business_name}",
+            "Quick question about {business_name}'s air systems",
+            "Vendor intro: {contact_name}"
+        ]),
+        "body": lambda: f"""{spin(['Hi', 'Hello', 'Hey'])} {{contact_name}},<br><br>{spin(["I'm Lou, owner of Pure Air California.", "My name is Lou, I run Pure Air California.", "Lou here from Pure Air California."])} We help commercial facilities like {{business_name}} extend the lifespan of massive HVAC infrastructures through NADCA-certified cleaning.<br><br>Clean systems drastically improve indoor air quality for your occupants while lowering energy consumption by up to 30%.<br><br>{spin(["Would you be opposed to a quick introductory call to see if we'd be a valuable addition to your vendor roster?", "Are you open to receiving a quick quote for comparison?", "Can I share some case studies of our commercial work?"])}<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've linked our compliance documents (W-9 and Insurance) below for your records.</span>{{vendor_docs}}"""
     }
 }
 
@@ -63,8 +88,8 @@ def get_email_template(category: BusinessCategory) -> dict:
         "id": template["id"],
         "name": template["name"],
         "category": category.value,
-        "subject": template["subject"],
-        "body": template["body"],
+        "subject": template["subject"]() if callable(template["subject"]) else template["subject"],
+        "body": template["body"]() if callable(template["body"]) else template["body"],
     }
 
 
@@ -76,16 +101,16 @@ def get_all_templates() -> list:
             "id": template["id"],
             "name": template["name"],
             "category": category.value,
-            "subject": template["subject"],
-            "body": template["body"],
+            "subject": template["subject"]() if callable(template["subject"]) else template["subject"],
+            "body": template["body"]() if callable(template["body"]) else template["body"],
         })
     # Add default template
     templates.append({
         "id": DEFAULT_TEMPLATE["id"],
         "name": DEFAULT_TEMPLATE["name"],
         "category": "other",
-        "subject": DEFAULT_TEMPLATE["subject"],
-        "body": DEFAULT_TEMPLATE["body"],
+        "subject": DEFAULT_TEMPLATE["subject"]() if callable(DEFAULT_TEMPLATE["subject"]) else DEFAULT_TEMPLATE["subject"],
+        "body": DEFAULT_TEMPLATE["body"]() if callable(DEFAULT_TEMPLATE["body"]) else DEFAULT_TEMPLATE["body"],
     })
     return templates
 
@@ -108,8 +133,8 @@ def compose_email(
         body = custom_body
     else:
         template = EMAIL_TEMPLATES.get(category, DEFAULT_TEMPLATE)
-        subject = template["subject"]
-        body = template["body"]
+        subject = template["subject"]() if callable(template["subject"]) else template["subject"]
+        body = template["body"]() if callable(template["body"]) else template["body"]
     
     # Variable substitution
     variables = {

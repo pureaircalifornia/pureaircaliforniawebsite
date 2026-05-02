@@ -366,7 +366,7 @@ async def preview_email(
         category=category,
         business_name=prospect.get("business_name", ""),
         contact_name=prospect.get("contact_name", "Hiring Manager"),
-        location="Los Angeles",
+        location=prospect.get("address", "Los Angeles"),
         custom_subject=request.custom_subject,
         custom_body=request.custom_body,
     )

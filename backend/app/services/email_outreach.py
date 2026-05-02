@@ -33,6 +33,30 @@ import random
 def spin(options):
     return random.choice(options)
 
+import re
+
+def extract_neighborhood(address_string: str) -> str:
+    """
+    Extracts the city or neighborhood from a full Google Maps address string.
+    Example: '123 Main St, Santa Monica, CA 90401, USA' -> 'Santa Monica'
+    """
+    if not address_string or address_string == "Los Angeles":
+        return "Los Angeles"
+        
+    parts = [p.strip() for p in address_string.split(',')]
+    
+    # Standard format: Street, City, State ZIP, Country
+    if len(parts) >= 3:
+        # The city is usually the second-to-last or third-to-last item depending on if Country is included
+        city_candidate = parts[-3] if "USA" in address_string or "United States" in address_string else parts[-2]
+        # Clean up any state/zip code that might have sneaked in
+        city_candidate = re.sub(r'\b[A-Z]{2}\s+\d{5}\b', '', city_candidate).strip()
+        if city_candidate:
+            return city_candidate
+            
+    return "the local area"
+
+
 DEFAULT_TEMPLATE = {
     "id": "general_vendor_intro",
     "name": "General Vendor Introduction",
@@ -42,7 +66,7 @@ DEFAULT_TEMPLATE = {
         "Vendor intro: {business_name} HVAC maintenance",
         "Quick question for {contact_name}"
     ]),
-    "body": lambda: f"""{spin(['Hi', 'Hello', 'Hey'])} {{contact_name}},<br><br>{spin(["I'm Lou, owner of Pure Air California.", "My name is Lou, I run Pure Air California.", "Lou here from Pure Air California."])}<br><br>I'm reaching out because we help properties like {{business_name}} reduce HVAC energy costs by up to 30% and ensure full safety compliance through professional air duct and dryer vent cleaning.<br><br>Many of our clients in Los Angeles didn't realize how much buildup was in their systems until they saw our before/after photos.<br><br>{spin(["Are you open to a brief chat to see if we'd be a good fit for your vendor list?", "Would you be opposed to keeping our info on file?", "Can I send over some of our rates for comparison?"])}<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. To make things frictionless, I've included our vendor setup documents below if you'd like to keep us on file.</span>{{vendor_docs}}"""
+    "body": lambda: f"""{spin(['Hi', 'Hello', 'Hey'])} {{contact_name}},<br><br>{spin(["I'm Lou, owner of Pure Air California.", "My name is Lou, I run Pure Air California.", "Lou here from Pure Air California."])}<br><br>I'm reaching out because we help properties like {{business_name}} reduce HVAC energy costs by up to 30% and ensure full safety compliance through professional air duct and dryer vent cleaning.<br><br>Many of our clients in {{location}} didn't realize how much buildup was in their systems until they saw our before/after photos.<br><br>{spin(["Are you open to a brief chat to see if we'd be a good fit for your vendor list?", "Would you be opposed to keeping our info on file?", "Can I send over some of our rates for comparison?"])}<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. To make things frictionless, I've included our vendor setup documents below if you'd like to keep us on file.</span>{{vendor_docs}}"""
 }
 
 EMAIL_TEMPLATES = {
@@ -55,7 +79,7 @@ EMAIL_TEMPLATES = {
             "Vendor intro: {business_name} air quality",
             "{business_name} dryer vent compliance"
         ]),
-        "body": lambda: f"""{spin(['Hi', 'Hello', 'Hey'])} {{contact_name}},<br><br>{spin(["I'm Lou, owner of Pure Air California.", "My name is Lou, I run Pure Air California.", "Lou here from Pure Air California."])} We specialize in partnering with HOAs across Los Angeles to prevent dryer vent fires and improve resident air quality.<br><br>We handle the heavy lifting of coordinating with residents while offering aggressive group pricing that keeps your board happy.<br><br>{spin(["Would you be open to keeping our information on file for your next HOA meeting?", "Are you open to comparing our HOA group rates?", "Can I send over a quick capabilities deck for your board?"])}<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've attached our W-9 and Insurance below so you have everything you need upfront.</span>{{vendor_docs}}"""
+        "body": lambda: f"""{spin(['Hi', 'Hello', 'Hey'])} {{contact_name}},<br><br>{spin(["I'm Lou, owner of Pure Air California.", "My name is Lou, I run Pure Air California.", "Lou here from Pure Air California."])} We specialize in partnering with HOAs across {{location}} to prevent dryer vent fires and improve resident air quality.<br><br>We handle the heavy lifting of coordinating with residents while offering aggressive group pricing that keeps your board happy.<br><br>{spin(["Would you be open to keeping our information on file for your next HOA meeting?", "Are you open to comparing our HOA group rates?", "Can I send over a quick capabilities deck for your board?"])}<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've attached our W-9 and Insurance below so you have everything you need upfront.</span>{{vendor_docs}}"""
     },
     BusinessCategory.property_manager: {
         "id": "property_mgmt_vendor",
@@ -66,7 +90,7 @@ EMAIL_TEMPLATES = {
             "Tenant air quality at {business_name}",
             "Quick question for {contact_name}"
         ]),
-        "body": lambda: f"""{spin(['Hi', 'Hello', 'Hey'])} {{contact_name}},<br><br>{spin(["I'm Lou, owner of Pure Air California.", "My name is Lou, I run Pure Air California.", "Lou here from Pure Air California."])} We help property managers in Los Angeles reduce tenant complaints and lower HVAC overhead by keeping air ducts and dryer vents pristine.<br><br>We know managing multiple properties is stressful, so we make our vendor process completely frictionless—we handle the tenant scheduling and guarantee compliance.<br><br>{spin(["Are you open to comparing our rates against your current provider?", "Would you be opposed to keeping our info on file?", "Can we set up a quick 5-minute intro?"])}<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've included our W-9 and Insurance links below if you'd like to add us to your approved list.</span>{{vendor_docs}}"""
+        "body": lambda: f"""{spin(['Hi', 'Hello', 'Hey'])} {{contact_name}},<br><br>{spin(["I'm Lou, owner of Pure Air California.", "My name is Lou, I run Pure Air California.", "Lou here from Pure Air California."])} We help property managers in {{location}} reduce tenant complaints and lower HVAC overhead by keeping air ducts and dryer vents pristine.<br><br>We know managing multiple properties is stressful, so we make our vendor process completely frictionless—we handle the tenant scheduling and guarantee compliance.<br><br>{spin(["Are you open to comparing our rates against your current provider?", "Would you be opposed to keeping our info on file?", "Can we set up a quick 5-minute intro?"])}<br><br>Best,<br><br>Lou<br>Pure Air California<br>📞 (213) 792-4145<br>🌐 www.pureaircalifornia.com<br><br><span style="font-size:12px; color:#666;">P.S. I've included our W-9 and Insurance links below if you'd like to add us to your approved list.</span>{{vendor_docs}}"""
     },
      BusinessCategory.office_building: {
         "id": "cre_vendor",
@@ -137,10 +161,12 @@ def compose_email(
         body = template["body"]() if callable(template["body"]) else template["body"]
     
     # Variable substitution
+    neighborhood = extract_neighborhood(location)
+    
     variables = {
         "{business_name}": business_name,
         "{contact_name}": contact_name or "Hiring Manager",
-        "{location}": location,
+        "{location}": neighborhood,
         "{vendor_docs}": get_vendor_documents_html(),
     }
     

@@ -157,6 +157,7 @@ async def send_email(
 
 async def _send_email_resend(to_email: str, to_name: str, subject: str, body: str, settings) -> dict:
     import resend
+    import re
     
     resend.api_key = settings.RESEND_API_KEY
     from_email = settings.FROM_EMAIL
@@ -164,14 +165,26 @@ async def _send_email_resend(to_email: str, to_name: str, subject: str, body: st
     # Format HTML body
     html_body = body.replace("\n", "<br>")
     
+    # Create clean plain text version (prevents spam filters flagging HTML in plain text)
+    text_body = body.replace("<br>", "\n").replace("<br/>", "\n")
+    text_body = re.sub(r'<[^>]+>', '', text_body)
+    
+    # Anti-spam compliant opt-out message
+    footer_html = "<br><br><span style='font-size: 11px; color: #999999;'>If you are not the correct contact or wish to opt-out, please reply with 'Unsubscribe'.</span>"
+    footer_text = "\n\nIf you are not the correct contact or wish to opt-out, please reply with 'Unsubscribe'."
+    
     try:
         r = resend.Emails.send({
             "from": f"Lou <{from_email}>",
             "to": [to_email],
             "subject": subject,
-            "html": f"<div style='font-family: sans-serif; font-size: 14px;'>{html_body}</div>",
-            "text": body,
-            "reply_to": "lou@pureaircalifornia.com"
+            "html": f"<div style='font-family: sans-serif; font-size: 14px;'>{html_body}{footer_html}</div>",
+            "text": text_body + footer_text,
+            "reply_to": "lou@pureaircalifornia.com",
+            "tags": [{"name": "campaign", "value": "vendor_outreach"}],
+            "headers": {
+                "List-Unsubscribe": "<mailto:lou@pureaircalifornia.com?subject=Unsubscribe>"
+            }
         })
         logger.info(f"Email sent successfully via Resend to {to_email} (ID: {r.get('id')})")
         return {"success": True, "dry_run": False, "message": "Email sent via Resend"}
@@ -182,9 +195,21 @@ async def _send_email_resend(to_email: str, to_name: str, subject: str, body: st
 
 async def _send_email_sendgrid(to_email: str, to_name: str, subject: str, body: str, settings) -> dict:
     import httpx
+    import re
     
     api_key = settings.SENDGRID_API_KEY
     from_email = settings.FROM_EMAIL
+    
+    # Format HTML body
+    html_body = body.replace("\n", "<br>")
+    
+    # Create clean plain text version (prevents spam filters flagging HTML in plain text)
+    text_body = body.replace("<br>", "\n").replace("<br/>", "\n")
+    text_body = re.sub(r'<[^>]+>', '', text_body)
+    
+    # Anti-spam compliant opt-out message
+    footer_html = "<br><br><span style='font-size: 11px; color: #999999;'>If you are not the correct contact or wish to opt-out, please reply with 'Unsubscribe'.</span>"
+    footer_text = "\n\nIf you are not the correct contact or wish to opt-out, please reply with 'Unsubscribe'."
     
     payload = {
         "personalizations": [
@@ -196,8 +221,21 @@ async def _send_email_sendgrid(to_email: str, to_name: str, subject: str, body: 
         "from": {"email": from_email, "name": "Lou"},
         "reply_to": {"email": "lou@pureaircalifornia.com", "name": "Lou"},
         "content": [
-            {"type": "text/plain", "value": body},
+            {"type": "text/plain", "value": text_body + footer_text},
+            {"type": "text/html", "value": f"<div style='font-family: sans-serif; font-size: 14px;'>{html_body}{footer_html}</div>"},
         ],
+        "headers": {
+            "List-Unsubscribe": "<mailto:lou@pureaircalifornia.com?subject=Unsubscribe>"
+        },
+        "tracking_settings": {
+            "click_tracking": {
+                "enable": True,
+                "enable_text": False
+            },
+            "open_tracking": {
+                "enable": True
+            }
+        }
     }
     
     async with httpx.AsyncClient() as client:

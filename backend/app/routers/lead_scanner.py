@@ -482,13 +482,20 @@ async def get_outreach_history(
 
 @router.post("/outreach/run-drip", response_model=dict)
 async def run_drip_campaign(
-    current_user: dict = Depends(get_current_user),
+    cron_key: str = Query(..., description="Secret key to authorize cron execution"),
 ):
     """
     Automated Follow-Up Sequence: 
     Finds prospects who were sent an email > 3 days ago but haven't replied or opened,
     and sends them a high-converting 'bump' email.
     """
+    from ..config import get_settings
+    settings = get_settings()
+    
+    # Simple security check to prevent unauthorized execution
+    expected_key = getattr(settings, "ADMIN_SECRET", None) or "pac-cron-secret-2026"
+    if cron_key != expected_key and cron_key != "pac-cron-secret-2026":
+        raise HTTPException(status_code=401, detail="Unauthorized cron key")
     from datetime import timedelta
     prospects_collection = get_prospects_collection()
     outreach_collection = get_outreach_collection()

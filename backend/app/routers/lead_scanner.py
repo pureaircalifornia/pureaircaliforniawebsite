@@ -478,3 +478,93 @@ async def get_outreach_history(
         record.pop("_id", None)
     
     return history
+
+
+@router.post("/outreach/run-drip", response_model=dict)
+async def run_drip_campaign(
+    current_user: dict = Depends(get_current_user),
+):
+    """
+    Automated Follow-Up Sequence: 
+    Finds prospects who were sent an email > 3 days ago but haven't replied or opened,
+    and sends them a high-converting 'bump' email.
+    """
+    from datetime import timedelta
+    prospects_collection = get_prospects_collection()
+    outreach_collection = get_outreach_collection()
+    
+    # Calculate cutoff date (3 days ago)
+    cutoff_date = (datetime.utcnow() - timedelta(days=3)).isoformat()
+    
+    # Find eligible prospects (only emailed once, last contacted > 3 days ago, haven't replied)
+    cursor = prospects_collection.find({
+        "outreach_status": OutreachStatus.email_sent.value,
+        "emails_sent": 1,
+        "last_contacted_at": {"$lt": cutoff_date},
+        "contact_email": {"$ne": None}
+    }).limit(20) # Process in batches of 20 to prevent rate limits
+    
+    prospects = await cursor.to_list(length=20)
+    
+    sent_count = 0
+    errors = 0
+    
+    import random
+    bump_templates = [
+        "Hi {contact_name}, I know things get busy. Just floating this to the top of your inbox. Are you open to a quick chat this week?",
+        "Hey {contact_name}, just following up on my last note. Let me know if you'd be opposed to comparing our rates against your current provider.",
+        "Hi {contact_name}, Lou here again. Any thoughts on my previous email regarding {business_name}'s air quality systems?"
+    ]
+    
+    for prospect in prospects:
+        to_email = prospect.get("contact_email")
+        if not to_email:
+            continue
+            
+        contact_name = prospect.get("contact_name", "Hiring Manager")
+        business_name = prospect.get("business_name", "your property")
+        
+        body = random.choice(bump_templates).format(contact_name=contact_name, business_name=business_name)
+        body += "<br><br>Best,<br>Lou<br>Pure Air California"
+        subject = f"Following up: {business_name}"
+        
+        # Send email
+        result = await send_email(
+            to_email=to_email,
+            to_name=contact_name,
+            subject=subject,
+            body=body,
+        )
+        
+        if result["success"]:
+            # Log outreach
+            await outreach_collection.insert_one({
+                "id": str(uuid.uuid4()),
+                "prospect_id": prospect["id"],
+                "to_email": to_email,
+                "to_name": contact_name,
+                "subject": subject,
+                "body": body,
+                "sent_at": datetime.utcnow().isoformat(),
+                "status": "sent",
+                "is_followup": True
+            })
+            
+            # Update prospect
+            await prospects_collection.update_one(
+                {"id": prospect["id"]},
+                {
+                    "$set": {"last_contacted_at": datetime.utcnow().isoformat()},
+                    "$inc": {"emails_sent": 1}
+                }
+            )
+            sent_count += 1
+        else:
+            errors += 1
+            
+    return {
+        "processed": len(prospects),
+        "follow_ups_sent": sent_count,
+        "errors": errors,
+        "message": f"Drip campaign executed. Sent {sent_count} follow-ups."
+    }

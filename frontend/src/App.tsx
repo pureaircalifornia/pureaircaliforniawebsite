@@ -8,79 +8,93 @@ import { seoConfig } from './utils/seo/seoConfig';
 import NavBar from './components/NavBar';
 import ScrollToTop from './components/ScrollToTop';
 import EnhancedLanding from './pages/EnhancedLanding';
-import LandingNature from './pages/LandingNature';
-import LandingDryerSafety from './pages/LandingDryerSafety';
-import LandingCompetitor from './pages/LandingCompetitor';
-import LandingCommercial from './pages/LandingCommercial';
+
+// Lazy load landing pages
+const LandingNature = React.lazy(() => import('./pages/LandingNature'));
+const LandingDryerSafety = React.lazy(() => import('./pages/LandingDryerSafety'));
+const LandingCompetitor = React.lazy(() => import('./pages/LandingCompetitor'));
+const LandingCommercial = React.lazy(() => import('./pages/LandingCommercial'));
 import ABTestRouter from './components/ABTestRouter';
-import Locations from './pages/Locations';
-import LocationDetail from './pages/LocationDetail';
-import Services from './pages/Services';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Quote from './pages/Quote';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
-import NotFound from './pages/NotFound';
-import HealthBenefits from './pages/HealthBenefits';
 import StickyServiceButton from './components/StickyServiceButton';
 import GoogleAnalytics from './components/GoogleAnalytics';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfService from './pages/TermsOfService';
 import ExitIntentPopup from './components/ExitIntentPopup';
 import SMSLeadWidget from './components/SMSLeadWidget';
+import UrgencyBanner from './components/UrgencyBanner';
 
-// Import individual service pages
-import CommercialAirDuctCleaning from './pages/services/CommercialAirDuctCleaning';
-import ResidentialAirDuctCleaning from './pages/services/ResidentialAirDuctCleaning';
-import CommercialDryerVentCleaning from './pages/services/CommercialDryerVentCleaning';
-import ResidentialDryerVentCleaning from './pages/services/ResidentialDryerVentCleaning';
-import ResidentialElectrostaticFilter from './pages/services/ResidentialElectrostaticFilter';
-import CommercialElectrostaticFilter from './pages/services/CommercialElectrostaticFilter';
-import DryerVentMaintenanceProgram from './pages/services/DryerVentMaintenanceProgram';
-import HVACSystemCleaning from './pages/services/HVACSystemCleaning';
+// Lazy loaded imports for optimal bundle splitting
+const Locations = React.lazy(() => import('./pages/Locations'));
+const LosAngeles = React.lazy(() => import('./pages/locations/LosAngeles'));
+const LocationDetail = React.lazy(() => import('./pages/LocationDetail'));
+const Services = React.lazy(() => import('./pages/Services'));
+const About = React.lazy(() => import('./pages/About'));
+const Contact = React.lazy(() => import('./pages/Contact'));
+const Quote = React.lazy(() => import('./pages/Quote'));
+const Blog = React.lazy(() => import('./pages/Blog'));
+const BlogPost = React.lazy(() => import('./pages/BlogPost'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
+const HealthBenefits = React.lazy(() => import('./pages/HealthBenefits'));
+const Pricing = React.lazy(() => import('./pages/Pricing'));
+const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = React.lazy(() => import('./pages/TermsOfService'));
+const AirQualityCalculator = React.lazy(() => import('./pages/AirQualityCalculator'));
+const Partnerships = React.lazy(() => import('./pages/Partnerships'));
+const PropertyManagers = React.lazy(() => import('./pages/PropertyManagers'));
+const Feedback = React.lazy(() => import('./pages/Feedback'));
 
-// Import industry pages
-import HealthcareFacilities from './pages/industries/HealthcareFacilities';
-import Hospitality from './pages/industries/Hospitality';
-import Restaurants from './pages/industries/Restaurants';
-import Education from './pages/industries/Education';
-import Retail from './pages/industries/Retail';
-import Manufacturing from './pages/industries/Manufacturing';
-import CommercialRealEstate from './pages/industries/CommercialRealEstate';
+// Lazy load individual service pages
+const CommercialAirDuctCleaning = React.lazy(() => import('./pages/services/CommercialAirDuctCleaning'));
+const ResidentialAirDuctCleaning = React.lazy(() => import('./pages/services/ResidentialAirDuctCleaning'));
+const CommercialDryerVentCleaning = React.lazy(() => import('./pages/services/CommercialDryerVentCleaning'));
+const ResidentialDryerVentCleaning = React.lazy(() => import('./pages/services/ResidentialDryerVentCleaning'));
+const ResidentialElectrostaticFilter = React.lazy(() => import('./pages/services/ResidentialElectrostaticFilter'));
+const CommercialElectrostaticFilter = React.lazy(() => import('./pages/services/CommercialElectrostaticFilter'));
+const DryerVentMaintenanceProgram = React.lazy(() => import('./pages/services/DryerVentMaintenanceProgram'));
+const HVACSystemCleaning = React.lazy(() => import('./pages/services/HVACSystemCleaning'));
 
-import {
-  AdminLayout,
-  AdminLogin,
-  AdminDashboard,
-  LeadScanner,
-  Prospects,
-  LeadList,
-  LeadDetail,
-  CustomersList,
-  CustomerDetail,
-  AppointmentsList,
-  AppointmentForm,
-  InvoicesList,
-  InvoiceDetail,
-  Inbox,
-  ReportsDashboard,
-  Estimates,
-  EstimateDetail,
-  Payments,
-  Documents,
-  Team,
-  Settings,
-} from './pages/admin';
+// Lazy load industry pages
+const HealthcareFacilities = React.lazy(() => import('./pages/industries/HealthcareFacilities'));
+const Hospitality = React.lazy(() => import('./pages/industries/Hospitality'));
+const Restaurants = React.lazy(() => import('./pages/industries/Restaurants'));
+const Education = React.lazy(() => import('./pages/industries/Education'));
+const Retail = React.lazy(() => import('./pages/industries/Retail'));
+const Manufacturing = React.lazy(() => import('./pages/industries/Manufacturing'));
+const CommercialRealEstate = React.lazy(() => import('./pages/industries/CommercialRealEstate'));
 
-import CustomerForm from './pages/admin/CustomerForm';
+// Lazy load admin pages
+const AdminLayout = React.lazy(() => import('./pages/admin').then(m => ({ default: m.AdminLayout })));
+const AdminLogin = React.lazy(() => import('./pages/admin').then(m => ({ default: m.AdminLogin })));
+const AdminDashboard = React.lazy(() => import('./pages/admin').then(m => ({ default: m.AdminDashboard })));
+const LeadScanner = React.lazy(() => import('./pages/admin').then(m => ({ default: m.LeadScanner })));
+const Prospects = React.lazy(() => import('./pages/admin').then(m => ({ default: m.Prospects })));
+const LeadList = React.lazy(() => import('./pages/admin').then(m => ({ default: m.LeadList })));
+const LeadDetail = React.lazy(() => import('./pages/admin').then(m => ({ default: m.LeadDetail })));
+const CustomersList = React.lazy(() => import('./pages/admin').then(m => ({ default: m.CustomersList })));
+const CustomerDetail = React.lazy(() => import('./pages/admin').then(m => ({ default: m.CustomerDetail })));
+const AppointmentsList = React.lazy(() => import('./pages/admin').then(m => ({ default: m.AppointmentsList })));
+const AppointmentForm = React.lazy(() => import('./pages/admin').then(m => ({ default: m.AppointmentForm })));
+const InvoicesList = React.lazy(() => import('./pages/admin').then(m => ({ default: m.InvoicesList })));
+const InvoiceDetail = React.lazy(() => import('./pages/admin').then(m => ({ default: m.InvoiceDetail })));
+const Inbox = React.lazy(() => import('./pages/admin').then(m => ({ default: m.Inbox })));
+const ReportsDashboard = React.lazy(() => import('./pages/admin').then(m => ({ default: m.ReportsDashboard })));
+const Estimates = React.lazy(() => import('./pages/admin').then(m => ({ default: m.Estimates })));
+const EstimateDetail = React.lazy(() => import('./pages/admin').then(m => ({ default: m.EstimateDetail })));
+const Payments = React.lazy(() => import('./pages/admin').then(m => ({ default: m.Payments })));
+const Documents = React.lazy(() => import('./pages/admin').then(m => ({ default: m.Documents })));
+const Team = React.lazy(() => import('./pages/admin').then(m => ({ default: m.Team })));
+const Settings = React.lazy(() => import('./pages/admin').then(m => ({ default: m.Settings })));
+const CustomerForm = React.lazy(() => import('./pages/admin/CustomerForm'));
+
 // Create query client
 const queryClient = new QueryClient();
 
 // Loading component for Suspense fallback
 const LoadingFallback = () => (
-  <div className="flex items-center justify-center min-h-screen">
-    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+  <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+    <div className="relative">
+      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-brand-700 animate-pulse shadow-lg" />
+      <div className="absolute inset-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-brand-700 animate-ping opacity-20" />
+    </div>
+    <p className="mt-4 text-sm font-medium text-gray-500 tracking-wide animate-pulse">Loading Pure Air California...</p>
   </div>
 );
 
@@ -92,7 +106,10 @@ type RouteConfig = {
 const routes: RouteConfig[] = [
   { path: "/", element: <ABTestRouter variantA={<EnhancedLanding />} variantB={<LandingNature />} testName="landing_page_2024" splitRatio={50} /> },
   { path: "/locations", element: <Locations /> },
+  // Dedicated Los Angeles page (must come before dynamic :locationSlug)
+  { path: "/locations/los-angeles", element: <LosAngeles /> },
   { path: "/locations/:locationSlug", element: <LocationDetail /> },
+  { path: "/pricing", element: <Pricing /> },
   { path: "/services", element: <Services /> },
   // Individual service pages
   { path: "/services/commercial-air-duct-cleaning", element: <CommercialAirDuctCleaning /> },
@@ -128,6 +145,14 @@ const routes: RouteConfig[] = [
   { path: "/dryer-safety", element: <LandingDryerSafety /> },
   { path: "/compare", element: <LandingCompetitor /> },
   { path: "/commercial-services", element: <LandingCommercial /> },
+  
+  // B2B & Conversion Assets Let
+  { path: "/air-quality-calculator", element: <AirQualityCalculator /> },
+  { path: "/partners", element: <Partnerships /> },
+  { path: "/property-managers", element: <PropertyManagers /> },
+
+  // Tokenized customer feedback / review-routing (dynamic, noindex — do NOT add to prerender)
+  { path: "/feedback/:token", element: <Feedback /> },
 ];
 
 // Component to handle scroll restoration
@@ -160,10 +185,13 @@ const ScrollToTopOnRouteChange = () => {
 
 // Main website layout (NavBar is rendered by individual pages that need it)
 const MainLayout = ({ children }: { children: React.ReactNode }) => (
-  <div className="min-h-screen pb-24 md:pb-0 bg-gray-50">
+  <div className="min-h-screen pb-24 md:pb-0 bg-gray-50 flex flex-col">
     <ScrollToTopOnRouteChange />
     <ScrollToTop />
-    {children}
+    <UrgencyBanner />
+    <main className="flex-grow">
+      {children}
+    </main>
     <StickyServiceButton />
     <SMSLeadWidget />
     <ExitIntentPopup />
@@ -198,7 +226,6 @@ function App() {
                   <Route path="invoices" element={<InvoicesList />} />
                   <Route path="invoices/:id" element={<InvoiceDetail />} />
                   <Route path="reports" element={<ReportsDashboard />} />
-                  {/* Placeholder routes for other admin sections */}
                   <Route path="estimates" element={<Estimates />} />
                   <Route path="estimates/:id" element={<EstimateDetail />} />
                   <Route path="payments" element={<Payments />} />
@@ -220,11 +247,10 @@ function App() {
                 <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
               </Routes>
             </Suspense>
-
           </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>
-    </HelmetProvider >
+    </HelmetProvider>
   );
 }
 

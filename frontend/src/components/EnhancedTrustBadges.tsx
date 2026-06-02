@@ -2,6 +2,7 @@ import React from 'react';
 import { Shield, Award, Star, CheckCircle, ShieldCheck, Users, ThumbsUp, BadgeCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ResponsiveImage from './ResponsiveImage';
+import AnimatedCounter from './AnimatedCounter';
 
 const EnhancedTrustBadges = () => {
   const clientLogos = [
@@ -18,7 +19,7 @@ const EnhancedTrustBadges = () => {
     { icon: Shield, text: 'Licensed & Insured', description: 'Fully licensed and insured for your protection' },
     { icon: Award, text: 'NADCA Certified', description: 'National Air Duct Cleaners Association certified technicians' },
     { icon: BadgeCheck, text: 'EPA Approved', description: 'Using EPA approved cleaning products and methods' },
-    { icon: Star, text: '5-Star Rated', description: '4.9/5 average rating across 1,200+ reviews' },
+    { icon: Star, text: '4.7★ on Google', description: 'NADCA Certified · BBB A+ Rated · 448K+ customers served' },
   ];
 
   const testimonialHighlights = [
@@ -28,9 +29,9 @@ const EnhancedTrustBadges = () => {
   ];
 
   const trustMetrics = [
-    { icon: Users, value: '184K+', label: 'Satisfied Customers' },
-    { icon: CheckCircle, value: '40+', label: 'Years Experience' },
-    { icon: ThumbsUp, value: '99%', label: 'Customer Satisfaction' },
+    { icon: Users, target: 448, suffix: '+', label: 'Satisfied Customers', isK: true },
+    { icon: CheckCircle, target: 40, suffix: '+', label: 'Years Experience', isK: false },
+    { icon: ThumbsUp, target: 99, suffix: '%', label: 'Customer Satisfaction', isK: false },
   ];
 
   return (
@@ -48,7 +49,9 @@ const EnhancedTrustBadges = () => {
               viewport={{ once: true }}
             >
               <metric.icon className="text-brand-600 mb-2" size={28} />
-              <span className="text-3xl font-bold text-brand-700">{metric.value}</span>
+              <span className="text-3xl font-bold text-brand-700">
+                <AnimatedCounter target={metric.target} suffix={metric.isK ? 'K' + metric.suffix : metric.suffix} duration={2000} />
+              </span>
               <span className="text-gray-600">{metric.label}</span>
             </motion.div>
           ))}
@@ -56,7 +59,7 @@ const EnhancedTrustBadges = () => {
 
         {/* Certifications with descriptions */}
         <div className="mb-8">
-          <h3 className="text-center text-lg font-semibold text-gray-800 mb-4">Industry Certifications & Standards</h3>
+          <h2 className="text-center text-lg font-semibold text-gray-800 mb-4">Industry Certifications & Standards</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {certifications.map((cert, index) => (
               <motion.div
@@ -143,6 +146,8 @@ const EnhancedTrustBadges = () => {
                 <ResponsiveImage
                   src={client.logo}
                   alt={client.alt}
+                  width={120}
+                  height={48}
                   className="h-full w-auto object-contain"
                 />
               </motion.div>

@@ -51,10 +51,10 @@ const TestimonialSection = () => {
                   <Star key={i} className="text-yellow-400 fill-yellow-400" size={24} />
                 ))}
               </span>
-              <span className="font-bold text-xl text-gray-800">4.9/5</span>
+              <span className="font-bold text-xl text-gray-800">4.7★</span>
             </div>
             <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight text-gray-900">
-              Trusted by Over 1,200+ Los Angeles Residents
+              Trusted by 448K+ Los Angeles Customers
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               We take pride in delivering exceptional service. See what our customers have to say about their experience with Pure Air California.
@@ -103,8 +103,8 @@ const TestimonialSection = () => {
         </div>
 
         <div className="mt-12 text-center">
-          <a href="https://g.page/pure-air-california/review" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-brand-700 bg-brand-50 hover:bg-brand-100 transition-colors">
-            Read all 1,200+ Google Reviews
+          <a href="https://www.google.com/maps?cid=4164883086478915552" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-brand-700 bg-brand-50 hover:bg-brand-100 transition-colors">
+            Read our Google Reviews
             <ExternalLink className="ml-2" size={18} />
           </a>
         </div>

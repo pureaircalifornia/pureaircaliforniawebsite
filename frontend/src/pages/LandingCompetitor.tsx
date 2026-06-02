@@ -1,5 +1,6 @@
+import SEOProvider from '@/components/SEOProvider';
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
+
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -22,13 +23,7 @@ const LandingCompetitor = () => {
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-50 font-sans">
-            <Helmet>
-                <title>Pure Air California vs. The Competition | Best Value Guarantee</title>
-                <meta
-                    name="description"
-                    content="Don't get scammed by bait-and-switch offers. See why 1,200+ Los Angeles homeowners choose Pure Air California. NADCA Certified & Upfront Pricing."
-                />
-            </Helmet>
+            <SEOProvider title="Pure Air California vs. The Competition | Best Value Guarantee" description="Don" noIndex />
 
             <NavBar />
 
@@ -37,7 +32,7 @@ const LandingCompetitor = () => {
                 <div className="bg-slate-900 text-white pt-32 pb-20">
                     <div className="container mx-auto px-4 text-center">
                         <span className="inline-block py-1 px-3 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 text-sm font-bold mb-6">
-                            1,200+ 5-Star Reviews
+                            448K+ Customers Served
                         </span>
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight text-white">
                             Tired of Hidden Fees & <br className="hidden md:block" /> No-Show Contractors?
@@ -79,7 +74,7 @@ const LandingCompetitor = () => {
                             { feature: "Truck-Mounted Equipment", us: true, them: false },
                             { feature: "Background Checked Team", us: true, them: false },
                             { feature: "Before & After Photos Provided", us: true, them: true },
-                            { feature: "1,200+ Verified 5-Star Reviews", us: true, them: false },
+                            { feature: "448K+ Customers Served (40+ Years)", us: true, them: false },
                             { feature: "Licensed, Bonded & Insured", us: true, them: "Maybe?" },
                         ].map((row, i) => (
                             <div key={i} className={`grid grid-cols-3 border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'} hover:bg-gray-50 transition-colors`}>

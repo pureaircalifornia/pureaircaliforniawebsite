@@ -9,27 +9,36 @@ export const business = {
   phoneHref: 'tel:2137924145',
   email: 'lou@pureaircalifornia.com',
   url: 'https://www.pureaircalifornia.com',
-  // TODO(owner): confirm real street address / suite
+  // Service-area business: Google Business Profile hides the street address.
   address: {
-    streetAddress: '', // GBP service-area business may hide street; keep city/region
+    streetAddress: '',
     addressLocality: 'Los Angeles',
     addressRegion: 'CA',
     postalCode: '',
     addressCountry: 'US',
   },
-  geo: { latitude: 34.0522, longitude: -118.2437 }, // TODO(owner): real coords
+  // Real coordinates from the Google Business Profile.
+  geo: { latitude: 33.8256055, longitude: -118.641338 },
   priceRange: '$$',
-  // TODO(owner): real aggregate from GBP
-  aggregateRating: { ratingValue: 4.9, reviewCount: 1200 },
-  googleReviewUrl: 'https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID', // TODO(owner)
+  // REAL Google rating + review count (verified from GBP 2026-06-02). These power
+  // the LocalBusiness schema's aggregateRating — they MUST match Google or the
+  // structured data is non-compliant. Update as the review engine grows the count.
+  aggregateRating: { ratingValue: 4.7, reviewCount: 9 },
+  // CID-based deep link that reliably opens the GBP listing (verified). For a
+  // true one-tap review prompt, replace with the exact "g.page/r/<id>/review"
+  // link from the GBP dashboard → "Ask for reviews".
+  googleReviewUrl: 'https://www.google.com/maps?cid=4164883086478915552',
+  // GBP shows "Open 24 hours" (24/7 emergency service).
   hours: [
-    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '07:00', closes: '19:00' },
-    { days: ['Saturday'], opens: '08:00', closes: '17:00' },
+    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' },
   ],
   categories: ['Air duct cleaning service', 'HVAC contractor', 'Dryer vent cleaning service'],
   sameAs: [
-    // TODO(owner): GBP, Facebook, Instagram, Yelp URLs
+    'https://www.google.com/maps?cid=4164883086478915552',
+    // TODO(owner): add Facebook, Instagram, Yelp profile URLs for stronger entity signals
   ],
 } as const;
 
-export const ratingDisplay = `${business.aggregateRating.ratingValue} ★ · ${business.aggregateRating.reviewCount.toLocaleString()}+ reviews`;
+// Honest, conversion-focused proof line. Uses the verified 4.7 Google rating plus
+// the owner-confirmed lifetime stats (NOT the 9 Google reviews, which read weak).
+export const ratingDisplay = `4.7★ on Google · 448K+ customers · 40+ years`;

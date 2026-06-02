@@ -29,7 +29,7 @@ const EnhancedLanding = () => {
     <div className="min-h-screen flex flex-col">
       <SEOProvider
         title="#1 Air Duct Cleaning Company in Los Angeles | Pure Air California | (213) 792-4145"
-        description="Los Angeles' top-rated air duct & dryer vent cleaning company. NADCA certified, 1,200+ 5-star reviews, same-day service available. Free estimates! Call (213) 792-4145."
+        description="Los Angeles' top-rated air duct & dryer vent cleaning company. NADCA certified, 448K+ customers served over 40+ years, same-day service available. Free estimates! Call (213) 792-4145."
         keywords={["air duct cleaning Los Angeles", "best air duct cleaning company Los Angeles", "dryer vent cleaning Los Angeles", "HVAC cleaning Los Angeles", "air duct cleaning near me", "duct cleaning LA", "indoor air quality Los Angeles", "NADCA certified air duct cleaning"]}
         path="/"
         disableDefaultSchema // We will provide LocalBusiness schema explicitly

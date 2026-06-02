@@ -124,5 +124,13 @@ class ApiClient {
   }
 }
 
+export interface ReviewStats {
+  total_requests: number;
+  sent: number;
+  clicked: number;
+  reviewed: number;
+  private_feedback: number;
+}
+
 export const api = new ApiClient(API_URL);
 export default api;

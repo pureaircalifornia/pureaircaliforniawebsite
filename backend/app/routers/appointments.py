@@ -5,6 +5,7 @@ Handles scheduling and dispatching operations.
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from datetime import datetime, timedelta
 from typing import List, Optional
+import logging
 import uuid
 
 from ..models.appointment import (
@@ -331,7 +332,6 @@ async def update_status(
             if customer:
                 await review_engine.create_and_send(appointment, customer)
         except Exception:
-            import logging
             logging.getLogger(__name__).exception("review request trigger failed")
 
     updated_appointment = await appointments.find_one({"_id": appointment_id})

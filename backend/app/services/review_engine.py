@@ -7,6 +7,7 @@ Compliant: every customer is asked and always sees the Google option.
 import logging
 import secrets
 from datetime import datetime
+from html import escape
 
 from ..config import get_settings
 from ..database import get_review_requests_collection
@@ -24,9 +25,10 @@ def _full_name(customer: dict) -> str:
 
 
 def _review_email_html(name: str, feedback_url: str) -> str:
+    safe_name = escape(name)
     return f"""
     <div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;color:#0f172a">
-      <h2 style="color:#0A3D7C">Thanks for choosing Pure Air California, {name}!</h2>
+      <h2 style="color:#0A3D7C">Thanks for choosing Pure Air California, {safe_name}!</h2>
       <p>We hope you're breathing easier. Your feedback means the world to our small team —
          it takes 15 seconds and helps your neighbors find us.</p>
       <p style="text-align:center;margin:28px 0">
@@ -56,7 +58,7 @@ async def create_and_send(appointment: dict, customer: dict):
             return None
 
         settings = get_settings()
-        token = secrets.token_urlsafe(24)
+        token = secrets.token_urlsafe(32)
         name = _full_name(customer)
         doc = {
             "id": secrets.token_urlsafe(12),
@@ -92,6 +94,8 @@ async def create_and_send(appointment: dict, customer: dict):
 
 
 async def mark_clicked(token: str) -> dict | None:
+    """Mark a request as clicked. Returns ONLY the fields safe to expose
+    publicly (never PII like email/phone or internal ids)."""
     col = get_review_requests_collection()
     req = await col.find_one({"token": token})
     if not req:
@@ -100,8 +104,16 @@ async def mark_clicked(token: str) -> dict | None:
         await col.update_one({"token": token},
                              {"$set": {"status": "clicked",
                                        "clicked_at": datetime.utcnow().isoformat()}})
-    req.pop("_id", None)
-    return req
+    # Reflect the freshly-set status without re-querying.
+    status = "clicked" if req.get("status") in ("sent", "pending") else req.get("status")
+    return {"customer_name": req.get("customer_name"), "status": status}
+
+
+def _route_for(req: dict) -> dict:
+    settings = get_settings()
+    if (req.get("rating") or 0) >= HIGH_RATING_THRESHOLD:
+        return {"route": "google", "google_review_url": settings.GOOGLE_REVIEW_URL or ""}
+    return {"route": "private"}
 
 
 async def record_feedback(token: str, rating: int, private_feedback: str | None) -> dict | None:
@@ -109,6 +121,10 @@ async def record_feedback(token: str, rating: int, private_feedback: str | None)
     req = await col.find_one({"token": token})
     if not req:
         return None
+    # Idempotent: once feedback is recorded, don't overwrite or re-notify the
+    # owner (prevents repeated low-rating submissions from email-bombing).
+    if req.get("status") in ("feedback_submitted", "reviewed"):
+        return _route_for(req)
     settings = get_settings()
     high = rating >= HIGH_RATING_THRESHOLD
     new_status = "reviewed" if high else "feedback_submitted"
@@ -127,12 +143,18 @@ async def record_feedback(token: str, rating: int, private_feedback: str | None)
 async def _notify_owner_of_feedback(req: dict, rating: int, feedback: str | None, settings) -> None:
     if not settings.OWNER_NOTIFY_EMAIL:
         return
+    # Customer-controlled values flow into HTML + the subject — escape them.
+    safe_name = escape(req.get("customer_name", ""))
+    safe_email = escape(req.get("customer_email", ""))
+    safe_feedback = escape(feedback or "(none provided)")
+    # Subject is plain text; strip CR/LF to avoid header injection.
+    subject_name = (req.get("customer_name", "") or "").replace("\r", " ").replace("\n", " ")
     html = (f"<h3>&#9888;&#65039; {rating}-star private feedback</h3>"
-            f"<p><b>Customer:</b> {req.get('customer_name')} ({req.get('customer_email')})</p>"
-            f"<p><b>Feedback:</b> {feedback or '(none provided)'}</p>"
+            f"<p><b>Customer:</b> {safe_name} ({safe_email})</p>"
+            f"<p><b>Feedback:</b> {safe_feedback}</p>"
             f"<p>Reach out to recover this customer before they post publicly.</p>")
     await send_transactional_email(settings.OWNER_NOTIFY_EMAIL,
-                                   f"Service recovery: {rating}star from {req.get('customer_name')}",
+                                   f"Service recovery: {rating}-star from {subject_name}",
                                    html, settings)
 
 

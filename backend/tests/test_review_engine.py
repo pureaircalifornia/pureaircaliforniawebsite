@@ -65,3 +65,21 @@ async def test_record_feedback_low_rating_routes_private(monkeypatch):
     out = await review_engine.record_feedback("t", rating=2, private_feedback="late")
     assert out["route"] == "private"
     notify.assert_awaited_once()
+
+
+@pytest.mark.asyncio
+async def test_record_feedback_ignores_resubmission(monkeypatch):
+    # Already-submitted feedback must not re-write or re-notify the owner
+    # (prevents repeated low-rating submissions from email-bombing).
+    fake_col = AsyncMock()
+    fake_col.find_one = AsyncMock(return_value={"id": "r1", "token": "t",
+                                                "status": "feedback_submitted", "rating": 2,
+                                                "customer_name": "J", "customer_email": "j@x.com"})
+    fake_col.update_one = AsyncMock()
+    notify = AsyncMock()
+    monkeypatch.setattr(review_engine, "get_review_requests_collection", lambda: fake_col)
+    monkeypatch.setattr(review_engine, "_notify_owner_of_feedback", notify)
+    out = await review_engine.record_feedback("t", rating=1, private_feedback="spam")
+    assert out["route"] == "private"
+    fake_col.update_one.assert_not_awaited()
+    notify.assert_not_awaited()

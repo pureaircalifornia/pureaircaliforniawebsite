@@ -38,7 +38,10 @@ def _owner_html(lead: dict) -> str:
     # The href values are controlled by us in the link text; phone is numeric-only in practice,
     # but we still escape just the display text portion above.
     phone = escape(str(lead.get("phone") or ""))
-    email = escape(str(lead.get("email") or ""))
+    # Strip any query-string (?subject=&bcc=...) before the mailto href so a crafted
+    # email value can't pre-populate a BCC/subject in the owner's compose window.
+    raw_email = str(lead.get("email") or "").split("?", 1)[0]
+    email = escape(raw_email)
     return (f"<h3>&#128293; New website lead — call now</h3><table>{rows}</table>"
             f"<p><a href='tel:{phone}'>Call {phone}</a> · "
             f"<a href='mailto:{email}'>Email</a></p>")

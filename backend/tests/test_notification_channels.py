@@ -18,5 +18,5 @@ def test_factory_returns_sms_stub_when_enabled():
 @pytest.mark.asyncio
 async def test_sms_stub_returns_false_and_does_not_raise():
     s = get_settings()
-    ok = await SmsChannelStub().send("+13105551212", "subject", "<p>body</p>", "555", s)
+    ok = await SmsChannelStub().send("customer@example.com", "subject", "<p>body</p>", "+13105551212", s)
     assert ok is False

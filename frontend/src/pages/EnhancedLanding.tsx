@@ -1,5 +1,5 @@
 import React from 'react';
-import { ratingDisplay, business } from '@/config/business';
+import { ratingDisplay } from '@/config/business';
 
 import SEOProvider from '@/components/SEOProvider';
 import SchemaMarkup from '@/components/SchemaMarkup';

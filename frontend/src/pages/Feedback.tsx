@@ -13,6 +13,8 @@ const Feedback = () => {
   const [submitted, setSubmitted] = useState(false);
   const [googleUrl, setGoogleUrl] = useState('');
   const [feedback, setFeedback] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     // noindex this page
@@ -27,15 +29,25 @@ const Feedback = () => {
   }, [token]);
 
   const submit = async (stars: number, note?: string) => {
-    const r = await fetch(`${API}/reviews/feedback/${token}`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ rating: stars, private_feedback: note }),
-    });
-    const d = await r.json();
-    setSubmitted(true);
-    if (d.route === 'google' && d.google_review_url) {
-      setGoogleUrl(d.google_review_url);
-      window.location.href = d.google_review_url; // send happy customers straight to Google
+    if (submitting || stars < 1 || stars > 5) return; // guard double-submit + range
+    setSubmitting(true);
+    setError('');
+    try {
+      const r = await fetch(`${API}/reviews/feedback/${token}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rating: stars, private_feedback: note }),
+      });
+      if (!r.ok) throw new Error('request failed');
+      const d = await r.json();
+      setSubmitted(true);
+      if (d.route === 'google' && d.google_review_url) {
+        setGoogleUrl(d.google_review_url);
+        window.location.href = d.google_review_url; // send happy customers straight to Google
+      }
+    } catch {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -60,22 +72,24 @@ const Feedback = () => {
         ))}
       </div>
       {rating >= 4 && (
-        <button onClick={() => submit(rating)}
-          className="w-full bg-[#0A3D7C] text-white font-bold py-3 rounded-xl">
-          Leave a Google review →
+        <button onClick={() => submit(rating)} disabled={submitting}
+          className="w-full bg-[#0A3D7C] text-white font-bold py-3 rounded-xl disabled:opacity-60">
+          {submitting ? 'One moment…' : 'Leave a Google review →'}
         </button>
       )}
       {rating > 0 && rating < 4 && (
         <div className="space-y-3">
           <textarea value={feedback} onChange={e => setFeedback(e.target.value)}
+            maxLength={2000}
             placeholder="What went wrong? We want to fix it."
             className="w-full border rounded-xl p-3 min-h-[120px]" />
-          <button onClick={() => submit(rating, feedback)}
-            className="w-full bg-[#0A3D7C] text-white font-bold py-3 rounded-xl">
-            Send private feedback
+          <button onClick={() => submit(rating, feedback)} disabled={submitting}
+            className="w-full bg-[#0A3D7C] text-white font-bold py-3 rounded-xl disabled:opacity-60">
+            {submitting ? 'Sending…' : 'Send private feedback'}
           </button>
         </div>
       )}
+      {error && <p className="text-red-600 text-sm mt-3">{error}</p>}
     </Centered>
   );
 };

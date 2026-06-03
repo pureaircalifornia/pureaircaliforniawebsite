@@ -1,5 +1,6 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import { ratingDisplay } from '@/config/business';
+
 import SEOProvider from '@/components/SEOProvider';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import { seoConfig } from '@/utils/seo/seoConfig';
@@ -7,7 +8,7 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Phone, Calendar, CheckCircle, ArrowRight, Shield, Award, Star, MapPin, Clock, Users } from 'lucide-react';
+import { Phone, Calendar, CheckCircle, ArrowRight, Shield, Award, Star, MapPin, Clock, Users, Heart } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { motion } from 'framer-motion';
 import EnhancedTrustBadges from '@/components/EnhancedTrustBadges';
@@ -28,7 +29,7 @@ const EnhancedLanding = () => {
     <div className="min-h-screen flex flex-col">
       <SEOProvider
         title="#1 Air Duct Cleaning Company in Los Angeles | Pure Air California | (213) 792-4145"
-        description="Los Angeles' top-rated air duct & dryer vent cleaning company. NADCA certified, 1,200+ 5-star reviews, same-day service available. Free estimates! Call (213) 792-4145."
+        description="Los Angeles' top-rated air duct & dryer vent cleaning company. NADCA certified, 448K+ customers served over 40+ years, same-day service available. Free estimates! Call (213) 792-4145."
         keywords={["air duct cleaning Los Angeles", "best air duct cleaning company Los Angeles", "dryer vent cleaning Los Angeles", "HVAC cleaning Los Angeles", "air duct cleaning near me", "duct cleaning LA", "indoor air quality Los Angeles", "NADCA certified air duct cleaning"]}
         path="/"
         disableDefaultSchema // We will provide LocalBusiness schema explicitly
@@ -53,28 +54,23 @@ const EnhancedLanding = () => {
           <div className="container mx-auto px-4 py-24 md:py-32 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <motion.h1
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  style={{ textShadow: '0 0 10px rgba(255,255,255,0.6), 0 0 30px rgba(56,189,248,0.4), 0 0 60px rgba(56,189,248,0.25), 0 0 100px rgba(56,189,248,0.15), 0 2px 4px rgba(0,0,0,0.5)' }}
+                <h1
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white drop-shadow-lg"
                 >
                   Breathe Easier with Professional Air Duct & Dryer Vent Cleaning
-                </motion.h1>
-                <motion.p
+                </h1>
+                <div className="flex items-center gap-2 mb-4 text-yellow-400">
+                  <span className="text-2xl tracking-tight">★★★★★</span>
+                  <span className="text-white font-semibold">{ratingDisplay}</span>
+                  <span className="text-white/70 text-sm hidden sm:inline">· NADCA Certified</span>
+                </div>
+                <p
                   className="text-xl md:text-2xl mb-8 text-gray-200"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
                 >
                   Improve your indoor air quality and energy efficiency with Pure Air California's expert cleaning services.
-                </motion.p>
-                <motion.div
+                </p>
+                <div
                   className="flex flex-col sm:flex-row gap-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <Button asChild size="lg" className="btn-premium text-white text-lg font-bold px-8 py-6 h-auto shadow-2xl">
                     <a href="tel:2137924145" className="flex items-center gap-2">
@@ -88,7 +84,7 @@ const EnhancedLanding = () => {
                       Get Free Quote
                     </Link>
                   </Button>
-                </motion.div>
+                </div>
 
                 {/* Trust indicators */}
                 <motion.div
@@ -120,6 +116,9 @@ const EnhancedLanding = () => {
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
                 <EnhancedQuoteForm />
+                <p className="text-center text-white/70 text-xs mt-3">
+                  ⚡ We respond within 15 minutes during business hours
+                </p>
               </motion.div>
             </div>
           </div>
@@ -130,8 +129,9 @@ const EnhancedLanding = () => {
           <div className="absolute inset-0 bg-mesh opacity-5"></div>
 
           <div className="container mx-auto px-4 relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-center">
               {[
+                { icon: Heart, label: "Breathe with Confidence", color: "text-teal-400" },
                 { icon: Phone, label: "24/7 Emergency Service", color: "text-sky-400" },
                 { icon: Calendar, label: "Flexible Scheduling", color: "text-blue-400" },
                 { icon: CheckCircle, label: "100% Satisfaction", color: "text-green-400" }
@@ -167,7 +167,7 @@ const EnhancedLanding = () => {
                 <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-sky-300 text-sm font-medium mb-4">
                   Words of Wisdom
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white" style={{ textShadow: '0 0 15px rgba(255,255,255,0.6)' }}>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
                   The Importance of <span className="text-gradient-shine">Clean Air</span>
                 </h2>
                 <p className="text-lg text-gray-300 max-w-2xl mx-auto">
@@ -193,21 +193,6 @@ const EnhancedLanding = () => {
                   author: "Ancient Proverb",
                   role: "Eastern Wisdom"
                 },
-                {
-                  quote: "Clean air is a basic human right. Everyone deserves to breathe fresh, pure air.",
-                  author: "World Health Organization",
-                  role: "Global Health Authority"
-                },
-                {
-                  quote: "The air we breathe, the water we drink, and the land we inhabit are not only critical elements in the quality of life, but are a reflection of the quality of our stewardship.",
-                  author: "Gerald Ford",
-                  role: "38th U.S. President"
-                },
-                {
-                  quote: "A breath of fresh air can transform your entire day, your mood, and your outlook on life.",
-                  author: "Deepak Chopra",
-                  role: "Wellness Pioneer"
-                }
               ].map((item, i) => (
                 <ScrollReveal key={i} delay={i * 0.1}>
                   <motion.div
@@ -278,7 +263,7 @@ const EnhancedLanding = () => {
         <section className="bg-brand-700 py-12 text-white overflow-hidden relative">
           <div className="absolute inset-0 opacity-10"></div>
           <div className="container mx-auto px-4 relative z-10 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white" style={{ textShadow: '0 0 15px rgba(255,255,255,0.6)' }}>Need an Estimate Right Now?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">Need an Estimate Right Now?</h2>
             <p className="text-xl mb-8 text-brand-100 max-w-2xl mx-auto">Skip the form and talk to a certified expert immediately. We provide free, accurate quotes over the phone.</p>
             <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100 font-bold text-lg px-8 py-6 h-auto shadow-lg hover:scale-105 transition-transform">
               <a href="tel:2137924145" className="flex items-center gap-2">

@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Link, useParams } from 'react-router-dom';
 import { locationData } from './locations/data';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+
 import ResponsiveImage from '@/components/ResponsiveImage';
 import HomeQuoteForm from '@/components/HomeQuoteForm';
 import TestimonialCard from '@/components/TestimonialCard';
@@ -22,7 +22,7 @@ const LocationDetail = () => {
   }
 
   const pageTitle = `Air Duct Cleaning ${location.name} CA | NADCA Certified | Pure Air California`;
-  const pageDescription = `#1 rated air duct cleaning in ${location.name}, California. NADCA certified, 1,200+ 5-star reviews. Serving ${location.zipCodes.slice(0, 3).join(', ')} and more. Free estimates - call (213) 792-4145!`;
+  const pageDescription = `#1 rated air duct cleaning in ${location.name}, California. NADCA certified, 448K+ customers served over 40+ years. Serving ${location.zipCodes.slice(0, 3).join(', ')} and more. Free estimates - call (213) 792-4145!`;
   const pageUrl = `${seoConfig.siteUrl}/locations/${location.slug}`;
 
   // Location-specific FAQs
@@ -37,27 +37,14 @@ const LocationDetail = () => {
     },
     {
       question: `Why should I choose Pure Air California for air duct cleaning in ${location.name}?`,
-      answer: `We're the #1 rated air duct cleaning company in ${location.name} with 1,200+ 5-star reviews. We're NADCA certified, fully insured, and offer same-day service. Our technicians live in the LA area and understand the unique air quality challenges in ${location.name}.`
+      answer: `We're the #1 rated air duct cleaning company in ${location.name}. NADCA certified, fully insured, and offering same-day service — backed by 40+ years and 448K+ customers served across the LA area. Our technicians understand the unique air quality challenges in ${location.name}.`
     }
   ];
 
   return (
-    <HelmetProvider>
+    
       <div className="min-h-screen flex flex-col">
-        <Helmet>
-          <title>{pageTitle}</title>
-          <meta name="description" content={pageDescription} />
-          <meta name="keywords" content={`air duct cleaning ${location.name}, ${location.name} air duct cleaning, hvac cleaning ${location.name}, air quality ${location.name}, dryer vent cleaning ${location.name}, best air duct cleaning ${location.name}, ${location.name} CA duct cleaning`} />
-          <meta name="robots" content="index, follow, max-image-preview:large" />
-          <meta name="geo.region" content="US-CA" />
-          <meta name="geo.placename" content={location.name} />
-          <meta property="og:title" content={pageTitle} />
-          <meta property="og:description" content={pageDescription} />
-          <meta property="og:url" content={pageUrl} />
-          <meta property="og:type" content="website" />
-          <meta property="og:site_name" content="Pure Air California" />
-          <link rel="canonical" href={pageUrl} />
-        </Helmet>
+        <SEOProvider title={pageTitle} isLocalBusiness={true} />
         <SEOProvider>
           {/* LocalBusiness Schema */}
           <SchemaMarkup schema={{
@@ -132,7 +119,7 @@ const LocationDetail = () => {
           </div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Air Duct Cleaning in {location.name}</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white drop-shadow-lg">Air Duct Cleaning in {location.name}</h1>
               <p className="text-xl mb-8 text-gray-100">
                 Your trusted local experts for professional air duct cleaning services in {location.name}, {location.county}.
               </p>
@@ -173,9 +160,7 @@ const LocationDetail = () => {
                 <div className="rounded-xl overflow-hidden shadow-xl h-64 md:h-96 relative border border-gray-100">
                   <iframe
                     title={`Map of ${location.name}, CA`}
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
+                    className="w-full h-full border-0"
                     loading="lazy"
                     allowFullScreen
                     referrerPolicy="no-referrer-when-downgrade"
@@ -310,7 +295,7 @@ const LocationDetail = () => {
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready for Cleaner Air in {location.name}?</h2>
             <p className="text-xl mb-8 max-w-3xl mx-auto text-brand-100">
-              Join 1,200+ satisfied customers in the Los Angeles area. Schedule your free estimate today!
+              Join 448K+ satisfied customers in the Los Angeles area. Schedule your free estimate today!
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button size="lg" className="bg-white text-brand-700 hover:bg-gray-100 font-bold text-lg px-8 py-6 h-auto shadow-lg hover:scale-105 transition-transform" asChild>
@@ -331,7 +316,7 @@ const LocationDetail = () => {
 
         <Footer />
       </div>
-    </HelmetProvider>
+    
   );
 };
 

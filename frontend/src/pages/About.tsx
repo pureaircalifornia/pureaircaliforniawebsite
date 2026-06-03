@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -12,15 +12,16 @@ import SEOProvider from '@/components/SEOProvider';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import { seoConfig } from '@/utils/seo/seoConfig';
 import TrustedBy from '@/components/TrustedBy';
+import AnimatedCounter from '@/components/AnimatedCounter';
 
 
 const About = () => {
   return (
-    <HelmetProvider>
+    
       <div className="min-h-screen flex flex-col">
         <SEOProvider
           title="About Pure Air California | #1 NADCA Certified Air Duct Cleaning Los Angeles"
-          description="Learn about Pure Air California, Los Angeles' trusted air duct cleaning experts with over 40 years of experience. NADCA certified, licensed & insured with 184,000+ satisfied customers. Meet our team!"
+          description="Learn about Pure Air California, Los Angeles' trusted air duct cleaning experts with over 40 years of experience. NADCA certified, licensed & insured with 448K+ satisfied customers. Meet our team!"
           keywords={["about pure air california", "air duct cleaning company Los Angeles", "NADCA certified Los Angeles", "best air duct cleaning team LA", "professional HVAC cleaning Los Angeles"]}
           path="/about"
         >
@@ -60,7 +61,7 @@ const About = () => {
                 </span>
                 <span className="text-brand-200 font-medium">About Our Company</span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 font-heading text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>About Pure Air California</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 font-heading text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.3),_0_0_40px_rgba(100,180,255,0.2),_0_0_60px_rgba(100,180,255,0.1)]">About Pure Air California</h1>
               <p className="text-xl text-brand-100 mb-8 max-w-3xl">
                 For over 40 years, Pure Air California has been Southern California's trusted name in professional air duct cleaning.
                 We're committed to improving indoor air quality for homes and businesses throughout Los Angeles and surrounding areas.
@@ -86,14 +87,16 @@ const About = () => {
             {/* Company Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
               {[
-                { label: 'Years of Experience', value: '40+' },
-                { label: 'Satisfied Clients', value: '448K+' },
-                { label: 'Satisfaction Guarantee', value: '100%' },
+                { label: 'Years of Experience', target: 40, suffix: '+' },
+                { label: 'Satisfied Clients', target: 448, suffix: 'K+' },
+                { label: 'Satisfaction Guarantee', target: 100, suffix: '%' },
                 { label: 'Emergency Service', value: '24/7' }
               ].map((stat, i) => (
                 <ScrollReveal key={i} animation="fadeInUp" delay={0.1 * (i + 1)}>
                   <div className="glass-premium p-6 rounded-2xl text-center hover:scale-105 transition-transform duration-300">
-                    <div className="text-3xl md:text-4xl font-bold text-brand-600 mb-2">{stat.value}</div>
+                    <div className="text-3xl md:text-4xl font-bold text-brand-600 mb-2">
+                      {stat.value ? stat.value : <AnimatedCounter target={stat.target!} suffix={stat.suffix} duration={2200} />}
+                    </div>
                     <div className="text-sm md:text-base text-gray-600 font-medium">{stat.label}</div>
                   </div>
                 </ScrollReveal>
@@ -136,9 +139,9 @@ const About = () => {
                     <div className="absolute bottom-6 left-6 glass-premium backdrop-blur-md p-4 rounded-xl shadow-2xl border-white/40">
                       <div className="flex items-center gap-2">
                         <Star className="h-5 w-5 text-yellow-500 fill-current" />
-                        <span className="font-bold text-slate-900">5.0 Rating</span>
+                        <span className="font-bold text-slate-900">4.7★ on Google</span>
                       </div>
-                      <p className="text-xs text-slate-600 font-medium mt-1">Based on 500+ reviews</p>
+                      <p className="text-xs text-slate-600 font-medium mt-1">448K+ customers · 40+ years</p>
                     </div>
                   </div>
                 </div>
@@ -400,7 +403,7 @@ const About = () => {
         </main>
         <Footer />
       </div>
-    </HelmetProvider>
+    
   );
 };
 

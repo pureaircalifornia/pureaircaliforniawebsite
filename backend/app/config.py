@@ -52,7 +52,15 @@ class Settings(BaseSettings):
     
     # Google Places API (Lead Scanner)
     GOOGLE_PLACES_API_KEY: Optional[str] = None
-    
+
+    # Google Business Profile / Reviews
+    GOOGLE_REVIEW_URL: Optional[str] = None  # GBP "leave a review" link
+    PUBLIC_SITE_URL: str = "https://www.pureaircalifornia.com"
+
+    # Notifications
+    OWNER_NOTIFY_EMAIL: Optional[str] = None  # instant lead/owner alerts
+    SMS_ENABLED: bool = False  # email-first; flip on when Twilio is live
+
     # Admin Secret (backward compat)
     ADMIN_SECRET: Optional[str] = None
     

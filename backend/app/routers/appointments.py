@@ -5,6 +5,7 @@ Handles scheduling and dispatching operations.
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from datetime import datetime, timedelta
 from typing import List, Optional
+import logging
 import uuid
 
 from ..models.appointment import (
@@ -317,9 +318,22 @@ async def update_status(
             update_data["actual_duration"] = int(duration)
         if notes:
             update_data["completion_notes"] = notes
-    
+
     await appointments.update_one({"_id": appointment_id}, {"$set": update_data})
-    
+
+    # Speed-to-reviews: fire review request when a job is completed (best-effort)
+    if new_status == AppointmentStatus.COMPLETED:
+        try:
+            from ..services import review_engine
+            from ..database import get_customers_collection
+            customer = await get_customers_collection().find_one(
+                {"_id": appointment.get("customer_id")}
+            )
+            if customer:
+                await review_engine.create_and_send(appointment, customer)
+        except Exception:
+            logging.getLogger(__name__).exception("review request trigger failed")
+
     updated_appointment = await appointments.find_one({"_id": appointment_id})
     return Appointment(**updated_appointment)
 

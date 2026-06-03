@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import {
   Target, Users, CalendarCheck, TrendingUp, ArrowUpRight, ArrowDownRight,
-  Clock, DollarSign, Zap, Radar, Send, Building2, ArrowRight,
+  Clock, DollarSign, Zap, Radar, Send, Building2, ArrowRight, Star, MessageSquareWarning,
 } from 'lucide-react';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, PieChart, Pie, Cell,
 } from 'recharts';
-import api from '../api/client';
+import api, { type ReviewStats } from '../api/client';
 
 interface LeadStats {
   total: number;
@@ -74,6 +74,20 @@ export default function DashboardPage() {
     queryFn: () => api.get('/lead-scanner/prospects?limit=1'),
     refetchInterval: 60_000,
   });
+
+  const { data: reviewStats, isLoading: reviewStatsLoading, isError: reviewStatsError } = useQuery<ReviewStats>({
+    queryKey: ['review-stats'],
+    queryFn: () => api.get<ReviewStats>('/reviews/stats'),
+    refetchInterval: 60_000,
+  });
+
+  const safeReviewStats: ReviewStats = {
+    total_requests: reviewStats?.total_requests ?? 0,
+    sent: reviewStats?.sent ?? 0,
+    clicked: reviewStats?.clicked ?? 0,
+    reviewed: reviewStats?.reviewed ?? 0,
+    private_feedback: reviewStats?.private_feedback ?? 0,
+  };
 
   const pieData = stats
     ? Object.entries(stats.by_status)
@@ -329,6 +343,64 @@ export default function DashboardPage() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Reviews Funnel */}
+      <div className="glass-card p-6">
+        <h3 className="text-base font-semibold text-white mb-4 flex items-center gap-2">
+          <Star className="w-4 h-4 text-yellow-400" /> Reviews Funnel
+        </h3>
+        {reviewStatsError ? (
+          <p className="text-sm text-red-400">Could not load review stats.</p>
+        ) : (
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-0">
+            {(
+              [
+                { label: 'Requests', value: safeReviewStats.total_requests, color: 'text-blue-400', bg: 'from-blue-500/20 to-blue-600/10' },
+                { label: 'Sent', value: safeReviewStats.sent, color: 'text-emerald-400', bg: 'from-emerald-500/20 to-emerald-600/10' },
+                { label: 'Clicked', value: safeReviewStats.clicked, color: 'text-cyan-400', bg: 'from-cyan-500/20 to-cyan-600/10' },
+                { label: 'Reviewed', value: safeReviewStats.reviewed, color: 'text-purple-400', bg: 'from-purple-500/20 to-purple-600/10' },
+              ] as Array<{ label: string; value: number; color: string; bg: string }>
+            ).map((step, idx, arr) => (
+              <div key={step.label} className="flex items-center gap-3 sm:flex-1">
+                <div className={`flex-1 flex flex-col items-center p-4 rounded-xl bg-gradient-to-br ${step.bg}`}>
+                  <span className="text-xs font-medium text-surface-400 mb-1">{step.label}</span>
+                  <span className={`text-2xl font-bold ${step.color}`}>
+                    {reviewStatsLoading ? (
+                      <span className="inline-block w-8 h-7 bg-surface-700 rounded animate-pulse" />
+                    ) : (
+                      step.value
+                    )}
+                  </span>
+                </div>
+                {idx < arr.length - 1 && (
+                  <ArrowRight className="w-4 h-4 text-surface-600 flex-shrink-0 hidden sm:block" />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+        {!reviewStatsError && (
+          <div className={`mt-4 flex items-center gap-3 p-3 rounded-xl border ${
+            safeReviewStats.private_feedback > 0
+              ? 'border-amber-500/40 bg-amber-500/10'
+              : 'border-surface-700/50 bg-surface-800/30'
+          }`}>
+            <MessageSquareWarning className={`w-4 h-4 flex-shrink-0 ${safeReviewStats.private_feedback > 0 ? 'text-amber-400' : 'text-surface-500'}`} />
+            <div className="flex-1 min-w-0">
+              <span className={`text-sm font-medium ${safeReviewStats.private_feedback > 0 ? 'text-amber-300' : 'text-surface-400'}`}>
+                Private feedback (needs follow-up)
+              </span>
+            </div>
+            <span className={`text-lg font-bold flex-shrink-0 ${safeReviewStats.private_feedback > 0 ? 'text-amber-400' : 'text-surface-500'}`}>
+              {reviewStatsLoading ? (
+                <span className="inline-block w-6 h-6 bg-surface-700 rounded animate-pulse" />
+              ) : (
+                safeReviewStats.private_feedback
+              )}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Recent Leads Table */}

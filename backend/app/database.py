@@ -106,7 +106,13 @@ async def create_indexes() -> None:
     await _database.leads.create_index("source")
     await _database.leads.create_index("created_at")
     await _database.leads.create_index("email")
-    
+
+    # Review requests collection indexes
+    await _database.review_requests.create_index("token", unique=True)
+    await _database.review_requests.create_index("appointment_id")
+    await _database.review_requests.create_index("status")
+    await _database.review_requests.create_index("created_at")
+
     # Prospects collection indexes
     await _database.prospects.create_index("business_category")
     await _database.prospects.create_index("outreach_status")
@@ -180,4 +186,7 @@ def get_outreach_collection():
 
 def get_settings_collection():
     return get_database().settings
+
+def get_review_requests_collection():
+    return get_database().review_requests
 

@@ -7,6 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query, Request
 from datetime import datetime
 from typing import List, Optional
 from collections import defaultdict
+import logging
 import uuid
 import time
 
@@ -65,7 +66,14 @@ async def create_lead(lead_input: LeadCreate, request: Request):
     lead_dict["updated_at"] = lead_dict["updated_at"].isoformat()
     
     await collection.insert_one(lead_dict)
-    
+
+    # Speed-to-lead: fire instant auto-reply + owner alert (best-effort, non-blocking)
+    try:
+        from ..services.lead_notifications import send_lead_notifications
+        await send_lead_notifications(lead_dict)
+    except Exception:
+        logging.getLogger(__name__).exception("lead notification dispatch failed")
+
     return lead_dict
 
 

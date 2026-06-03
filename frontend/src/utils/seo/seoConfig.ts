@@ -1,9 +1,11 @@
+import { business } from '@/config/business';
+
 export const seoConfig = {
   // Core SEO Settings
   siteName: 'Pure Air California',
   siteUrl: 'https://www.pureaircalifornia.com',
-  defaultTitle: '#1 Air Duct Cleaning Company in Los Angeles | Pure Air California | (213) 792-4145',
-  defaultDescription: 'Los Angeles\' top-rated air duct & dryer vent cleaning company. NADCA certified, 1,200+ 5-star reviews, same-day service. Free estimates! Call (213) 792-4145.',
+  defaultTitle: '#1 Air Duct Cleaning Los Angeles | Pure Air California',
+  defaultDescription: 'Top-rated air duct & dryer vent cleaning in LA. NADCA certified. 448K+ happy customers over 40 years. Free estimates! Call (213) 792-4145.',
 
   // Content Configuration
   defaultImage: 'https://www.pureaircalifornia.com/gallery/jason-hawke-fu7pSuUa2PE-unsplash.jpg',
@@ -122,44 +124,37 @@ export const seoConfig = {
       }
     },
     localBusiness: {
+      '@context': 'https://schema.org',
       '@type': 'HVACBusiness',
       '@id': 'https://www.pureaircalifornia.com/#business',
-      name: 'Pure Air California',
+      name: business.legalName,
       alternateName: 'Pure Air California Air Duct Cleaning',
       image: 'https://www.pureaircalifornia.com/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png',
-      telephone: '+1-213-792-4145',
-      email: 'info@pureaircalifornia.com',
-      url: 'https://www.pureaircalifornia.com',
-      priceRange: '$$',
+      telephone: business.phone,
+      email: business.email,
+      url: business.url,
+      priceRange: business.priceRange,
       currenciesAccepted: 'USD',
       paymentAccepted: 'Cash, Credit Card, Check',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '1550 N Poinsettia Pl',
-        addressLocality: 'Los Angeles',
-        addressRegion: 'CA',
-        postalCode: '90046',
-        addressCountry: 'US'
+        streetAddress: business.address.streetAddress || undefined,
+        addressLocality: business.address.addressLocality,
+        addressRegion: business.address.addressRegion,
+        postalCode: business.address.postalCode || undefined,
+        addressCountry: business.address.addressCountry,
       },
       geo: {
         '@type': 'GeoCoordinates',
-        latitude: 34.0522,
-        longitude: -118.2437
+        latitude: business.geo.latitude,
+        longitude: business.geo.longitude,
       },
-      openingHoursSpecification: [
-        {
-          '@type': 'OpeningHoursSpecification',
-          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-          opens: '08:00',
-          closes: '18:00'
-        },
-        {
-          '@type': 'OpeningHoursSpecification',
-          dayOfWeek: 'Saturday',
-          opens: '09:00',
-          closes: '17:00'
-        }
-      ],
+      openingHoursSpecification: business.hours.map(h => ({
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: h.days,
+        opens: h.opens,
+        closes: h.closes,
+      })),
       areaServed: [
         { '@type': 'City', name: 'Los Angeles' },
         { '@type': 'City', name: 'Beverly Hills' },
@@ -174,11 +169,12 @@ export const seoConfig = {
       ],
       aggregateRating: {
         '@type': 'AggregateRating',
-        ratingValue: '4.9',
-        reviewCount: '1247',
+        ratingValue: business.aggregateRating.ratingValue,
+        reviewCount: business.aggregateRating.reviewCount,
         bestRating: '5',
-        worstRating: '1'
+        worstRating: '1',
       },
+      sameAs: business.sameAs,
       hasCredential: [
         {
           '@type': 'EducationalOccupationalCredential',
@@ -246,48 +242,48 @@ export const seoConfig = {
   // Page-specific SEO configurations
   pages: {
     home: {
-      title: '#1 Air Duct Cleaning Company in Los Angeles | Pure Air California',
-      description: 'Los Angeles\' top-rated air duct & dryer vent cleaning company. NADCA certified, 1,200+ 5-star reviews, same-day service. Free estimates! Call (213) 792-4145.'
+      title: '#1 Air Duct Cleaning Los Angeles | Pure Air California',
+      description: 'Stop breathing dirty air. LA\'s #1 NADCA-certified air duct & dryer vent cleaners. 448K+ happy customers. 40+ years experience. Get a Free Estimate!'
     },
     services: {
-      title: 'Air Duct & Dryer Vent Cleaning Services Los Angeles | Pure Air California',
-      description: 'Professional air duct cleaning, dryer vent cleaning, HVAC cleaning & electrostatic filter services in Los Angeles. Licensed, insured & NADCA certified.'
+      title: '5-Star Air Duct & Dryer Vent Cleaning LA | Pure Air CA',
+      description: 'Protect your family. Expert residential & commercial air duct & dryer vent cleaning in LA. NADCA certified, 40+ years experience. Free Quotes.'
     },
     residentialAirDuct: {
-      title: 'Residential Air Duct Cleaning Los Angeles | Home HVAC Cleaning | Pure Air California',
-      description: 'Expert residential air duct cleaning in Los Angeles. Remove dust, allergens & improve indoor air quality. NADCA certified. Free estimates! Call (213) 792-4145.'
+      title: 'Residential Air Duct Cleaning LA | Pure Air California',
+      description: 'Remove severe dust, mold & allergens from your home\'s HVAC system. 448K+ LA homeowners trust our NADCA-certified experts. Book a free inspection!'
     },
     commercialAirDuct: {
-      title: 'Commercial Air Duct Cleaning Los Angeles | Office & Business HVAC | Pure Air California',
-      description: 'Professional commercial air duct cleaning for Los Angeles businesses. Improve employee health & HVAC efficiency. NADCA certified. Free commercial quotes!'
+      title: 'Commercial Air Duct Cleaning LA | Employee Health & Safety',
+      description: 'Improve indoor air quality & HVAC efficiency for your LA business. 40+ years of commercial duct cleaning experience. Secure your free estimate.'
     },
     residentialDryerVent: {
-      title: 'Dryer Vent Cleaning Los Angeles | Fire Prevention | Pure Air California',
-      description: 'Professional dryer vent cleaning in Los Angeles. Prevent dryer fires, reduce energy bills & improve drying time. Same-day service available. Call now!'
+      title: 'Dryer Vent Cleaning Los Angeles | Prevent Lint Fires',
+      description: 'Is your dryer taking too long? Prevent dangerous blockages and lower energy bills with professional dryer vent cleaning in LA. Same-day service!'
     },
     commercialDryerVent: {
-      title: 'Commercial Dryer Vent Cleaning Los Angeles | Laundromat & Multi-Unit | Pure Air California',
-      description: 'Commercial dryer vent cleaning for Los Angeles laundromats, hotels & multi-unit properties. Prevent fires & ensure code compliance. Free quotes!'
+      title: 'Commercial Dryer Vent Cleaning LA | Code Compliance',
+      description: 'Heavy-duty commercial dryer vent cleaning for laundromats, hotels & apartments in Los Angeles. Prevent fires and reduce drying times.'
     },
     locations: {
-      title: 'Air Duct Cleaning Locations | Los Angeles County Service Areas | Pure Air California',
-      description: 'Pure Air California serves all of Los Angeles County. Find air duct cleaning services in Beverly Hills, Santa Monica, Pasadena, Burbank & more.'
+      title: 'Air Duct Cleaning Locations in LA County | Pure Air CA',
+      description: 'Pure Air California serves all of Los Angeles County. Find 5-star air duct cleaning in Beverly Hills, Santa Monica, Pasadena, Burbank & more.'
     },
     about: {
-      title: 'About Pure Air California | NADCA Certified Air Duct Cleaning Experts',
-      description: 'Learn about Pure Air California, Los Angeles\' trusted air duct cleaning experts. NADCA certified, licensed & insured with 1,200+ 5-star reviews.'
+      title: 'About Pure Air California | NADCA Air Duct Cleaning Experts',
+      description: 'Meet Pure Air California, LA\'s trusted air duct cleaning experts. NADCA certified, 40+ years experience, and 448K+ satisfied customers.'
     },
     contact: {
-      title: 'Contact Pure Air California | Air Duct Cleaning Los Angeles | (213) 792-4145',
-      description: 'Contact Pure Air California for air duct & dryer vent cleaning in Los Angeles. Call (213) 792-4145 or fill out our form for a free estimate today!'
+      title: 'Contact Pure Air California | (213) 792-4145',
+      description: 'Contact Pure Air California for top-rated air duct & dryer vent cleaning in Los Angeles. Call (213) 792-4145 or submit our form for a free quote!'
     },
     quote: {
-      title: 'Get a Free Air Duct Cleaning Quote | Los Angeles | Pure Air California',
-      description: 'Request your free air duct cleaning quote in Los Angeles. No obligation, same-day estimates available. Call (213) 792-4145 or submit online!'
+      title: 'Get a Free Air Duct Cleaning Quote in LA | Pure Air CA',
+      description: 'Claim your 100% free, no-obligation air duct or dryer vent estimate in Los Angeles. See why 448K+ customers trust Pure Air California.'
     },
     healthBenefits: {
-      title: 'Health Benefits of Air Duct Cleaning | Indoor Air Quality | Pure Air California',
-      description: 'Discover the health benefits of professional air duct cleaning. Reduce allergies, asthma triggers & improve indoor air quality in your Los Angeles home.'
+      title: 'Health Benefits of Air Duct Cleaning | Indoor Air Quality',
+      description: 'Discover the health benefits of professional air duct cleaning. Reduce allergies and asthma triggers. Improve your LA home\'s indoor air quality.'
     }
   }
 };

@@ -25,10 +25,10 @@ MONGO_URL = os.environ.get("MONGO_URL", "mongodb://localhost:27017")
 DB_NAME = os.environ.get("DB_NAME", "pureaircalifornia")
 
 # Default admin credentials
-ADMIN_EMAIL = "lou@pureaircalifornia.com"
-ADMIN_PASSWORD = "PureAir1"
-ADMIN_FIRST_NAME = "Lou"
-ADMIN_LAST_NAME = "Pure Air"
+ADMIN_EMAIL = "admin@pureaircalifornia.com"
+ADMIN_PASSWORD = "PureAir2025!"
+ADMIN_FIRST_NAME = "Admin"
+ADMIN_LAST_NAME = "User"
 
 
 async def seed_admin():

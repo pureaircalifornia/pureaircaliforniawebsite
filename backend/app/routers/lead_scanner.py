@@ -8,14 +8,11 @@ from typing import List, Optional
 import uuid
 from pydantic import BaseModel
 
-import base64 as _base64
-
 from ..models.prospect import (
     Prospect, ProspectCreate, ProspectUpdate,
     OutreachEmail, BusinessCategory, OutreachStatus,
-    PlaceSearchRequest, PlaceSearchResult, EmailAttachment,
+    PlaceSearchRequest, PlaceSearchResult,
 )
-from ..services.suppression import is_suppressed
 from ..services.google_places import search_places
 from ..services.email_outreach import (
     get_email_template, get_all_templates, compose_email, send_email,
@@ -40,7 +37,6 @@ async def search_businesses(
         location=request.location,
         radius_miles=request.radius_miles,
         custom_query=request.query if request.query else None,
-        max_results=request.max_results,
     )
     return results
 
@@ -304,10 +300,6 @@ outreach_logger = logging.getLogger(__name__)
 # Daily send limit per user to prevent abuse
 MAX_EMAILS_PER_DAY = 50
 
-# Cap total attachment payload to keep emails deliverable (large attachments tank
-# inbox placement and risk provider limits). 7 MB of raw bytes.
-MAX_ATTACHMENT_BYTES = 7 * 1024 * 1024
-
 
 class ComposeEmailRequest(BaseModel):
     prospect_id: str
@@ -323,24 +315,6 @@ class SendEmailRequest(BaseModel):
     to_name: Optional[str] = None
     subject: str
     body: str
-    attachments: Optional[List[EmailAttachment]] = None
-
-    @field_validator("attachments")
-    @classmethod
-    def validate_attachments(cls, v: Optional[List[EmailAttachment]]) -> Optional[List[EmailAttachment]]:
-        if not v:
-            return v
-        if len(v) > 5:
-            raise ValueError("A maximum of 5 attachments is allowed")
-        total = 0
-        for att in v:
-            try:
-                total += len(_base64.b64decode(att.content_base64, validate=True))
-            except Exception:
-                raise ValueError(f"Attachment '{att.filename}' is not valid base64")
-        if total > MAX_ATTACHMENT_BYTES:
-            raise ValueError("Attachments exceed the 7 MB total size limit")
-        return v
 
     @field_validator("subject")
     @classmethod
@@ -434,28 +408,19 @@ async def send_outreach_email(
     prospect = await prospects_collection.find_one({"id": request.prospect_id})
     if not prospect:
         raise HTTPException(status_code=404, detail="Prospect not found")
-
-    # Respect the suppression list (unsubscribes / hard bounces) — required for
-    # CAN-SPAM compliance and to protect sender reputation.
-    if await is_suppressed(request.to_email):
-        raise HTTPException(
-            status_code=409,
-            detail="This address has unsubscribed and cannot be emailed.",
-        )
-
+    
     # Audit log
     outreach_logger.info(
         f"Email outreach: user={current_user.get('email')} -> to={request.to_email} "
-        f"prospect={request.prospect_id} attachments={len(request.attachments or [])}"
+        f"prospect={request.prospect_id}"
     )
-
+    
     # Send the email
     result = await send_email(
         to_email=request.to_email,
         to_name=request.to_name or prospect.get("contact_name", ""),
         subject=request.subject,
         body=request.body,
-        attachments=request.attachments,
     )
     
     # Create outreach record
@@ -558,17 +523,11 @@ async def run_drip_campaign(
         "Hi {contact_name}, Lou here again. Any thoughts on my previous email regarding {business_name}'s air quality systems?"
     ]
     
-    skipped_suppressed = 0
     for prospect in prospects:
         to_email = prospect.get("contact_email")
         if not to_email:
             continue
-
-        # Never re-email an unsubscribed / bounced address.
-        if await is_suppressed(to_email):
-            skipped_suppressed += 1
-            continue
-
+            
         contact_name = prospect.get("contact_name", "Hiring Manager")
         business_name = prospect.get("business_name", "your property")
         
@@ -614,6 +573,5 @@ async def run_drip_campaign(
         "processed": len(prospects),
         "follow_ups_sent": sent_count,
         "errors": errors,
-        "skipped_suppressed": skipped_suppressed,
         "message": f"Drip campaign executed. Sent {sent_count} follow-ups."
     }

@@ -122,7 +122,10 @@ async def create_indexes() -> None:
     # Outreach collection indexes
     await _database.outreach.create_index("prospect_id")
     await _database.outreach.create_index("sent_at")
-    
+
+    # Email suppression list (unsubscribes / hard bounces) — never email these again
+    await _database.email_suppressions.create_index("email", unique=True)
+
     logger.info("Database indexes created successfully")
 
 
@@ -183,6 +186,10 @@ def get_prospects_collection():
 
 def get_outreach_collection():
     return get_database().outreach
+
+
+def get_suppressions_collection():
+    return get_database().email_suppressions
 
 def get_settings_collection():
     return get_database().settings

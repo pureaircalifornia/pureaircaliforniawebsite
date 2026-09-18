@@ -1,5 +1,5 @@
 import React from 'react';
-import { seoConfig } from '@/utils/seo/seoConfig';
+import { canonicalUrl } from '@/utils/seo/canonicalUrl';
 
 interface BreadcrumbItem {
     name: string;
@@ -18,7 +18,7 @@ const BreadcrumbSchema: React.FC<BreadcrumbSchemaProps> = ({ items }) => {
             '@type': 'ListItem',
             position: index + 1,
             name: item.name,
-            item: item.item.startsWith('http') ? item.item : `${seoConfig.siteUrl}${item.item}`
+            item: canonicalUrl(item.item)
         }))
     };
 

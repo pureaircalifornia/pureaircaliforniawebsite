@@ -81,7 +81,7 @@ export default function CustomerForm() {
         <div className="max-w-4xl mx-auto space-y-6">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                    <button
+                    <button title="Go back" aria-label="Go back"
                         onClick={() => navigate(-1)}
                         className="p-2 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
                     >
@@ -110,7 +110,7 @@ export default function CustomerForm() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
-                                <input
+                                <input title="First name" aria-label="First name" placeholder="First name"
                                     type="text"
                                     name="first_name"
                                     required
@@ -121,7 +121,7 @@ export default function CustomerForm() {
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
-                                <input
+                                <input title="Last name" aria-label="Last name" placeholder="Last name"
                                     type="text"
                                     name="last_name"
                                     required
@@ -134,7 +134,7 @@ export default function CustomerForm() {
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Email Directory</label>
                                 <div className="relative">
                                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                                    <input
+                                    <input title="Email address" aria-label="Email address" placeholder="email@example.com"
                                         type="email"
                                         name="email"
                                         value={formData.email}
@@ -147,7 +147,7 @@ export default function CustomerForm() {
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                                 <div className="relative">
                                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                                    <input
+                                    <input title="Phone number" aria-label="Phone number" placeholder="(555) 555-5555"
                                         type="tel"
                                         name="phone"
                                         value={formData.phone}
@@ -160,7 +160,7 @@ export default function CustomerForm() {
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Company Name (Optional)</label>
                                 <div className="relative">
                                     <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                                    <input
+                                    <input title="Company name" aria-label="Company name" placeholder="Company name (optional)"
                                         type="text"
                                         name="company"
                                         value={formData.company}
@@ -171,7 +171,7 @@ export default function CustomerForm() {
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                                <select
+                                <select title="Customer status" aria-label="Customer status"
                                     name="lead_status"
                                     value={formData.lead_status}
                                     onChange={handleChange}
@@ -197,7 +197,7 @@ export default function CustomerForm() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="md:col-span-2">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Street Address</label>
-                                <input
+                                <input title="Street address" aria-label="Street address" placeholder="123 Main St"
                                     type="text"
                                     name="address_line1"
                                     value={formData.properties[0].address_line1}
@@ -207,7 +207,7 @@ export default function CustomerForm() {
                             </div>
                             <div className="md:col-span-2">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Suite/Apt (Optional)</label>
-                                <input
+                                <input title="Suite or apartment number" aria-label="Suite or apartment number" placeholder="Suite, Apt, etc. (optional)"
                                     type="text"
                                     name="address_line2"
                                     value={formData.properties[0].address_line2}
@@ -217,7 +217,7 @@ export default function CustomerForm() {
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
-                                <input
+                                <input title="City" aria-label="City" placeholder="City"
                                     type="text"
                                     name="city"
                                     value={formData.properties[0].city}
@@ -228,7 +228,7 @@ export default function CustomerForm() {
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
-                                    <input
+                                    <input title="State" aria-label="State" placeholder="CA"
                                         type="text"
                                         name="state"
                                         value={formData.properties[0].state}
@@ -238,7 +238,7 @@ export default function CustomerForm() {
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">ZIP Code</label>
-                                    <input
+                                    <input title="ZIP code" aria-label="ZIP code" placeholder="90001"
                                         type="text"
                                         name="zip_code"
                                         value={formData.properties[0].zip_code}
@@ -249,7 +249,7 @@ export default function CustomerForm() {
                             </div>
                             <div className="md:col-span-2">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
-                                <select
+                                <select title="Property type" aria-label="Property type"
                                     name="property_type"
                                     value={formData.properties[0].property_type}
                                     onChange={handlePropertyChange}

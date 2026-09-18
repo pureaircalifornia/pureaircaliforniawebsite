@@ -19,17 +19,21 @@ const GoogleAnalytics = () => {
     const location = useLocation();
     const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
-    // Initialize GA4 script
+    // Initialize GA4 and Google Ads after delay to avoid blocking main thread (LCP/TBT fix)
     useEffect(() => {
         if (!measurementId) return;
 
-        const scriptId = 'google-analytics-script';
-        if (!document.getElementById(scriptId)) {
-            const script = document.createElement('script');
-            script.id = scriptId;
-            script.async = true;
-            script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-            document.head.appendChild(script);
+        let initialized = false;
+
+        const initTracking = () => {
+            if (initialized) return;
+            initialized = true;
+
+            // 1. Google Analytics & Google Ads
+            const gaScript = document.createElement('script');
+            gaScript.async = true;
+            gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+            document.head.appendChild(gaScript);
 
             window.dataLayer = window.dataLayer || [];
             window.gtag = function () {
@@ -38,7 +42,39 @@ const GoogleAnalytics = () => {
 
             window.gtag('js', new Date());
             window.gtag('config', measurementId);
-        }
+            window.gtag('config', 'AW-1120420693'); // Pure Air California Google Ads
+
+            // 2. Google Tag Manager
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({
+                    'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'
+                }); var f = d.getElementsByTagName(s)[0],
+                    // @ts-ignore
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+                // @ts-ignore
+            })(window, document, 'script', 'dataLayer', 'GTM-KWX8V4NL');
+        };
+
+        // Delay execution until browser is idle or after 2.5s
+        const timeoutId = setTimeout(initTracking, 2500);
+
+        // Or initialize immediately on first scroll/interaction
+        const handleInteraction = () => {
+            initTracking();
+            window.removeEventListener('scroll', handleInteraction);
+            window.removeEventListener('click', handleInteraction);
+        };
+
+        window.addEventListener('scroll', handleInteraction, { passive: true });
+        window.addEventListener('click', handleInteraction, { passive: true });
+
+        return () => {
+            clearTimeout(timeoutId);
+            window.removeEventListener('scroll', handleInteraction);
+            window.removeEventListener('click', handleInteraction);
+        };
     }, [measurementId]);
 
     // Track page views with enhanced data on route change

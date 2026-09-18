@@ -1,6 +1,8 @@
+import { canonicalUrl } from '@/utils/seo/canonicalUrl';
+import PageHero from '@/components/PageHero';
 
 import React, { useState } from 'react';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,12 +11,12 @@ import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, Calendar, Clock, ArrowRight, Star } from 'lucide-react';
+import { Search, Calendar, Clock, ArrowRight, Star, Phone } from 'lucide-react';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import { blogPosts, categories } from './blog/data';
 import SEOProvider from '@/components/SEOProvider';
 import SchemaMarkup from '@/components/SchemaMarkup';
-import { seoConfig } from '@/utils/seo/seoConfig';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -30,87 +32,24 @@ const Blog = () => {
 
   const featuredPosts = blogPosts.filter(post => post.featured);
 
-  const pageTitle = "Blog | Pure Air California - Expert Air Quality Tips & Advice";
-  const pageDescription = "Read our expert blog for tips, advice, and information about air duct cleaning, dryer vent maintenance, and indoor air quality. Stay informed about healthy air practices.";
-  const pageUrl = `${seoConfig.siteUrl}/blog`;
+  const pageTitle = "Air Duct Cleaning Blog | Pure Air California";
+  const pageDescription = "Practical guides to air duct cleaning, dryer vents, costs and commercial service planning for Los Angeles homes and businesses. Read the PAC journal.";
 
   return (
-    <HelmetProvider>
+    
       <div className="min-h-screen flex flex-col">
-        <Helmet>
-          <title>{pageTitle}</title>
-          <meta name="description" content={pageDescription} />
-          <meta name="keywords" content="air duct cleaning blog Los Angeles, indoor air quality tips, dryer vent safety, HVAC maintenance LA, air quality advice" />
-          <meta name="robots" content="index, follow, max-image-preview:large" />
-          <meta name="geo.region" content="US-CA" />
-          <meta name="geo.placename" content="Los Angeles" />
-          <meta property="og:title" content={pageTitle} />
-          <meta property="og:description" content={pageDescription} />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content={pageUrl} />
-          <meta property="og:site_name" content="Pure Air California" />
-          <link rel="canonical" href={pageUrl} />
-        </Helmet>
-        <SEOProvider>
-          <SchemaMarkup schema={{
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "url": pageUrl,
-            "name": pageTitle,
-            "description": pageDescription,
-            "publisher": seoConfig.schema.organization
-          }} />
-          <SchemaMarkup schema={{
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            "name": "Blog",
-            "description": pageDescription,
-            "url": pageUrl,
-            "mainEntity": {
-              "@type": "ItemList",
-              "itemListElement": blogPosts.map((post, index) => ({
-                "@type": "ListItem",
-                "position": index + 1,
-                "url": `${seoConfig.siteUrl}/blog/${post.slug}`
-              }))
-            }
-          }} />
+        <SEOProvider title={pageTitle} description={pageDescription} path="/blog/" mainEntityId={canonicalUrl('/blog')+'#articles'}>
+          <SchemaMarkup schema={{'@context':'https://schema.org','@type':'ItemList','@id':canonicalUrl('/blog')+'#articles',name:'PAC air care journal',itemListElement:blogPosts.map((post,index)=>({'@type':'ListItem',position:index+1,name:post.title,url:canonicalUrl('/blog/'+post.slug)}))}}/>
         </SEOProvider>
         <NavBar />
 
         {/* Hero Section */}
-        <section className="relative py-16 md:py-24 bg-gray-900 overflow-hidden">
-          <div className="absolute inset-0 z-0 opacity-30">
-            <ResponsiveImage
-              src="/images/blog/blog-hero.jpg"
-              alt="Blog"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent z-0"></div>
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6 font-heading" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>
-                Pure Air California Blog
-              </h1>
-              <p className="text-xl text-gray-200 mb-8">
-                Expert tips, advice, and information to help you maintain clean air in your home or business.
-              </p>
+        <PageHero title="A little knowledge. A breath of clarity." description="The PAC air care journal: practical answers about air ducts, dryer vents and indoor air for Los Angeles homes and businesses."/>
 
-              {/* Search Bar */}
-              <div className="relative max-w-md">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <Input
-                  type="text"
-                  placeholder="Search articles..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-300"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Breadcrumb */}
+        <div className="container mx-auto px-4">
+          <Breadcrumbs />
+        </div>
 
         {/* Featured Posts */}
         <section className="py-16 bg-gray-50">
@@ -118,7 +57,7 @@ const Blog = () => {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">Featured Articles</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Our most popular and informative articles about air quality and HVAC maintenance.
+                A selection of practical guides for homeowners and property teams.
               </p>
             </div>
 
@@ -144,7 +83,7 @@ const Blog = () => {
                         <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
                           <div className="flex items-center gap-1">
                             <Calendar className="h-4 w-4" />
-                            {new Date(post.date).toLocaleDateString()}
+                            <time dateTime={post.date}>{new Date(post.date).toLocaleDateString()}</time>
                           </div>
                           <div className="flex items-center gap-1">
                             <Clock className="h-4 w-4" />
@@ -249,17 +188,30 @@ const Blog = () => {
               </div>
             )}
 
-            <div className="mt-16 text-center">
-              <Button asChild variant="outline" size="lg">
-                <Link to="/contact">Contact Us for More Information</Link>
-              </Button>
+            {/* High-Conversion CTA */}
+            <div className="mt-16 bg-gradient-to-r from-brand-700 to-brand-800 rounded-2xl p-8 md:p-12 text-white text-center">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">Stop Breathing Dirty Air Today</h2>
+              <p className="text-brand-100 text-lg mb-6 max-w-2xl mx-auto">
+                Join the 448,000+ customers we have served since 1993. Get a free, no-obligation quote in under 2 minutes — or call for immediate service.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100 font-bold text-lg px-8 py-6 h-auto shadow-lg">
+                  <Link to="/quote">Get Your Free Quote →</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 font-bold text-lg px-8 py-6 h-auto">
+                  <a href="tel:2137924145" className="flex items-center gap-2">
+                    <Phone className="w-5 h-5 fill-current" />
+                    (213) 792-4145
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
 
         <Footer />
       </div>
-    </HelmetProvider>
+    
   );
 };
 

@@ -10,6 +10,7 @@ interface ResponsiveImageProps {
   width?: number;
   height?: number;
   sizes?: string;
+  style?: React.CSSProperties;
 }
 
 // Use SVG placeholder which is guaranteed to work
@@ -25,8 +26,15 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   loading = 'lazy',
   fetchPriority,
   className,
-  width,
-  height,
+  style,
+  // Default intrinsic dimensions so the browser can reserve space and avoid a
+  // layout shift. Most callers never passed these, which left 69 pages emitting
+  // <img> with no width/height at all — a direct Cumulative Layout Shift cost.
+  // The values only supply an aspect-ratio hint: the component's own
+  // `w-full h-full object-cover` classes still control rendered size, so a
+  // caller that knows the real dimensions should pass them and override these.
+  width = 1200,
+  height = 800,
   sizes = "(max-width: 768px) 100vw, 50vw",
 }) => {
   const [imageSrc, setImageSrc] = useState(src);
@@ -48,6 +56,7 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   return (
     <img
       src={imageSrc}
+      style={style}
       alt={alt}
       loading={loading}
       {...(fetchPriority ? { fetchpriority: fetchPriority } as any : {})}

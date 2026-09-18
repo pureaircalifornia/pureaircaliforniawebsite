@@ -1,0 +1,1 @@
+export default function BrandMark(){return <span className="pac-wordmark"><img src="/brand/pac-brandmark.svg" alt="PAC — Pure Air California" width={620} height={245} className="pac-original-logo"/></span>}

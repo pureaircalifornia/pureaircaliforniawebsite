@@ -1,0 +1,34 @@
+[
+  {
+    "url": "https://www.pureaircalifornia.com/",
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://pureaircalifornia.com/",
+    "error": "fetch failed"
+  },
+  {
+    "url": "http://pureaircalifornia.com/",
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://www.pureaircalifornia.com/robots.txt",
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://www.pureaircalifornia.com/sitemap.xml",
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://www.pureaircalifornia.com/locations/brentwood/",
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://www.pureaircalifornia.com/services/residential-air-duct-cleaning/",
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://www.pureaircalifornia.com/seo-audit-missing-20260912/",
+    "error": "fetch failed"
+  }
+]

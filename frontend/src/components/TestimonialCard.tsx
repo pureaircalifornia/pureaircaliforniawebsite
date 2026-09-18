@@ -55,7 +55,7 @@ const TestimonialCard = ({
           </motion.div>
           
           <div className="flex-grow">
-            <h4 className="font-semibold text-gray-900">{name}</h4>
+            <h3 className="font-semibold text-gray-900">{name}</h3>
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-500">{location}</p>
               <span className="text-xs text-gray-400">{date}</span>

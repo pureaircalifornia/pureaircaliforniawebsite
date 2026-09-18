@@ -1,0 +1,54 @@
+[
+  {
+    "route": "/blog/air-duct-cleaning-cost-los-angeles/",
+    "title": "Air Duct Cleaning Cost in Los Angeles: Quote Guide",
+    "h1": [
+      "Air Duct Cleaning Cost in Los Angeles: Quote Guide"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/health-benefits-air-duct-cleaning/",
+    "title": "",
+    "h1": [
+      "Air Duct Cleaning and Health: Evidence and Limits"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/services/residential-air-duct-cleaning/",
+    "title": "Residential Air Duct Cleaning Los Angeles",
+    "h1": [
+      "Residential Air Duct Cleaning Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/industries/healthcare/",
+    "title": "Healthcare Air Duct Cleaning in Los Angeles",
+    "h1": [
+      "Healthcare Air Duct Cleaning in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  }
+]

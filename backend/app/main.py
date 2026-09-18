@@ -27,6 +27,7 @@ from .routers import (
     reviews_router,
 )
 from .routers.webhooks import router as webhooks_router
+from .routers.unsubscribe import router as unsubscribe_router
 
 # Configure logging
 logging.basicConfig(
@@ -104,6 +105,7 @@ def create_app() -> FastAPI:
     app.include_router(settings_router, prefix="/api")
     app.include_router(webhooks_router, prefix="/api")
     app.include_router(reviews_router, prefix="/api")
+    app.include_router(unsubscribe_router, prefix="/api")
     
     # Mount local uploads directory for documents
     uploads_dir = os.path.join(os.getcwd(), "uploads")

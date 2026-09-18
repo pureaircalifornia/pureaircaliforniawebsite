@@ -1,0 +1,475 @@
+[
+  {
+    "file": "src/components/ServiceDetailLayout.tsx",
+    "heading": "{h1}",
+    "ancestors": [
+      {
+        "tag": "<div className=\"max-w-3xl\">",
+        "start": 3732,
+        "end": 4581
+      },
+      {
+        "tag": "<div className=\"container mx-auto px-4\">",
+        "start": 3679,
+        "end": 4598
+      },
+      {
+        "tag": "<section className=\"pt-32 pb-14 bg-gradient-to-r from-brand-700 to-brand-900 text-white\">",
+        "start": 3579,
+        "end": 4617
+      },
+      {
+        "tag": "<main className=\"flex-grow\">",
+        "start": 3542,
+        "end": 7649
+      },
+      {
+        "tag": "<div className=\"pac-service-detail min-h-screen flex flex-col\">",
+        "start": 2917,
+        "end": 7678
+      }
+    ]
+  },
+  {
+    "file": "src/components/IndustryPageLayout.tsx",
+    "heading": "{title}",
+    "ancestors": [
+      {
+        "tag": "<div className=\"max-w-3xl\">",
+        "start": 4049,
+        "end": 4561
+      },
+      {
+        "tag": "<div className=\"container mx-auto px-4\">",
+        "start": 3998,
+        "end": 4576
+      },
+      {
+        "tag": "<section\n        className=\"pac-industry-hero pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white relative\"\n        style={heroImage ? { \n          '--hero-bg': `linear-gradient(to right, rgba(0, 44, 69, 0.9), rgba(0, 67, 101, 0.8)), url(${heroImage})` \n        } as React.CSSProperties & { '--hero-bg': string } : undefined}\n      >",
+        "start": 3530,
+        "end": 4593
+      },
+      {
+        "tag": "<div className=\"pac-industry-page min-h-screen flex flex-col\">",
+        "start": 2779,
+        "end": 10153
+      }
+    ]
+  },
+  {
+    "file": "src/pages/LocationDetail.tsx",
+    "heading": "Air Duct Cleaning in {location.name}",
+    "ancestors": [
+      {
+        "tag": "<div className=\"max-w-3xl\">",
+        "start": 8553,
+        "end": 9444
+      },
+      {
+        "tag": "<div className=\"container mx-auto px-4 relative z-10\">",
+        "start": 8485,
+        "end": 9462
+      },
+      {
+        "tag": "<section className=\"relative pt-32 pb-16 text-white overflow-hidden\">",
+        "start": 7894,
+        "end": 9482
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 5556,
+        "end": 25579
+      }
+    ]
+  },
+  {
+    "file": "src/pages/BlogPost.tsx",
+    "heading": "Blog Post Not Found",
+    "ancestors": [
+      {
+        "tag": "<div className=\"text-center\">",
+        "start": 3785,
+        "end": 4118
+      },
+      {
+        "tag": "<div className=\"container mx-auto px-4 py-16 flex-grow flex items-center justify-center\">",
+        "start": 3684,
+        "end": 4134
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 3610,
+        "end": 4168
+      }
+    ]
+  },
+  {
+    "file": "src/pages/BlogPost.tsx",
+    "heading": "{post.title}",
+    "ancestors": [
+      {
+        "tag": "<div className=\"max-w-4xl mx-auto\">",
+        "start": 7884,
+        "end": 9021
+      },
+      {
+        "tag": "<div className=\"container mx-auto px-4\">",
+        "start": 7828,
+        "end": 9041
+      },
+      {
+        "tag": "<div className=\"absolute inset-0 z-20 flex items-center\">",
+        "start": 7757,
+        "end": 9059
+      },
+      {
+        "tag": "<div className=\"relative h-[40vh] md:h-[50vh] overflow-hidden\">",
+        "start": 7407,
+        "end": 9075
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 6377,
+        "end": 18421
+      }
+    ]
+  },
+  {
+    "file": "src/pages/About.tsx",
+    "heading": "About Pure Air California",
+    "ancestors": [
+      {
+        "tag": "<div className=\"max-w-4xl\">",
+        "start": 2778,
+        "end": 4225
+      },
+      {
+        "tag": "<div className=\"container mx-auto px-4 relative z-10\">",
+        "start": 2710,
+        "end": 4243
+      },
+      {
+        "tag": "<section className=\"relative pt-32 pb-16 text-white overflow-hidden\">",
+        "start": 2049,
+        "end": 4263
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 880,
+        "end": 23257
+      }
+    ]
+  },
+  {
+    "file": "src/pages/Industries.tsx",
+    "heading": "Industries We Serve\r\n              ",
+    "ancestors": [
+      {
+        "tag": "<div className=\"max-w-3xl\">",
+        "start": 3954,
+        "end": 4522
+      },
+      {
+        "tag": "<div className=\"container mx-auto px-4\">",
+        "start": 3900,
+        "end": 4540
+      },
+      {
+        "tag": "<section className=\"pt-32 pb-14 bg-gradient-to-r from-brand-700 to-brand-900 text-white\">",
+        "start": 3799,
+        "end": 4560
+      },
+      {
+        "tag": "<main className=\"flex-grow\">",
+        "start": 3761,
+        "end": 6624
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 3077,
+        "end": 7044
+      }
+    ]
+  },
+  {
+    "file": "src/pages/Locations.tsx",
+    "heading": "Los Angeles <span className=\"text-sky-400 text-glow\">Service Areas</span>",
+    "ancestors": [
+      {
+        "tag": "<div className=\"max-w-4xl\">",
+        "start": 1701,
+        "end": 2865
+      },
+      {
+        "tag": "<div className=\"container mx-auto px-4 relative z-10\">",
+        "start": 1635,
+        "end": 2881
+      },
+      {
+        "tag": "<div className=\"relative py-24 bg-gray-900 overflow-hidden\">",
+        "start": 1106,
+        "end": 2895
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 572,
+        "end": 19727
+      }
+    ]
+  },
+  {
+    "file": "src/pages/Pricing.tsx",
+    "heading": "Air Duct Cleaning Cost in{' '}<span className=\"text-sky-400\">Los Angeles</span>",
+    "ancestors": [
+      {
+        "tag": "<div className=\"container mx-auto px-4 text-center\">",
+        "start": 7789,
+        "end": 10088
+      },
+      {
+        "tag": "<section className=\"bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white py-24\">",
+        "start": 7680,
+        "end": 10108
+      },
+      {
+        "tag": "<main>",
+        "start": 7642,
+        "end": 25457
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 6738,
+        "end": 25883
+      }
+    ]
+  },
+  {
+    "file": "src/pages/Quote.tsx",
+    "heading": "Get a Free Air Duct Cleaning Quote in Los Angeles\r\n              ",
+    "ancestors": [
+      {
+        "tag": "<header className=\"max-w-3xl mb-8\">",
+        "start": 1493,
+        "end": 2224
+      },
+      {
+        "tag": "<div className=\"container mx-auto px-4\">",
+        "start": 1240,
+        "end": 7064
+      },
+      {
+        "tag": "<main className=\"flex-grow bg-gray-50 pt-32 pb-16\">",
+        "start": 1177,
+        "end": 7081
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 757,
+        "end": 7506
+      }
+    ]
+  },
+  {
+    "file": "src/pages/Contact.tsx",
+    "heading": "How can we help<br/><em>your space?</em>",
+    "ancestors": [
+      {
+        "tag": "<main className=\"pac-contact-page pac-container\">",
+        "start": 666,
+        "end": 2270
+      }
+    ]
+  },
+  {
+    "file": "src/pages/CaseStudies.tsx",
+    "heading": "Commercial Case Studies\r\n              ",
+    "ancestors": [
+      {
+        "tag": "<div className=\"max-w-3xl\">",
+        "start": 1835,
+        "end": 2293
+      },
+      {
+        "tag": "<div className=\"container mx-auto px-4\">",
+        "start": 1781,
+        "end": 2311
+      },
+      {
+        "tag": "<section className=\"pt-32 pb-14 bg-gradient-to-r from-brand-700 to-brand-900 text-white\">",
+        "start": 1680,
+        "end": 2331
+      },
+      {
+        "tag": "<main className=\"flex-grow\">",
+        "start": 1642,
+        "end": 7638
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 943,
+        "end": 7944
+      }
+    ]
+  },
+  {
+    "file": "src/pages/CaseStudyDetail.tsx",
+    "heading": "{study.title}",
+    "ancestors": [
+      {
+        "tag": "<div className=\"max-w-3xl\">",
+        "start": 2678,
+        "end": 3343
+      },
+      {
+        "tag": "<div className=\"container mx-auto px-4\">",
+        "start": 2624,
+        "end": 3361
+      },
+      {
+        "tag": "<section className=\"pt-32 pb-14 bg-gradient-to-r from-brand-700 to-brand-900 text-white\">",
+        "start": 2523,
+        "end": 3381
+      },
+      {
+        "tag": "<main className=\"flex-grow\">",
+        "start": 2485,
+        "end": 7055
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 1824,
+        "end": 7087
+      }
+    ]
+  },
+  {
+    "file": "src/pages/Blog.tsx",
+    "heading": "Pure Air California Blog\r\n              ",
+    "ancestors": [
+      {
+        "tag": "<div className=\"max-w-3xl\">",
+        "start": 3373,
+        "end": 4344
+      },
+      {
+        "tag": "<div className=\"container mx-auto px-4 relative z-10\">",
+        "start": 3305,
+        "end": 4362
+      },
+      {
+        "tag": "<section className=\"relative py-16 md:py-24 bg-gray-900 overflow-hidden\">",
+        "start": 2871,
+        "end": 4382
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 1824,
+        "end": 12764
+      }
+    ]
+  },
+  {
+    "file": "src/pages/Partnerships.tsx",
+    "heading": "Monetize Your Existing <br className=\"hidden md:block\" /><span className=\"text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-brand-400\">Los Angeles Customer Base</span>",
+    "ancestors": [
+      {
+        "tag": "<div className=\"container mx-auto px-4 relative z-10 text-center max-w-4xl\">",
+        "start": 1223,
+        "end": 2492
+      },
+      {
+        "tag": "<section className=\"bg-slate-900 text-white py-24 md:py-32 relative overflow-hidden\">",
+        "start": 975,
+        "end": 2512
+      },
+      {
+        "tag": "<main className=\"flex-grow\">",
+        "start": 913,
+        "end": 9922
+      },
+      {
+        "tag": "<div className=\"min-h-screen bg-slate-50 flex flex-col\">",
+        "start": 518,
+        "end": 10346
+      }
+    ]
+  },
+  {
+    "file": "src/pages/PropertyManagers.tsx",
+    "heading": "The Preferred <span className=\"text-brand-600\">Duct Cleaning Vendor</span>for Los Angeles PMs & HOAs\r\n           ",
+    "ancestors": [
+      {
+        "tag": "<section className=\"container mx-auto px-4 mb-20 text-center max-w-5xl\">",
+        "start": 1138,
+        "end": 2373
+      },
+      {
+        "tag": "<main className=\"flex-grow pt-24 pb-20\">",
+        "start": 1060,
+        "end": 10591
+      },
+      {
+        "tag": "<div className=\"min-h-screen bg-slate-50 flex flex-col\">",
+        "start": 658,
+        "end": 11071
+      }
+    ]
+  },
+  {
+    "file": "src/pages/HealthBenefits.tsx",
+    "heading": "Better air begins<br/>with <em>better information.</em>",
+    "ancestors": [
+      {
+        "tag": "<main className=\"pac-article pac-container\">",
+        "start": 664,
+        "end": 3334
+      }
+    ]
+  },
+  {
+    "file": "src/pages/PrivacyPolicy.tsx",
+    "heading": "Privacy Policy",
+    "ancestors": [
+      {
+        "tag": "<div className=\"container mx-auto px-4 max-w-4xl\">",
+        "start": 1199,
+        "end": 4885
+      },
+      {
+        "tag": "<main className=\"flex-grow pt-32 pb-16\">",
+        "start": 1137,
+        "end": 4910
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 608,
+        "end": 4960
+      }
+    ]
+  },
+  {
+    "file": "src/pages/TermsOfService.tsx",
+    "heading": "Terms of Service",
+    "ancestors": [
+      {
+        "tag": "<div className=\"container mx-auto px-4 max-w-4xl\">",
+        "start": 1214,
+        "end": 5372
+      },
+      {
+        "tag": "<main className=\"flex-grow pt-32 pb-16\">",
+        "start": 1152,
+        "end": 5397
+      },
+      {
+        "tag": "<div className=\"min-h-screen flex flex-col\">",
+        "start": 621,
+        "end": 5447
+      }
+    ]
+  },
+  {
+    "file": "src/pages/LosAngeles.tsx",
+    "error": "ENOENT: no such file or directory, open 'C:\\Users\\IMAGINE360\\Documents\\PAC\\Website\\pureaircaliforniawebsite\\frontend\\src\\pages\\LosAngeles.tsx'"
+  }
+]

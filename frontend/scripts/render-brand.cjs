@@ -1,0 +1,1 @@
+const sharp=require('sharp');sharp('public/brand/og-cinematic-v1.svg').jpeg({quality:88}).toFile('public/brand/og-cinematic-v1.jpg');

@@ -8,7 +8,7 @@ import {
     Search, MapPin, Save, Star, Phone, Globe, Building2,
     Loader2, CheckCircle, Mail, Clock, UserCheck, XCircle, CalendarCheck, Eye
 } from 'lucide-react';
-import { searchBusinesses, saveProspect, checkProspectStatus, getProspects, updateProspectOutreach, sendProspectOutreach } from '@/utils/api';
+import { searchBusinesses, saveProspect, checkProspectStatus, getProspects, updateProspect, sendOutreachEmail } from '@/utils/api';
 
 const BUSINESS_CATEGORIES = [
     { value: 'Home Owner Association', label: 'Home Owner Associations (HOA)' },
@@ -62,6 +62,7 @@ export default function LeadScanner() {
     const [category, setCategory] = useState(BUSINESS_CATEGORIES[0].value);
     const [location, setLocation] = useState('Los Angeles, CA');
     const [radius, setRadius] = useState(25);
+    const [maxResults, setMaxResults] = useState(20);
     const [customQuery, setCustomQuery] = useState('');
     const [results, setResults] = useState<PlaceSearchResult[]>([]);
     const [loading, setLoading] = useState(false);
@@ -84,6 +85,7 @@ export default function LeadScanner() {
                 category,
                 location,
                 radius_miles: radius,
+                max_results: maxResults,
             });
             setResults(data);
 
@@ -184,11 +186,11 @@ export default function LeadScanner() {
 
             {/* Search Controls */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                     {/* Category */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Business Category</label>
-                        <select
+                        <select title="Select lead category" aria-label="Select lead category"
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
                             className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white"
@@ -217,7 +219,7 @@ export default function LeadScanner() {
                     {/* Radius */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Radius: {radius} miles</label>
-                        <input
+                        <input title="Search leads" aria-label="Search leads" placeholder="Search leads..."
                             type="range"
                             min={5}
                             max={50}
@@ -225,6 +227,23 @@ export default function LeadScanner() {
                             onChange={(e) => setRadius(parseInt(e.target.value))}
                             className="w-full mt-2 accent-sky-500"
                         />
+                    </div>
+
+                    {/* Number of results */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Number of leads</label>
+                        <select
+                            title="Number of leads to search"
+                            aria-label="Number of leads to search"
+                            value={maxResults}
+                            onChange={(e) => setMaxResults(parseInt(e.target.value))}
+                            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white"
+                        >
+                            <option value={10}>10 leads</option>
+                            <option value={20}>20 leads</option>
+                            <option value={40}>40 leads</option>
+                            <option value={60}>60 leads (max)</option>
+                        </select>
                     </div>
 
                     {/* Custom Query */}

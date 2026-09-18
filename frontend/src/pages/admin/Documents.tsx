@@ -107,6 +107,8 @@ export default function Documents() {
                                     href={`http://localhost:8000${doc.file_url}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    title={`Download ${doc.name}`}
+                                    aria-label={`Download ${doc.name}`}
                                     className="p-2 text-gray-400 hover:text-sky-600 bg-gray-50 hover:bg-sky-50 rounded-lg flex-shrink-0"
                                 >
                                     <Download className="w-4 h-4" />
@@ -123,7 +125,7 @@ export default function Documents() {
                     <div className="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden">
                         <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
                             <h3 className="font-semibold text-gray-900">Upload Document</h3>
-                            <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-500">
+                            <button title="Close upload document modal" aria-label="Close upload document modal" onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-500">
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
@@ -138,7 +140,7 @@ export default function Documents() {
                                 <>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Document Type</label>
-                                        <select
+                                        <select title="Filter documents by type" aria-label="Filter documents by type"
                                             value={docType}
                                             onChange={(e) => setDocType(e.target.value)}
                                             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 bg-white"
@@ -172,7 +174,7 @@ export default function Documents() {
                                             ) : (
                                                 <p className="text-sm text-gray-500">Click to browse or drag and drop<br /><span className="text-xs">PDF, PNG, JPG (Max 10MB)</span></p>
                                             )}
-                                            <input
+                                            <input title="Select file to upload" aria-label="Select file to upload" placeholder=""
                                                 ref={fileInputRef}
                                                 type="file"
                                                 className="hidden"

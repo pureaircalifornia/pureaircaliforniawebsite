@@ -1,0 +1,15 @@
+[
+  {
+    "route": "/quote/",
+    "title": "",
+    "h1": [
+      "Let’s plan the right care for your space."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  }
+]

@@ -1,0 +1,12 @@
+/ {"h1":1,"hero":true,"images":0,"overflow":false}
+/contact/ {"h1":1,"hero":true,"images":0,"overflow":false}
+/quote/ {"h1":1,"hero":true,"images":0,"overflow":false}
+/about/ Waiting for selector `h1` failed
+/pricing/ Navigation timeout of 30000 ms exceeded
+/services/ Waiting for selector `h1` failed
+/locations/ {"h1":1,"hero":true,"images":0,"overflow":false}
+/air-quality-calculator/ {"h1":1,"hero":true,"images":0,"overflow":false}
+/partners/ {"h1":1,"hero":true,"images":0,"overflow":false}
+/property-managers/ {"h1":1,"hero":true,"images":0,"overflow":false}
+/blog/ {"h1":1,"hero":true,"images":0,"overflow":false}
+/health-benefits/ {"h1":1,"hero":true,"images":0,"overflow":false}

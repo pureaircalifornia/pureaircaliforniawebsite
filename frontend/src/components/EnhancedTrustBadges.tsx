@@ -19,7 +19,7 @@ const EnhancedTrustBadges = () => {
     { icon: Shield, text: 'Licensed & Insured', description: 'Fully licensed and insured for your protection' },
     { icon: Award, text: 'NADCA Certified', description: 'National Air Duct Cleaners Association certified technicians' },
     { icon: BadgeCheck, text: 'EPA Approved', description: 'Using EPA approved cleaning products and methods' },
-    { icon: Star, text: '4.7★ on Google', description: 'NADCA Certified · BBB A+ Rated · 448K+ customers served' },
+    { icon: Star, text: '4.6★ on Google', description: 'NADCA Certified · BBB A+ Rated · 448K+ customers served' },
   ];
 
   const testimonialHighlights = [
@@ -29,7 +29,7 @@ const EnhancedTrustBadges = () => {
   ];
 
   const trustMetrics = [
-    { icon: Users, target: 448, suffix: '+', label: 'Satisfied Customers', isK: true },
+    { icon: Users, target: 448, suffix: '+', label: 'Customers Since 1993', isK: true },
     { icon: CheckCircle, target: 40, suffix: '+', label: 'Years Experience', isK: false },
     { icon: ThumbsUp, target: 99, suffix: '%', label: 'Customer Satisfaction', isK: false },
   ];
@@ -106,7 +106,7 @@ const EnhancedTrustBadges = () => {
             ))}
           </div>
           <div className="text-center mt-3">
-            <a href="/testimonials" className="text-brand-600 hover:text-brand-700 text-sm font-medium inline-flex items-center">
+            <a href="/about" className="text-brand-600 hover:text-brand-700 text-sm font-medium inline-flex items-center">
               Read more customer reviews
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />

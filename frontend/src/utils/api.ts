@@ -382,6 +382,7 @@ export async function searchBusinesses(data: {
     category: string;
     location: string;
     radius_miles: number;
+    max_results?: number;
 }): Promise<PlaceSearchResult[]> {
     const response = await authFetch(`${API_BASE_URL}/lead-scanner/search`, {
         method: 'POST',
@@ -477,12 +478,19 @@ export async function previewEmail(data: {
     return response.json();
 }
 
+export interface EmailAttachment {
+    filename: string;
+    content_base64: string;
+    content_type: string;
+}
+
 export async function sendOutreachEmail(data: {
     prospect_id: string;
     to_email: string;
     to_name?: string;
     subject: string;
     body: string;
+    attachments?: EmailAttachment[];
 }): Promise<{ success: boolean; message: string; dry_run: boolean; outreach_record: OutreachRecord }> {
     const response = await authFetch(`${API_BASE_URL}/lead-scanner/outreach/send`, {
         method: 'POST',
@@ -539,6 +547,7 @@ export async function submitFormWithBackend(
 ): Promise<{ success: boolean; lead?: Lead; error?: string }> {
     try {
         let lead: Lead | undefined;
+        let emailDelivered = false;
         try {
             lead = await createLead(formData);
         } catch (dbError) {
@@ -547,7 +556,7 @@ export async function submitFormWithBackend(
 
         // FormSubmit fallback for email notifications
         try {
-            await fetch('https://formsubmit.co/ajax/lou@pureaircalifornia.com', {
+            const emailResponse = await fetch('https://formsubmit.co/ajax/lou@pureaircalifornia.com', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -571,10 +580,15 @@ export async function submitFormWithBackend(
                     _captcha: "false"
                 })
             });
+            const emailResult = await emailResponse.json().catch(() => null);
+            emailDelivered = emailResponse.ok && (emailResult?.success === true || emailResult?.success === 'true');
         } catch (emailErr) {
             console.warn('FormSubmit notification failed:', emailErr);
         }
 
+        if (!lead && !emailDelivered) {
+            return { success: false, error: 'Your request could not be delivered. Please try again or call us.' };
+        }
         return { success: true, lead };
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';

@@ -106,6 +106,17 @@ class PlaceSearchRequest(BaseModel):
     category: BusinessCategory
     location: str = "Los Angeles, CA"
     radius_miles: int = 25
+    # How many businesses to return. The Google Places Text Search API caps at
+    # 60 total (3 pages × 20). Each result also triggers a details lookup + email
+    # scrape, so smaller values are faster and cheaper.
+    max_results: int = Field(default=20, ge=1, le=60)
+
+
+class EmailAttachment(BaseModel):
+    """A file attached to an outreach email, supplied base64-encoded by the admin UI."""
+    filename: str = Field(min_length=1, max_length=255)
+    content_base64: str  # base64-encoded file bytes (no data: URI prefix)
+    content_type: str = "application/octet-stream"
 
 
 class PlaceSearchResult(BaseModel):

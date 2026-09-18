@@ -26,7 +26,7 @@ const TrustBadges = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-6">
           <div className="text-center md:text-left">
-            <p className="text-2xl font-bold text-brand-600 mb-2">448K+ Satisfied Customers</p>
+            <p className="text-2xl font-bold text-brand-600 mb-2">448K+ Customers Served Since 1993</p>
             <p className="text-gray-600">Trusted by Los Angeles homeowners and businesses</p>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
@@ -36,7 +36,7 @@ const TrustBadges = () => {
             </div>
             <div className="flex items-center gap-2">
               <Star className="text-yellow-500 fill-current" size={24} />
-              <span className="font-semibold">4.7★ on Google</span>
+              <span className="font-semibold">4.6★ on Google</span>
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@ const TrustBadges = () => {
           >
             <Star className="text-yellow-500 fill-yellow-500 mb-2" size={32} />
             <span className="text-center font-bold text-yellow-900">5-Star Rated</span>
-            <span className="text-center text-xs text-yellow-700 mt-1">4.7★ · NADCA Certified</span>
+            <span className="text-center text-xs text-yellow-700 mt-1">4.6★ · NADCA Certified</span>
           </motion.div>
 
           <motion.div

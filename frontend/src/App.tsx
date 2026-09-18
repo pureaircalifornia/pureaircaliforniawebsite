@@ -3,23 +3,31 @@ import { HelmetProvider } from 'react-helmet-async';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { TooltipProvider } from '@radix-ui/react-tooltip';
-import SEOProvider from './components/SEOProvider';
-import { seoConfig } from './utils/seo/seoConfig';
-import NavBar from './components/NavBar';
+
+
+
 import ScrollToTop from './components/ScrollToTop';
-import EnhancedLanding from './pages/EnhancedLanding';
+import BrandedLoading from './components/BrandedLoading';
+import ContactDock from './components/ContactDock';
+import PageMotionProvider from './components/PageMotionProvider';
+import CinematicLanding from './pages/CinematicLanding';
+import './cinematic.css';
+import './pac-refinement.css';
+
+
+
 
 // Lazy load landing pages
-const LandingNature = React.lazy(() => import('./pages/LandingNature'));
+
 const LandingDryerSafety = React.lazy(() => import('./pages/LandingDryerSafety'));
 const LandingCompetitor = React.lazy(() => import('./pages/LandingCompetitor'));
 const LandingCommercial = React.lazy(() => import('./pages/LandingCommercial'));
-import ABTestRouter from './components/ABTestRouter';
-import StickyServiceButton from './components/StickyServiceButton';
+
+
 import GoogleAnalytics from './components/GoogleAnalytics';
-import ExitIntentPopup from './components/ExitIntentPopup';
-import SMSLeadWidget from './components/SMSLeadWidget';
-import UrgencyBanner from './components/UrgencyBanner';
+
+
+
 
 // Lazy loaded imports for optimal bundle splitting
 const Locations = React.lazy(() => import('./pages/Locations'));
@@ -40,6 +48,9 @@ const AirQualityCalculator = React.lazy(() => import('./pages/AirQualityCalculat
 const Partnerships = React.lazy(() => import('./pages/Partnerships'));
 const PropertyManagers = React.lazy(() => import('./pages/PropertyManagers'));
 const Feedback = React.lazy(() => import('./pages/Feedback'));
+const Industries = React.lazy(() => import('./pages/Industries'));
+const CaseStudies = React.lazy(() => import('./pages/CaseStudies'));
+const CaseStudyDetail = React.lazy(() => import('./pages/CaseStudyDetail'));
 
 // Lazy load individual service pages
 const CommercialAirDuctCleaning = React.lazy(() => import('./pages/services/CommercialAirDuctCleaning'));
@@ -50,6 +61,8 @@ const ResidentialElectrostaticFilter = React.lazy(() => import('./pages/services
 const CommercialElectrostaticFilter = React.lazy(() => import('./pages/services/CommercialElectrostaticFilter'));
 const DryerVentMaintenanceProgram = React.lazy(() => import('./pages/services/DryerVentMaintenanceProgram'));
 const HVACSystemCleaning = React.lazy(() => import('./pages/services/HVACSystemCleaning'));
+const AirDuctSanitizing = React.lazy(() => import('./pages/services/AirDuctSanitizing'));
+const LaundromatDryerVentCleaning = React.lazy(() => import('./pages/services/LaundromatDryerVentCleaning'));
 
 // Lazy load industry pages
 const HealthcareFacilities = React.lazy(() => import('./pages/industries/HealthcareFacilities'));
@@ -88,15 +101,7 @@ const CustomerForm = React.lazy(() => import('./pages/admin/CustomerForm'));
 const queryClient = new QueryClient();
 
 // Loading component for Suspense fallback
-const LoadingFallback = () => (
-  <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-    <div className="relative">
-      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-brand-700 animate-pulse shadow-lg" />
-      <div className="absolute inset-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-brand-700 animate-ping opacity-20" />
-    </div>
-    <p className="mt-4 text-sm font-medium text-gray-500 tracking-wide animate-pulse">Loading Pure Air California...</p>
-  </div>
-);
+const LoadingFallback = BrandedLoading;
 
 type RouteConfig = {
   path: string;
@@ -104,7 +109,7 @@ type RouteConfig = {
 };
 
 const routes: RouteConfig[] = [
-  { path: "/", element: <ABTestRouter variantA={<EnhancedLanding />} variantB={<LandingNature />} testName="landing_page_2024" splitRatio={50} /> },
+  { path: "/", element: <CinematicLanding /> },
   { path: "/locations", element: <Locations /> },
   // Dedicated Los Angeles page (must come before dynamic :locationSlug)
   { path: "/locations/los-angeles", element: <LosAngeles /> },
@@ -118,11 +123,14 @@ const routes: RouteConfig[] = [
   { path: "/services/commercial-electrostatic-filter", element: <CommercialElectrostaticFilter /> },
   { path: "/services/dryer-vent-maintenance-program", element: <DryerVentMaintenanceProgram /> },
   { path: "/services/hvac-system-cleaning", element: <HVACSystemCleaning /> },
+  { path: "/services/air-duct-sanitizing", element: <AirDuctSanitizing /> },
+  { path: "/services/laundromat-dryer-vent-cleaning", element: <LaundromatDryerVentCleaning /> },
   // Legacy service routes
   { path: "/services/residential-air-duct-cleaning", element: <ResidentialAirDuctCleaning /> },
   { path: "/services/commercial-dryer-vent-cleaning", element: <CommercialDryerVentCleaning /> },
   { path: "/services/electrostatic-filter-program", element: <Navigate to="/services/residential-electrostatic-filter" replace /> },
   // Industry pages
+  { path: "/industries", element: <Industries /> },
   { path: "/industries/healthcare", element: <HealthcareFacilities /> },
   { path: "/industries/hospitality", element: <Hospitality /> },
   { path: "/industries/restaurants", element: <Restaurants /> },
@@ -136,6 +144,8 @@ const routes: RouteConfig[] = [
   { path: "/about", element: <About /> },
   { path: "/contact", element: <Contact /> },
   { path: "/quote", element: <Quote /> },
+  { path: "/case-studies", element: <CaseStudies /> },
+  { path: "/case-studies/:slug", element: <CaseStudyDetail /> },
   { path: "/blog", element: <Blog /> },
   { path: "/blog/:slug", element: <BlogPost /> },
   { path: "/privacy-policy", element: <PrivacyPolicy /> },
@@ -155,12 +165,10 @@ const routes: RouteConfig[] = [
   { path: "/feedback/:token", element: <Feedback /> },
 ];
 
-// Component to handle scroll restoration
-const ScrollToTopOnRouteChange = () => {
-  const { pathname } = useLocation();
+// Track phone interactions once; ScrollToTop owns route and hash restoration.
+const PhoneClickTracking = () => {
 
   useEffect(() => {
-    window.scrollTo(0, 0);
 
     // Global listener for phone clicks
     const handlePhoneClick = (e: MouseEvent) => {
@@ -178,24 +186,21 @@ const ScrollToTopOnRouteChange = () => {
 
     document.addEventListener('click', handlePhoneClick);
     return () => document.removeEventListener('click', handlePhoneClick);
-  }, [pathname]);
+  }, []);
 
   return null;
 };
 
 // Main website layout (NavBar is rendered by individual pages that need it)
 const MainLayout = ({ children }: { children: React.ReactNode }) => (
-  <div className="min-h-screen pb-24 md:pb-0 bg-gray-50 flex flex-col">
-    <ScrollToTopOnRouteChange />
-    <ScrollToTop />
-    <UrgencyBanner />
-    <main className="flex-grow">
+  <PageMotionProvider>
+  <div className="pac-site min-h-screen flex flex-col">
+    <div id="main-content" tabIndex={-1} className="flex-grow">
       {children}
-    </main>
-    <StickyServiceButton />
-    <SMSLeadWidget />
-    <ExitIntentPopup />
+    </div>
+    <ContactDock />
   </div>
+  </PageMotionProvider>
 );
 
 function App() {
@@ -205,6 +210,8 @@ function App() {
         <TooltipProvider>
           <BrowserRouter>
             <GoogleAnalytics />
+            <PhoneClickTracking />
+            <ScrollToTop />
             <Suspense fallback={<LoadingFallback />}>
               <Routes>
                 {/* Admin Login (no layout) */}
@@ -255,3 +262,7 @@ function App() {
 }
 
 export default App;
+
+
+
+

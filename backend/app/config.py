@@ -57,6 +57,11 @@ class Settings(BaseSettings):
     GOOGLE_REVIEW_URL: Optional[str] = None  # GBP "leave a review" link
     PUBLIC_SITE_URL: str = "https://www.pureaircalifornia.com"
 
+    # Public base URL of THIS API (e.g. https://api.pureaircalifornia.com), used to
+    # build RFC 8058 one-click unsubscribe links in outreach emails. When unset,
+    # emails fall back to a mailto-only unsubscribe (weaker deliverability signal).
+    API_PUBLIC_URL: Optional[str] = None
+
     # Notifications
     OWNER_NOTIFY_EMAIL: Optional[str] = None  # instant lead/owner alerts
     SMS_ENABLED: bool = False  # email-first; flip on when Twilio is live

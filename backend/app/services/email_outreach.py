@@ -180,25 +180,56 @@ def compose_email(
     }
 
 
+def _build_unsubscribe_headers(to_email: str) -> dict:
+    """
+    RFC 8058 one-click unsubscribe headers. When a public API URL is configured we
+    advertise an HTTPS one-click endpoint (the strongest Gmail/Yahoo deliverability
+    signal) alongside the mailto fallback; otherwise mailto only.
+    """
+    from .suppression import build_unsubscribe_url
+    mailto = "<mailto:lou@pureaircalifornia.com?subject=Unsubscribe>"
+    https_url = build_unsubscribe_url(to_email)
+    if https_url:
+        return {
+            "List-Unsubscribe": f"<{https_url}>, {mailto}",
+            "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+        }
+    return {"List-Unsubscribe": mailto}
+
+
+def _normalize_attachments(attachments) -> list:
+    """Coerce inbound attachment dicts/models to a plain list of dicts."""
+    result = []
+    for att in attachments or []:
+        if hasattr(att, "model_dump"):
+            att = att.model_dump()
+        if att.get("filename") and att.get("content_base64"):
+            result.append(att)
+    return result
+
+
 async def send_email(
     to_email: str,
     to_name: str,
     subject: str,
     body: str,
+    attachments=None,
 ) -> dict:
     """
     Send an email via Resend or SendGrid API based on what's configured.
-    Prefers Resend if available.
+    Prefers Resend if available. `attachments` is an optional list of
+    {filename, content_base64, content_type} dicts (or EmailAttachment models).
     """
     settings = get_settings()
-    
+    attachments = _normalize_attachments(attachments)
+
     if settings.RESEND_API_KEY:
-        return await _send_email_resend(to_email, to_name, subject, body, settings)
+        return await _send_email_resend(to_email, to_name, subject, body, settings, attachments)
     elif settings.SENDGRID_API_KEY:
-        return await _send_email_sendgrid(to_email, to_name, subject, body, settings)
+        return await _send_email_sendgrid(to_email, to_name, subject, body, settings, attachments)
     else:
         logger.warning("No email API configured — running in dry-run mode")
-        logger.info(f"[DRY RUN] Email to: {to_email} | Subject: {subject}")
+        logger.info(f"[DRY RUN] Email to: {to_email} | Subject: {subject} | attachments: {len(attachments)}")
         return {
             "success": True,
             "dry_run": True,
@@ -206,26 +237,26 @@ async def send_email(
         }
 
 
-async def _send_email_resend(to_email: str, to_name: str, subject: str, body: str, settings) -> dict:
+async def _send_email_resend(to_email: str, to_name: str, subject: str, body: str, settings, attachments=None) -> dict:
     import resend
     import re
-    
+
     resend.api_key = settings.RESEND_API_KEY
     from_email = "lou@pureaircalifornia.com"
-    
+
     # Format HTML body
     html_body = body.replace("\n", "<br>")
-    
+
     # Create clean plain text version (prevents spam filters flagging HTML in plain text)
     text_body = body.replace("<br>", "\n").replace("<br/>", "\n")
     text_body = re.sub(r'<[^>]+>', '', text_body)
-    
+
     # Anti-spam compliant opt-out message
     footer_html = "<br><br><span style='font-size: 11px; color: #999999;'>If you are not the correct contact or wish to opt-out, please reply with 'Unsubscribe'.</span>"
     footer_text = "\n\nIf you are not the correct contact or wish to opt-out, please reply with 'Unsubscribe'."
-    
+
     try:
-        r = resend.Emails.send({
+        message = {
             "from": f"Lou <{from_email}>",
             "to": [to_email],
             "subject": subject,
@@ -233,10 +264,19 @@ async def _send_email_resend(to_email: str, to_name: str, subject: str, body: st
             "text": text_body + footer_text,
             "reply_to": "lou@pureaircalifornia.com",
             "tags": [{"name": "campaign", "value": "vendor_outreach"}],
-            "headers": {
-                "List-Unsubscribe": "<mailto:lou@pureaircalifornia.com?subject=Unsubscribe>"
-            }
-        })
+            "headers": _build_unsubscribe_headers(to_email),
+        }
+        if attachments:
+            # Resend expects base64 content under "content".
+            message["attachments"] = [
+                {
+                    "filename": att["filename"],
+                    "content": att["content_base64"],
+                    "content_type": att.get("content_type", "application/octet-stream"),
+                }
+                for att in attachments
+            ]
+        r = resend.Emails.send(message)
         logger.info(f"Email sent successfully via Resend to {to_email} (ID: {r.get('id')})")
         return {"success": True, "dry_run": False, "message": "Email sent via Resend"}
     except Exception as e:
@@ -244,24 +284,24 @@ async def _send_email_resend(to_email: str, to_name: str, subject: str, body: st
         return {"success": False, "dry_run": False, "message": f"Resend error: {str(e)}"}
 
 
-async def _send_email_sendgrid(to_email: str, to_name: str, subject: str, body: str, settings) -> dict:
+async def _send_email_sendgrid(to_email: str, to_name: str, subject: str, body: str, settings, attachments=None) -> dict:
     import httpx
     import re
-    
+
     api_key = settings.SENDGRID_API_KEY
     from_email = "lou@pureaircalifornia.com"
-    
+
     # Format HTML body
     html_body = body.replace("\n", "<br>")
-    
+
     # Create clean plain text version (prevents spam filters flagging HTML in plain text)
     text_body = body.replace("<br>", "\n").replace("<br/>", "\n")
     text_body = re.sub(r'<[^>]+>', '', text_body)
-    
+
     # Anti-spam compliant opt-out message
     footer_html = "<br><br><span style='font-size: 11px; color: #999999;'>If you are not the correct contact or wish to opt-out, please reply with 'Unsubscribe'.</span>"
     footer_text = "\n\nIf you are not the correct contact or wish to opt-out, please reply with 'Unsubscribe'."
-    
+
     payload = {
         "personalizations": [
             {
@@ -275,9 +315,7 @@ async def _send_email_sendgrid(to_email: str, to_name: str, subject: str, body: 
             {"type": "text/plain", "value": text_body + footer_text},
             {"type": "text/html", "value": f"<div style='font-family: sans-serif; font-size: 14px;'>{html_body}{footer_html}</div>"},
         ],
-        "headers": {
-            "List-Unsubscribe": "<mailto:lou@pureaircalifornia.com?subject=Unsubscribe>"
-        },
+        "headers": _build_unsubscribe_headers(to_email),
         "tracking_settings": {
             "click_tracking": {
                 "enable": True,
@@ -288,6 +326,17 @@ async def _send_email_sendgrid(to_email: str, to_name: str, subject: str, body: 
             }
         }
     }
+    if attachments:
+        # SendGrid expects base64 content under "content" with explicit type + disposition.
+        payload["attachments"] = [
+            {
+                "content": att["content_base64"],
+                "filename": att["filename"],
+                "type": att.get("content_type", "application/octet-stream"),
+                "disposition": "attachment",
+            }
+            for att in attachments
+        ]
     
     async with httpx.AsyncClient() as client:
         try:

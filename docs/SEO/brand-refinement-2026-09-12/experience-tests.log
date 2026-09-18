@@ -1,0 +1,8 @@
+[
+  'Empty form blocked by native validation',
+  'Failed delivery displays an error and preserves values',
+  'Confirmed mock delivery displays success',
+  'Checklist completion moves focus to useful next steps',
+  'Story chapter navigation, still view and focus availability pass',
+  'Reduced-motion preference opens the static story'
+]

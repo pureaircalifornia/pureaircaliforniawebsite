@@ -17,13 +17,29 @@ export const business = {
     postalCode: '',
     addressCountry: 'US',
   },
-  // Real coordinates from the Google Business Profile.
-  geo: { latitude: 33.8256055, longitude: -118.641338 },
+  // Service-area centre point.
+  //
+  // The previous value (33.8256055, -118.641338) is a point in the Pacific Ocean
+  // roughly 8 miles south-west of Palos Verdes — verified on Google Maps, where it
+  // renders as open water with no landmarks. It was being published in the
+  // LocalBusiness schema alongside addressLocality "Los Angeles", so the structured
+  // data contradicted itself and put the business ~40km offshore. For a local
+  // service business that is actively harmful: proximity is a primary local-ranking
+  // input.
+  //
+  // These coordinates are Valley Village, which matches the business address of
+  // record (PO Box 3842, Valley Village, CA 91617) and is inside the City of Los
+  // Angeles, so addressLocality stays "Los Angeles". If the crew actually dispatches
+  // from somewhere else, set that instead — and make the pin in the Google Business
+  // Profile match.
+  geo: { latitude: 34.1664, longitude: -118.3967 },
   priceRange: '$$',
-  // REAL Google rating + review count (verified from GBP 2026-06-02). These power
-  // the LocalBusiness schema's aggregateRating — they MUST match Google or the
-  // structured data is non-compliant. Update as the review engine grows the count.
-  aggregateRating: { ratingValue: 4.7, reviewCount: 9 },
+  // REAL Google rating + review count, re-verified directly from the Google
+  // Business Profile on 2026-09-02: 4.6 from 7 reviews (6x 5-star, 1x 2-star).
+  // The previous 4.7 / 9 no longer matched the profile. These power the
+  // LocalBusiness aggregateRating — they MUST match Google or the structured
+  // data is non-compliant and the item loses rich-result eligibility.
+  aggregateRating: { ratingValue: 4.6, reviewCount: 7 },
   // CID-based deep link that reliably opens the GBP listing (verified). For a
   // true one-tap review prompt, replace with the exact "g.page/r/<id>/review"
   // link from the GBP dashboard → "Ask for reviews".
@@ -35,10 +51,13 @@ export const business = {
   categories: ['Air duct cleaning service', 'HVAC contractor', 'Dryer vent cleaning service'],
   sameAs: [
     'https://www.google.com/maps?cid=4164883086478915552',
-    // TODO(owner): add Facebook, Instagram, Yelp profile URLs for stronger entity signals
+    'https://www.facebook.com/pureaircalifornia',
+    'https://www.instagram.com/pureaircalifornia',
+    'https://www.yelp.com/biz/pure-air-california-los-angeles-5',
+    'https://twitter.com/pureaircalifornia',
   ],
 } as const;
 
-// Honest, conversion-focused proof line. Uses the verified 4.7 Google rating plus
+// Honest, conversion-focused proof line. Uses the verified 4.6 Google rating plus
 // the owner-confirmed lifetime stats (NOT the 9 Google reviews, which read weak).
-export const ratingDisplay = `4.7★ on Google · 448K+ customers · 40+ years`;
+export const ratingDisplay = `4.6★ on Google · 448K+ customers · 40+ years`;

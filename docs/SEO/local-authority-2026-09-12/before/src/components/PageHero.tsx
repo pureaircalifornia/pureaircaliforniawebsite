@@ -1,0 +1,7 @@
+import { ReactNode } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { ArrowUpRight, Phone } from 'lucide-react';
+import { business } from '@/config/business';
+import { getPageHero } from '@/data/pageHeroes';
+type Props={title:ReactNode;description?:ReactNode;image?:string;alt?:string;eyebrow?:string;meta?:ReactNode;compact?:boolean};
+export default function PageHero({title,description,image,alt,eyebrow,meta,compact=false}:Props){const {pathname}=useLocation();const story=getPageHero(pathname);return <section className={'pac-page-hero '+(compact?'is-compact':'')} aria-label="Page introduction"><img className="pac-page-hero-photo" src={image||story.image} alt={alt||story.alt} width={1800} height={1100} loading="eager" {...{fetchpriority:'high'}} style={{objectPosition:story.position||'center'}}/><div className="pac-page-hero-wash"/><div className="pac-container pac-page-hero-content"><span className="pac-eyebrow">{eyebrow||story.eyebrow}</span><h1>{title}</h1>{description&&<div className="pac-page-hero-description">{description}</div>}{meta&&<div className="pac-page-hero-meta">{meta}</div>}{!compact&&<div className="pac-actions"><a href={business.phoneHref} className="pac-button pac-button-light"><Phone size={18}/> Call {business.phone}</a><Link to="/quote/" className="pac-text-link">Request a free estimate <ArrowUpRight size={17}/></Link></div>}</div><div className="pac-hero-caption"><span/> {story.caption}</div></section>}

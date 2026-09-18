@@ -1,10 +1,12 @@
+import WestsideGuides from '@/components/WestsideGuides';
+import PageHero from '@/components/PageHero';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { MapPin, Compass, Navigation, CheckCircle } from 'lucide-react';
 import EnhancedQuoteForm from '@/components/EnhancedQuoteForm';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { locationData } from './locations/data';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import SEOProvider from '@/components/SEOProvider';
@@ -13,59 +15,31 @@ const Locations = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEOProvider
-        title="Air Duct Cleaning Locations | Los Angeles County | Pure Air California"
-        description="Pure Air California serves all of Los Angeles County. Find professional air duct & dryer vent cleaning in Beverly Hills, Santa Monica, Pasadena, Burbank, Glendale & more."
+        title="Air Duct Cleaning Locations | Pure Air California"
+        description="Air duct & dryer vent cleaning across Los Angeles County — Beverly Hills, Santa Monica, Pasadena, Burbank, Glendale and more. Call (213) 792-4145."
         keywords={["air duct cleaning locations", "Los Angeles service areas", "duct cleaning near me"]}
         path="/locations"
+        isLocalBusiness={true}
       />
 
       <NavBar />
 
       {/* Hero Section */}
-      <div className="relative py-24 bg-gray-900 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-30">
-          <ResponsiveImage
-            src="/images/locations/los-angeles-skyline.jpg"
-            alt="Los Angeles skyline"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900/80 to-transparent z-0"></div>
-        <div className="absolute inset-0 bg-mesh opacity-10"></div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-8 font-heading tracking-tight" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>
-              Los Angeles <span className="text-sky-400 text-glow">Service Areas</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-slate-200 mb-10 leading-relaxed font-medium">
-              Pure Air California provides elite air duct and ventilation cleaning services across
-              the entire Los Angeles metropolis and surrounding premium communities.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-5">
-              <Button asChild size="lg" className="btn-premium text-white px-10 py-8 h-auto text-lg rounded-2xl shadow-2xl">
-                <Link to="/quote">Get Your Free Estimate</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="glass-premium border-white/20 text-white hover:bg-white/10 px-10 py-8 h-auto text-lg rounded-2xl">
-                <Link to="/services">Explore Expert Services</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHero title="Local air care. Across Los Angeles." description="From a home in the hills to a busy commercial property, find PAC air duct and dryer vent cleaning services in your neighborhood."/>
+      <WestsideGuides />
 
       {/* Locations Grid */}
-      <section className="py-32 relative bg-slate-50 overflow-hidden">
+      <section className="py-20 relative bg-slate-50 overflow-hidden">
         <div className="absolute inset-0 bg-mesh opacity-20"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-black mb-6 text-slate-900 tracking-tight">
-              Premier <span className="text-sky-600">Health-Mapped</span> Cities
+              Find air duct cleaning <span className="text-sky-600">near you.</span>
             </h2>
             <div className="w-24 h-1.5 bg-sky-600 mx-auto rounded-full mb-8"></div>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
-              We've deployed health-certified teams to every corner of LA. Select a location to see our local community impact.
+              Explore our Greater Los Angeles service areas. Choose your neighborhood for duct cleaning, dryer vent care and help planning a visit.
             </p>
           </div>
 
@@ -91,7 +65,7 @@ const Locations = () => {
                   <p className="text-slate-600 mb-8 leading-relaxed font-medium flex-grow">{location.description}</p>
                   <Button asChild variant="outline" className="w-full justify-between group/btn py-6 px-6 glass-premium border-sky-100 text-sky-700 font-bold rounded-2xl hover:bg-sky-600 hover:text-white transition-all duration-300">
                     <Link to={`/locations/${location.slug}`}>
-                      <span>View Community Details</span>
+                      <span>Explore local services</span>
                       <Compass className="w-5 h-5 transition-transform group-hover/btn:rotate-45" />
                     </Link>
                   </Button>

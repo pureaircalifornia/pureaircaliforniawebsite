@@ -12,8 +12,11 @@ import {
     getProspects, updateProspect, deleteProspect,
     previewEmail, sendOutreachEmail, getOutreachHistory,
     findEmails, createCustomer,
-    Prospect, OutreachRecord
+    Prospect, OutreachRecord, EmailAttachment
 } from '@/utils/api';
+
+// Total attachment payload cap — must match the backend (7 MB of raw bytes).
+const MAX_ATTACHMENT_BYTES = 7 * 1024 * 1024;
 
 const STATUS_COLORS: Record<string, string> = {
     not_contacted: 'bg-gray-100 text-gray-700',
@@ -54,6 +57,8 @@ export default function Prospects() {
     const [sendingEmail, setSendingEmail] = useState(false);
     const [emailSubject, setEmailSubject] = useState('');
     const [emailBody, setEmailBody] = useState('');
+    const [emailAttachments, setEmailAttachments] = useState<EmailAttachment[]>([]);
+    const [attachmentError, setAttachmentError] = useState<string | null>(null);
     const [emailResult, setEmailResult] = useState<{ success: boolean; message: string } | null>(null);
 
     // Outreach history
@@ -138,10 +143,57 @@ export default function Prospects() {
         }
     };
 
+    const readFileAsBase64 = (file: File): Promise<string> =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const result = reader.result as string;
+                // strip the "data:<mime>;base64," prefix — backend wants raw base64
+                resolve(result.includes(',') ? result.split(',')[1] : result);
+            };
+            reader.onerror = () => reject(reader.error);
+            reader.readAsDataURL(file);
+        });
+
+    const handleAttachFiles = async (fileList: FileList | null) => {
+        if (!fileList || fileList.length === 0) return;
+        setAttachmentError(null);
+        try {
+            const incoming = await Promise.all(
+                Array.from(fileList).map(async (file) => ({
+                    filename: file.name,
+                    content_base64: await readFileAsBase64(file),
+                    content_type: file.type || 'application/octet-stream',
+                }))
+            );
+            const next = [...emailAttachments, ...incoming];
+            if (next.length > 5) {
+                setAttachmentError('A maximum of 5 attachments is allowed.');
+                return;
+            }
+            // base64 inflates ~4/3; estimate raw byte total to match backend cap
+            const totalBytes = next.reduce((sum, a) => sum + Math.floor(a.content_base64.length * 0.75), 0);
+            if (totalBytes > MAX_ATTACHMENT_BYTES) {
+                setAttachmentError('Attachments exceed the 7 MB total size limit.');
+                return;
+            }
+            setEmailAttachments(next);
+        } catch {
+            setAttachmentError('Could not read one of the selected files.');
+        }
+    };
+
+    const handleRemoveAttachment = (index: number) => {
+        setEmailAttachments((prev) => prev.filter((_, i) => i !== index));
+        setAttachmentError(null);
+    };
+
     const handleComposeEmail = async (prospect: Prospect) => {
         setComposingId(prospect.id);
         setEmailLoading(true);
         setEmailResult(null);
+        setEmailAttachments([]);
+        setAttachmentError(null);
         try {
             const preview = await previewEmail({ prospect_id: prospect.id });
             setEmailSubject(preview.subject);
@@ -168,6 +220,7 @@ export default function Prospects() {
                 to_name: prospect.contact_name || undefined,
                 subject: emailSubject,
                 body: emailBody,
+                attachments: emailAttachments.length > 0 ? emailAttachments : undefined,
             });
             setEmailResult({ success: result.success, message: result.message });
             if (result.success) {
@@ -444,7 +497,7 @@ export default function Prospects() {
                                 <div className="px-6 py-4 bg-emerald-50 border-t border-emerald-100">
                                     <div className="flex justify-between items-center mb-3">
                                         <h3 className="font-semibold text-gray-900 text-sm">Compose Outreach Email</h3>
-                                        <button onClick={() => { setComposingId(null); setEmailResult(null); }} className="text-gray-400 hover:text-gray-600">
+                                        <button title="Add new prospect" aria-label="Add new prospect" onClick={() => { setComposingId(null); setEmailResult(null); }} className="text-gray-400 hover:text-gray-600">
                                             <X className="w-4 h-4" />
                                         </button>
                                     </div>
@@ -464,11 +517,41 @@ export default function Prospects() {
                                                 </div>
                                                 <div>
                                                     <label className="text-xs font-medium text-gray-600 block mb-1">Subject</label>
-                                                    <input type="text" value={emailSubject} onChange={(e) => setEmailSubject(e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm" />
+                                                    <input title="Enter prospect details" aria-label="Enter prospect details" placeholder=" " type="text" value={emailSubject} onChange={(e) => setEmailSubject(e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm" />
                                                 </div>
                                                 <div>
                                                     <label className="text-xs font-medium text-gray-600 block mb-1">Body</label>
-                                                    <textarea value={emailBody} onChange={(e) => setEmailBody(e.target.value)} rows={12} className="w-full px-3 py-2 border rounded-lg text-sm font-mono leading-relaxed" />
+                                                    <textarea title="Text input" aria-label="Text input" placeholder=" " value={emailBody} onChange={(e) => setEmailBody(e.target.value)} rows={12} className="w-full px-3 py-2 border rounded-lg text-sm font-mono leading-relaxed" />
+                                                </div>
+                                                <div>
+                                                    <label className="text-xs font-medium text-gray-600 block mb-1">Attachments</label>
+                                                    <label className="inline-flex items-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-lg text-sm text-gray-600 cursor-pointer hover:border-sky-400 hover:text-sky-600 transition-colors">
+                                                        <FileText className="w-4 h-4" />
+                                                        Add files
+                                                        <input
+                                                            type="file"
+                                                            multiple
+                                                            className="hidden"
+                                                            onChange={(e) => { handleAttachFiles(e.target.files); e.target.value = ''; }}
+                                                            aria-label="Attach files to email"
+                                                        />
+                                                    </label>
+                                                    <p className="text-[11px] text-gray-400 mt-1">Up to 5 files, 7 MB total. PDFs (W-9, insurance) recommended.</p>
+                                                    {emailAttachments.length > 0 && (
+                                                        <ul className="mt-2 space-y-1">
+                                                            {emailAttachments.map((att, i) => (
+                                                                <li key={`${att.filename}-${i}`} className="flex items-center justify-between gap-2 px-3 py-1.5 bg-white border rounded-lg text-xs text-gray-700">
+                                                                    <span className="flex items-center gap-2 truncate"><FileText className="w-3.5 h-3.5 text-gray-400 shrink-0" /><span className="truncate">{att.filename}</span></span>
+                                                                    <button type="button" onClick={() => handleRemoveAttachment(i)} className="text-gray-400 hover:text-red-500 shrink-0" aria-label={`Remove ${att.filename}`}>
+                                                                        <X className="w-3.5 h-3.5" />
+                                                                    </button>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    )}
+                                                    {attachmentError && (
+                                                        <p className="text-[11px] text-red-500 mt-1">{attachmentError}</p>
+                                                    )}
                                                 </div>
                                             </div>
 

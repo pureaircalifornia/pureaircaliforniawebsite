@@ -3,17 +3,22 @@ Leads Router
 Handles lead CRUD operations for the CRM.
 Public endpoint for form submissions, authenticated endpoints for admin management.
 """
-from fastapi import APIRouter, Depends, HTTPException, status, Query, Request
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status, Query, Request
 from datetime import datetime
 from typing import List, Optional
 from collections import defaultdict
 import logging
+import hashlib
+import hmac
+import json
 import uuid
 import time
+from pymongo.errors import DuplicateKeyError, PyMongoError
 
-from ..models.lead import Lead, LeadCreate, LeadUpdate, LeadStatus, LeadSource
+from ..models.lead import Lead, LeadCreate, LeadReceipt, LeadUpdate, LeadStatus, LeadSource
 from ..core.dependencies import get_current_user
 from ..database import get_leads_collection
+from ..services.lead_notifications import send_lead_notifications
 
 router = APIRouter(prefix="/leads", tags=["Leads"])
 
@@ -37,8 +42,8 @@ def _check_rate_limit(client_ip: str) -> bool:
     return True
 
 
-@router.post("", response_model=dict, status_code=status.HTTP_201_CREATED)
-async def create_lead(lead_input: LeadCreate, request: Request):
+@router.post("", response_model=LeadReceipt, status_code=status.HTTP_201_CREATED)
+async def create_lead(lead_input: LeadCreate, request: Request, background_tasks: BackgroundTasks):
     """
     Create a new lead from form submission.
     This endpoint is PUBLIC — no auth required for website form submissions.
@@ -52,29 +57,48 @@ async def create_lead(lead_input: LeadCreate, request: Request):
             detail="Too many submissions. Please try again in a few minutes."
         )
     collection = get_leads_collection()
-    
+    submission_id = str(lead_input.submission_id)
+    # Mongo's built-in unique _id index protects concurrent requests and survives
+    # restarts. A check-then-insert or process-local retry cache would not.
+    document_id = f"website-submission:{submission_id}"
+    payload = lead_input.model_dump(mode="json")
+    fingerprint = hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    ).hexdigest()
     lead = Lead(
-        **lead_input.model_dump(),
+        **payload,
         id=str(uuid.uuid4()),
         status=LeadStatus.new,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow(),
     )
     
-    lead_dict = lead.model_dump()
-    lead_dict["created_at"] = lead_dict["created_at"].isoformat()
-    lead_dict["updated_at"] = lead_dict["updated_at"].isoformat()
-    
-    await collection.insert_one(lead_dict)
-
-    # Speed-to-lead: fire instant auto-reply + owner alert (best-effort, non-blocking)
+    lead_dict = lead.model_dump(mode="json")
+    document = {**lead_dict, "_id": document_id, "submission_fingerprint": fingerprint}
     try:
-        from ..services.lead_notifications import send_lead_notifications
-        await send_lead_notifications(lead_dict)
-    except Exception:
-        logging.getLogger(__name__).exception("lead notification dispatch failed")
+        await collection.insert_one(document)
+    except DuplicateKeyError:
+        try:
+            existing = await collection.find_one(
+                {"_id": document_id}, {"id": 1, "submission_fingerprint": 1}
+            )
+        except PyMongoError:
+            raise HTTPException(status_code=503, detail="Unable to confirm request. Please retry.") from None
+        if not existing or not hmac.compare_digest(
+            str(existing.get("submission_fingerprint", "")), fingerprint
+        ):
+            raise HTTPException(
+                status_code=409, detail="Submission ID is already in use. Start a new request."
+            )
+        # Never return the stored lead (or send email again) on a public retry.
+        return LeadReceipt(submission_id=submission_id, id=existing["id"])
+    except PyMongoError:
+        raise HTTPException(status_code=503, detail="Unable to confirm request. Please retry.") from None
 
-    return lead_dict
+    # Acknowledge persisted intake before slow email providers run. Accepted is
+    # not a qualified lead, booked job, verified price, or confirmed email delivery.
+    background_tasks.add_task(send_lead_notifications, lead_dict)
+    return LeadReceipt(submission_id=submission_id, id=lead.id)
 
 
 @router.get("", response_model=List[dict])

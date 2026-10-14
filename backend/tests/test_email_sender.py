@@ -7,6 +7,7 @@ from app.config import get_settings
 @pytest.mark.asyncio
 async def test_send_skips_when_no_api_key():
     settings = get_settings()
+    object.__setattr__(settings, "RESEND_API_KEY", None)
     object.__setattr__(settings, "SENDGRID_API_KEY", None)
     ok = await send_transactional_email("a@b.com", "Hi", "<p>Hi</p>", settings)
     assert ok is False
@@ -15,6 +16,7 @@ async def test_send_skips_when_no_api_key():
 @pytest.mark.asyncio
 async def test_send_posts_to_sendgrid_when_key_present():
     settings = get_settings()
+    object.__setattr__(settings, "RESEND_API_KEY", None)
     object.__setattr__(settings, "SENDGRID_API_KEY", "SG.test")
     object.__setattr__(settings, "FROM_EMAIL", "noreply@pureaircalifornia.com")
     with patch("app.services.email_sender.httpx.AsyncClient") as MockClient:

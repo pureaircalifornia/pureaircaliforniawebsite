@@ -122,6 +122,14 @@ async def create_indexes() -> None:
     # Outreach collection indexes
     await _database.outreach.create_index("prospect_id")
     await _database.outreach.create_index("sent_at")
+    await _database.outreach.create_index("provider_id", sparse=True)
+
+    # Prospect lookups used by the public booking page and the drip runner
+    await _database.prospects.create_index("public_token", unique=True, sparse=True)
+    await _database.prospects.create_index([("sequence_status", 1), ("next_touch_at", 1)])
+
+    # Addresses that must never be emailed again (unsubscribes, bounces, complaints)
+    await _database.outreach_suppressions.create_index("email", unique=True)
     
     logger.info("Database indexes created successfully")
 
@@ -183,6 +191,10 @@ def get_prospects_collection():
 
 def get_outreach_collection():
     return get_database().outreach
+
+
+def get_suppressions_collection():
+    return get_database().outreach_suppressions
 
 def get_settings_collection():
     return get_database().settings

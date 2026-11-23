@@ -63,6 +63,27 @@ class Settings(BaseSettings):
 
     # Admin Secret (backward compat)
     ADMIN_SECRET: Optional[str] = None
+
+    # Cold outreach (lead scanner)
+    OUTREACH_FROM_EMAIL: str = "lou@pureaircalifornia.com"
+    OUTREACH_FROM_NAME: str = "Lou at Pure Air California"
+    OUTREACH_REPLY_TO: str = "lou@pureaircalifornia.com"
+    OUTREACH_SENDER_FIRST_NAME: str = "Lou"
+    OUTREACH_PHONE: str = "(213) 792-4145"
+    # CAN-SPAM requires a valid physical postal address in every commercial email.
+    OUTREACH_POSTAL_ADDRESS: str = "PO Box 3842, Valley Village, CA 91617"
+    # Hard ceiling on outreach emails per rolling 24 hours (manual + automated).
+    OUTREACH_DAILY_LIMIT: int = 40
+    # Automated follow-ups only go out Monday-Friday inside this local window.
+    OUTREACH_TIMEZONE: str = "America/Los_Angeles"
+    OUTREACH_WINDOW_START_HOUR: int = 8
+    OUTREACH_WINDOW_END_HOUR: int = 16
+    # Public base URL of this API, used for one-click unsubscribe headers.
+    PUBLIC_API_URL: str = "https://pac-crm-backend.onrender.com/api"
+    # Shared secret the scheduler sends to /lead-scanner/outreach/run-drip.
+    CRON_SECRET: Optional[str] = None
+    # Signing secret from the Resend webhook settings ("whsec_...").
+    RESEND_WEBHOOK_SECRET: Optional[str] = None
     
     # CORS
     CORS_ORIGINS: list = [

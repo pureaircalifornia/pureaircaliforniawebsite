@@ -42,6 +42,8 @@ const BlogPost = React.lazy(() => import('./pages/BlogPost'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 const HealthBenefits = React.lazy(() => import('./pages/HealthBenefits'));
 const Pricing = React.lazy(() => import('./pages/Pricing'));
+const FreeInspection = React.lazy(() => import('./pages/FreeInspection'));
+const Unsubscribe = React.lazy(() => import('./pages/Unsubscribe'));
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = React.lazy(() => import('./pages/TermsOfService'));
 const AirQualityCalculator = React.lazy(() => import('./pages/AirQualityCalculator'));
@@ -115,6 +117,9 @@ const routes: RouteConfig[] = [
   { path: "/locations/los-angeles", element: <LosAngeles /> },
   { path: "/locations/:locationSlug", element: <LocationDetail /> },
   { path: "/pricing", element: <Pricing /> },
+  // Outreach email destinations (noindex; prerendered so Apache serves them)
+  { path: "/free-inspection", element: <FreeInspection /> },
+  { path: "/unsubscribe", element: <Unsubscribe /> },
   { path: "/services", element: <Services /> },
   // Individual service pages
   { path: "/services/commercial-air-duct-cleaning", element: <CommercialAirDuctCleaning /> },

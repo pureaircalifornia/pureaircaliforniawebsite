@@ -23,6 +23,8 @@ from .routers import (
     reports_router,
     leads_router,
     lead_scanner_router,
+    outreach_router,
+    outreach_public_router,
     settings_router,
     reviews_router,
 )
@@ -34,6 +36,10 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+# httpx logs each request URL at INFO. Several of those URLs carry an API key
+# in the query string, so keep them out of the application log.
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
 
 
 @asynccontextmanager
@@ -101,6 +107,8 @@ def create_app() -> FastAPI:
     app.include_router(reports_router, prefix="/api")
     app.include_router(leads_router, prefix="/api")
     app.include_router(lead_scanner_router, prefix="/api")
+    app.include_router(outreach_router, prefix="/api")
+    app.include_router(outreach_public_router, prefix="/api")
     app.include_router(settings_router, prefix="/api")
     app.include_router(webhooks_router, prefix="/api")
     app.include_router(reviews_router, prefix="/api")

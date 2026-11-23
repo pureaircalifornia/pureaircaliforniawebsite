@@ -47,7 +47,11 @@ const routes = [
     // Conversion / B2B assets that are real indexable pages
     '/air-quality-calculator', '/partners', '/property-managers',
 
-    '/dryer-safety', '/compare', '/commercial-services', '/404'
+    '/dryer-safety', '/compare', '/commercial-services', '/404',
+
+    // Outreach email destinations. noindex and absent from the sitemap, but they
+    // need a static file or Apache serves 404.html when a prospect clicks through.
+    '/free-inspection', '/unsubscribe'
 ];
 
 const locationSlugs = extractSlugs('locations/data.ts');

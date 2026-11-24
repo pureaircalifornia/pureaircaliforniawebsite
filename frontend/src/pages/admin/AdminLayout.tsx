@@ -108,7 +108,7 @@ export default function AdminLayout() {
                         </div>
                         <span className="text-white font-semibold">Admin Portal</span>
                     </Link>
-                    <button
+                    <button title="Close sidebar" aria-label="Close sidebar"
                         className="lg:hidden text-gray-400 hover:text-white"
                         onClick={() => setSidebarOpen(false)}
                     >
@@ -147,7 +147,7 @@ export default function AdminLayout() {
             <div className="lg:pl-64">
                 {/* Top header */}
                 <header className="sticky top-0 z-30 h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 lg:px-6">
-                    <button
+                    <button title="Open navigation menu" aria-label="Open navigation menu"
                         className="lg:hidden text-gray-600 hover:text-gray-900"
                         onClick={() => setSidebarOpen(true)}
                     >
@@ -158,7 +158,7 @@ export default function AdminLayout() {
 
                     <div className="flex items-center gap-4">
                         {/* Notifications */}
-                        <button className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">
+                        <button title="View notifications" aria-label="View notifications" className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg">
                             <Bell className="w-5 h-5" />
                             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
                         </button>

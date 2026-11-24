@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-09-12T22:02:21.990Z",
+  "typescript": "passed",
+  "eslint": "passed",
+  "productionRoutes": 116,
+  "indexablePages": 112,
+  "basicSeoErrors": 0,
+  "semanticSeoErrors": 0,
+  "browserRoutes": 115,
+  "browserIssues": [],
+  "interactionChecks": 11,
+  "deployed": false
+}

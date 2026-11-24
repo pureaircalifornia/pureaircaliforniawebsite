@@ -184,7 +184,7 @@ export default function ReportsDashboard() {
                                 <div className="flex-1 h-8 bg-gray-100 rounded overflow-hidden">
                                     <div
                                         className={`h-full ${stage.color} flex items-center justify-end pr-2`}
-                                        style={{ width: `${stage.percentage}%` }}
+                                        style={{ '--tw-percent': `${stage.percentage}%` } as React.CSSProperties & { '--tw-percent': string }}
                                     >
                                         <span className="text-xs font-medium text-white">{stage.count}</span>
                                     </div>

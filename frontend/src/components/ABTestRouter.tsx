@@ -19,24 +19,18 @@ const ABTestRouter: React.FC<ABTestRouterProps> = ({
     testName = 'landing_page',
     splitRatio = 50, // 50/50 split by default
 }) => {
-    const [variant, setVariant] = useState<'A' | 'B' | null>(null);
-
-    useEffect(() => {
-        // Check if user already has an assigned variant
+    // Initialize synchronously to prevent layout shifts or loading spinners on first paint
+    const [variant, setVariant] = useState<'A' | 'B'>(() => {
         const storedVariant = localStorage.getItem(AB_STORAGE_KEY);
-
         if (storedVariant === 'A' || storedVariant === 'B') {
-            setVariant(storedVariant);
-        } else {
-            // Randomly assign variant based on split ratio
-            const randomValue = Math.random() * 100;
-            const assignedVariant = randomValue < splitRatio ? 'B' : 'A';
-
-            // Persist in localStorage
-            localStorage.setItem(AB_STORAGE_KEY, assignedVariant);
-            setVariant(assignedVariant);
+            return storedVariant;
         }
-    }, [splitRatio]);
+        // Randomly assign variant based on split ratio
+        const randomValue = Math.random() * 100;
+        const assignedVariant = randomValue < splitRatio ? 'B' : 'A';
+        localStorage.setItem(AB_STORAGE_KEY, assignedVariant);
+        return assignedVariant;
+    });
 
     useEffect(() => {
         if (variant && window.gtag) {
@@ -49,15 +43,6 @@ const ABTestRouter: React.FC<ABTestRouterProps> = ({
             });
         }
     }, [variant, testName]);
-
-    // Show loading state while determining variant
-    if (variant === null) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-slate-900">
-                <div className="w-8 h-8 border-2 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-        );
-    }
 
     return <>{variant === 'A' ? variantA : variantB}</>;
 };

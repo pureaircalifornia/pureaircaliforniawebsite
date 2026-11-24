@@ -1,6 +1,7 @@
+import { usePageMotion } from '@/hooks/usePageMotion';
 
 import React, { ReactNode } from 'react';
-import { motion, Variants, HTMLMotionProps } from 'framer-motion';
+import { motion, Variants, HTMLMotionProps, useReducedMotion } from 'framer-motion';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
 import { cn } from '@/lib/utils';
 import * as animations from '@/lib/animation';
@@ -30,6 +31,9 @@ export function ScrollReveal({
   className,
   ...props
 }: ScrollRevealProps) {
+  const reducedMotion = useReducedMotion();
+  const { paused } = usePageMotion();
+  const showImmediately = paused || reducedMotion || (typeof window !== "undefined" && window.__PRERENDERING__);
   const [ref, isInView] = useScrollAnimation<HTMLDivElement>({
     threshold,
     rootMargin: margin,
@@ -45,13 +49,13 @@ export function ScrollReveal({
     }
     
     // Apply custom duration if provided
-    if (duration && selectedAnimation.visible) {
+    if (duration && typeof selectedAnimation.visible === 'object') {
       return {
         ...selectedAnimation,
         visible: {
-          ...(selectedAnimation.visible as Record<string, unknown>),
+          ...selectedAnimation.visible,
           transition: {
-            ...(selectedAnimation.visible as Record<string, unknown>).transition,
+            ...selectedAnimation.visible.transition,
             duration
           }
         }
@@ -64,12 +68,11 @@ export function ScrollReveal({
   return (
     <motion.div
       ref={ref}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      exit="exit"
+      initial={showImmediately ? false : "hidden"}
+      animate={showImmediately ? { opacity: 1, x: 0, y: 0, scale: 1, transition: { duration: 0, repeat: 0 } } : isInView ? "visible" : "hidden"}
+      exit={showImmediately ? undefined : "exit"}
       variants={getAnimationVariant()}
       className={cn(className)}
-      style={{ opacity: 0 }}
       transition={{ delay }}
       {...props}
     >
@@ -91,6 +94,9 @@ export function StaggerContainer({
   className?: string;
   staggerDelay?: number;
 } & Omit<HTMLMotionProps<"div">, "animate" | "initial" | "variants">) {
+  const reducedMotion = useReducedMotion();
+  const { paused } = usePageMotion();
+  const showImmediately = paused || reducedMotion || (typeof window !== "undefined" && window.__PRERENDERING__);
   const [ref, isInView] = useScrollAnimation<HTMLDivElement>();
   
   const staggerVariants: Variants = {
@@ -106,8 +112,8 @@ export function StaggerContainer({
   return (
     <motion.div
       ref={ref}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      initial={showImmediately ? false : "hidden"}
+      animate={showImmediately ? { opacity: 1, x: 0, y: 0, scale: 1, transition: { duration: 0, repeat: 0 } } : isInView ? "visible" : "hidden"}
       variants={staggerVariants}
       className={cn(className)}
       {...props}
@@ -118,3 +124,4 @@ export function StaggerContainer({
 }
 
 export default ScrollReveal;
+

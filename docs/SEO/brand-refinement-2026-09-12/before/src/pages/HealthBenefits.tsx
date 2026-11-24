@@ -1,0 +1,16 @@
+import { Link } from 'react-router-dom';
+import SEOProvider from '@/components/SEOProvider';
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/Footer';
+import BreadcrumbSchema from '@/components/BreadcrumbSchema';
+export default function HealthBenefits(){return <>
+ <SEOProvider title="Air Duct Cleaning & Indoor Air Quality: What to Know" description="Understand the role of duct cleaning, filtration, ventilation and moisture control in your Los Angeles home. Clear guidance before you book." path="/health-benefits/"/>
+ <BreadcrumbSchema items={[{name:'Home',item:'/'},{name:'Indoor air quality',item:'/health-benefits/'}]}/><NavBar/>
+ <main className="pac-article pac-container"><span className="pac-eyebrow">THE AIR CARE JOURNAL</span><h1>Better air begins<br/>with <em>better information.</em></h1><p className="pac-article-lead">Air duct cleaning can remove accumulated debris from ductwork. It is one part of caring for an HVAC system, and the right recommendation starts with the condition of your home.</p>
+ <h2>What duct cleaning can—and cannot—tell you</h2><p>Cleaning does not diagnose indoor air quality, cure allergies or guarantee lower energy bills. The EPA does not recommend routine duct cleaning for every home. It advises considering cleaning when there is substantial contamination, pest infestation or excessive debris being released from registers.</p><p>A technician should explain what they can see, which components need attention and why. If someone claims there is mold, ask how it was identified and how the underlying moisture problem will be addressed.</p>
+ <h2>Before choosing a service</h2><ul><li>Describe the concern: visible debris, an odor, renovation work or an airflow change.</li><li>Ask which parts of the system will be inspected and cleaned.</li><li>Request a written scope and discuss access, protection of finishes and cleanup.</li><li>Ask about any proposed chemicals and whether they are appropriate for your duct material.</li><li>Discuss when cleaning is insufficient and repair or replacement may be needed.</li></ul>
+ <h2>Look at the whole home</h2><p>Filtration, outdoor air conditions, ventilation, indoor activities and moisture all influence indoor air. Keep filters appropriate for your equipment and maintain them according to the manufacturer’s guidance. If the concern is persistent, discuss a broader indoor air assessment with a qualified professional.</p><p>For symptoms or health concerns, speak with a healthcare professional. A duct inspection cannot establish the cause of a medical condition.</p>
+ <h2>Where to learn more</h2><p>Read the <a href="https://www.epa.gov/indoor-air-quality-iaq/should-you-have-air-ducts-your-home-cleaned" target="_blank" rel="noreferrer">EPA’s guide to deciding whether to have your air ducts cleaned</a>. Bring your questions to your estimate so the decision is based on your system and the actual scope of work.</p>
+ <div className="pac-article-cta"><h2>Let’s start with your home.</h2><p>Tell Pure Air California what you’ve noticed and where your property is located.</p><div className="pac-actions"><Link className="pac-button" to="/quote/">Request a free estimate ↗</Link><Link className="pac-text-link" to="/services/residential-air-duct-cleaning/">Residential duct cleaning ↗</Link></div></div>
+ </main><Footer/>
+ </>}

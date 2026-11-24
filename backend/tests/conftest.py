@@ -17,3 +17,37 @@ def clear_settings_cache():
     after each test to keep tests order-independent."""
     yield
     get_settings.cache_clear()
+
+
+@pytest.fixture
+def db(monkeypatch):
+    """An empty in-memory database wired in place of MongoDB."""
+    from app import database
+    from tests.fake_mongo import FakeDatabase
+
+    fake = FakeDatabase()
+    monkeypatch.setattr(database, "_database", fake)
+    return fake
+
+
+@pytest.fixture
+def prospect():
+    """A saved prospect with a published, on-domain contact email."""
+    return {
+        "id": "p1",
+        "business_name": "Sunset Villas HOA, Inc.",
+        "business_category": "hoa",
+        "address": "1 Main St, Santa Monica, CA 90401, USA",
+        "website": "https://sunsetvillas.example",
+        "phone": "(310) 555-0142",
+        "contact_name": "Maria Lopez",
+        "contact_title": "Board President",
+        "contact_email": "maria@sunsetvillas.example",
+        "found_emails": [{"email": "maria@sunsetvillas.example", "source": "contact page (/board)",
+                          "confidence": 95, "grade": "named"}],
+        "outreach_status": "not_contacted",
+        "emails_sent": 0,
+        "sequence_status": "none",
+        "sequence_step": 0,
+        "public_token": "tok_abcdefghijklmnop",
+    }

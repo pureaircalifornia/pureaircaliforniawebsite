@@ -1,10 +1,26 @@
 import React from 'react';
 import { seoConfig } from '@/utils/seo/seoConfig';
 import { serviceSchema } from '@/utils/seo/serviceSchema';
+import { buildFaqSchema } from '@/data/faqs';
 
 interface SchemaMarkupProps {
   serviceType?: 'airDuctCleaning' | 'dryerVentCleaning' | 'moldRemoval';
   schema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  /**
+   * Emit the site-wide LocalBusiness/HVACBusiness node.
+   *
+   * Defaults to FALSE, and must stay that way. Every business node carries the
+   * same `@id` (".../#business") and an `aggregateRating`, so Google merges all
+   * copies on a page into one entity. When this defaulted to true, any page using
+   * <SchemaMarkup> more than once emitted the node repeatedly — location pages
+   * emitted it four times — producing an entity with four aggregate ratings.
+   * Search Console reports that as "Review has multiple aggregate ratings", and
+   * the item becomes ineligible for rich results.
+   *
+   * The business entity should appear exactly once per page: either via
+   * SEOProvider's `isLocalBusiness`, or by opting in here on ONE instance when the
+   * page needs a customised version (as the location pages do).
+   */
   showLocalBusiness?: boolean;
   showFAQ?: boolean;
   showReviews?: boolean;
@@ -14,7 +30,7 @@ interface SchemaMarkupProps {
 const SchemaMarkup: React.FC<SchemaMarkupProps> = ({
   serviceType,
   schema,
-  showLocalBusiness = true,
+  showLocalBusiness = false,
   showFAQ = false,
   showReviews = false,
   showServiceArea = false
@@ -38,55 +54,17 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({
         </script>
       )}
 
-      {/* Reviews Schema */}
-      {showReviews && (
-        <script type="application/ld+json">
-          {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'AggregateRating',
-            '@id': 'https://pureaircalifornia.com/#aggregateRating',
-            ratingValue: localBusiness.aggregateRating.ratingValue,
-            reviewCount: localBusiness.aggregateRating.reviewCount,
-            bestRating: localBusiness.aggregateRating.bestRating,
-            worstRating: localBusiness.aggregateRating.worstRating,
-            ratingExplanation: `Based on ${localBusiness.aggregateRating.reviewCount}+ customer reviews on Google`
-          })}
-        </script>
-      )}
+      {/* Reviews / rating: intentionally NOT emitted as a standalone AggregateRating.
+          A bare AggregateRating with no `itemReviewed` is invalid for rich results
+          (Google: "Missing field itemReviewed"). The valid rating is carried nested
+          inside the LocalBusiness/HVACBusiness schema (the `schema` prop / showLocalBusiness),
+          which is the Google-recommended form. `showReviews` is kept for API compatibility. */}
 
-      {/* FAQ Schema */}
+      {/* FAQ Schema — generated from the same data the visible <FAQSection> renders,
+          so the structured data always matches on-page content (Google requirement + GEO). */}
       {showFAQ && (
         <script type="application/ld+json">
-          {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: [
-              {
-                '@type': 'Question',
-                name: 'How often should I clean my air ducts?',
-                acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: 'We recommend cleaning your air ducts every 3-5 years, depending on your home\'s specific needs. Homes with pets, allergies, or recent renovations may benefit from more frequent cleaning.'
-                }
-              },
-              {
-                '@type': 'Question',
-                name: 'How long does air duct cleaning take?',
-                acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: 'A typical residential air duct cleaning takes about 2-4 hours, depending on the size of your system and the level of contamination.'
-                }
-              },
-              {
-                '@type': 'Question',
-                name: 'Is air duct cleaning worth it?',
-                acceptedAnswer: {
-                  '@type': 'Answer',
-                  text: 'Yes, professional air duct cleaning can significantly improve indoor air quality, reduce allergy symptoms, lower energy bills by improving HVAC efficiency, and extend the lifespan of your system.'
-                }
-              }
-            ]
-          })}
+          {JSON.stringify(buildFaqSchema())}
         </script>
       )}
 
@@ -95,7 +73,8 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({
         <script type="application/ld+json">
           {JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'ServiceArea',
+            '@type': 'Service',
+            name: 'Air Duct & Dryer Vent Cleaning',
             provider: {
               '@type': 'Organization',
               name: localBusiness.name

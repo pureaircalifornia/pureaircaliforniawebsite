@@ -40,7 +40,7 @@ const CleanAirDuctsAllergyRelief = () => {
             </div>
             
             <ResponsiveImage 
-              src="/images/blog/person-with-allergies.jpg" 
+              src="/images/blog/allergy-relief.jpg" 
               alt="Person with allergies" 
               className="w-full h-auto rounded-lg mb-8 object-cover"
               style={{ maxHeight: '400px' }}

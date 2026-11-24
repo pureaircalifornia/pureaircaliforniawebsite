@@ -1,0 +1,13 @@
+[
+  "Homepage: ten distinct services, eight markets, no orbit SVG, direct hash alignment",
+  "Service cards fit 1440px, with 44px+ click targets",
+  "Service cards fit 862px, with 44px+ click targets",
+  "Service cards fit 390px, with 44px+ click targets",
+  "Desktop services menu opens with all services; Escape restores focus",
+  "For your home link opens the correct service group across routes",
+  "Business shortcut reaches the commercial service group",
+  "Service navigation starts at top and Back restores the browsing position",
+  "Mobile grouped navigation expands and closes after a destination is selected",
+  "Process photograph loads",
+  "No browser runtime errors"
+]

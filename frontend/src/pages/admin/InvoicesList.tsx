@@ -198,7 +198,7 @@ export default function InvoicesList() {
                             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
                         />
                     </div>
-                    <select
+                    <select title="Filter invoices by status" aria-label="Filter invoices by status"
                         value={selectedStatus}
                         onChange={(e) => { setSelectedStatus(e.target.value); setPage(1); }}
                         className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 bg-white"
@@ -344,15 +344,13 @@ export default function InvoicesList() {
                             Showing page <span className="font-medium">{page}</span> ({filteredInvoices.length} results)
                         </p>
                         <div className="flex gap-2">
-                            <button
-                                onClick={() => setPage(Math.max(1, page - 1))}
+                            <button title="Previous page" aria-label="Previous page"
                                 disabled={page === 1}
                                 className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 transition-colors"
                             >
                                 <ChevronLeft className="w-4 h-4" />
                             </button>
-                            <button
-                                onClick={() => setPage(page + 1)}
+                            <button title="Next page" aria-label="Next page"
                                 disabled={invoices.length < pageSize}
                                 className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 transition-colors"
                             >

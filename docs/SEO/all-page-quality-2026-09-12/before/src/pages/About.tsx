@@ -1,0 +1,385 @@
+import PageHero from '@/components/PageHero';
+import React from 'react';
+
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/Footer';
+import RelatedLinks from '@/components/RelatedLinks';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Shield, Clock, CheckCircle, Award, Users, Building, Star, Phone, Mail, MapPin } from 'lucide-react';
+import { ScrollReveal } from '@/components/ui/scroll-reveal';
+import ResponsiveImage from '@/components/ResponsiveImage';
+import TestimonialCard from '@/components/TestimonialCard';
+import SEOProvider from '@/components/SEOProvider';
+import SchemaMarkup from '@/components/SchemaMarkup';
+import { seoConfig } from '@/utils/seo/seoConfig';
+import TrustedBy from '@/components/TrustedBy';
+import AnimatedCounter from '@/components/AnimatedCounter';
+
+
+const About = () => {
+  return (
+    
+      <div className="min-h-screen flex flex-col">
+        <SEOProvider
+          title="About Pure Air California | NADCA Certified in LA"
+          description="Meet Pure Air California — NADCA-certified air duct cleaning in Los Angeles for 40+ years. Licensed, insured, 448K+ customers served. Call (213) 792-4145."
+          keywords={["about pure air california", "air duct cleaning company Los Angeles", "NADCA certified Los Angeles", "best air duct cleaning team LA", "professional HVAC cleaning Los Angeles"]}
+          path="/about"
+          isLocalBusiness
+        >
+          <SchemaMarkup schema={seoConfig.schema.organization} />
+          <SchemaMarkup schema={{
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "url": "https://www.pureaircalifornia.com/",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://www.pureaircalifornia.com/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          }} />
+        </SEOProvider>
+
+        <NavBar />
+
+        {/* Hero Section */}
+        <PageHero title="Good air starts with good people." description="We’re Pure Air California. A hands-on team helping Los Angeles homeowners, property managers and businesses care for the systems behind their everyday comfort."/>
+
+        {/* Trusted By Brands */}
+        <TrustedBy />
+
+        <main>
+          <div className="container mx-auto px-4 py-16">
+
+            {/* Company Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+              {[
+                { label: 'Years of Experience', target: 40, suffix: '+' },
+                { label: 'Customers Since 1993', target: 448, suffix: 'K+' },
+                { label: 'Satisfaction Guarantee', target: 100, suffix: '%' },
+                { label: 'Emergency Service', value: '24/7' }
+              ].map((stat, i) => (
+                <ScrollReveal key={i} animation="fadeInUp" delay={0.1 * (i + 1)}>
+                  <div className="glass-premium p-6 rounded-2xl text-center hover:scale-105 transition-transform duration-300">
+                    <div className="text-3xl md:text-4xl font-bold text-brand-600 mb-2">
+                      {stat.value ? stat.value : <AnimatedCounter target={stat.target!} suffix={stat.suffix} duration={2200} />}
+                    </div>
+                    <div className="text-sm md:text-base text-gray-600 font-medium">{stat.label}</div>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+
+            {/* Our Story */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+              <ScrollReveal animation="slideInLeft">
+                <div>
+                  <h2 className="text-3xl font-bold mb-6 text-slate-900 drop-shadow-sm">Our Story</h2>
+                  <p className="text-lg text-gray-600 mb-6">
+                    {/* Founding year matches llms.txt and the company record. The page
+                        previously said "founded over 40 years ago", which contradicted the
+                        stated 1993 founding — the 40+ years figure refers to our founder's
+                        experience in air quality, not the age of the company. */}
+                    Pure Air California was founded in 1993 with a simple mission: to provide the highest quality air duct cleaning services
+                    to Southern California residents and businesses, drawing on our founder's 40+ years of hands-on air quality experience.
+                    What started as a small family business has grown into one of the region's most trusted air quality specialists.
+                  </p>
+                  <p className="text-lg text-gray-600 mb-6">
+                    Our founder, Lou, recognized the critical importance of clean indoor air after witnessing firsthand how poor air quality
+                    affected his family's health. This personal experience drives our commitment to excellence and customer satisfaction.
+                  </p>
+                  <p className="text-lg text-gray-600">
+                    Today, we serve thousands of customers across Los Angeles, Orange County, and surrounding areas, maintaining the same
+                    family values and attention to detail that made us successful from day one.
+                  </p>
+                </div>
+              </ScrollReveal>
+
+              <ScrollReveal animation="slideInRight">
+                <div className="relative group">
+                  <div className="absolute -inset-2 bg-gradient-to-r from-brand-500 to-sky-500 rounded-2xl opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500"></div>
+                  <div className="relative glass-premium p-2 rounded-2xl overflow-hidden shadow-2xl">
+                    <ResponsiveImage
+                      src="/images/logo/pac-logo.png"
+                      alt="Pure Air California"
+                      className="w-full h-64 object-contain rounded-xl p-8 bg-white group-hover:scale-105 transition-transform duration-700"
+                      loading="lazy"
+                      width={400}
+                      height={400}
+                    />
+                    <div className="absolute bottom-6 left-6 glass-premium backdrop-blur-md p-4 rounded-xl shadow-2xl border-white/40">
+                      <div className="flex items-center gap-2">
+                        <Star className="h-5 w-5 text-yellow-500 fill-current" />
+                        <span className="font-bold text-slate-900">4.6★ on Google</span>
+                      </div>
+                      <p className="text-xs text-slate-600 font-medium mt-1">448K+ customers · 40+ years</p>
+                    </div>
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+              <ScrollReveal animation="fadeInUp">
+                <div className="glass-card p-8 h-full">
+                  <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-slate-900">
+                    <div className="p-2 bg-brand-50 rounded-lg text-brand-600">
+                      <Shield className="h-6 w-6" />
+                    </div>
+                    Our Mission
+                  </h2>
+                  <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+                    To improve indoor air quality for homes and businesses throughout Southern California by providing professional,
+                    reliable, and affordable air duct cleaning services that promote health, comfort, and energy efficiency.
+                  </p>
+                  <div className="space-y-4">
+                    {[
+                      'NADCA certified technicians',
+                      'Fully licensed and insured',
+                      'Advanced equipment and techniques',
+                      '100% satisfaction guarantee'
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-3">
+                        <div className="w-6 h-6 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0">
+                          <CheckCircle className="h-4 w-4 text-green-600" />
+                        </div>
+                        <span className="text-slate-600 font-medium">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+
+              <ScrollReveal animation="fadeInUp" delay={0.2}>
+                <div className="glass-card p-8 h-full">
+                  <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-slate-900">
+                    <div className="p-2 bg-brand-50 rounded-lg text-brand-600">
+                      <Award className="h-6 w-6" />
+                    </div>
+                    Our Values
+                  </h2>
+                  <div className="space-y-6">
+                    {[
+                      {
+                        title: 'Integrity',
+                        icon: <Shield className="h-6 w-6" />,
+                        desc: 'We conduct business with honesty and transparency, always putting our customers\' needs first.'
+                      },
+                      {
+                        title: 'Excellence',
+                        icon: <Users className="h-6 w-6" />,
+                        desc: 'We strive for the highest standards in everything we do, from customer service to technical expertise.'
+                      },
+                      {
+                        title: 'Reliability',
+                        icon: <Clock className="h-6 w-6" />,
+                        desc: 'We show up on time, complete our work efficiently, and stand behind our results.'
+                      }
+                    ].map((value, i) => (
+                      <div key={i} className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/40 transition-colors duration-300">
+                        <div className="flex-shrink-0">
+                          <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-brand-600">
+                            {value.icon}
+                          </div>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-slate-900 mb-1">{value.title}</h3>
+                          <p className="text-slate-600 text-sm leading-relaxed">{value.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
+
+            {/* Team Section */}
+            <div className="mb-16">
+              <ScrollReveal animation="fadeInUp">
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl font-bold mb-4 text-slate-900 drop-shadow-sm">Meet Our Team</h2>
+                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Our experienced professionals are dedicated to providing exceptional service and maintaining the highest standards of air quality.
+                  </p>
+                </div>
+              </ScrollReveal>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[
+                  {
+                    name: 'Lou Chanab',
+                    role: 'Founder & CEO',
+                    image: '/images/team/team-lou-chanab-headshot-professional.png',
+                    desc: 'With over 40 years of experience in the air quality industry, Lou founded Pure Air California with a passion for helping families breathe cleaner air.',
+                    delay: 0.1
+                  },
+                  {
+                    name: 'Maya Chanab',
+                    role: 'VP Client Relations',
+                    image: '/images/team/team-maya-chanab-headshot-professional.png',
+                    desc: 'Maya brings a wealth of empathy and expertise, leading our customer relationship strategies to ensure every client has a positive, stress-free experience.',
+                    delay: 0.2
+                  },
+                  {
+                    name: 'Sarah',
+                    role: 'Customer Relations',
+                    image: '/images/team/team-customer-relations-manager.jpg',
+                    desc: 'Sarah ensures every customer receives exceptional service from initial contact through project completion and follow-up.',
+                    delay: 0.3
+                  }
+                ].map((member, i) => (
+                  <ScrollReveal key={i} animation="fadeInUp" delay={member.delay}>
+                    <div className="glass-card group h-full flex flex-col overflow-hidden hover:shadow-2xl transition-all duration-500">
+                      <div className="relative h-64 overflow-hidden">
+                        <div className="absolute inset-0 bg-brand-900/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                        <ResponsiveImage
+                          src={member.image}
+                          alt={`${member.name}, ${member.role}`}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                          loading="lazy"
+                          width={400}
+                          height={400}
+                        />
+                      </div>
+                      <div className="p-8 flex flex-col flex-grow">
+                        <h3 className="text-xl font-bold text-slate-900 mb-1">{member.name}</h3>
+                        <p className="text-brand-600 font-semibold text-sm mb-4 uppercase tracking-wider">{member.role}</p>
+                        <p className="text-slate-600 text-sm leading-relaxed">
+                          {member.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                ))}
+              </div>
+            </div>
+
+            {/* Certifications & Awards */}
+            <div className="bg-gray-50 rounded-xl p-8 mb-16">
+              <ScrollReveal animation="fadeInUp">
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl font-bold mb-4 text-slate-900 drop-shadow-sm">Certifications & Awards</h2>
+                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    We maintain the highest industry standards and are proud of our certifications and recognition.
+                  </p>
+                </div>
+              </ScrollReveal>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <ScrollReveal animation="fadeInUp" delay={0.1}>
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                      <Award className="h-10 w-10 text-brand-600" />
+                    </div>
+                    <h3 className="font-semibold mb-2">NADCA Certified</h3>
+                    <p className="text-sm text-gray-600">National Air Duct Cleaners Association certification for quality standards</p>
+                  </div>
+                </ScrollReveal>
+
+                <ScrollReveal animation="fadeInUp" delay={0.2}>
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                      <Shield className="h-10 w-10 text-brand-600" />
+                    </div>
+                    <h3 className="font-semibold mb-2">Fully Insured</h3>
+                    <p className="text-sm text-gray-600">Comprehensive liability and workers compensation coverage</p>
+                  </div>
+                </ScrollReveal>
+
+                <ScrollReveal animation="fadeInUp" delay={0.3}>
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                      <Star className="h-10 w-10 text-yellow-500 fill-current" />
+                    </div>
+                    <h3 className="font-semibold mb-2">4.6★ on Google</h3>
+                    <p className="text-sm text-gray-600">Rated 4.6 stars by our Google customers, with 448K+ served over 40+ years</p>
+                  </div>
+                </ScrollReveal>
+
+                <ScrollReveal animation="fadeInUp" delay={0.4}>
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                      <Building className="h-10 w-10 text-brand-600" />
+                    </div>
+                    <h3 className="font-semibold mb-2">Licensed & Bonded</h3>
+                    <p className="text-sm text-gray-600">Fully licensed and bonded for your protection and peace of mind</p>
+                  </div>
+                </ScrollReveal>
+              </div>
+            </div>
+
+            {/* Testimonials */}
+            <div className="mb-16">
+              <ScrollReveal animation="fadeInUp">
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl font-bold mb-4 text-slate-900 drop-shadow-sm">What Our Customers Say</h2>
+                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Don't just take our word for it. Here's what our satisfied customers have to say about our services.
+                  </p>
+                </div>
+              </ScrollReveal>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <ScrollReveal animation="fadeInUp" delay={0.1}>
+                  <TestimonialCard
+                    name="David M."
+                    location="Beverly Hills"
+                    quote="Exceptional service! The team was professional, thorough, and respectful of our home. The difference in air quality was noticeable immediately."
+                    rating={5}
+                  />
+                </ScrollReveal>
+
+                <ScrollReveal animation="fadeInUp" delay={0.2}>
+                  <TestimonialCard
+                    name="Jennifer L."
+                    location="Downtown LA"
+                    quote="Professional, reliable, and reasonably priced. They cleaned our entire office building and the improvement in air quality was remarkable. Highly recommend!"
+                    rating={5}
+                  />
+                </ScrollReveal>
+
+                <ScrollReveal animation="fadeInUp" delay={0.3}>
+                  <TestimonialCard
+                    name="Robert K."
+                    location="Santa Monica"
+                    quote="Outstanding service from start to finish. The team was knowledgeable, efficient, and left our home spotless. My allergies have improved significantly!"
+                    rating={5}
+                  />
+                </ScrollReveal>
+              </div>
+            </div>
+
+            {/* Contact CTA */}
+            <ScrollReveal animation="fadeInUp">
+              <div className="bg-gradient-to-r from-brand-600 to-brand-700 rounded-xl p-8 text-white text-center shadow-lg">
+                <h2 className="text-3xl font-bold mb-4 drop-shadow-md text-shadow-sm">Ready to Experience Pure Air?</h2>
+                <p className="text-xl mb-8 max-w-2xl mx-auto text-brand-50">
+                  Join thousands of satisfied customers who trust Pure Air California for their air duct cleaning needs.
+                  Contact us today for a free consultation and quote.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
+                    <Link to="/quote">Get Free Quote</Link>
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-700">
+                    <a href="tel:+12137924145">
+                      <Phone className="w-4 h-4 mr-2 inline" />
+                      (213) 792-4145
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </main>
+        <RelatedLinks heading="Explore our work" links={[{ label: 'Commercial case studies', path: '/case-studies' }, { label: 'Industries we serve', path: '/industries' }, { label: 'Areas we serve', path: '/locations' }, { label: 'Air duct cleaning cost in Los Angeles', path: '/pricing' }]} />
+
+        <Footer />
+      </div>
+    
+  );
+};
+
+export default About;
+

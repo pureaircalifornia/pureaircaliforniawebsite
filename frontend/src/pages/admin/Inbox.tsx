@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { Search, Mail, MailOpen, Plus, Clock, Inbox as InboxIcon, Send, Archive, Trash2, CheckCircle2, Loader2 } from 'lucide-react';
 
 export default function Inbox() {
@@ -190,10 +191,10 @@ export default function Inbox() {
                         <div className="p-4 border-b border-gray-200 flex justify-between items-center bg-white">
                             <h2 className="text-lg font-semibold text-gray-900">{selectedMessage.subject}</h2>
                             <div className="flex items-center gap-2">
-                                <button onClick={() => handleArchive(selectedMessage.id)} className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
+                                <button title="Message action" aria-label="Message action" onClick={() => handleArchive(selectedMessage.id)} className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
                                     <Archive className="w-4 h-4" />
                                 </button>
-                                <button className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-gray-100">
+                                <button title="Message action" aria-label="Message action" className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-gray-100">
                                     <Trash2 className="w-4 h-4" />
                                 </button>
                             </div>

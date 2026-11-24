@@ -1,3 +1,4 @@
+// AppointmentForm — Schedule a new service appointment
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Save, Calendar, Clock, MapPin, User, CheckSquare, Loader2 } from 'lucide-react';
@@ -139,7 +140,7 @@ export default function AppointmentForm() {
         <div className="max-w-4xl mx-auto space-y-6">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                    <button
+                    <button title="Go back" aria-label="Go back"
                         onClick={() => navigate(-1)}
                         className="p-2 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
                     >
@@ -173,7 +174,7 @@ export default function AppointmentForm() {
                                 <div className="space-y-4">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-2">Customer *</label>
-                                        <select
+                                        <select title="Select customer" aria-label="Select customer"
                                             name="customer_id"
                                             required
                                             value={formData.customer_id}
@@ -192,7 +193,7 @@ export default function AppointmentForm() {
                                     {selectedCustomer && (
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-2">Service Location *</label>
-                                            <select
+                                            <select title="Select service location" aria-label="Select service location"
                                                 name="property_id"
                                                 required
                                                 value={formData.property_id}
@@ -224,7 +225,7 @@ export default function AppointmentForm() {
                                         <label className="block text-sm font-medium text-gray-700 mb-2">Date & Time *</label>
                                         <div className="relative">
                                             <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                                            <input
+                                            <input title="Appointment date and time" aria-label="Appointment date and time" placeholder="Select date and time"
                                                 type="datetime-local"
                                                 required
                                                 value={formData.scheduled_start}
@@ -235,7 +236,7 @@ export default function AppointmentForm() {
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-2">Duration (minutes)</label>
-                                        <input
+                                        <input title="Estimated duration in minutes" aria-label="Estimated duration in minutes" placeholder="e.g. 90"
                                             type="number"
                                             min="30"
                                             step="30"
@@ -246,7 +247,7 @@ export default function AppointmentForm() {
                                     </div>
                                     <div className="md:col-span-2">
                                         <label className="block text-sm font-medium text-gray-700 mb-2">Assign Technician</label>
-                                        <select
+                                        <select title="Assign technician" aria-label="Assign technician"
                                             name="technician_id"
                                             value={formData.technician_id}
                                             onChange={(e) => setFormData(prev => ({ ...prev, technician_id: e.target.value }))}
@@ -288,6 +289,8 @@ export default function AppointmentForm() {
                                     {SERVICE_OPTIONS.map(service => (
                                         <label key={service.value} className="flex items-start gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
                                             <input
+                                                title={`Toggle ${service.label}`}
+                                                aria-label={`Toggle ${service.label}`}
                                                 type="checkbox"
                                                 checked={formData.service_types.includes(service.value)}
                                                 onChange={() => handleServiceToggle(service.value)}
@@ -305,6 +308,7 @@ export default function AppointmentForm() {
 
                 <div className="flex justify-end gap-4 border-t border-gray-200 pt-6">
                     <button
+                        title="Cancel and go back" aria-label="Cancel and go back"
                         type="button"
                         onClick={() => navigate(-1)}
                         className="px-6 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
@@ -312,6 +316,7 @@ export default function AppointmentForm() {
                         Cancel
                     </button>
                     <button
+                        title="Save and schedule this appointment" aria-label="Save and schedule this appointment"
                         type="submit"
                         disabled={loading}
                         className="flex items-center gap-2 px-6 py-2.5 bg-sky-600 rounded-lg text-sm font-medium text-white hover:bg-sky-700 transition-colors disabled:opacity-50"

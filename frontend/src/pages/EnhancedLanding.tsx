@@ -28,8 +28,8 @@ const EnhancedLanding = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEOProvider
-        title="#1 Air Duct Cleaning Company in Los Angeles | Pure Air California | (213) 792-4145"
-        description="Los Angeles' top-rated air duct & dryer vent cleaning company. NADCA certified, 448K+ customers served over 40+ years, same-day service available. Free estimates! Call (213) 792-4145."
+        title="Air Duct Cleaning Los Angeles | Pure Air California"
+        description="NADCA-certified air duct & dryer vent cleaning in Los Angeles. 448K+ customers over 40+ years, same-day service. Free estimate — (213) 792-4145."
         keywords={["air duct cleaning Los Angeles", "best air duct cleaning company Los Angeles", "dryer vent cleaning Los Angeles", "HVAC cleaning Los Angeles", "air duct cleaning near me", "duct cleaning LA", "indoor air quality Los Angeles", "NADCA certified air duct cleaning"]}
         path="/"
         disableDefaultSchema // We will provide LocalBusiness schema explicitly
@@ -57,7 +57,7 @@ const EnhancedLanding = () => {
                 <h1
                   className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white drop-shadow-lg"
                 >
-                  Breathe Easier with Professional Air Duct & Dryer Vent Cleaning
+                  Breathe Easier: Air Duct & Dryer Vent Cleaning in Los Angeles
                 </h1>
                 <div className="flex items-center gap-2 mb-4 text-yellow-400">
                   <span className="text-2xl tracking-tight">★★★★★</span>
@@ -155,11 +155,26 @@ const EnhancedLanding = () => {
         {/* Dynamic Social Proof Marquee */}
         <ReviewMarquee />
 
-        {/* Inspirational Quotes About Breath & Air */}
-        <section className="py-20 bg-gradient-to-br from-slate-900 via-brand-900 to-slate-900 text-white overflow-hidden relative">
-          <div className="absolute inset-0 opacity-10"></div>
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl"></div>
+        {/* Inspirational Quotes About Breath & Air.
+            Set over real California coastline rather than an abstract gradient — the
+            subject of the section is naturally clean air, so the imagery should be
+            the thing itself. The dark overlay below is what keeps the quote text at
+            an accessible contrast ratio over a photograph. */}
+        <section className="py-24 text-white overflow-hidden relative isolate">
+          <img
+            src="/images/hero/hero-misty-trees.jpg"
+            alt="Fresh coastal air over the California shoreline at Big Sur"
+            className="absolute inset-0 w-full h-full object-cover -z-10"
+            loading="lazy"
+            decoding="async"
+            width={1920}
+            height={1080}
+          />
+          {/* A single, light overlay. Each quote card carries its own dark panel, so
+              the section tint only needs to blend the photo into the neighbouring
+              dark sections and take the edge off the sky — not black it out. Two
+              stacked overlays multiplied to ~94% and hid the photograph entirely. */}
+          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/85 via-slate-950/35 to-slate-950/85"></div>
 
           <div className="container mx-auto px-4 relative z-10">
             <ScrollReveal>
@@ -195,23 +210,25 @@ const EnhancedLanding = () => {
                 },
               ].map((item, i) => (
                 <ScrollReveal key={i} delay={i * 0.1}>
-                  <motion.div
-                    className="bg-slate-800/90 backdrop-blur-lg p-8 rounded-3xl h-full flex flex-col justify-between group hover:scale-[1.02] transition-all duration-500 border border-white/15 shadow-xl"
+                  <motion.figure
+                    className="bg-slate-950/70 backdrop-blur-md p-8 md:p-10 rounded-3xl h-full flex flex-col justify-between border border-white/20 shadow-2xl transition-all duration-500"
                     whileHover={{ y: -5 }}
                   >
                     <div>
-                      <svg className="w-10 h-10 text-sky-400 mb-4 opacity-50" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-10 h-10 text-sky-300 mb-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                       </svg>
-                      <p className="text-lg text-gray-200 italic leading-relaxed mb-6">
-                        "{item.quote}"
-                      </p>
+                      {/* Quotes render in full — no clamping or truncation — at a size
+                          that makes them the point of the section rather than filler. */}
+                      <blockquote className="text-xl md:text-2xl text-white font-light italic leading-relaxed mb-8">
+                        “{item.quote}”
+                      </blockquote>
                     </div>
-                    <div className="border-t border-white/10 pt-4">
-                      <p className="font-bold text-white">{item.author}</p>
-                      <p className="text-sm text-sky-300">{item.role}</p>
-                    </div>
-                  </motion.div>
+                    <figcaption className="border-t border-white/25 pt-5">
+                      <p className="font-bold text-white text-lg">{item.author}</p>
+                      <p className="text-sm text-sky-200 mt-0.5">{item.role}</p>
+                    </figcaption>
+                  </motion.figure>
                 </ScrollReveal>
               ))}
             </div>

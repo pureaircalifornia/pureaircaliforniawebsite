@@ -1,7 +1,9 @@
+import PageHero from '@/components/PageHero';
 import React from 'react';
 
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
+import RelatedLinks from '@/components/RelatedLinks';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Shield, Clock, CheckCircle, Award, Users, Building, Star, Phone, Mail, MapPin } from 'lucide-react';
@@ -9,8 +11,6 @@ import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import TestimonialCard from '@/components/TestimonialCard';
 import SEOProvider from '@/components/SEOProvider';
-import SchemaMarkup from '@/components/SchemaMarkup';
-import { seoConfig } from '@/utils/seo/seoConfig';
 import TrustedBy from '@/components/TrustedBy';
 import AnimatedCounter from '@/components/AnimatedCounter';
 
@@ -20,63 +20,18 @@ const About = () => {
     
       <div className="min-h-screen flex flex-col">
         <SEOProvider
-          title="About Pure Air California | #1 NADCA Certified Air Duct Cleaning Los Angeles"
-          description="Learn about Pure Air California, Los Angeles' trusted air duct cleaning experts with over 40 years of experience. NADCA certified, licensed & insured with 448K+ satisfied customers. Meet our team!"
+          title="About Pure Air California | Los Angeles Air Care"
+          description="Meet the PAC team serving Los Angeles homes and businesses. Learn about our approach to air duct and dryer vent cleaning, project records and customer care."
           keywords={["about pure air california", "air duct cleaning company Los Angeles", "NADCA certified Los Angeles", "best air duct cleaning team LA", "professional HVAC cleaning Los Angeles"]}
           path="/about"
+          isLocalBusiness
         >
-          <SchemaMarkup schema={seoConfig.schema.organization} />
-          <SchemaMarkup schema={{
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "url": "https://www.pureaircalifornia.com/",
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": "https://www.pureaircalifornia.com/search?q={search_term_string}",
-              "query-input": "required name=search_term_string"
-            }
-          }} />
         </SEOProvider>
 
         <NavBar />
 
         {/* Hero Section */}
-        <section className="relative pt-32 pb-16 text-white overflow-hidden">
-          <div className="absolute inset-0 z-0">
-            <ResponsiveImage
-              src="/images/sortanduse/martin-adams-pTCcJSBOTxY-unsplash.jpg"
-              alt="Los Angeles Skyline Sunset by Martin Adams"
-              className="w-full h-full object-cover"
-              loading="eager"
-              fetchPriority="high"
-            />
-            {/* Reduced opacity gradient overlay for better image visibility */}
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-900/80 via-brand-800/60 to-transparent"></div>
-          </div>
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-4xl">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="bg-white/20 p-2 rounded-full">
-                  <Building className="h-6 w-6" />
-                </span>
-                <span className="text-brand-200 font-medium">About Our Company</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 font-heading text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.3),_0_0_40px_rgba(100,180,255,0.2),_0_0_60px_rgba(100,180,255,0.1)]">About Pure Air California</h1>
-              <p className="text-xl text-brand-100 mb-8 max-w-3xl">
-                For over 40 years, Pure Air California has been Southern California's trusted name in professional air duct cleaning.
-                We're committed to improving indoor air quality for homes and businesses throughout Los Angeles and surrounding areas.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-                  <Link to="/contact">Contact Our Team</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-700">
-                  <Link to="/services">Our Services</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
+        <PageHero title="Good air starts with good people." description="We’re Pure Air California. A hands-on team helping Los Angeles homeowners, property managers and businesses care for the systems behind their everyday comfort."/>
 
         {/* Trusted By Brands */}
         <TrustedBy />
@@ -88,7 +43,7 @@ const About = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
               {[
                 { label: 'Years of Experience', target: 40, suffix: '+' },
-                { label: 'Satisfied Clients', target: 448, suffix: 'K+' },
+                { label: 'Customers Since 1993', target: 448, suffix: 'K+' },
                 { label: 'Satisfaction Guarantee', target: 100, suffix: '%' },
                 { label: 'Emergency Service', value: '24/7' }
               ].map((stat, i) => (
@@ -109,9 +64,13 @@ const About = () => {
                 <div>
                   <h2 className="text-3xl font-bold mb-6 text-slate-900 drop-shadow-sm">Our Story</h2>
                   <p className="text-lg text-gray-600 mb-6">
-                    Pure Air California was founded over 40 years ago with a simple mission: to provide the highest quality air duct cleaning services
-                    to Southern California residents and businesses. What started as a small family business has grown into one of the region's
-                    most trusted air quality specialists.
+                    {/* Founding year matches llms.txt and the company record. The page
+                        previously said "founded over 40 years ago", which contradicted the
+                        stated 1993 founding — the 40+ years figure refers to our founder's
+                        experience in air quality, not the age of the company. */}
+                    Pure Air California was founded in 1993 with a simple mission: to provide the highest quality air duct cleaning services
+                    to Southern California residents and businesses, drawing on our founder's 40+ years of hands-on air quality experience.
+                    What started as a small family business has grown into one of the region's most trusted air quality specialists.
                   </p>
                   <p className="text-lg text-gray-600 mb-6">
                     Our founder, Lou, recognized the critical importance of clean indoor air after witnessing firsthand how poor air quality
@@ -139,7 +98,7 @@ const About = () => {
                     <div className="absolute bottom-6 left-6 glass-premium backdrop-blur-md p-4 rounded-xl shadow-2xl border-white/40">
                       <div className="flex items-center gap-2">
                         <Star className="h-5 w-5 text-yellow-500 fill-current" />
-                        <span className="font-bold text-slate-900">4.7★ on Google</span>
+                        <span className="font-bold text-slate-900">4.6★ on Google</span>
                       </div>
                       <p className="text-xs text-slate-600 font-medium mt-1">448K+ customers · 40+ years</p>
                     </div>
@@ -320,8 +279,8 @@ const About = () => {
                     <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                       <Star className="h-10 w-10 text-yellow-500 fill-current" />
                     </div>
-                    <h3 className="font-semibold mb-2">5-Star Rating</h3>
-                    <p className="text-sm text-gray-600">Consistently rated 5 stars by our customers across all platforms</p>
+                    <h3 className="font-semibold mb-2">4.6★ on Google</h3>
+                    <p className="text-sm text-gray-600">Rated 4.6 stars by our Google customers, with 448K+ served over 40+ years</p>
                   </div>
                 </ScrollReveal>
 
@@ -330,8 +289,8 @@ const About = () => {
                     <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                       <Building className="h-10 w-10 text-brand-600" />
                     </div>
-                    <h3 className="font-semibold mb-2">BBB Accredited</h3>
-                    <p className="text-sm text-gray-600">Better Business Bureau A+ rating for ethical business practices</p>
+                    <h3 className="font-semibold mb-2">Licensed & Bonded</h3>
+                    <p className="text-sm text-gray-600">Fully licensed and bonded for your protection and peace of mind</p>
                   </div>
                 </ScrollReveal>
               </div>
@@ -401,6 +360,9 @@ const About = () => {
             </ScrollReveal>
           </div>
         </main>
+        <RelatedLinks heading="Explore our work" links={[{ label: 'Commercial case studies', path: '/case-studies' }, { label: 'Industries we serve', path: '/industries' }, { label: 'Areas we serve', path: '/locations' }, { label: 'Air duct cleaning cost in Los Angeles', path: '/pricing' }]} />
+
+        <section className="pac-section pac-container" id="editorial-standards"><div className="max-w-3xl"><span className="pac-eyebrow">THE PAC AIR CARE JOURNAL</span><h2>Useful information.<br/><em>Clear about its limits.</em></h2><p>Our guides help homeowners and property teams understand service options and ask better questions. We identify PAC as the publisher, link to relevant public guidance and show when an article was revised.</p><p>Project stories describe the scope recorded for the property and date shown. General service information does not replace an assessment of your equipment, medical advice or a facility’s own requirements.</p><p><Link className="pac-text-link" to="/blog/">Explore the air care journal →</Link></p></div></section>
         <Footer />
       </div>
     

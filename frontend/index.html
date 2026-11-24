@@ -2,60 +2,38 @@
 <html lang="en">
 
 <head>
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({
-        'gtm.start':
-          new Date().getTime(), event: 'gtm.js'
-      }); var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-KWX8V4NL');</script>
-  <!-- End Google Tag Manager -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SK8BHVML0W"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-SK8BHVML0W');
+  </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <base href="/" />
-  <title>#1 Air Duct Cleaning Company in Los Angeles | Pure Air California | (213) 792-4145</title>
-  <meta name="description"
-    content="Los Angeles' top-rated air duct & dryer vent cleaning company. NADCA certified, 1,200+ 5-star reviews, same-day service. Free estimates! Call (213) 792-4145." />
+
   <meta name="author" content="Pure Air California" />
 
-  <!-- SEO Meta Tags -->
-  <meta name="keywords"
-    content="air duct cleaning Los Angeles, best air duct cleaning company Los Angeles, dryer vent cleaning Los Angeles, HVAC cleaning Los Angeles, indoor air quality Los Angeles, commercial duct cleaning LA, residential duct cleaning Los Angeles, air duct cleaning near me, NADCA certified air duct cleaning" />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <meta name="geo.region" content="US-CA" />
-  <meta name="geo.placename" content="Los Angeles" />
-  <meta name="geo.position" content="34.0522;-118.2437" />
-  <meta name="ICBM" content="34.0522, -118.2437" />
+  <!--
+    IMPORTANT: do NOT add title / description / keywords / robots / canonical /
+    og:* / twitter:* tags here.
 
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="#1 Air Duct Cleaning Company in Los Angeles | Pure Air California" />
-  <meta property="og:description"
-    content="Los Angeles' top-rated air duct & dryer vent cleaning company. NADCA certified, 1,200+ 5-star reviews, same-day service. Free estimates!" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.pureaircalifornia.com/" />
-  <meta property="og:image"
-    content="https://www.pureaircalifornia.com/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:site_name" content="Pure Air California" />
-  <meta property="og:locale" content="en_US" />
+    SEOProvider (react-helmet-async) owns all of them per route. Helmet replaces
+    the title element but only APPENDS its own meta tags, so anything duplicated
+    here shipped twice on every page — once with the homepage's copy and once with
+    the real per-page copy — leaving Google to pick between two conflicting
+    descriptions site-wide. Only tags Helmet never manages belong in this file.
 
-  <!-- Twitter Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@pureaircalifornia" />
-  <meta name="twitter:title" content="#1 Air Duct Cleaning Company in Los Angeles | Pure Air California" />
-  <meta name="twitter:description"
-    content="Los Angeles' top-rated air duct & dryer vent cleaning company. NADCA certified, 1,200+ 5-star reviews, same-day service." />
-  <meta name="twitter:image"
-    content="https://www.pureaircalifornia.com/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png" />
-
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://www.pureaircalifornia.com/" />
+    Non-route-specific og tags that Helmet does not set are safe to keep below.
+  -->
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png" />
+  <link rel="icon" type="image/svg+xml" href="/brand/pac-brandmark.svg" />
+
+  <link rel="preload" href="/brand/pac-brandmark.svg" as="image" type="image/svg+xml" />
 
   <!-- Preconnect for Performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,27 +41,22 @@
   <link rel="preconnect" href="https://www.googletagmanager.com">
   <link rel="dns-prefetch" href="https://www.google-analytics.com">
 
-  <!-- Preload hero image for LCP improvement -->
-  <link rel="preload" as="image" href="/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png" type="image/png"
-    fetchpriority="high">
+  <!-- Preload fonts for FCP/LCP improvement -->
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap"
+    as="style" onload="this.onload=null;this.rel='stylesheet'">
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SK8BHVML0W"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+  <!-- Preload critical above-the-fold images for LCP optimization -->
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap">
+  </noscript>
 
-    gtag('config', 'G-SK8BHVML0W');
-    gtag('config', 'AW-1120420693'); // Pure Air California Google Ads Conversion ID
-  </script>
+
 </head>
 
 <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KWX8V4NL" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>

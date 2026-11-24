@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-09-12T09:52:11.900Z",
+  "typescript": "passed",
+  "eslint": "passed",
+  "buildRoutes": 116,
+  "indexablePages": 112,
+  "basicErrors": [],
+  "semanticErrors": [],
+  "browserRoutes": 115,
+  "browserIssues": [],
+  "deployed": false
+}

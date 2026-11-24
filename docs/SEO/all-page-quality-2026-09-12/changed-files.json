@@ -1,0 +1,218 @@
+[
+  {
+    "file": "src/pages/blog/post-data.ts",
+    "status": "modified",
+    "beforeBytes": 115008,
+    "afterBytes": 58529
+  },
+  {
+    "file": "src/pages/blog/data.ts",
+    "status": "modified",
+    "beforeBytes": 11992,
+    "afterBytes": 14926
+  },
+  {
+    "file": "src/components/SEOProvider.tsx",
+    "status": "modified",
+    "beforeBytes": 8496,
+    "afterBytes": 5052
+  },
+  {
+    "file": "src/pages/BlogPost.tsx",
+    "status": "modified",
+    "beforeBytes": 16938,
+    "afterBytes": 17696
+  },
+  {
+    "file": "src/pages/LocationDetail.tsx",
+    "status": "modified",
+    "beforeBytes": 24590,
+    "afterBytes": 24653
+  },
+  {
+    "file": "src/components/ServiceDetailLayout.tsx",
+    "status": "modified",
+    "beforeBytes": 6245,
+    "afterBytes": 6385
+  },
+  {
+    "file": "src/components/IndustryPageLayout.tsx",
+    "status": "modified",
+    "beforeBytes": 9233,
+    "afterBytes": 9266
+  },
+  {
+    "file": "src/pages/CaseStudyDetail.tsx",
+    "status": "modified",
+    "beforeBytes": 7227,
+    "afterBytes": 7494
+  },
+  {
+    "file": "src/pages/locations/data.ts",
+    "status": "modified",
+    "beforeBytes": 97619,
+    "afterBytes": 48903
+  },
+  {
+    "file": "src/pages/locations/regionContent.ts",
+    "status": "modified",
+    "beforeBytes": 14072,
+    "afterBytes": 7107
+  },
+  {
+    "file": "src/data/industryContent.ts",
+    "status": "added",
+    "beforeBytes": 0,
+    "afterBytes": 9759
+  },
+  {
+    "file": "src/components/IndustryServicePage.tsx",
+    "status": "added",
+    "beforeBytes": 0,
+    "afterBytes": 2591
+  },
+  {
+    "file": "src/pages/industries/HealthcareFacilities.tsx",
+    "status": "modified",
+    "beforeBytes": 18732,
+    "afterBytes": 169
+  },
+  {
+    "file": "src/pages/industries/Hospitality.tsx",
+    "status": "modified",
+    "beforeBytes": 18080,
+    "afterBytes": 161
+  },
+  {
+    "file": "src/pages/industries/Restaurants.tsx",
+    "status": "modified",
+    "beforeBytes": 18748,
+    "afterBytes": 161
+  },
+  {
+    "file": "src/pages/industries/Education.tsx",
+    "status": "modified",
+    "beforeBytes": 9781,
+    "afterBytes": 157
+  },
+  {
+    "file": "src/pages/industries/Retail.tsx",
+    "status": "modified",
+    "beforeBytes": 9605,
+    "afterBytes": 151
+  },
+  {
+    "file": "src/pages/industries/Manufacturing.tsx",
+    "status": "modified",
+    "beforeBytes": 18283,
+    "afterBytes": 165
+  },
+  {
+    "file": "src/pages/industries/CommercialRealEstate.tsx",
+    "status": "modified",
+    "beforeBytes": 16232,
+    "afterBytes": 181
+  },
+  {
+    "file": "src/pages/Industries.tsx",
+    "status": "modified",
+    "beforeBytes": 6686,
+    "afterBytes": 5017
+  },
+  {
+    "file": "src/components/ServiceResources.tsx",
+    "status": "added",
+    "beforeBytes": 0,
+    "afterBytes": 3679
+  },
+  {
+    "file": "src/pages/Services.tsx",
+    "status": "modified",
+    "beforeBytes": 5131,
+    "afterBytes": 5631
+  },
+  {
+    "file": "src/pages/Blog.tsx",
+    "status": "modified",
+    "beforeBytes": 11545,
+    "afterBytes": 11000
+  },
+  {
+    "file": "src/pages/CaseStudies.tsx",
+    "status": "modified",
+    "beforeBytes": 6114,
+    "afterBytes": 6179
+  },
+  {
+    "file": "src/pages/About.tsx",
+    "status": "modified",
+    "beforeBytes": 21372,
+    "afterBytes": 21523
+  },
+  {
+    "file": "src/pac-refinement.css",
+    "status": "modified",
+    "beforeBytes": 27045,
+    "afterBytes": 29101
+  },
+  {
+    "file": "src/components/Breadcrumbs.tsx",
+    "status": "modified",
+    "beforeBytes": 3591,
+    "afterBytes": 3571
+  },
+  {
+    "file": "scripts/generate-sitemap.js",
+    "status": "modified",
+    "beforeBytes": 8642,
+    "afterBytes": 9046
+  },
+  {
+    "file": "src/utils/seo/seoConfig.ts",
+    "status": "modified",
+    "beforeBytes": 11450,
+    "afterBytes": 11462
+  },
+  {
+    "file": "src/pages/Quote.tsx",
+    "status": "modified",
+    "beforeBytes": 7061,
+    "afterBytes": 7059
+  },
+  {
+    "file": "scripts/audit-search-quality.mjs",
+    "status": "added",
+    "beforeBytes": 0,
+    "afterBytes": 4842
+  },
+  {
+    "file": "scripts/capture-search-quality.cjs",
+    "status": "added",
+    "beforeBytes": 0,
+    "afterBytes": 1311
+  },
+  {
+    "file": "src/components/TableOfContents.tsx",
+    "status": "modified",
+    "beforeBytes": 3511,
+    "afterBytes": 3191
+  },
+  {
+    "file": "src/pages/PrivacyPolicy.tsx",
+    "status": "modified",
+    "beforeBytes": 5040,
+    "afterBytes": 4553
+  },
+  {
+    "file": "src/pages/TermsOfService.tsx",
+    "status": "modified",
+    "beforeBytes": 5528,
+    "afterBytes": 5037
+  },
+  {
+    "file": "index.html",
+    "status": "modified",
+    "beforeBytes": 2341,
+    "afterBytes": 2235
+  }
+]

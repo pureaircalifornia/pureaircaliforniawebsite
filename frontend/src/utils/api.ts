@@ -10,7 +10,7 @@ const isLocalhost = typeof window !== 'undefined' && (
     window.location.hostname === 'localhost' ||
     window.location.hostname === '127.0.0.1'
 );
-const API_BASE_URL = isLocalhost ? '/api' : (import.meta.env.VITE_API_BASE_URL || '/api');
+export const API_BASE_URL = isLocalhost ? '/api' : (import.meta.env.VITE_API_BASE_URL || '/api');
 
 // ── Types ────────────────────────────────────────────────────────────
 
@@ -40,68 +40,6 @@ export interface Lead extends LeadCreate {
     estimated_price?: number;
 }
 
-export type OutreachStatus = 'not_contacted' | 'email_sent' | 'email_opened' | 'replied' | 'interested' | 'not_interested' | 'meeting_scheduled' | 'converted';
-
-export interface Prospect {
-    id: string;
-    business_name: string;
-    business_category: string;
-    address?: string;
-    phone?: string;
-    website?: string;
-    rating?: number;
-    total_ratings?: number;
-    place_id?: string;
-    contact_name?: string;
-    contact_email?: string;
-    contact_title?: string;
-    notes?: string;
-    outreach_status: OutreachStatus;
-    created_at: string;
-    updated_at: string;
-    last_contacted_at?: string;
-    emails_sent: number;
-    found_emails?: FoundEmail[];
-}
-
-export interface FoundEmail {
-    email: string;
-    source: string;
-    confidence: number;
-}
-
-export interface PlaceSearchResult {
-    place_id: string;
-    name: string;
-    address: string;
-    phone?: string;
-    website?: string;
-    rating?: number;
-    total_ratings?: number;
-    business_status?: string;
-    types: string[];
-}
-
-export interface EmailTemplate {
-    id: string;
-    name: string;
-    category: string;
-    subject: string;
-    body: string;
-}
-
-export interface OutreachRecord {
-    id: string;
-    prospect_id: string;
-    to_email: string;
-    to_name?: string;
-    subject: string;
-    body: string;
-    sent_at: string;
-    status: string;
-    dry_run: boolean;
-}
-
 export interface ApiError {
     detail: string;
 }
@@ -121,7 +59,7 @@ function getAuthHeaders(): Record<string, string> {
     };
 }
 
-async function authFetch(url: string, options: RequestInit = {}): Promise<Response> {
+export async function authFetch(url: string, options: RequestInit = {}): Promise<Response> {
     const headers = { ...getAuthHeaders(), ...options.headers as Record<string, string> };
 
     const response = await fetch(url, { ...options, headers });
@@ -375,132 +313,7 @@ export async function getDashboardStats(): Promise<any> {
     return response.json();
 }
 
-// ── Lead Scanner Endpoints ───────────────────────────────────────────
-
-export async function searchBusinesses(data: {
-    query: string;
-    category: string;
-    location: string;
-    radius_miles: number;
-}): Promise<PlaceSearchResult[]> {
-    const response = await authFetch(`${API_BASE_URL}/lead-scanner/search`, {
-        method: 'POST',
-        body: JSON.stringify(data),
-    });
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-}
-
-export async function getProspects(params?: {
-    category?: string;
-    outreach_status?: OutreachStatus;
-    limit?: number;
-}): Promise<Prospect[]> {
-    const searchParams = new URLSearchParams();
-    if (params?.category) searchParams.set('category', params.category);
-    if (params?.outreach_status) searchParams.set('outreach_status', params.outreach_status);
-    if (params?.limit) searchParams.set('limit', params.limit.toString());
-
-    const url = `${API_BASE_URL}/lead-scanner/prospects${searchParams.toString() ? `?${searchParams}` : ''}`;
-    const response = await authFetch(url);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-}
-
-export async function saveProspect(data: any): Promise<Prospect> {
-    const response = await authFetch(`${API_BASE_URL}/lead-scanner/prospects`, {
-        method: 'POST',
-        body: JSON.stringify(data),
-    });
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-}
-
-export async function checkProspectStatus(placeIds: string[]): Promise<{ status_map: Record<string, { prospect_id: string; outreach_status: string; emails_sent: number; last_contacted_at?: string }> }> {
-    const response = await authFetch(`${API_BASE_URL}/lead-scanner/check-prospects`, {
-        method: 'POST',
-        body: JSON.stringify({ place_ids: placeIds }),
-    });
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-}
-
-export async function updateProspect(prospectId: string, updates: any): Promise<Prospect> {
-    const response = await authFetch(`${API_BASE_URL}/lead-scanner/prospects/${prospectId}`, {
-        method: 'PATCH',
-        body: JSON.stringify(updates),
-    });
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-}
-
-export async function deleteProspect(prospectId: string): Promise<void> {
-    const response = await authFetch(`${API_BASE_URL}/lead-scanner/prospects/${prospectId}`, {
-        method: 'DELETE',
-    });
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-}
-
-export async function findEmails(prospectId: string): Promise<{ emails: FoundEmail[]; domain: string; pages_scraped: number }> {
-    const response = await authFetch(`${API_BASE_URL}/lead-scanner/find-emails/${prospectId}`, {
-        method: 'POST',
-    });
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-}
-
-// ── Email Outreach ───────────────────────────────────────────────────
-
-export async function getEmailTemplates(): Promise<EmailTemplate[]> {
-    const response = await authFetch(`${API_BASE_URL}/lead-scanner/templates`);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-}
-
-export async function getEmailTemplate(category: string): Promise<EmailTemplate> {
-    const response = await authFetch(`${API_BASE_URL}/lead-scanner/templates/${category}`);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-}
-
-export async function previewEmail(data: {
-    prospect_id: string;
-    template_id?: string;
-    custom_subject?: string;
-    custom_body?: string;
-}): Promise<{ prospect: any; subject: string; body: string }> {
-    const response = await authFetch(`${API_BASE_URL}/lead-scanner/outreach/preview`, {
-        method: 'POST',
-        body: JSON.stringify(data),
-    });
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-}
-
-export async function sendOutreachEmail(data: {
-    prospect_id: string;
-    to_email: string;
-    to_name?: string;
-    subject: string;
-    body: string;
-}): Promise<{ success: boolean; message: string; dry_run: boolean; outreach_record: OutreachRecord }> {
-    const response = await authFetch(`${API_BASE_URL}/lead-scanner/outreach/send`, {
-        method: 'POST',
-        body: JSON.stringify(data),
-    });
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-}
-
-export async function getOutreachHistory(prospectId?: string): Promise<OutreachRecord[]> {
-    const searchParams = new URLSearchParams();
-    if (prospectId) searchParams.set('prospect_id', prospectId);
-
-    const url = `${API_BASE_URL}/lead-scanner/outreach/history${searchParams.toString() ? `?${searchParams}` : ''}`;
-    const response = await authFetch(url);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-}
+// Lead Scanner and outreach endpoints live in ./outreachApi.ts
 
 // ── Housecall Pro Sync ───────────────────────────────────────────────
 
@@ -539,6 +352,7 @@ export async function submitFormWithBackend(
 ): Promise<{ success: boolean; lead?: Lead; error?: string }> {
     try {
         let lead: Lead | undefined;
+        let emailDelivered = false;
         try {
             lead = await createLead(formData);
         } catch (dbError) {
@@ -547,7 +361,7 @@ export async function submitFormWithBackend(
 
         // FormSubmit fallback for email notifications
         try {
-            await fetch('https://formsubmit.co/ajax/lou@pureaircalifornia.com', {
+            const emailResponse = await fetch('https://formsubmit.co/ajax/lou@pureaircalifornia.com', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -571,10 +385,15 @@ export async function submitFormWithBackend(
                     _captcha: "false"
                 })
             });
+            const emailResult = await emailResponse.json().catch(() => null);
+            emailDelivered = emailResponse.ok && (emailResult?.success === true || emailResult?.success === 'true');
         } catch (emailErr) {
             console.warn('FormSubmit notification failed:', emailErr);
         }
 
+        if (!lead && !emailDelivered) {
+            return { success: false, error: 'Your request could not be delivered. Please try again or call us.' };
+        }
         return { success: true, lead };
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';

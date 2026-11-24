@@ -1,0 +1,1458 @@
+[
+  {
+    "route": "/",
+    "title": "Air Duct Cleaning Los Angeles | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Los AngelesA breath of fresh air.For every space."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/contact/",
+    "title": "Contact Pure Air California | Los Angeles Duct Cleaning",
+    "h1": [
+      "How can we help your space?"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/about/",
+    "title": "",
+    "h1": [
+      "Good air starts with good people."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/quote/",
+    "title": "Free Air Duct Cleaning Quote | Pure Air California",
+    "h1": [
+      "Let’s plan the right care for your space."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/services/",
+    "title": "Air Duct Cleaning Services Los Angeles | Pure Air California",
+    "h1": [
+      "Good air care.For every kind of space."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/",
+    "title": "Air Duct Cleaning Locations | Pure Air California",
+    "h1": [
+      "Local air care. Across Los Angeles."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/los-angeles/",
+    "title": "Los Angeles Air Duct Cleaning: Services & Local Guide",
+    "h1": [
+      "Air duct cleaning. For Los Angeles living."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/air-quality-calculator/",
+    "title": "Indoor Air Care Checklist | Pure Air California",
+    "h1": [
+      "Get to know your air system."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/partners/",
+    "title": "HVAC & Plumber Referral Program | Pure Air CA",
+    "h1": [
+      "Good people. Better together."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/property-managers/",
+    "title": "HOA & Property Manager Duct Cleaning LA",
+    "h1": [
+      "One property or a whole portfolio."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/",
+    "title": "Air Duct Cleaning Blog | Pure Air California",
+    "h1": [
+      "A little knowledge. A breath of clarity."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/health-benefits/",
+    "title": "Air Duct Cleaning & Indoor Air Quality: What to Know",
+    "h1": [
+      "Better air begins with better information."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/privacy-policy/",
+    "title": "Privacy Policy | Pure Air California",
+    "h1": [
+      "Privacy policy"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/terms-of-service/",
+    "title": "Terms of Service | Pure Air California",
+    "h1": [
+      "Terms of service"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/services/commercial-air-duct-cleaning/",
+    "title": "Commercial Air Duct Cleaning Los Angeles",
+    "h1": [
+      "Commercial Air Duct Cleaning Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/services/residential-air-duct-cleaning/",
+    "title": "Residential Air Duct Cleaning Los Angeles",
+    "h1": [
+      "Residential Air Duct Cleaning Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/services/residential-dryer-vent-cleaning/",
+    "title": "Dryer Vent Cleaning Los Angeles | Pure Air California",
+    "h1": [
+      "Dryer Vent Cleaning Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/services/commercial-dryer-vent-cleaning/",
+    "title": "Commercial Dryer Vent Cleaning in Los Angeles",
+    "h1": [
+      "Commercial Dryer Vent Cleaning in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/services/hvac-system-cleaning/",
+    "title": "HVAC System Cleaning in Los Angeles | Pure Air California",
+    "h1": [
+      "HVAC System Cleaning in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/services/dryer-vent-maintenance-program/",
+    "title": "Dryer Vent Maintenance in Los Angeles | Pure Air California",
+    "h1": [
+      "Dryer Vent Maintenance in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/services/residential-electrostatic-filter/",
+    "title": "Electrostatic Air Filter Service in Los Angeles",
+    "h1": [
+      "Electrostatic Air Filter Service in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/services/commercial-electrostatic-filter/",
+    "title": "Commercial Filter Service in Los Angeles",
+    "h1": [
+      "Commercial Filter Service in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/services/air-duct-sanitizing/",
+    "title": "Air Duct Sanitizing Los Angeles | Pure Air California",
+    "h1": [
+      "Air Duct Sanitizing in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/services/laundromat-dryer-vent-cleaning/",
+    "title": "Laundromat Dryer Vent Cleaning LA | Pure Air California",
+    "h1": [
+      "Laundromat Dryer Vent Cleaning in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/industries/",
+    "title": "Commercial Duct Cleaning by Industry | Pure Air California",
+    "h1": [
+      "Your business deserves personal attention."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/case-studies/",
+    "title": "Commercial Duct Cleaning Case Studies | Pure Air California",
+    "h1": [
+      "A closer look at commercial air care."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/industries/healthcare/",
+    "title": "Hospital Air Duct Cleaning Los Angeles | Pure Air California",
+    "h1": [
+      "Hospital & Medical Air Duct Cleaning in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/industries/hospitality/",
+    "title": "Hotel Air Duct Cleaning Los Angeles | Pure Air California",
+    "h1": [
+      "Hotel Air Duct Cleaning in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/industries/restaurants/",
+    "title": "Restaurant Duct Cleaning Los Angeles | Pure Air California",
+    "h1": [
+      "Restaurant Kitchen Exhaust & Duct Cleaning in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/industries/education/",
+    "title": "School Air Duct Cleaning Los Angeles | Pure Air California",
+    "h1": [
+      "School Air Duct Cleaning in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/industries/retail/",
+    "title": "Retail Air Duct Cleaning Los Angeles | Pure Air California",
+    "h1": [
+      "Retail Air Duct Cleaning in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/industries/manufacturing/",
+    "title": "Industrial Duct Cleaning Los Angeles | Pure Air California",
+    "h1": [
+      "Industrial Duct Cleaning in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/industries/commercial-real-estate/",
+    "title": "Office Building Duct Cleaning LA | Pure Air California",
+    "h1": [
+      "Office Building Duct Cleaning in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/santa-monica/",
+    "title": "Air Duct Cleaning Santa Monica CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Santa Monica"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/beverly-hills/",
+    "title": "Air Duct Cleaning Beverly Hills CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Beverly Hills"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/glendale/",
+    "title": "Air Duct Cleaning Glendale CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Glendale"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/malibu/",
+    "title": "Air Duct Cleaning Malibu CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Malibu"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/century-city/",
+    "title": "Air Duct Cleaning Century City CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Century City"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/hollywood/",
+    "title": "Air Duct Cleaning Hollywood CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Hollywood"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/downtown-la/",
+    "title": "Air Duct Cleaning Downtown LA CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Downtown LA"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/ventura/",
+    "title": "Air Duct Cleaning Ventura CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Ventura"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/pasadena/",
+    "title": "Air Duct Cleaning Pasadena CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Pasadena"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/burbank/",
+    "title": "Air Duct Cleaning Burbank CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Burbank"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/studio-city/",
+    "title": "Air Duct Cleaning Studio City CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Studio City"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/encino/",
+    "title": "Air Duct Cleaning Encino CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Encino"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/tarzana/",
+    "title": "Air Duct Cleaning Tarzana CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Tarzana"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/reseda/",
+    "title": "Air Duct Cleaning Reseda CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Reseda"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/canoga-park/",
+    "title": "Air Duct Cleaning Canoga Park CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Canoga Park"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/woodland-hills/",
+    "title": "Air Duct Cleaning Woodland Hills CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Woodland Hills"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/calabasas/",
+    "title": "Air Duct Cleaning Calabasas CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Calabasas"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/valley-village/",
+    "title": "Air Duct Cleaning Valley Village CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Valley Village"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/van-nuys/",
+    "title": "Air Duct Cleaning Van Nuys CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Van Nuys"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/panorama-city/",
+    "title": "Air Duct Cleaning Panorama City CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Panorama City"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/northridge/",
+    "title": "Air Duct Cleaning Northridge CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Northridge"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/sun-valley/",
+    "title": "Air Duct Cleaning Sun Valley CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Sun Valley"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/central-la/",
+    "title": "Air Duct Cleaning Central LA CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Central LA"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/pacific-palisades/",
+    "title": "Air Duct Cleaning Pacific Palisades CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Pacific Palisades"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/brentwood/",
+    "title": "Air Duct Cleaning Brentwood CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Brentwood"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/los-feliz/",
+    "title": "Air Duct Cleaning Los Feliz CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Los Feliz"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/culver-city/",
+    "title": "Air Duct Cleaning Culver City CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Culver City"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/west-hollywood/",
+    "title": "Air Duct Cleaning West Hollywood CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in West Hollywood"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/chatsworth/",
+    "title": "Air Duct Cleaning Chatsworth CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Chatsworth"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/laurel-canyon/",
+    "title": "Air Duct Cleaning Laurel Canyon CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Laurel Canyon"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/fairfax/",
+    "title": "Air Duct Cleaning Fairfax CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Fairfax"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/larchmont/",
+    "title": "Air Duct Cleaning Larchmont CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Larchmont"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/koreatown/",
+    "title": "Air Duct Cleaning Koreatown CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Koreatown"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/west-la/",
+    "title": "Air Duct Cleaning West LA CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in West LA"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/westwood/",
+    "title": "Air Duct Cleaning Westwood CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Westwood"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/north-of-montana/",
+    "title": "Air Duct Cleaning North of Montana CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in North of Montana"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/sawtelle/",
+    "title": "Air Duct Cleaning Sawtelle CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Sawtelle"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/beverly-glen/",
+    "title": "Air Duct Cleaning Beverly Glen CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Beverly Glen"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/mid-wilshire/",
+    "title": "Air Duct Cleaning Mid-Wilshire CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Mid-Wilshire"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/sherman-oaks/",
+    "title": "Air Duct Cleaning Sherman Oaks CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Sherman Oaks"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/encino-village/",
+    "title": "Air Duct Cleaning Encino Village CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Encino Village"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/lake-balboa/",
+    "title": "Air Duct Cleaning Lake Balboa CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Lake Balboa"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/valley-glen/",
+    "title": "Air Duct Cleaning Valley Glen CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Valley Glen"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/magnolia-park/",
+    "title": "Air Duct Cleaning Magnolia Park CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Magnolia Park"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/toluca-lake/",
+    "title": "Air Duct Cleaning Toluca Lake CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Toluca Lake"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/sherwood-forest/",
+    "title": "Air Duct Cleaning Sherwood Forest CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Sherwood Forest"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/winnetka/",
+    "title": "Air Duct Cleaning Winnetka CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Winnetka"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/pricing/",
+    "title": "Air Duct Cleaning Cost Los Angeles | Pure Air California",
+    "h1": [
+      "Air duct cleaning cost in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/granada-hills/",
+    "title": "Air Duct Cleaning Granada Hills CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Granada Hills"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/porter-ranch/",
+    "title": "Air Duct Cleaning Porter Ranch CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Porter Ranch"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/north-hollywood/",
+    "title": "Air Duct Cleaning North Hollywood CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in North Hollywood"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/sepulveda-basin/",
+    "title": "Air Duct Cleaning Sepulveda Basin CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Sepulveda Basin"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/hidden-hills/",
+    "title": "Air Duct Cleaning Hidden Hills CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Hidden Hills"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/deer-lake-highlands/",
+    "title": "Air Duct Cleaning Deer Lake Highlands CA",
+    "h1": [
+      "Air duct cleaning in Deer Lake Highlands"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/case-studies/apartment-community-42-units/",
+    "title": "Case Study: 42-Unit Apartment Duct Cleaning",
+    "h1": [
+      "42-Unit Apartment Community: Full Property Ventilation Clean"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/case-studies/nonprofit-housing-office-hvac/",
+    "title": "Case Study: Weekend Office HVAC Cleaning",
+    "h1": [
+      "Weekend HVAC Clean for an Occupied Nonprofit Office"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/air-duct-cleaning-faq/",
+    "title": "Air Duct Cleaning FAQ | Pure Air California",
+    "h1": [
+      "Air Duct Cleaning FAQ"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/dryer-vent-safety-guide/",
+    "title": "Dryer Vent Safety Guide | Pure Air California",
+    "h1": [
+      "Dryer Vent Safety Guide"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/commercial-indoor-air-quality-guide/",
+    "title": "Commercial Indoor Air Quality Guide | Pure Air California",
+    "h1": [
+      "Commercial Indoor Air Quality Guide"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/health-benefits-air-duct-cleaning/",
+    "title": "How Duct Cleaning Affects Your Health | Pure Air California",
+    "h1": [
+      "Health Benefits of Air Duct Cleaning"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/importance-of-regular-air-duct-cleaning/",
+    "title": "Importance of Regular Air Duct Cleaning",
+    "h1": [
+      "Importance of Regular Air Duct Cleaning"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/clean-air-ducts-allergy-relief/",
+    "title": "Clean Air Ducts & Allergy Relief | Pure Air California",
+    "h1": [
+      "How Clean Air Ducts Improve Indoor Air Quality for Allergy Sufferers"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/signs-air-ducts-need-cleaning/",
+    "title": "5 Signs Your Air Ducts Need Cleaning | Pure Air California",
+    "h1": [
+      "5 Signs Your Air Ducts Need Cleaning"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/residential-air-duct-cleaning-los-angeles/",
+    "title": "Residential Air Duct Cleaning Guide | Pure Air California",
+    "h1": [
+      "The Ultimate Guide to Residential Air Duct Cleaning in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/commercial-air-duct-cleaning-los-angeles-businesses/",
+    "title": "Why Los Angeles Businesses Need Commercial Air Duct Cleaning",
+    "h1": [
+      "Why Los Angeles Businesses Need Commercial Air Duct Cleaning"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/industrial-air-duct-cleaning-safety-efficiency/",
+    "title": "Industrial Air Duct Cleaning Standards | Pure Air California",
+    "h1": [
+      "Industrial Air Duct Cleaning: Safety and Efficiency Standards for LA Facilities"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/hospital-healthcare-air-duct-cleaning/",
+    "title": "Hospital Duct Cleaning & Air Quality | Pure Air California",
+    "h1": [
+      "Healthcare Air Quality: The Critical Role of Duct Cleaning in Los Angeles Hospitals"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/restaurant-kitchen-air-duct-cleaning/",
+    "title": "Restaurant Kitchen Air Duct Dangers | Pure Air California",
+    "h1": [
+      "Restaurant Hygiene: The Hidden Danger in Your Kitchen Air Ducts"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/laundromat-dryer-vent-cleaning-safety/",
+    "title": "Dryer Vent Safety and Efficiency for Los Angeles Laundromats",
+    "h1": [
+      "Dryer Vent Safety and Efficiency for Los Angeles Laundromats"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/hotel-air-quality-guest-satisfaction/",
+    "title": "Hotel Air Quality & Guest Satisfaction | Pure Air California",
+    "h1": [
+      "Guest Satisfaction and Air Quality: A Guide for Los Angeles Hotels"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/air-duct-cleaning-cost-los-angeles/",
+    "title": "What Air Duct Cleaning Really Costs | Pure Air California",
+    "h1": [
+      "Air Duct Cleaning Cost in Los Angeles 2026 — What to Expect (No Bait & Switch)"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/air-duct-cleaning-after-wildfire-los-angeles/",
+    "title": "Air Duct Cleaning After a Wildfire | Pure Air California",
+    "h1": [
+      "Should You Clean Your Air Ducts After a Wildfire in Los Angeles? (2026 Guide)"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/signs-los-angeles-air-ducts-need-cleaning-2026/",
+    "title": "7 Signs Your Air Ducts Need Cleaning | Pure Air California",
+    "h1": [
+      "7 Signs Your Los Angeles Home's Air Ducts Need Cleaning in 2026"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/is-air-duct-cleaning-worth-it/",
+    "title": "Is Air Duct Cleaning Worth It? An Honest Answer",
+    "h1": [
+      "Is Air Duct Cleaning Worth It? An Honest Answer"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/avoid-air-duct-cleaning-scams-los-angeles/",
+    "title": "How to Avoid Air Duct Cleaning Scams in Los Angeles",
+    "h1": [
+      "How to Avoid Air Duct Cleaning Scams in Los Angeles"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/dryer-safety/",
+    "title": "Look beyond the lint screen. | Pure Air California",
+    "h1": [
+      "Look beyond the lint screen."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/compare/",
+    "title": "Choose your air care with confidence. | Pure Air California",
+    "h1": [
+      "Choose your air care with confidence."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/commercial-services/",
+    "title": "Commercial air care. Built around your business. | Pure Air California",
+    "h1": [
+      "Commercial air care. Built around your business."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/locations/mission-hills/",
+    "title": "Air Duct Cleaning Mission Hills CA | Pure Air California",
+    "h1": [
+      "Air duct cleaning in Mission Hills"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  }
+]

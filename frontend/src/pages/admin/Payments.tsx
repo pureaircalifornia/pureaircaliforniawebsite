@@ -80,7 +80,7 @@ export default function Payments() {
                             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500"
                         />
                     </div>
-                    <select
+                    <select title="Filter payments by status" aria-label="Filter payments by status"
                         value={selectedStatus}
                         onChange={(e) => setSelectedStatus(e.target.value)}
                         className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500"

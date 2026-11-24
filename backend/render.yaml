@@ -27,5 +27,13 @@ services:
         sync: false
       - key: INSURANCE_DOCUMENT_LINK
         sync: false
+      - key: RESEND_WEBHOOK_SECRET
+        sync: false
+      - key: CRON_SECRET
+        sync: false
+      - key: OWNER_NOTIFY_EMAIL
+        sync: false
+      - key: OUTREACH_DAILY_LIMIT
+        value: "40"
 
 

@@ -1,0 +1,791 @@
+{
+  "checkedAt": "2026-09-12T21:53:28.775Z",
+  "checked": 112,
+  "errors": [],
+  "pages": [
+    {
+      "route": "/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/losAngeles.webp",
+      "errors": []
+    },
+    {
+      "route": "/about/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/residential.webp",
+      "errors": []
+    },
+    {
+      "route": "/contact/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/consultation.webp",
+      "errors": []
+    },
+    {
+      "route": "/quote/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/consultation.webp",
+      "errors": []
+    },
+    {
+      "route": "/pricing/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/filter.webp",
+      "errors": []
+    },
+    {
+      "route": "/services/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/hvac.webp",
+      "errors": []
+    },
+    {
+      "route": "/locations/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/losAngeles.webp",
+      "errors": []
+    },
+    {
+      "route": "/locations/los-angeles/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/losAngeles.webp",
+      "errors": []
+    },
+    {
+      "route": "/air-quality-calculator/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/homeInterior.webp",
+      "errors": []
+    },
+    {
+      "route": "/partners/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/commercial.webp",
+      "errors": []
+    },
+    {
+      "route": "/property-managers/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/building.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/homeInterior.webp",
+      "errors": []
+    },
+    {
+      "route": "/health-benefits/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/family.webp",
+      "errors": []
+    },
+    {
+      "route": "/privacy-policy/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/sky.webp",
+      "errors": []
+    },
+    {
+      "route": "/terms-of-service/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/coast.webp",
+      "errors": []
+    },
+    {
+      "route": "/services/commercial-air-duct-cleaning/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/commercial.webp",
+      "errors": []
+    },
+    {
+      "route": "/services/residential-air-duct-cleaning/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/residential.webp",
+      "errors": []
+    },
+    {
+      "route": "/services/residential-dryer-vent-cleaning/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/dryerAppliance.webp",
+      "errors": []
+    },
+    {
+      "route": "/services/commercial-dryer-vent-cleaning/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/laundromat.webp",
+      "errors": []
+    },
+    {
+      "route": "/services/hvac-system-cleaning/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/hvac.webp",
+      "errors": []
+    },
+    {
+      "route": "/services/dryer-vent-maintenance-program/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/dryer.webp",
+      "errors": []
+    },
+    {
+      "route": "/services/residential-electrostatic-filter/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/filter.webp",
+      "errors": []
+    },
+    {
+      "route": "/services/commercial-electrostatic-filter/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/commercialFilter.webp",
+      "errors": []
+    },
+    {
+      "route": "/services/air-duct-sanitizing/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/cleanDuct.webp",
+      "errors": []
+    },
+    {
+      "route": "/services/laundromat-dryer-vent-cleaning/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/laundromat.webp",
+      "errors": []
+    },
+    {
+      "route": "/industries/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/commercial.webp",
+      "errors": []
+    },
+    {
+      "route": "/case-studies/",
+      "article": 0,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/realEquipment.webp",
+      "errors": []
+    },
+    {
+      "route": "/industries/healthcare/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/healthcare.webp",
+      "errors": []
+    },
+    {
+      "route": "/industries/hospitality/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/hotel.webp",
+      "errors": []
+    },
+    {
+      "route": "/industries/restaurants/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/restaurant.webp",
+      "errors": []
+    },
+    {
+      "route": "/industries/education/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/cleanDuct.webp",
+      "errors": []
+    },
+    {
+      "route": "/industries/retail/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/office.webp",
+      "errors": []
+    },
+    {
+      "route": "/industries/manufacturing/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/industrial.webp",
+      "errors": []
+    },
+    {
+      "route": "/industries/commercial-real-estate/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/pac/building.webp",
+      "errors": []
+    },
+    {
+      "route": "/locations/santa-monica/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/santa-monica.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/beverly-hills/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/beverly-hills.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/glendale/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/glendale.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/malibu/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/malibu.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/century-city/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/century-city.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/hollywood/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/hollywood.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/downtown-la/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/downtown-la.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/ventura/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/ventura.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/pasadena/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/pasadena.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/burbank/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/burbank.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/studio-city/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/studio-city.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/encino/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/encino.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/tarzana/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/tarzana.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/reseda/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/reseda.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/canoga-park/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/canoga-park.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/woodland-hills/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/woodland-hills.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/calabasas/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/calabasas.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/valley-village/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/valley-village.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/van-nuys/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/van-nuys.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/panorama-city/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/panorama-city.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/northridge/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/northridge.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/sun-valley/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/sun-valley.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/central-la/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/central-la.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/pacific-palisades/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/pacific-palisades.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/brentwood/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/brentwood.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/los-feliz/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/los-feliz.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/culver-city/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/culver-city.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/west-hollywood/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/west-hollywood.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/chatsworth/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/chatsworth.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/laurel-canyon/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/laurel-canyon.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/fairfax/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/fairfax.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/larchmont/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/larchmont.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/koreatown/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/koreatown.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/west-la/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/west-la.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/westwood/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/westwood.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/north-of-montana/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/north-of-montana.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/sawtelle/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/sawtelle.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/beverly-glen/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/beverly-glen.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/mid-wilshire/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/mid-wilshire.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/sherman-oaks/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/sherman-oaks.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/encino-village/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/encino-village.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/lake-balboa/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/lake-balboa.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/valley-glen/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/valley-glen.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/magnolia-park/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/magnolia-park.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/toluca-lake/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/toluca-lake.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/sherwood-forest/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/sherwood-forest.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/winnetka/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/winnetka.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/granada-hills/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/granada-hills.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/mission-hills/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/mission-hills.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/porter-ranch/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/porter-ranch.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/north-hollywood/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/north-hollywood.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/sepulveda-basin/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/sepulveda-basin.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/hidden-hills/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/hidden-hills.jpg",
+      "errors": []
+    },
+    {
+      "route": "/locations/deer-lake-highlands/",
+      "article": 0,
+      "service": 1,
+      "image": "https://www.pureaircalifornia.com/images/locations/deer-lake-highlands.jpg",
+      "errors": []
+    },
+    {
+      "route": "/case-studies/apartment-community-42-units/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/homeInterior.webp",
+      "errors": []
+    },
+    {
+      "route": "/case-studies/nonprofit-housing-office-hvac/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/hvac.webp",
+      "errors": []
+    },
+    {
+      "route": "/case-studies/soulcycle-westside-dryer-vents/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/dryer.webp",
+      "errors": []
+    },
+    {
+      "route": "/case-studies/taco-bell-canoga-park-hvac/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/commercial.webp",
+      "errors": []
+    },
+    {
+      "route": "/case-studies/bassett-torrance-showroom/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/office.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/air-duct-cleaning-faq/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/residential.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/dryer-vent-safety-guide/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/dryer.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/commercial-indoor-air-quality-guide/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/office.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/health-benefits-air-duct-cleaning/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/family.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/importance-of-regular-air-duct-cleaning/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/filter.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/clean-air-ducts-allergy-relief/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/homeInterior.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/signs-air-ducts-need-cleaning/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/dirtyDuct.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/residential-air-duct-cleaning-los-angeles/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/residential.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/commercial-air-duct-cleaning-los-angeles-businesses/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/commercial.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/industrial-air-duct-cleaning-safety-efficiency/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/industrial.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/hospital-healthcare-air-duct-cleaning/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/healthcare.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/restaurant-kitchen-air-duct-cleaning/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/restaurant.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/laundromat-dryer-vent-cleaning-safety/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/laundromat.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/hotel-air-quality-guest-satisfaction/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/hotel.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/air-duct-cleaning-cost-los-angeles/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/consultation.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/air-duct-cleaning-after-wildfire-los-angeles/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/losAngeles.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/signs-los-angeles-air-ducts-need-cleaning-2026/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/dirtyDuct.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/is-air-duct-cleaning-worth-it/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/cleanDuct.webp",
+      "errors": []
+    },
+    {
+      "route": "/blog/avoid-air-duct-cleaning-scams-los-angeles/",
+      "article": 1,
+      "service": 0,
+      "image": "https://www.pureaircalifornia.com/images/pac/consultation.webp",
+      "errors": []
+    }
+  ]
+}

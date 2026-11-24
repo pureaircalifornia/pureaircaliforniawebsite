@@ -1,0 +1,32 @@
+[
+  {
+    "url": "http://pureaircalifornia.com/",
+    "status": 301,
+    "location": "https://www.pureaircalifornia.com/"
+  },
+  {
+    "url": "https://pureaircalifornia.com/",
+    "status": 301,
+    "location": "https://www.pureaircalifornia.com/"
+  },
+  {
+    "url": "https://www.pureaircalifornia.com/locations/brentwood",
+    "status": 301,
+    "location": "https://www.pureaircalifornia.com/locations/brentwood/"
+  },
+  {
+    "url": "https://www.pureaircalifornia.com/residential-air-duct-cleaning/",
+    "status": 301,
+    "location": "https://www.pureaircalifornia.com/services/residential-air-duct-cleaning/"
+  },
+  {
+    "url": "https://www.pureaircalifornia.com/libri/seo-audit-test/",
+    "status": 410,
+    "location": null
+  },
+  {
+    "url": "https://www.pureaircalifornia.com/case-studies/soulcycle-westside-dryer-vents/",
+    "status": 404,
+    "location": null
+  }
+]

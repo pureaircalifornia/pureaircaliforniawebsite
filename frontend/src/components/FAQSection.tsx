@@ -7,29 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-
-const faqs = [
-  {
-    question: "How often should air ducts be cleaned?",
-    answer: "The National Air Duct Cleaners Association recommends cleaning air ducts every 3 to 5 years. However, homes with pets, allergies, smokers, or recent renovations may benefit from more frequent cleaning."
-  },
-  {
-    question: "How long does the air duct cleaning process take?",
-    answer: "A typical air duct cleaning for an average-sized home takes about 3-5 hours, depending on the size of your home, number of vents, and the condition of your ductwork."
-  },
-  {
-    question: "Will air duct cleaning reduce my energy bills?",
-    answer: "Yes, clean air ducts can improve HVAC system efficiency, which can lead to reduced energy costs. When ducts are clogged with debris, your system works harder and uses more energy."
-  },
-  {
-    question: "How can I tell if my air ducts need cleaning?",
-    answer: "Signs include visible dust or debris coming from vents, increased dust settling on surfaces, uneven airflow, musty odors when the system runs, and unexplained respiratory issues."
-  },
-  {
-    question: "Is air duct cleaning worth the investment?",
-    answer: "Yes, professional air duct cleaning provides many benefits including improved indoor air quality, reduced allergens, increased HVAC efficiency, extended equipment life, and elimination of odors."
-  }
-];
+import { homepageFaqs as faqs } from '@/data/faqs';
 
 const FAQSection = () => {
   return (

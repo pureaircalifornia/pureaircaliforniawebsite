@@ -23,7 +23,7 @@ interface HeroSliderProps {
 // Default slides with high-quality images
 const defaultSlides: HeroSlide[] = [
     {
-        image: '/images/hero/hvac-technicians.jpg',
+        image: '/images/hero/hvac-technicians.webp',
         alt: 'Professional HVAC cleaning technician team',
     },
     {
@@ -163,9 +163,10 @@ const HeroSlider: React.FC<HeroSliderProps> = ({
                         src={activeSlides[currentIndex].image}
                         alt={activeSlides[currentIndex].alt}
                         className="w-full h-full object-cover"
-                        // @ts-ignore - React doesn't fully support fetchpriority yet in types
-                        fetchpriority="high"
                         loading="eager"
+                        fetchPriority="high"
+                        width={1920}
+                        height={1080}
                     />
 
                     {/* Integrated Overlay */}

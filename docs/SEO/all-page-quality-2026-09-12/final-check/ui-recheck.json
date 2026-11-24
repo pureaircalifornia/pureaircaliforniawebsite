@@ -1,0 +1,67 @@
+[
+  {
+    "route": "/quote/",
+    "title": "Free Air Duct Cleaning Quote | Pure Air California",
+    "h1": [
+      "Let’s plan the right care for your space."
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/terms-of-service/",
+    "title": "Terms of Service | Pure Air California",
+    "h1": [
+      "Terms of service"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/privacy-policy/",
+    "title": "",
+    "h1": [
+      "Privacy policy"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/case-studies/apartment-community-42-units/",
+    "title": "Case Study: 42-Unit Apartment Duct Cleaning",
+    "h1": [
+      "42-Unit Apartment Community: Full Property Ventilation Clean"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  },
+  {
+    "route": "/blog/air-duct-cleaning-cost-los-angeles/",
+    "title": "Air Duct Cleaning Cost in Los Angeles: Quote Guide",
+    "h1": [
+      "Air Duct Cleaning Cost in Los Angeles: Quote Guide"
+    ],
+    "hero": true,
+    "images": [],
+    "overflow": false,
+    "phone": true,
+    "hashes": [],
+    "mobileOverflow": false
+  }
+]

@@ -51,10 +51,10 @@ const TestimonialSection = () => {
                   <Star key={i} className="text-yellow-400 fill-yellow-400" size={24} />
                 ))}
               </span>
-              <span className="font-bold text-xl text-gray-800">4.7★</span>
+              <span className="font-bold text-xl text-gray-800">4.6★</span>
             </div>
             <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight text-gray-900">
-              Trusted by 448K+ Los Angeles Customers
+              Trusted Across Los Angeles Since 1993
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               We take pride in delivering exceptional service. See what our customers have to say about their experience with Pure Air California.

@@ -2,20 +2,36 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { MapPin, Clock, Car, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Define the interface for Google Maps objects
+// The small Maps surface used here, including legacy and advanced markers.
+interface GoogleMapInstance { panTo(position: unknown): void; }
+interface GoogleMapMarker {
+ position?: unknown;
+ addListener(event: string, handler: () => void): unknown;
+ setMap?: (map: GoogleMapInstance | null) => void;
+ getPosition?: () => unknown;
+ setAnimation?: (animation: unknown) => void;
+}
+interface GoogleInfoWindow {
+ open(options: unknown, marker?: GoogleMapMarker): void;
+ close(): void;
+}
+interface MapEntry { marker: GoogleMapMarker; infoWindow: GoogleInfoWindow | null; areaName: string; }
 declare global {
-  interface Window {
-    google: {
-      maps: {
-        Map: new (element: HTMLElement, options: Record<string, unknown>) => unknown;
-        MapTypeId: { ROADMAP: string };
-        marker?: { AdvancedMarkerElement: unknown };
-        LatLng: new (lat: number, lng: number) => unknown;
-        InfoWindow: new (options: Record<string, unknown>) => unknown;
-      };
-    };
-    initializeGoogleMapsCallback: () => void;
-  }
+ interface Window {
+  google: { maps: {
+   Map: new (element: HTMLElement, options: Record<string, unknown>) => GoogleMapInstance;
+   MapTypeId: { ROADMAP: string };
+   marker?: { AdvancedMarkerElement: new (options: Record<string, unknown>) => GoogleMapMarker };
+   Marker: new (options: Record<string, unknown>) => GoogleMapMarker;
+   LatLng: new (lat: number, lng: number) => unknown;
+   Size: new (width: number, height: number) => unknown;
+   Point: new (x: number, y: number) => unknown;
+   InfoWindow: new (options: Record<string, unknown>) => GoogleInfoWindow;
+   Animation?: { BOUNCE: unknown };
+   event?: { clearInstanceListeners(instance: unknown): void };
+  }};
+  initializeGoogleMapsCallback: () => void;
+ }
 }
 
 // Define service areas
@@ -57,8 +73,8 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [loadError, setLoadError] = useState(false);
-  const mapInstanceRef = useRef<unknown>(null);
-  const markersRef = useRef<unknown[]>([]);
+  const mapInstanceRef = useRef<GoogleMapInstance | null>(null);
+  const markersRef = useRef<MapEntry[]>([]);
   const officeLocationRef = useRef({ lat: 34.0984, lng: -118.3301 }); // LA center
   const scriptElementRef = useRef<HTMLScriptElement | null>(null);
   const scriptLoadedRef = useRef<boolean>(false);
@@ -433,7 +449,7 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
               marker.setAnimation(window.google.maps.Animation.BOUNCE);
               setTimeout(() => {
                 if (marker) {
-                  marker.setAnimation(null);
+                  marker.setAnimation?.(null);
                 }
               }, 700);
             }

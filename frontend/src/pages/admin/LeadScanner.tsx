@@ -1,112 +1,83 @@
 /**
- * Lead Scanner Page
- * Search Google Maps for businesses, save as prospects for outreach.
- * Shows existing prospect / outreach status for each search result.
+ * Lead Scanner
+ * Search Google Maps for businesses, ranked by how good a prospect each one is,
+ * and save the best ones to the Prospects pipeline in bulk.
  */
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
-    Search, MapPin, Save, Star, Phone, Globe, Building2,
-    Loader2, CheckCircle, Mail, Clock, UserCheck, XCircle, CalendarCheck, Eye
+    ArrowRight, Building2, CheckCircle, Globe, Loader2, MapPin, Phone, Save, Search, Star,
 } from 'lucide-react';
-import { searchBusinesses, saveProspect, checkProspectStatus, getProspects, updateProspectOutreach, sendProspectOutreach } from '@/utils/api';
+import {
+    checkProspectStatus, safeUrl, saveProspectsBulk, searchBusinesses,
+    type PlaceSearchResult, type ProspectStatusInfo,
+} from '@/utils/outreachApi';
+import { BUSINESS_CATEGORIES, dialable, scoreClass, statusInfo } from './outreach/constants';
 
-const BUSINESS_CATEGORIES = [
-    { value: 'Home Owner Association', label: 'Home Owner Associations (HOA)' },
-    { value: 'Building Management Company', label: 'Building Management Companies' },
-    { value: 'Hotel', label: 'Hotels' },
-    { value: 'Senior Living / Assisted Living', label: 'Senior Living / Assisted Living' },
-    { value: 'Hospital / Medical Facility', label: 'Hospitals / Medical Facilities' },
-    { value: 'Restaurant', label: 'Restaurants' },
-    { value: 'Property Management Company', label: 'Property Managers' },
-    { value: 'Office Building', label: 'Office Buildings' },
-    { value: 'School / University', label: 'Schools / Universities' },
-    { value: 'Gym / Fitness Center', label: 'Gyms / Fitness Centers' },
-    { value: 'Shopping Center / Mall', label: 'Shopping Centers / Malls' },
-    { value: 'Warehouse / Industrial', label: 'Warehouses / Industrial' },
-    { value: 'Church / Religious Building', label: 'Churches / Religious Buildings' },
-    { value: 'Daycare / Childcare Center', label: 'Daycares / Childcare Centers' },
-    { value: 'Other', label: 'Other' },
-];
-
-interface PlaceSearchResult {
-    name: string;
-    address: string;
-    rating?: number;
-    total_ratings?: number;
-    business_status?: string;
-    phone?: string;
-    website?: string;
-    email?: string | null;
-    place_id: string;
-}
-
-type ProspectInfo = {
-    prospect_id: string;
-    outreach_status: string;
-    emails_sent: number;
-    last_contacted_at?: string;
-};
-
-const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string; icon: any }> = {
-    not_contacted: { label: 'Prospect (Not Contacted)', color: 'text-amber-700', bg: 'bg-amber-50 border-amber-200', icon: Eye },
-    email_sent: { label: 'Email Sent', color: 'text-blue-700', bg: 'bg-blue-50 border-blue-200', icon: Mail },
-    email_opened: { label: 'Email Opened', color: 'text-indigo-700', bg: 'bg-indigo-50 border-indigo-200', icon: Mail },
-    replied: { label: 'Replied', color: 'text-purple-700', bg: 'bg-purple-50 border-purple-200', icon: Mail },
-    interested: { label: 'Interested', color: 'text-emerald-700', bg: 'bg-emerald-50 border-emerald-200', icon: UserCheck },
-    not_interested: { label: 'Not Interested', color: 'text-red-700', bg: 'bg-red-50 border-red-200', icon: XCircle },
-    meeting_scheduled: { label: 'Meeting Scheduled', color: 'text-sky-700', bg: 'bg-sky-50 border-sky-200', icon: CalendarCheck },
-    converted: { label: 'Converted ✓', color: 'text-emerald-700', bg: 'bg-emerald-100 border-emerald-300', icon: CheckCircle },
-};
+const RESULT_SIZES = [10, 20, 40, 60];
 
 export default function LeadScanner() {
     const [category, setCategory] = useState(BUSINESS_CATEGORIES[0].value);
     const [location, setLocation] = useState('Los Angeles, CA');
     const [radius, setRadius] = useState(25);
+    const [maxResults, setMaxResults] = useState(20);
     const [customQuery, setCustomQuery] = useState('');
-    const [results, setResults] = useState<PlaceSearchResult[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
-    const [savingId, setSavingId] = useState<string | null>(null);
-    // Prospect status map: place_id -> ProspectInfo
-    const [prospectMap, setProspectMap] = useState<Record<string, ProspectInfo>>({});
+    const [searchedCategory, setSearchedCategory] = useState(category);
 
-    const handleSearch = async () => {
+    const [results, setResults] = useState<PlaceSearchResult[]>([]);
+    const [saved, setSaved] = useState<Record<string, ProspectStatusInfo>>({});
+    const [selected, setSelected] = useState<Set<string>>(new Set());
+    const [websiteOnly, setWebsiteOnly] = useState(false);
+
+    const [loading, setLoading] = useState(false);
+    const [saving, setSaving] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [notice, setNotice] = useState<string | null>(null);
+    const [searched, setSearched] = useState(false);
+
+    const needsCustomQuery = category === 'other' && !customQuery.trim();
+    const visible = useMemo(
+        () => (websiteOnly ? results.filter((r) => r.website) : results),
+        [results, websiteOnly],
+    );
+    const selectable = visible.filter((r) => !saved[r.place_id]);
+    const allSelected = selectable.length > 0 && selectable.every((r) => selected.has(r.place_id));
+
+    const handleSearch = async (event?: React.FormEvent) => {
+        event?.preventDefault();
+        if (needsCustomQuery) {
+            setError('Type what to search for when the category is "Other".');
+            return;
+        }
         setLoading(true);
         setError(null);
+        setNotice(null);
         setResults([]);
-        setSavedIds(new Set());
-        setProspectMap({});
-
+        setSaved({});
+        setSelected(new Set());
         try {
             const data = await searchBusinesses({
-                query: customQuery || '',
+                query: customQuery.trim() || undefined,
                 category,
-                location,
+                location: location.trim(),
                 radius_miles: radius,
+                max_results: maxResults,
             });
             setResults(data);
+            setSearchedCategory(category);
+            setSearched(true);
 
-            if (data.length === 0) {
-                setError('No businesses found. Try adjusting your search criteria.');
-            } else {
-                // Cross-reference with existing prospects
-                const placeIds = data.map(r => r.place_id).filter(Boolean);
-                if (placeIds.length > 0) {
-                    try {
-                        const { status_map } = await checkProspectStatus(placeIds);
-                        setProspectMap(status_map || {});
-                        // Pre-populate savedIds for businesses already saved as prospects
-                        const alreadySaved = new Set<string>();
-                        for (const pid of Object.keys(status_map || {})) {
-                            alreadySaved.add(pid);
-                        }
-                        setSavedIds(alreadySaved);
-                    } catch (err) {
-                        console.warn('Could not check prospect statuses:', err);
-                    }
+            let statusMap: Record<string, ProspectStatusInfo> = {};
+            if (data.length > 0) {
+                try {
+                    statusMap = (await checkProspectStatus(data.map((r) => r.place_id))).status_map || {};
+                } catch {
+                    // Saving still de-duplicates on the server; the badges are a convenience.
                 }
             }
+            setSaved(statusMap);
+            // Pre-select the strong prospects that are not saved yet.
+            setSelected(new Set(data.filter((r) => r.fit_score >= 60 && !statusMap[r.place_id]).map((r) => r.place_id)));
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Search failed. Please try again.');
         } finally {
@@ -114,285 +85,236 @@ export default function LeadScanner() {
         }
     };
 
-    const handleSave = async (result: PlaceSearchResult) => {
-        setSavingId(result.place_id);
+    const toggle = (placeId: string) => {
+        setSelected((prev) => {
+            const next = new Set(prev);
+            if (next.has(placeId)) next.delete(placeId); else next.add(placeId);
+            return next;
+        });
+    };
+
+    const toggleAll = () => {
+        setSelected(allSelected ? new Set() : new Set(selectable.map((r) => r.place_id)));
+    };
+
+    const handleSaveSelected = async () => {
+        const chosen = results.filter((r) => selected.has(r.place_id) && !saved[r.place_id]);
+        if (chosen.length === 0) return;
+        setSaving(true);
+        setError(null);
         try {
-            await saveProspect({
-                business_name: result.name,
-                business_category: category,
-                address: result.address,
-                phone: result.phone,
-                website: result.website,
-                email: result.email,
-                rating: result.rating,
-                total_ratings: result.total_ratings,
-                place_id: result.place_id,
+            const response = await saveProspectsBulk(chosen.map((r) => ({
+                business_name: r.name,
+                business_category: searchedCategory,
+                address: r.address,
+                phone: r.phone,
+                website: r.website,
+                rating: r.rating,
+                total_ratings: r.total_ratings,
+                place_id: r.place_id,
+                business_status: r.business_status,
+                types: r.types,
+            })));
+            setSaved((prev) => {
+                const next = { ...prev };
+                response.saved.forEach((p) => {
+                    if (p.place_id) {
+                        next[p.place_id] = { prospect_id: p.id, outreach_status: p.outreach_status, emails_sent: p.emails_sent };
+                    }
+                });
+                return next;
             });
-            setSavedIds(prev => new Set(prev).add(result.place_id));
-            setProspectMap(prev => ({
-                ...prev,
-                [result.place_id]: {
-                    prospect_id: '',
-                    outreach_status: 'not_contacted',
-                    emails_sent: 0,
-                },
-            }));
+            setSelected(new Set());
+            setNotice(`Saved ${response.created} prospect${response.created === 1 ? '' : 's'}. ` +
+                'Their websites are being read for a contact email now; it takes a minute or two.');
         } catch (err) {
-            console.error('Failed to save prospect:', err);
+            setError(err instanceof Error ? err.message : 'Could not save the selected businesses.');
         } finally {
-            setSavingId(null);
+            setSaving(false);
         }
-    };
-
-    const handleSaveAll = async () => {
-        for (const result of results) {
-            if (!savedIds.has(result.place_id)) {
-                await handleSave(result);
-            }
-        }
-    };
-
-    const unsavedCount = results.filter(r => !savedIds.has(r.place_id)).length;
-
-    const renderStatusBadge = (placeId: string) => {
-        const info = prospectMap[placeId];
-        if (!info) return null;
-
-        const cfg = STATUS_CONFIG[info.outreach_status] || STATUS_CONFIG.not_contacted;
-        const Icon = cfg.icon;
-
-        return (
-            <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-medium ${cfg.bg} ${cfg.color}`}>
-                <Icon className="w-3 h-3" />
-                {cfg.label}
-                {info.emails_sent > 0 && (
-                    <span className="ml-1 opacity-70">({info.emails_sent} sent)</span>
-                )}
-            </div>
-        );
     };
 
     return (
         <div className="space-y-6">
-            {/* Header */}
-            <div className="flex justify-between items-center">
-                <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Lead Scanner</h1>
-                    <p className="text-sm text-gray-500 mt-1">Search Google Maps for potential commercial clients</p>
-                </div>
+            <div>
+                <h1 className="text-2xl font-bold text-gray-900">Lead Scanner</h1>
+                <p className="text-sm text-gray-500 mt-1">
+                    Find businesses on Google Maps, ranked by fit. Save the good ones and their contact details are looked up automatically.
+                </p>
             </div>
 
-            {/* Search Controls */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {/* Category */}
+            <form onSubmit={handleSearch} className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Business Category</label>
-                        <select
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white"
-                        >
-                            {BUSINESS_CATEGORIES.map((cat) => (
-                                <option key={cat.value} value={cat.value}>{cat.label}</option>
-                            ))}
+                        <label htmlFor="scan-category" className="block text-sm font-medium text-gray-700 mb-1">Business type</label>
+                        <select id="scan-category" value={category} onChange={(e) => setCategory(e.target.value)}
+                            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white">
+                            {BUSINESS_CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
                         </select>
                     </div>
-
-                    {/* Location */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                        <label htmlFor="scan-location" className="block text-sm font-medium text-gray-700 mb-1">City or ZIP</label>
                         <div className="relative">
-                            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                            <input
-                                type="text"
-                                value={location}
-                                onChange={(e) => setLocation(e.target.value)}
+                            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" aria-hidden="true" />
+                            <input id="scan-location" type="text" required value={location} onChange={(e) => setLocation(e.target.value)}
                                 placeholder="Los Angeles, CA"
-                                className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                            />
+                                className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500" />
                         </div>
                     </div>
-
-                    {/* Radius */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Radius: {radius} miles</label>
-                        <input
-                            type="range"
-                            min={5}
-                            max={50}
-                            value={radius}
-                            onChange={(e) => setRadius(parseInt(e.target.value))}
-                            className="w-full mt-2 accent-sky-500"
-                        />
+                        <label htmlFor="scan-radius" className="block text-sm font-medium text-gray-700 mb-1">Within {radius} miles</label>
+                        <input id="scan-radius" type="range" min={5} max={50} step={5} value={radius}
+                            onChange={(e) => setRadius(parseInt(e.target.value, 10))} className="w-full mt-2 accent-sky-500" />
                     </div>
-
-                    {/* Custom Query */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Custom Search (optional)</label>
-                        <input
-                            type="text"
-                            value={customQuery}
-                            onChange={(e) => setCustomQuery(e.target.value)}
-                            placeholder="e.g., luxury hotel Beverly Hills"
-                            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                        />
+                        <label htmlFor="scan-size" className="block text-sm font-medium text-gray-700 mb-1">How many</label>
+                        <select id="scan-size" value={maxResults} onChange={(e) => setMaxResults(parseInt(e.target.value, 10))}
+                            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white">
+                            {RESULT_SIZES.map((n) => <option key={n} value={n}>{n} businesses</option>)}
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="scan-query" className="block text-sm font-medium text-gray-700 mb-1">
+                            Custom search {category === 'other' ? '(required)' : '(optional)'}
+                        </label>
+                        <input id="scan-query" type="text" value={customQuery} onChange={(e) => setCustomQuery(e.target.value)}
+                            placeholder="e.g. luxury apartment complex"
+                            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500" />
                     </div>
                 </div>
-
-                <div className="flex gap-3 mt-4">
-                    <button
-                        onClick={handleSearch}
-                        disabled={loading}
-                        className="flex items-center gap-2 px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
-                    >
+                <div className="flex flex-wrap items-center gap-3 mt-4">
+                    <button type="submit" disabled={loading}
+                        className="flex items-center gap-2 px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50">
                         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
-                        {loading ? 'Searching...' : 'Search Google Maps'}
+                        {loading ? 'Searching Google Maps…' : 'Search'}
                     </button>
-
-                    {results.length > 0 && unsavedCount > 0 && (
-                        <button
-                            onClick={handleSaveAll}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors"
-                        >
-                            <Save className="w-4 h-4" />
-                            Save All ({unsavedCount} remaining)
-                        </button>
+                    {loading && maxResults > 20 && (
+                        <span className="text-xs text-gray-500">Larger searches run several queries and can take 20–30 seconds.</span>
                     )}
                 </div>
-            </div>
+            </form>
 
-            {/* Error */}
-            {error && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm">
-                    {error}
+            {error && <div role="alert" className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm">{error}</div>}
+            {notice && (
+                <div role="status" className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-emerald-800 text-sm flex flex-wrap items-center justify-between gap-3">
+                    <span>{notice}</span>
+                    <Link to="/admin/prospects" className="inline-flex items-center gap-1 font-medium text-emerald-800 underline">
+                        Go to Prospects <ArrowRight className="w-4 h-4" />
+                    </Link>
                 </div>
             )}
 
-            {/* Results */}
             {results.length > 0 && (
                 <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-                        <h2 className="text-lg font-semibold text-gray-900">
-                            Search Results ({results.length})
-                        </h2>
-                        <div className="flex items-center gap-3 text-xs text-gray-500">
-                            {Object.keys(prospectMap).length > 0 && (
-                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200">
-                                    <Eye className="w-3 h-3" />
-                                    {Object.keys(prospectMap).length} already saved as prospects
-                                </span>
-                            )}
+                    <div className="px-6 py-4 border-b border-gray-100 flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <h2 className="text-lg font-semibold text-gray-900">{visible.length} businesses, best fit first</h2>
+                            <p className="text-xs text-gray-500 mt-0.5">
+                                Closed businesses and anything outside the radius are already removed.
+                                {Object.keys(saved).length > 0 && ` ${Object.keys(saved).length} already in your prospects.`}
+                            </p>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-4">
+                            <label className="flex items-center gap-2 text-sm text-gray-600">
+                                <input type="checkbox" checked={websiteOnly} onChange={(e) => setWebsiteOnly(e.target.checked)} className="accent-sky-600" />
+                                Has a website
+                            </label>
+                            <button onClick={handleSaveSelected} disabled={saving || selected.size === 0}
+                                className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50">
+                                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                                Save {selected.size || ''} selected
+                            </button>
                         </div>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full">
                             <thead>
-                                <tr className="bg-gray-50 border-b border-gray-100">
-                                    <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Business</th>
-                                    <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Address</th>
-                                    <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Contact Info</th>
-                                    <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Rating</th>
-                                    <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th className="text-right px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+                                <tr className="bg-gray-50 border-b border-gray-100 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                    <th className="px-4 py-3 w-10">
+                                        <input type="checkbox" checked={allSelected} onChange={toggleAll} disabled={selectable.length === 0}
+                                            aria-label="Select all unsaved businesses" className="accent-sky-600" />
+                                    </th>
+                                    <th className="px-4 py-3">Fit</th>
+                                    <th className="px-4 py-3">Business</th>
+                                    <th className="px-4 py-3">Contact</th>
+                                    <th className="px-4 py-3">Reviews</th>
+                                    <th className="px-4 py-3">Status</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
-                                {results.map((result) => (
-                                    <tr
-                                        key={result.place_id}
-                                        className={`hover:bg-gray-50 transition-colors ${prospectMap[result.place_id] ? 'bg-sky-50/30' : ''}`}
-                                    >
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 bg-sky-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                                                    <Building2 className="w-5 h-5 text-sky-600" />
-                                                </div>
-                                                <div>
-                                                    <div className="font-semibold text-gray-900 text-sm">{result.name}</div>
-                                                    <div className="text-xs text-gray-400">{result.business_status}</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 max-w-xs truncate">{result.address}</td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex flex-col gap-2">
-                                                {result.phone ? (
-                                                    <a href={`tel:${result.phone}`} className="flex items-center gap-1 text-sm text-sky-600 hover:text-sky-700">
-                                                        <Phone className="w-3 h-3" />
-                                                        {result.phone}
-                                                    </a>
+                                {visible.map((result) => {
+                                    const existing = saved[result.place_id];
+                                    const info = existing ? statusInfo(existing.outreach_status) : null;
+                                    return (
+                                        <tr key={result.place_id} className={`hover:bg-gray-50 transition-colors ${existing ? 'bg-gray-50/60' : ''}`}>
+                                            <td className="px-4 py-4">
+                                                {existing ? (
+                                                    <CheckCircle className="w-4 h-4 text-emerald-500" aria-label="Already saved" />
                                                 ) : (
-                                                    <span className="text-sm text-gray-400">— Phone</span>
+                                                    <input type="checkbox" checked={selected.has(result.place_id)} onChange={() => toggle(result.place_id)}
+                                                        aria-label={`Select ${result.name}`} className="accent-sky-600" />
                                                 )}
-                                                {result.website ? (
-                                                    <a href={result.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm text-sky-600 hover:text-sky-700">
-                                                        <Globe className="w-3 h-3" />
-                                                        Website
-                                                    </a>
-                                                ) : (
-                                                    <span className="text-sm text-gray-400">— Website</span>
-                                                )}
-                                                {result.email && (
-                                                    <a href={`mailto:${result.email}`} className="flex items-center gap-1.5 text-gray-600 hover:text-sky-600 truncate bg-sky-50 px-2 py-0.5 rounded-full" title={result.email}>
-                                                        <Mail className="w-3.5 h-3.5 flex-shrink-0" />
-                                                        <span className="truncate">{result.email}</span>
-                                                    </a>
-                                                )}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            {result.rating ? (
-                                                <div className="flex items-center gap-1">
-                                                    <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                                                    <span className="text-sm font-medium text-gray-700">{result.rating}</span>
-                                                    <span className="text-xs text-gray-400">({result.total_ratings})</span>
-                                                </div>
-                                            ) : (
-                                                <span className="text-sm text-gray-400">—</span>
-                                            )}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            {renderStatusBadge(result.place_id)}
-                                        </td>
-                                        <td className="px-6 py-4 text-right">
-                                            {savedIds.has(result.place_id) ? (
-                                                <span className="inline-flex items-center gap-1 text-sm text-emerald-600 font-medium">
-                                                    <CheckCircle className="w-4 h-4" />
-                                                    Saved
+                                            </td>
+                                            <td className="px-4 py-4">
+                                                <span title={result.fit_reasons.join('\n')}
+                                                    className={`inline-flex items-center justify-center min-w-[2.5rem] px-2 py-1 rounded-md border text-sm font-semibold ${scoreClass(result.fit_score)}`}>
+                                                    {result.fit_score}
                                                 </span>
-                                            ) : (
-                                                <button
-                                                    onClick={() => handleSave(result)}
-                                                    disabled={savingId === result.place_id}
-                                                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-700 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
-                                                >
-                                                    {savingId === result.place_id ? (
-                                                        <Loader2 className="w-3 h-3 animate-spin" />
-                                                    ) : (
-                                                        <Save className="w-3 h-3" />
-                                                    )}
-                                                    Save
-                                                </button>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
+                                            </td>
+                                            <td className="px-4 py-4">
+                                                <div className="flex items-start gap-3">
+                                                    <div className="w-9 h-9 bg-sky-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                                        <Building2 className="w-4 h-4 text-sky-600" aria-hidden="true" />
+                                                    </div>
+                                                    <div className="min-w-0">
+                                                        <div className="font-semibold text-gray-900 text-sm">{result.name}</div>
+                                                        <div className="text-xs text-gray-500 max-w-xs truncate">{result.address}</div>
+                                                        <div className="text-xs text-gray-400 mt-0.5">
+                                                            {result.distance_miles != null && `${result.distance_miles} mi · `}
+                                                            {result.fit_reasons[0]}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-4 text-sm">
+                                                <div className="flex flex-col gap-1">
+                                                    {result.phone
+                                                        ? <a href={`tel:${dialable(result.phone)}`} className="inline-flex items-center gap-1 text-sky-600 hover:text-sky-700"><Phone className="w-3 h-3" />{result.phone}</a>
+                                                        : <span className="text-gray-400">No phone</span>}
+                                                    {safeUrl(result.website)
+                                                        ? <a href={safeUrl(result.website)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sky-600 hover:text-sky-700"><Globe className="w-3 h-3" />Website</a>
+                                                        : <span className="text-gray-400">No website</span>}
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-4 text-sm">
+                                                {result.rating
+                                                    ? <span className="inline-flex items-center gap-1"><Star className="w-4 h-4 text-amber-400 fill-amber-400" aria-hidden="true" />{result.rating}<span className="text-xs text-gray-400">({result.total_ratings})</span></span>
+                                                    : <span className="text-gray-400">None</span>}
+                                            </td>
+                                            <td className="px-4 py-4">
+                                                {info && <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${info.className}`}>Saved · {info.label}</span>}
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </div>
                 </div>
             )}
 
-            {/* Empty State */}
             {!loading && results.length === 0 && !error && (
                 <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-12 text-center">
                     <div className="w-16 h-16 bg-sky-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <Search className="w-8 h-8 text-sky-400" />
+                        <Search className="w-8 h-8 text-sky-400" aria-hidden="true" />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Search for Businesses</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                        {searched ? 'No businesses found' : 'Start with a business type and a city'}
+                    </h3>
                     <p className="text-sm text-gray-500 max-w-md mx-auto">
-                        Select a business category and location, then click "Search Google Maps" to find potential clients for air duct cleaning services.
+                        {searched
+                            ? 'Try a wider radius, a nearby city, or a custom search phrase.'
+                            : 'Results come back ranked: property types with the most vents and ducts, and businesses you can actually reach, are at the top.'}
                     </p>
                 </div>
             )}

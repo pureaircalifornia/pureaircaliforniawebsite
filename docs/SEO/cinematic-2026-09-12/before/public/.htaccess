@@ -1,0 +1,167 @@
+<IfModule mod_rewrite.c>
+  Options +SymLinksIfOwnerMatch
+  RewriteEngine On
+  RewriteBase /
+  
+  # ---------------------------------------------------------------------------
+  # LEGACY URL RECOVERY (pre-hack WordPress site)
+  #
+  # This domain ran WordPress until the site was rebuilt. Those pages were real,
+  # they were crawled for years (the Wayback Machine holds 128 captures of
+  # /residential-air-duct-cleaning alone), and whatever inbound links they earned
+  # still point at them. They were all answering 404, which throws that equity
+  # away — a 404 tells Google to forget the URL rather than to follow it here.
+  #
+  # These are EXACT matches (anchored with $) so they redirect only the genuine
+  # old page. Spam that was injected *underneath* those paths — /faq/<italian
+  # slug>, for instance — still falls through to the 410 rules below.
+  #
+  # These must stay ABOVE the 410 block: /faq and /who-we-are are real former
+  # pages that were previously being 410'd along with the injected spam.
+  # ---------------------------------------------------------------------------
+  RewriteRule ^/?residential-air-duct-cleaning/?$ /services/residential-air-duct-cleaning/ [R=301,L]
+  RewriteRule ^/?commercial-air-duct-cleaning/?$ /services/commercial-air-duct-cleaning/ [R=301,L]
+  RewriteRule ^/?dryer-vent-cleaning/?$ /services/residential-dryer-vent-cleaning/ [R=301,L]
+  RewriteRule ^/?air-duct-cleaning/?$ /services/residential-air-duct-cleaning/ [R=301,L]
+  RewriteRule ^/?filters/?$ /services/residential-electrostatic-filter/ [R=301,L]
+  RewriteRule ^/?(air-duct-cleaning-in-los-angeles|los-angeles-duct-vent-cleaning-services|los-angeles-cleaning-services)/?$ /locations/los-angeles/ [R=301,L]
+  RewriteRule ^/?welcome/?$ / [R=301,L]
+  RewriteRule ^/?(who-we-are|mission|philosophy)/?$ /about/ [R=301,L]
+  RewriteRule ^/?(faq|duct-cleaning-questions)/?$ /blog/air-duct-cleaning-faq/ [R=301,L]
+  RewriteRule ^/?(book-it|contact-for-free-system-checkup)/?$ /quote/ [R=301,L]
+  RewriteRule ^/?specials/?$ /pricing/ [R=301,L]
+  RewriteRule ^/?term-use/?$ /terms-of-service/ [R=301,L]
+  RewriteRule ^/?(project|lshowcase|ymca-westchester)/?$ /case-studies/ [R=301,L]
+  RewriteRule ^/?(feed|comments)/?$ /blog/ [R=301,L]
+
+  # WordPress remnants and its old XML/HTML sitemaps. The CMS is gone, so these
+  # are permanently gone — 410 rather than 404 so Google drops them faster, and
+  # so the endless bot probing of /wp-login.php and /xmlrpc.php gets a terminal
+  # answer instead of being handed the 404 page every time.
+  RewriteRule ^/?(wordpress|wp-content|wp-includes|wp-json|wp-admin)(/.*)?$ - [G,NC,L]
+  RewriteRule ^/?(wp-login\.php|xmlrpc\.php|wp-cron\.php)$ - [G,NC,L]
+  RewriteRule ^/?sitemap(-[a-z0-9-]+)?\.html$ - [G,NC,L]
+
+  # Return HTTP 410 Gone for legacy Italian spam directories to purge them from Google Search Console
+  RewriteRule ^/?(cartoleria-scuola|cd|classifica|ebook|film|giochi-giocattoli|idee-regalo|libri-inglese|libri-testi-universitari|libri|mio-ibs|offerte-ebook|ordina-come-ospite|shop)(/.*)?$ - [G,NC,L]
+  RewriteRule ^/?search/?$ - [G,NC,L]
+  # Injected dropshipping product URLs all end in "-p-<digits>" (e.g. /Tappo-...-p-497907).
+  # No legitimate page matches this, so 410 them to deindex the ~60K spam URLs faster than 404.
+  RewriteRule "-p-[0-9]+/?$" - [G,NC,L]
+
+  # Second wave of hack-era URLs. These were still answering 404 rather than 410,
+  # which tells Google "try again later" instead of "this is permanently gone" and
+  # keeps them sitting in the crawl queue. Every segment below is Italian-bookshop
+  # spam with no counterpart in this site's routes.
+  RewriteRule ^/?(vinili|happy-card|libri-vintage|seller|servizi|contattaci|who-we-are|faq|offerte-[a-z0-9-]+)(/.*)?$ - [G,NC,L]
+
+  # Injected product detail URLs carry an ISBN under /e/, e.g.
+  # /mio-primo-carezzalibro-...-fiona-watt/e/9781409515449?inventoryId=336928050
+  RewriteRule "/e/[0-9]{9,13}/?$" - [G,NC,L]
+
+  # Italian T&C pages injected UNDER the real /about/ page. Scoped to the exact
+  # "condizioni-" prefix so the genuine /about/ page is untouched.
+  RewriteRule ^/?about/condizioni- - [G,NC,L]
+
+  # ---------------------------------------------------------------------------
+  # Canonical hostname: https://www.pureaircalifornia.com
+  #
+  # Before this, all four of http/https x apex/www answered 200 with identical
+  # content, so Google crawled the whole site up to four times and split every
+  # ranking signal across four hosts. These run AFTER the 410 rules above so dead
+  # spam URLs die on the first request instead of costing a redirect hop first.
+  # ---------------------------------------------------------------------------
+
+  # apex (and any other host) -> www. Safe: the Host header is rewritten by the
+  # redirect itself, so this cannot loop.
+  RewriteCond %{HTTP_HOST} !^www\.pureaircalifornia\.com$ [NC]
+  RewriteRule ^ https://www.pureaircalifornia.com%{REQUEST_URI} [R=301,L]
+
+  # http -> https.
+  #
+  # %{HTTPS} is the correct signal on this host — verified empirically rather than
+  # assumed, because getting it wrong here is an infinite redirect that takes the
+  # whole site down. A probe rule confirmed %{HTTPS} reads "on" for real HTTPS
+  # requests and is absent over plaintext (X-Forwarded-Proto and X-Forwarded-SSL
+  # are not set at all here, so keying on either silently did nothing).
+  # Second condition is belt-and-braces: SERVER_PORT 443 also tracks TLS here, so
+  # the rule stays inert on HTTPS even if one signal changes.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{SERVER_PORT} !=443
+  RewriteRule ^ https://www.pureaircalifornia.com%{REQUEST_URI} [R=301,L]
+
+  # Legacy URL kept alive by a client-side <Navigate> in App.tsx. React never runs
+  # for a crawler here: Apache has already answered 404.html, so the redirect was
+  # invisible to Google and the old URL read as dead. Do it server-side instead.
+  RewriteRule ^/?services/electrostatic-filter-program/?$ /services/residential-electrostatic-filter/ [R=301,L]
+
+  # Client-side-only routes: no static file is prerendered for these because the
+  # URL carries a dynamic segment, so they must fall through to the SPA shell.
+  #   /admin/*     — the admin portal
+  #   /feedback/*  — tokenized review links texted to customers. Without this rule
+  #                  every customer who tapped a review request got 404.html.
+  RewriteCond %{REQUEST_URI} ^/(admin|feedback)(/|$) [NC]
+  RewriteRule ^ /index.html [L]
+
+  # Everything else that does not map to a real file/directory is genuinely gone.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} !^/(admin|feedback)(/|$) [NC]
+  RewriteRule ^ /404.html [R=404,L]
+</IfModule>
+
+# Ensure Directory Index is set
+DirectoryIndex index.html
+
+# Enable gzip compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml
+</IfModule>
+
+# Cache static assets (1 year — filenames are content-hashed by Vite)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+  # HTML should not be cached long (SPA entry point changes on deploy)
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-XSS-Protection "1; mode=block"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=(self)"
+
+  # No cache for HTML
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+
+  # Immutable cache for hashed assets
+  <FilesMatch "\.(js|css|woff2|woff|png|jpg|jpeg|webp|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# Prevent directory listing
+Options -Indexes
+
+# Block access to hidden files
+<FilesMatch "^\.(?!htaccess)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</FilesMatch>

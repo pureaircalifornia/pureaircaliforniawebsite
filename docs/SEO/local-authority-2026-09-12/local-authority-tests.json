@@ -1,0 +1,38 @@
+[
+  {
+    "test": "brentwood geography, FAQ and responsive layout",
+    "passed": true
+  },
+  {
+    "test": "culver-city geography, FAQ and responsive layout",
+    "passed": true
+  },
+  {
+    "test": "century-city geography, FAQ and responsive layout",
+    "passed": true
+  },
+  {
+    "test": "Home priority links and four commercial project cards",
+    "passed": true
+  },
+  {
+    "test": "soulcycle-westside-dryer-vents project page",
+    "passed": true
+  },
+  {
+    "test": "taco-bell-canoga-park-hvac project page",
+    "passed": true
+  },
+  {
+    "test": "bassett-torrance-showroom project page",
+    "passed": true
+  },
+  {
+    "test": "nonprofit-housing-office-hvac project page",
+    "passed": true
+  },
+  {
+    "test": "New project sitemap entries and universal crawler exclusions",
+    "passed": true
+  }
+]

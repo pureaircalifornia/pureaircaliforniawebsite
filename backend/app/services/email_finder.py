@@ -1,46 +1,399 @@
 """
 Email Finder Service
-Automatically discovers contact emails for businesses by scraping their websites
-and generating common email patterns.
+
+Finds contact emails and a contact name for a business by reading its own
+website. Every address returned was published by the business; nothing is
+invented. Pattern guesses (info@, facilities@ ...) are still offered so a person
+can check one by hand, but they are marked "pattern guess", graded "guessed" and
+never auto-selected or auto-sent, because mail to non-existent mailboxes bounces
+and bounces are what damage a sending domain.
 """
-import re
+import asyncio
+import ipaddress
+import json
 import logging
-from typing import List, Optional, Dict
-from urllib.parse import urlparse, urljoin
+import re
+import socket
+from typing import Dict, List, Optional, Tuple
+from urllib.parse import urljoin, urlparse
+
 import httpx
 from bs4 import BeautifulSoup
 
+from .prospect_quality import SENDABLE_GRADES, best_email, grade_email, normalize_domain
+
 logger = logging.getLogger(__name__)
 
-# Email regex pattern
+# The lookbehind and the length caps keep this linear: without them a long run
+# of letters with no "@" makes the engine retry from every position, and one
+# hostile page could pin the server for minutes.
 EMAIL_REGEX = re.compile(
-    r'[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}',
-    re.IGNORECASE,
+    r"(?<![A-Za-z0-9._%+\-])[A-Za-z0-9._%+\-]{1,64}@[A-Za-z0-9\-]{1,63}"
+    r"(?:\.[A-Za-z0-9\-]{1,63}){0,4}\.[A-Za-z]{2,24}(?![A-Za-z0-9\-])"
 )
 
-# Emails to skip (generic, not useful)
-SKIP_EMAILS = {
-    "example.com", "sentry.io", "wixpress.com", "googleapis.com",
-    "w3.org", "schema.org", "facebook.com", "twitter.com",
-    "instagram.com", "youtube.com", "google.com", "jquery.com",
-    "cloudflare.com", "cloudfront.net", "amazonaws.com",
+# "jane [at] acme [dot] com", "jane(at)acme.com". Only bracketed forms count:
+# matching the bare word "at" turns "Visit us at www.acme.com" into an address.
+OBFUSCATED_REGEX = re.compile(
+    r"(?<![A-Za-z0-9._%+\-])([A-Za-z0-9._%+\-]{2,40})\s{0,3}(?:\[at\]|\(at\)|\{at\})\s{0,3}"
+    r"([A-Za-z0-9\-]{2,40}(?:\s{0,3}(?:\[dot\]|\(dot\)|\{dot\}|\.)\s{0,3}[A-Za-z0-9\-]{2,40}){1,3})",
+    re.IGNORECASE,
+)
+_DOT_WORD = re.compile(r"\s*(?:\[dot\]|\(dot\)|\{dot\})\s*", re.IGNORECASE)
+
+# Domains whose addresses show up in page source but are never the business.
+SKIP_EMAIL_DOMAINS = (
+    "example.com", "sentry.io", "wixpress.com", "googleapis.com", "w3.org",
+    "schema.org", "facebook.com", "twitter.com", "instagram.com", "youtube.com",
+    "google.com", "jquery.com", "cloudflare.com", "cloudfront.net", "amazonaws.com",
+    "godaddy.com", "squarespace.com", "wix.com", "wordpress.com", "sentry-next.wixpress.com",
+    "domain.com", "yourdomain.com", "email.com",
+)
+ASSET_SUFFIXES = (".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".css", ".js")
+
+# Pages most likely to list a decision maker.
+CONTACT_PATHS = (
+    "/contact", "/contact-us", "/about", "/about-us", "/team", "/our-team",
+    "/staff", "/management", "/leadership", "/board",
+)
+
+ROLE_GUESSES = ("info", "office", "facilities", "maintenance", "manager", "contact")
+
+# Titles of the people who approve duct / dryer-vent work.
+TARGET_ROLES = (
+    "facilities manager", "facility manager", "director of facilities",
+    "property manager", "community manager", "community association manager",
+    "portfolio manager", "regional manager", "building manager", "building engineer",
+    "chief engineer", "director of engineering", "maintenance manager",
+    "maintenance supervisor", "maintenance director", "director of operations",
+    "operations manager", "general manager", "executive director", "administrator",
+    "office manager", "owner", "president", "board president", "principal",
+    "practice manager", "director",
+)
+_NAME_RE = re.compile(r"\b([A-Z][a-z]+(?:[-'][A-Z][a-z]+)?\s+(?:[A-Z]\.\s+)?[A-Z][a-z]+(?:[-'][A-Z][a-z]+)?)\b")
+_NOT_NAMES = {
+    "manager", "president", "director", "welcome", "about", "contact", "home", "our",
+    "team", "property", "facilities", "facility", "general", "community", "office",
+    "building", "operations", "maintenance", "executive", "chief", "engineer", "owner",
+    "board", "regional", "portfolio", "practice", "principal", "administrator", "the",
+    "los", "angeles", "santa", "monica", "beverly", "hills", "san", "north", "south",
+    "east", "west", "privacy", "policy", "terms", "service", "services", "learn", "more",
+    "read", "view", "call", "email", "meet", "senior", "living", "assisted", "care",
 }
 
-# Pages most likely to contain contact emails
-CONTACT_PATHS = [
-    "/contact", "/contact-us", "/about", "/about-us",
-    "/team", "/our-team", "/staff", "/management",
-    "/careers", "/jobs", "/support", "/help",
-]
+MAX_PAGE_BYTES = 600_000
+MAX_REDIRECTS = 5
+FETCH_TIMEOUT = 10.0          # per network read
+FETCH_DEADLINE = 15.0         # whole request, however slowly the body arrives
+MAX_CONCURRENT_PAGES = 4
 
-# Role-based prefixes ranked by relevance for facility management outreach
-ROLE_PREFIXES = [
-    "facilities", "maintenance", "operations", "manager",
-    "director", "admin", "office", "general",
-    "building", "property", "management",
-    "info", "contact", "hello", "inquiries", "enquiries",
-    "front.desk", "frontdesk", "reception",
-]
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+    ),
+    "Accept": "text/html,application/xhtml+xml",
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
+
+# ── Network safety ────────────────────────────────────────────────────
+
+_NAT64_PREFIX = ipaddress.ip_network("64:ff9b::/96")
+
+
+def _is_public_address(raw: str) -> bool:
+    try:
+        address = ipaddress.ip_address(raw)
+    except ValueError:
+        return False
+    if isinstance(address, ipaddress.IPv6Address):
+        if address.ipv4_mapped:
+            address = address.ipv4_mapped
+        elif address in _NAT64_PREFIX:
+            # The low 32 bits are an IPv4 address reached through a gateway.
+            address = ipaddress.IPv4Address(int(address) & 0xFFFFFFFF)
+    # is_global is False for private, loopback, link-local, carrier-grade NAT,
+    # reserved and multicast ranges alike.
+    return address.is_global
+
+
+def resolve_public_ip(host: Optional[str]) -> Optional[str]:
+    """
+    Resolve a host and return one address to connect to, or None unless every
+    address it resolves to is publicly routable.
+
+    The website field is editable and comes from third parties, so without this
+    the scraper could be pointed at localhost, a cloud metadata address or
+    another internal service.
+    """
+    if not host:
+        return None
+    try:
+        infos = socket.getaddrinfo(host, None, type=socket.SOCK_STREAM)
+    except (socket.gaierror, UnicodeError):
+        return None
+    addresses = [info[4][0] for info in infos]
+    if not addresses or not all(_is_public_address(address) for address in addresses):
+        return None
+    return addresses[0]
+
+
+def is_public_host(host: Optional[str]) -> bool:
+    return resolve_public_ip(host) is not None
+
+
+async def domain_accepts_mail(domain: Optional[str]) -> Optional[bool]:
+    """True/False when DNS gives a clear answer on MX records, None when unknown."""
+    if not domain:
+        return False
+    try:
+        import dns.asyncresolver
+        import dns.exception
+        import dns.resolver
+    except ImportError:  # dnspython ships with pymongo; treat absence as "unknown"
+        return None
+    try:
+        resolver = dns.asyncresolver.Resolver()
+        resolver.lifetime = 5.0
+        answers = await resolver.resolve(domain, "MX")
+        # A single "." exchange is a null MX: the domain declares it takes no mail.
+        return any(str(record.exchange).strip(".") for record in answers)
+    except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer):
+        return False
+    except dns.exception.DNSException:
+        return None
+    except Exception as exc:  # resolver misconfiguration must not break enrichment
+        logger.debug("MX lookup failed for %s: %s", domain, exc)
+        return None
+
+
+# ── Extraction (pure) ─────────────────────────────────────────────────
+
+def decode_cloudflare_email(encoded: str) -> Optional[str]:
+    """Decode Cloudflare's data-cfemail obfuscation (XOR with the first byte)."""
+    try:
+        key = int(encoded[:2], 16)
+        decoded = "".join(
+            chr(int(encoded[i:i + 2], 16) ^ key) for i in range(2, len(encoded), 2)
+        )
+    except (ValueError, IndexError):
+        return None
+    return decoded if "@" in decoded else None
+
+
+def _clean_email(raw: str) -> Optional[str]:
+    email = raw.strip().strip(".,;:()<>[]\"'").lower()
+    if email.startswith("mailto:"):
+        email = email[7:]
+    email = email.split("?")[0]
+    if "@" not in email or len(email) > 80 or email.endswith(ASSET_SUFFIXES):
+        return None
+    domain = email.split("@", 1)[1]
+    if any(domain == skip or domain.endswith("." + skip) for skip in SKIP_EMAIL_DOMAINS):
+        return None
+    if not EMAIL_REGEX.fullmatch(email):
+        return None
+    return email
+
+
+def extract_emails(html: str) -> List[str]:
+    """Pull every published address out of a page, including obfuscated ones."""
+    found: List[str] = []
+    try:
+        soup = BeautifulSoup(html, "html.parser")
+    except Exception:
+        soup = None
+
+    if soup is not None:
+        for link in soup.find_all("a", href=True):
+            href = link["href"]
+            if href.lower().startswith("mailto:"):
+                found.append(href)
+            elif "/cdn-cgi/l/email-protection#" in href:
+                decoded = decode_cloudflare_email(href.split("#", 1)[1])
+                if decoded:
+                    found.append(decoded)
+        for node in soup.find_all(attrs={"data-cfemail": True}):
+            decoded = decode_cloudflare_email(node["data-cfemail"])
+            if decoded:
+                found.append(decoded)
+        for script in soup.find_all("script", type="application/ld+json"):
+            found.extend(_emails_from_json_ld(script.string or ""))
+        text = soup.get_text(separator=" ")
+    else:
+        text = re.sub(r"<[^>]{0,2000}>", " ", html)
+
+    # Visible text only. Raw markup is full of escapes and script noise that
+    # look like addresses and are not.
+    found.extend(EMAIL_REGEX.findall(text))
+    for local, domain in OBFUSCATED_REGEX.findall(text):
+        found.append(f"{local}@{_DOT_WORD.sub('.', domain).replace(' ', '')}")
+
+    cleaned: List[str] = []
+    for raw in found:
+        email = _clean_email(raw)
+        if email and email not in cleaned:
+            cleaned.append(email)
+    return cleaned
+
+
+def _emails_from_json_ld(payload: str) -> List[str]:
+    try:
+        data = json.loads(payload)
+    except (ValueError, TypeError):
+        return []
+    emails: List[str] = []
+
+    def walk(node):
+        if isinstance(node, dict):
+            for key, value in node.items():
+                if key == "email" and isinstance(value, str):
+                    emails.append(value)
+                else:
+                    walk(value)
+        elif isinstance(node, list):
+            for item in node:
+                walk(item)
+
+    walk(data)
+    return emails
+
+
+def extract_contacts(html: str) -> List[Dict]:
+    """Find "Name - Title" pairs on a page: [{name, title, score}]."""
+    try:
+        soup = BeautifulSoup(html, "html.parser")
+    except Exception:
+        return []
+    contacts: Dict[str, Dict] = {}
+    for element in soup.find_all(["div", "p", "span", "li", "td", "h2", "h3", "h4", "h5", "figcaption"]):
+        text = " ".join(element.get_text(separator=" ").split())
+        if not (8 <= len(text) <= 160):
+            continue
+        lowered = text.lower()
+        role = next((r for r in TARGET_ROLES if re.search(rf"\b{re.escape(r)}\b", lowered)), None)
+        if not role:
+            continue
+        for name in _NAME_RE.findall(text):
+            words = [w.strip(".").lower() for w in name.split()]
+            if any(word in _NOT_NAMES for word in words):
+                continue
+            # Earlier roles in TARGET_ROLES are closer to the buying decision.
+            score = 100 - TARGET_ROLES.index(role)
+            existing = contacts.get(name)
+            if not existing or existing["score"] < score:
+                contacts[name] = {"name": name, "title": role.title(), "score": score}
+    return sorted(contacts.values(), key=lambda c: c["score"], reverse=True)
+
+
+def match_name_to_email(email: str, contacts: List[Dict]) -> Optional[Dict]:
+    """Return the contact whose name matches the mailbox (jsmith@, jane.smith@)."""
+    local = email.split("@", 1)[0].lower()
+    for contact in contacts:
+        parts = contact["name"].lower().replace(".", "").split()
+        first, last = parts[0], parts[-1]
+        patterns = {first, last, f"{first}.{last}", f"{first}{last}", f"{first[0]}{last}",
+                    f"{first}{last[0]}", f"{first}_{last}", f"{first[0]}.{last}"}
+        if local in patterns:
+            return contact
+    return None
+
+
+def _score(email: str, business_domain: Optional[str], on_contact_page: bool) -> Tuple[int, str]:
+    grade = grade_email(email, business_domain, "website")
+    base = {"named": 90, "buyer_role": 80, "role": 60, "free_mail": 50,
+            "other_domain": 25}.get(grade, 0)
+    return (base + (5 if on_contact_page and base else 0), grade)
+
+
+# ── Fetching ──────────────────────────────────────────────────────────
+
+async def _read_capped(client: httpx.AsyncClient, url: str) -> Optional[Tuple[int, dict, str]]:
+    """
+    GET one URL without following redirects. Returns (status, headers, text),
+    reading at most MAX_PAGE_BYTES of the decoded body.
+
+    The connection goes to the address that was just validated, not to
+    whatever the name resolves to a moment later, so a DNS answer that changes
+    between the check and the request cannot redirect us somewhere internal.
+    """
+    parsed = urlparse(url)
+    if parsed.scheme not in ("http", "https") or not parsed.hostname:
+        return None
+    host = parsed.hostname
+    address = await asyncio.to_thread(resolve_public_ip, host)
+    if not address:
+        return None
+    netloc = f"[{address}]" if ":" in address else address
+    if parsed.port:
+        netloc += f":{parsed.port}"
+    target = parsed._replace(netloc=netloc).geturl()
+    host_header = host if not parsed.port else f"{host}:{parsed.port}"
+
+    async with client.stream(
+        "GET", target, headers={"Host": host_header},
+        extensions={"sni_hostname": host}, timeout=FETCH_TIMEOUT,
+    ) as response:
+        headers = dict(response.headers)
+        if response.is_redirect or response.status_code != 200:
+            return response.status_code, headers, ""
+        content_type = headers.get("content-type", "")
+        if "html" not in content_type and "text/plain" not in content_type:
+            return response.status_code, headers, ""
+        chunks: List[bytes] = []
+        size = 0
+        async for chunk in response.aiter_bytes():
+            chunks.append(chunk)
+            size += len(chunk)
+            if size >= MAX_PAGE_BYTES:
+                break
+        body = b"".join(chunks)[:MAX_PAGE_BYTES]
+        return response.status_code, headers, body.decode(response.encoding or "utf-8", "replace")
+
+
+async def _fetch(client: httpx.AsyncClient, url: str) -> Optional[str]:
+    """Fetch a page, following up to MAX_REDIRECTS redirects one checked hop at a time."""
+    async def run() -> Optional[str]:
+        current = url
+        for _ in range(MAX_REDIRECTS + 1):
+            result = await _read_capped(client, current)
+            if result is None:
+                return None
+            status, headers, text = result
+            location = headers.get("location")
+            if 300 <= status < 400 and location:
+                current = urljoin(current, location)
+                continue
+            return (text or None) if status == 200 else None
+        return None
+
+    try:
+        return await asyncio.wait_for(run(), timeout=FETCH_DEADLINE)
+    except Exception as exc:  # timeouts, TLS and protocol errors: this page is skipped
+        logger.debug("Could not fetch %s: %s", urlparse(url).hostname, type(exc).__name__)
+        return None
+
+
+def _discover_contact_links(html: str, base_url: str, site_host: str) -> List[str]:
+    """Same-site links whose text or path suggests a contact / team page."""
+    try:
+        soup = BeautifulSoup(html, "html.parser")
+    except Exception:
+        return []
+    links: List[str] = []
+    for anchor in soup.find_all("a", href=True):
+        label = (anchor.get_text() or "").lower()
+        href = anchor["href"]
+        haystack = f"{label} {href.lower()}"
+        if not any(word in haystack for word in ("contact", "about", "team", "staff",
+                                                 "management", "leadership", "board")):
+            continue
+        absolute = urljoin(base_url, href).split("#")[0]
+        host = (urlparse(absolute).hostname or "").lower()
+        if host.replace("www.", "") == site_host and absolute not in links:
+            links.append(absolute)
+    return links[:6]
 
 
 async def find_emails_for_business(
@@ -50,275 +403,118 @@ async def find_emails_for_business(
 ) -> Dict:
     """
     Find contact emails for a business.
-    
-    Strategy:
-    1. Scrape the business website homepage + contact pages
-    2. Extract all email addresses found
-    3. Generate common pattern guesses from the domain
-    4. Rank and deduplicate results
-    
-    Returns dict with:
-        - emails: list of {email, source, confidence} dicts
-        - domain: the business domain
-        - top_contact_name: optional, best guess for contact name
-        - pages_scraped: number of pages checked
+
+    Returns:
+        emails            [{email, source, confidence, grade}] best first
+        best              the best *sendable* entry, or None
+        domain            the business's own domain
+        mx_valid          True / False / None (unknown)
+        top_contact_name  best decision-maker name found, or None
+        top_contact_title that person's title, or None
+        contacts          every {name, title} found
+        pages_scraped     how many pages were read
     """
-    if not website_url:
-        return {"emails": [], "domain": None, "pages_scraped": 0}
-    
-    # Normalize URL
-    if not website_url.startswith(("http://", "https://")):
-        website_url = "https://" + website_url
-    
-    parsed = urlparse(website_url)
-    domain = parsed.hostname
-    if not domain:
-        return {"emails": [], "domain": None, "pages_scraped": 0}
-    
-    # Strip www. for email domain
-    email_domain = domain.replace("www.", "")
-    
-    found_emails: Dict[str, Dict] = {}  # email -> {source, confidence}
-    found_names: Dict[str, int] = {}    # name -> confidence score
+    empty = {"emails": [], "best": None, "domain": None, "mx_valid": None,
+             "top_contact_name": None, "top_contact_title": None,
+             "contacts": [], "pages_scraped": 0}
+    domain = normalize_domain(website_url)
+    if not website_url or not domain:
+        return empty
+
+    base_url = website_url.strip()
+    if not base_url.startswith(("http://", "https://")):
+        base_url = "https://" + base_url
+
+    found: Dict[str, Dict] = {}
+    contacts: Dict[str, Dict] = {}
     pages_scraped = 0
-    
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml",
-        "Accept-Language": "en-US,en;q=0.9",
-    }
-    
+
+    def absorb(html: str, source: str, on_contact_page: bool) -> None:
+        for email in extract_emails(html):
+            confidence, grade = _score(email, domain, on_contact_page)
+            # "other_domain" is kept for a person to judge (a parent company, or
+            # the web designer); it is never selected automatically.
+            if grade not in SENDABLE_GRADES and grade != "other_domain":
+                continue
+            if email not in found or found[email]["confidence"] < confidence:
+                found[email] = {"email": email, "source": source,
+                                "confidence": confidence, "grade": grade}
+        for contact in extract_contacts(html):
+            existing = contacts.get(contact["name"])
+            if not existing or existing["score"] < contact["score"]:
+                contacts[contact["name"]] = contact
+
+    # verify=False: plenty of small-business sites serve expired certificates,
+    # and this client only ever reads public pages.
     async with httpx.AsyncClient(
-        follow_redirects=True,
-        timeout=12.0,
-        headers=headers,
-        verify=False,  # Some business sites have bad SSL
+        follow_redirects=False, timeout=FETCH_TIMEOUT, headers=HEADERS, verify=False,
     ) as client:
-        # 1. Scrape homepage
-        emails_from_page, names_from_page = await _scrape_page_for_emails_and_names(client, website_url)
-        pages_scraped += 1
-        for email in emails_from_page:
-            if _is_valid_business_email(email, email_domain):
-                found_emails[email.lower()] = {
-                    "source": "homepage",
-                    "confidence": _score_email(email, email_domain),
-                }
-        for name, score in names_from_page.items():
-            found_names[name] = max(found_names.get(name, 0), score)
+        homepage = await _fetch(client, base_url)
+        if homepage:
+            pages_scraped += 1
+            # HTML parsing is CPU-bound; keep it off the event loop so one big
+            # page cannot stall every other request on the server.
+            await asyncio.to_thread(absorb, homepage, "homepage", False)
 
-        # 2. Scrape contact/about pages
+        candidates = await asyncio.to_thread(
+            _discover_contact_links, homepage or "", base_url, domain)
         for path in CONTACT_PATHS:
-            contact_url = urljoin(website_url, path)
-            try:
-                emails_from_page, names_from_page = await _scrape_page_for_emails_and_names(client, contact_url)
-                pages_scraped += 1
-                for email in emails_from_page:
-                    if _is_valid_business_email(email, email_domain):
-                        existing = found_emails.get(email.lower())
-                        score = _score_email(email, email_domain) + 10  # Bonus for contact page
-                        if not existing or existing["confidence"] < score:
-                            found_emails[email.lower()] = {
-                                "source": f"contact page ({path})",
-                                "confidence": score,
-                            }
-                for name, score in names_from_page.items():
-                    found_names[name] = max(found_names.get(name, 0), score + 10) # Bonus for contact page
-            except Exception:
-                continue  # Skip pages that don't exist
-            
-            # Stop if we found enough emails
-            if len(found_emails) >= 5 and len(found_names) > 0:
-                break
-    
-    # 3. Fallback: DuckDuckGo Deep Search if no emails found natively
-    if not found_emails:
-        logger.info(f"Native site scrape failed for {email_domain}. Falling back to DuckDuckGo search.")
-        try:
-            from duckduckgo_search import AsyncDDGS
-            search_query = f'"{business_name}" email OR contact "@{email_domain}"' if business_name else f'contact email "@{email_domain}"'
-            async with AsyncDDGS() as ddgs:
-                results = [r async for r in ddgs.text(search_query, max_results=5)]
-                for r in results:
-                    snippet = r.get("body", "") + " " + r.get("title", "")
-                    ddg_emails = EMAIL_REGEX.findall(snippet)
-                    for email in ddg_emails:
-                        if _is_valid_business_email(email, email_domain):
-                            existing = found_emails.get(email.lower())
-                            score = _score_email(email, email_domain) + 15  # Good confidence for public web listing
-                            if not existing or existing["confidence"] < score:
-                                found_emails[email.lower()] = {
-                                    "source": "web directory search",
-                                    "confidence": score,
-                                }
-        except Exception as e:
-            logger.warning(f"DuckDuckGo fallback failed: {e}")
-            
-    # 4. Generate common pattern guesses if STILL no emails found
-    if not found_emails:
-        for prefix in ROLE_PREFIXES[:8]:  # Top 8 most likely
-            guess = f"{prefix}@{email_domain}"
-            found_emails[guess] = {
-                "source": "pattern guess",
-                "confidence": _score_email(guess, email_domain) - 20,  # Lower confidence
-            }
-    
-    # Sort by confidence
-    email_list = [
-        {"email": email, **info}
-        for email, info in sorted(
-            found_emails.items(),
-            key=lambda x: x[1]["confidence"],
-            reverse=True,
-        )
-    ]
-    
-    # Extract best name
-    top_contact_name = None
-    if found_names:
-        top_name_tuple = sorted(found_names.items(), key=lambda x: x[1], reverse=True)[0]
-        if top_name_tuple[1] > 20: # Must be somewhat confident
-            top_contact_name = top_name_tuple[0]
+            url = urljoin(base_url, path)
+            if url not in candidates:
+                candidates.append(url)
+        candidates = candidates[:12]
 
-    # Return top 10
+        semaphore = asyncio.Semaphore(MAX_CONCURRENT_PAGES)
+
+        async def read(url: str) -> Tuple[str, Optional[str]]:
+            async with semaphore:
+                return url, await _fetch(client, url)
+
+        for url, html in await asyncio.gather(*(read(u) for u in candidates)):
+            if not html:
+                continue
+            pages_scraped += 1
+            await asyncio.to_thread(
+                absorb, html, f"contact page ({urlparse(url).path or '/'})", True)
+
+    mx_valid = await domain_accepts_mail(domain)
+    contact_list = sorted(contacts.values(), key=lambda c: c["score"], reverse=True)
+
+    # A mailbox that matches a named decision maker is the best possible result.
+    for entry in found.values():
+        match = match_name_to_email(entry["email"], contact_list)
+        if match:
+            entry["confidence"] += 10
+            entry["contact_name"] = match["name"]
+            entry["contact_title"] = match["title"]
+
+    emails = sorted(found.values(), key=lambda e: e["confidence"], reverse=True)
+
+    # On-domain addresses cannot be delivered if the domain takes no mail.
+    if mx_valid is False:
+        emails = [e for e in emails if e["grade"] in ("free_mail", "other_domain")]
+
+    if not any(e["grade"] in SENDABLE_GRADES for e in emails) and mx_valid is not False:
+        emails = emails + [
+            {"email": f"{prefix}@{domain}", "source": "pattern guess",
+             "confidence": 10, "grade": "guessed"}
+            for prefix in ROLE_GUESSES
+        ]
+
+    best = best_email(emails, domain)
+    top = None
+    if best and best.get("contact_name"):
+        top = {"name": best["contact_name"], "title": best.get("contact_title")}
+    elif contact_list:
+        top = contact_list[0]
+
     return {
-        "emails": email_list[:10],
-        "domain": email_domain,
-        "top_contact_name": top_contact_name,
+        "emails": emails[:10],
+        "best": best,
+        "domain": domain,
+        "mx_valid": mx_valid,
+        "top_contact_name": top["name"] if top else None,
+        "top_contact_title": top.get("title") if top else None,
+        "contacts": [{"name": c["name"], "title": c["title"]} for c in contact_list[:8]],
         "pages_scraped": pages_scraped,
     }
-
-
-async def _scrape_page_for_emails_and_names(
-    client: httpx.AsyncClient,
-    url: str,
-) -> tuple[List[str], Dict[str, int]]:
-    """Fetch a page and extract email addresses and potential contact names."""
-    try:
-        response = await client.get(url, timeout=10.0)
-        if response.status_code != 200:
-            return [], {}
-        
-        content_type = response.headers.get("content-type", "")
-        if "text/html" not in content_type and "text/plain" not in content_type:
-            return [], {}
-        
-        html = response.text
-        
-        # Extract from raw HTML (catches mailto: links and text)
-        raw_emails = EMAIL_REGEX.findall(html)
-        
-        # Extract names using heuristic approach near target titles
-        found_names = {}
-        target_roles = [
-            "facilities manager", "property manager", "facility manager",
-            "director of operations", "general manager", "president",
-            "hoa president", "community manager", "maintenance manager",
-            "building manager", "chief engineer",
-        ]
-        
-        try:
-            soup = BeautifulSoup(html, "html.parser")
-            for link in soup.find_all("a", href=True):
-                href = link["href"]
-                if href.startswith("mailto:"):
-                    email = href.replace("mailto:", "").split("?")[0].strip()
-                    if email and "@" in email:
-                        raw_emails.append(email)
-                        
-            # Simplistic Name Extraction: look for elements containing target roles
-            for elem in soup.find_all(['div', 'p', 'span', 'li', 'td', 'h3', 'h4', 'strong', 'b']):
-                text = elem.get_text().strip()
-                if len(text) < 150: # Short block of text (like a team card)
-                    text_lower = text.lower()
-                    for role in target_roles:
-                        if role in text_lower:
-                            # Use regex to find capitalized words near the role
-                            import re
-                            # Looks for 2-3 capitalized words
-                            names = re.findall(r'([A-Z][a-z]+ [A-Z][a-z]+(?: [A-Z][a-z]+)?)', text)
-                            for name in names:
-                                # Penalize very short or very long
-                                if 4 < len(name) < 25 and not any(x in name.lower() for x in ["manager", "president", "director", "welcome", "about", "contact", "home"]):
-                                    found_names[name] = found_names.get(name, 0) + 50
-                            break
-        except Exception:
-            pass
-        
-        return list(set(raw_emails)), found_names
-        
-    except Exception as e:
-        logger.debug(f"Could not scrape {url}: {e}")
-        return [], {}
-
-
-def _is_valid_business_email(email: str, expected_domain: str) -> bool:
-    """Check if an email is a valid business email (not spam/generic)."""
-    email = email.lower().strip()
-    
-    # Must have @ and a dot in domain
-    if "@" not in email or "." not in email.split("@")[1]:
-        return False
-    
-    # Skip emails from known non-business domains
-    email_domain = email.split("@")[1]
-    for skip in SKIP_EMAILS:
-        if skip in email_domain:
-            return False
-    
-    # Skip common false positives
-    if email.endswith(".png") or email.endswith(".jpg") or email.endswith(".gif"):
-        return False
-    
-    # Skip very long emails (likely scraping artifacts)
-    if len(email) > 60:
-        return False
-    
-    return True
-
-
-def _score_email(email: str, expected_domain: str) -> int:
-    """
-    Score an email by relevance for business outreach.
-    Higher = more relevant.
-    """
-    score = 50  # Base score
-    email_lower = email.lower()
-    local_part = email_lower.split("@")[0]
-    email_domain = email_lower.split("@")[1]
-    
-    # Exact domain match is a big bonus
-    if email_domain == expected_domain:
-        score += 30
-    
-    # Role-based scoring
-    high_value = ["manager", "facilities", "maintenance", "operations", "director", "building", "property"]
-    medium_value = ["admin", "office", "general", "gm", "front"]
-    low_value = ["info", "contact", "hello", "inquiries", "support", "help"]
-    
-    for keyword in high_value:
-        if keyword in local_part:
-            score += 25
-            break
-    else:
-        for keyword in medium_value:
-            if keyword in local_part:
-                score += 15
-                break
-        else:
-            for keyword in low_value:
-                if keyword in local_part:
-                    score += 5
-                    break
-    
-    # Personal name emails (e.g., john@) are good
-    if re.match(r'^[a-z]{2,15}$', local_part):
-        score += 10
-    if "." in local_part and len(local_part.split(".")) == 2:
-        # firstname.lastname pattern
-        score += 20
-    
-    # Penalty for noreply/unsubscribe
-    if any(x in local_part for x in ["noreply", "no-reply", "unsubscribe", "do-not-reply", "mailer-daemon"]):
-        score -= 100
-    
-    return score

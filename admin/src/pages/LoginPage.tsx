@@ -73,7 +73,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="input-field"
-                placeholder="lou@pureaircalifornia.com"
+                placeholder="admin@company.com"
                 required
                 autoComplete="email"
                 autoFocus

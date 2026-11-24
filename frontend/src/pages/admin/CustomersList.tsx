@@ -84,7 +84,7 @@ export default function CustomersList() {
                     <p className="text-gray-600">Manage your customer database and leads</p>
                 </div>
                 <div className="flex gap-3">
-                    <button className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                    <button title="Export customers to CSV" aria-label="Export customers to CSV" className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                         <Download className="w-4 h-4" />
                         Export
                     </button>
@@ -104,6 +104,7 @@ export default function CustomersList() {
                     <div className="relative flex-1">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <input
+                            title="Search customers by name, email, or phone" aria-label="Search customers by name, email, or phone"
                             type="text"
                             placeholder="Search customers..."
                             value={searchQuery}
@@ -111,7 +112,7 @@ export default function CustomersList() {
                             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
                         />
                     </div>
-                    <select
+                    <select title="Filter customers by status" aria-label="Filter customers by status"
                         value={selectedStatus}
                         onChange={(e) => { setSelectedStatus(e.target.value); setPage(1); }}
                         className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
@@ -124,7 +125,7 @@ export default function CustomersList() {
                         <option value="converted">Converted</option>
                         <option value="lost">Lost</option>
                     </select>
-                    <button type="submit" className="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 text-sm font-medium">Search</button>
+                    <button title="Search customers" aria-label="Search customers" type="submit" className="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 text-sm font-medium">Search</button>
                 </form>
             </div>
 
@@ -146,7 +147,7 @@ export default function CustomersList() {
                             <thead className="bg-gray-50 border-b border-gray-200">
                                 <tr>
                                     <th className="px-4 py-3 text-left">
-                                        <input
+                                        <input title="Select all customers" aria-label="Select all customers"
                                             type="checkbox"
                                             checked={selectedCustomers.length === customers.length && customers.length > 0}
                                             onChange={toggleSelectAll}
@@ -179,7 +180,7 @@ export default function CustomersList() {
                                     return (
                                         <tr key={cid} className="hover:bg-gray-50 transition-colors">
                                             <td className="px-4 py-4">
-                                                <input
+                                                <input title="Select customer" aria-label="Select customer"
                                                     type="checkbox"
                                                     checked={selectedCustomers.includes(cid)}
                                                     onChange={() => toggleSelect(cid)}
@@ -262,6 +263,7 @@ export default function CustomersList() {
                         </p>
                         <div className="flex gap-2">
                             <button
+                                title="Previous page" aria-label="Previous page"
                                 onClick={() => setPage(Math.max(1, page - 1))}
                                 disabled={page === 1}
                                 className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50"
@@ -269,6 +271,7 @@ export default function CustomersList() {
                                 <ChevronLeft className="w-4 h-4" />
                             </button>
                             <button
+                                title="Next page" aria-label="Next page"
                                 onClick={() => setPage(page + 1)}
                                 disabled={customers.length < 20}
                                 className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50"

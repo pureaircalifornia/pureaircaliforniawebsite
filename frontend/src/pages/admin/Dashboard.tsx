@@ -214,7 +214,7 @@ export default function AdminDashboard() {
                                                 <span className="text-gray-900 font-medium">{count as number}</span>
                                             </div>
                                             <div className="w-full bg-gray-100 rounded-full h-2">
-                                                <div className={`${colors[status] || 'bg-gray-400'} h-2 rounded-full transition-all`} style={{ width: `${percentage}%` }} />
+                                                <div className={`${colors[status] || 'bg-gray-400'} h-2 rounded-full transition-all`} style={{ '--tw-percent': `${percentage}%` } as React.CSSProperties & { '--tw-percent': string }} />
                                             </div>
                                         </div>
                                     );

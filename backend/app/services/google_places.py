@@ -1,34 +1,185 @@
 """
 Google Places API Service
-Searches for businesses using Google Places Text Search API.
+
+Finds businesses for the lead scanner. Each search runs several phrasings of
+the category (Google caps one query at 60 results and different phrasings
+surface different businesses), drops places that are closed or outside the
+radius, fills in phone and website, then ranks by fit score so the best
+prospects are at the top of the list.
 """
-import httpx
+import asyncio
 import logging
-from typing import List, Optional
+import math
+from typing import Dict, List, Optional, Tuple
+
+import httpx
 from fastapi import HTTPException
+
 from ..config import get_settings
-from ..models.prospect import PlaceSearchResult, BusinessCategory
+from ..models.prospect import BusinessCategory, PlaceSearchResult
+from .prospect_quality import score_prospect
 
 logger = logging.getLogger(__name__)
 
-# Category-specific search queries for air duct cleaning prospects
-CATEGORY_SEARCH_QUERIES = {
-    BusinessCategory.hoa: "homeowner association",
-    BusinessCategory.building_management: "building management company",
-    BusinessCategory.hotel: "hotel",
-    BusinessCategory.senior_living: "senior living assisted living facility",
-    BusinessCategory.medical: "hospital medical center",
-    BusinessCategory.restaurant: "restaurant",
-    BusinessCategory.property_manager: "property management company",
-    BusinessCategory.office_building: "office building commercial office",
-    BusinessCategory.school: "school university",
-    BusinessCategory.gym: "gym fitness center",
-    BusinessCategory.retail: "shopping center mall",
-    BusinessCategory.warehouse: "warehouse industrial building",
-    BusinessCategory.church: "church religious building",
-    BusinessCategory.daycare: "daycare childcare center",
-    BusinessCategory.other: "",
+TEXT_SEARCH_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json"
+DETAILS_URL = "https://maps.googleapis.com/maps/api/place/details/json"
+
+# Phrasings per category, most productive first. The first phrasing alone is
+# used for small searches; more are added only when more results are wanted.
+CATEGORY_SEARCH_QUERIES: Dict[BusinessCategory, Tuple[str, ...]] = {
+    BusinessCategory.hoa: (
+        "homeowners association", "HOA management company", "condominium association"),
+    BusinessCategory.building_management: (
+        "building management company", "apartment building management", "facilities management company"),
+    BusinessCategory.property_manager: (
+        "property management company", "apartment property management", "residential property manager"),
+    BusinessCategory.hotel: ("hotel", "boutique hotel", "extended stay hotel"),
+    BusinessCategory.senior_living: (
+        "assisted living facility", "senior living community", "skilled nursing facility"),
+    BusinessCategory.medical: ("medical clinic", "urgent care center", "outpatient surgery center"),
+    BusinessCategory.dental: ("dental office", "dental clinic"),
+    BusinessCategory.restaurant: ("restaurant", "banquet hall"),
+    BusinessCategory.office_building: ("office building", "commercial office space", "coworking space"),
+    BusinessCategory.school: ("private school", "charter school", "college"),
+    BusinessCategory.gym: ("gym", "fitness center", "yoga studio"),
+    BusinessCategory.salon: ("hair salon", "day spa"),
+    BusinessCategory.retail: ("shopping center", "shopping mall"),
+    BusinessCategory.warehouse: ("warehouse", "distribution center", "manufacturing facility"),
+    BusinessCategory.church: ("church", "synagogue", "temple"),
+    BusinessCategory.daycare: ("daycare center", "preschool", "child care center"),
+    BusinessCategory.laundromat: ("laundromat", "coin laundry", "laundry service"),
+    BusinessCategory.other: (),
 }
+
+DETAILS_CONCURRENCY = 8
+EARTH_RADIUS_MILES = 3958.8
+_center_cache: Dict[str, Optional[Tuple[float, float]]] = {}
+
+
+def haversine_miles(a: Tuple[float, float], b: Tuple[float, float]) -> float:
+    lat1, lng1, lat2, lng2 = map(math.radians, (a[0], a[1], b[0], b[1]))
+    h = (math.sin((lat2 - lat1) / 2) ** 2
+         + math.cos(lat1) * math.cos(lat2) * math.sin((lng2 - lng1) / 2) ** 2)
+    return 2 * EARTH_RADIUS_MILES * math.asin(math.sqrt(h))
+
+
+def build_queries(category: BusinessCategory, location: str,
+                  custom_query: Optional[str], max_results: int) -> List[str]:
+    """Return the search phrasings to run, fewest that can reach max_results."""
+    if custom_query and custom_query.strip():
+        return [f"{custom_query.strip()} in {location}"]
+    phrasings = CATEGORY_SEARCH_QUERIES.get(category, ())
+    if not phrasings:
+        raise HTTPException(
+            status_code=400,
+            detail="Enter a custom search for the 'Other' category.",
+        )
+    # One phrasing yields at most 60; use a second and third for larger pulls.
+    wanted = 1 if max_results <= 20 else 2 if max_results <= 40 else 3
+    return [f"{phrase} in {location}" for phrase in phrasings[:wanted]]
+
+
+def _raise_for_status(data: dict, first_page: bool) -> bool:
+    """Raise on a hard API error; return False when paging should just stop."""
+    status = data.get("status")
+    if status in ("OK", "ZERO_RESULTS"):
+        return True
+    message = data.get("error_message") or status or "Unknown error"
+    logger.error("Places API %s: %s", status, message)
+    if status == "REQUEST_DENIED":
+        raise HTTPException(status_code=502, detail=f"Google API Error: REQUEST_DENIED. {message}")
+    if first_page:
+        code = 400 if status == "INVALID_REQUEST" else 502
+        raise HTTPException(status_code=code, detail=f"Google API Error: {message}")
+    return False
+
+
+async def _locate(client: httpx.AsyncClient, location: str, api_key: str) -> Optional[Tuple[float, float]]:
+    """Resolve a typed location to coordinates so the radius can be enforced."""
+    key = location.strip().lower()
+    if key in _center_cache:
+        return _center_cache[key]
+    center = None
+    try:
+        response = await client.get(
+            TEXT_SEARCH_URL, params={"query": location, "key": api_key}, timeout=15.0)
+        response.raise_for_status()
+        results = response.json().get("results", [])
+        if results:
+            point = results[0].get("geometry", {}).get("location", {})
+            if "lat" in point and "lng" in point:
+                center = (float(point["lat"]), float(point["lng"]))
+    except (httpx.HTTPError, ValueError) as exc:
+        # Never log the exception text: it contains the request URL, and the
+        # URL contains the API key.
+        logger.warning("Could not locate %r; radius will not be enforced (%s)",
+                       location, type(exc).__name__)
+        return None  # do not cache a transient failure
+    _center_cache[key] = center
+    return center
+
+
+async def _text_search(client: httpx.AsyncClient, query: str, api_key: str,
+                       center: Optional[Tuple[float, float]], radius_meters: int,
+                       limit: int) -> List[dict]:
+    params = {"query": query, "key": api_key}
+    if center:
+        params["location"] = f"{center[0]},{center[1]}"
+        params["radius"] = radius_meters
+    places: List[dict] = []
+    for page in range(3):  # Google returns 20 per page, 3 pages maximum
+        response = await client.get(TEXT_SEARCH_URL, params=params, timeout=15.0)
+        response.raise_for_status()
+        data = response.json()
+        if not _raise_for_status(data, first_page=(page == 0)):
+            break
+        places.extend(data.get("results", []))
+        token = data.get("next_page_token")
+        if not token or len(places) >= limit:
+            break
+        # A page token only becomes valid a moment after it is issued.
+        await asyncio.sleep(2)
+        params = {"pagetoken": token, "key": api_key}
+    return places
+
+
+async def _get_place_details(client: httpx.AsyncClient, place_id: str, api_key: str) -> dict:
+    params = {
+        "place_id": place_id,
+        "fields": "formatted_phone_number,website,business_status",
+        "key": api_key,
+    }
+    try:
+        response = await client.get(DETAILS_URL, params=params, timeout=10.0)
+        response.raise_for_status()
+        data = response.json()
+        if data.get("status") == "OK":
+            result = data.get("result", {})
+            return {
+                "phone": result.get("formatted_phone_number"),
+                "website": result.get("website"),
+                "business_status": result.get("business_status"),
+            }
+    except (httpx.HTTPError, ValueError) as exc:
+        logger.warning("Place details failed for %s (%s)", place_id, type(exc).__name__)
+    return {}
+
+
+def _to_result(place: dict, center: Optional[Tuple[float, float]]) -> PlaceSearchResult:
+    distance = None
+    point = place.get("geometry", {}).get("location", {})
+    if center and "lat" in point and "lng" in point:
+        distance = round(haversine_miles(center, (float(point["lat"]), float(point["lng"]))), 1)
+    return PlaceSearchResult(
+        place_id=place.get("place_id", ""),
+        name=place.get("name", ""),
+        address=place.get("formatted_address", ""),
+        rating=place.get("rating"),
+        total_ratings=place.get("user_ratings_total"),
+        business_status=place.get("business_status"),
+        types=place.get("types", []),
+        distance_miles=distance,
+    )
 
 
 async def search_places(
@@ -36,200 +187,69 @@ async def search_places(
     location: str = "Los Angeles, CA",
     radius_miles: int = 25,
     custom_query: Optional[str] = None,
-    max_results: int = 60,
+    max_results: int = 20,
 ) -> List[PlaceSearchResult]:
-    """
-    Search Google Places API for businesses by category and location.
-    
-    Uses the Places API Text Search endpoint.
-    Falls back to mock data if the API key is missing or the call fails.
-    """
-    settings = get_settings()
-    api_key = settings.GOOGLE_PLACES_API_KEY
-    
+    """Search Google Places and return ranked, de-duplicated, open businesses."""
+    api_key = get_settings().GOOGLE_PLACES_API_KEY
     if not api_key:
         logger.error("GOOGLE_PLACES_API_KEY not configured")
-        raise HTTPException(status_code=500, detail="Google Places API Key is not configured in the backend environment.")
-    
-    # Build search query
-    category_query = CATEGORY_SEARCH_QUERIES.get(category, "")
-    if custom_query:
-        search_query = f"{custom_query} in {location}"
-    else:
-        search_query = f"{category_query} in {location}"
-    
+        raise HTTPException(
+            status_code=500,
+            detail="Google Places API Key is not configured in the backend environment.",
+        )
+
+    queries = build_queries(category, location, custom_query, max_results)
     radius_meters = int(radius_miles * 1609.34)
-    
-    url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
-    params = {
-        "query": search_query,
-        "radius": radius_meters,
-        "key": api_key,
-    }
-    
-    results: List[PlaceSearchResult] = []
-    
+    by_id: Dict[str, PlaceSearchResult] = {}
+
     async with httpx.AsyncClient() as client:
         try:
-            # Fetch up to 3 pages of results (Google returns 20 per page)
-            next_page_token = None
-            pages_fetched = 0
-            
-            while pages_fetched < 3 and len(results) < max_results:
-                if next_page_token:
-                    params["pagetoken"] = next_page_token
-                    # Google requires a short delay before using next_page_token
-                    import asyncio
-                    await asyncio.sleep(2)
-                
-                response = await client.get(url, params=params, timeout=15.0)
-                response.raise_for_status()
-                data = response.json()
-                
-                logger.info(f"Places API response status: {data.get('status')}, results count: {len(data.get('results', []))}")
-                
-                if data.get("status") == "REQUEST_DENIED":
-                    error_msg = data.get('error_message', 'No error message')
-                    logger.error(f"Places API REQUEST_DENIED: {error_msg}")
-                    raise HTTPException(status_code=502, detail=f"Google API Error: REQUEST_DENIED. {error_msg}")
-                
-                if data.get("status") == "INVALID_REQUEST":
-                    error_msg = data.get('error_message', 'No error message')
-                    logger.error(f"Places API INVALID_REQUEST: {error_msg}")
-                    if pages_fetched == 0:
-                        raise HTTPException(status_code=400, detail=f"Google API Error: INVALID_REQUEST. {error_msg}")
+            center = await _locate(client, location, api_key)
+            for query in queries:
+                if len(by_id) >= max_results:
                     break
-                
-                if data.get("status") not in ("OK", "ZERO_RESULTS"):
-                    error_msg = data.get('error_message', data.get('status', 'Unknown error'))
-                    logger.error(f"Places API error: {data.get('status')} - {error_msg}")
-                    if pages_fetched == 0:
-                        raise HTTPException(status_code=502, detail=f"Google API Error: {error_msg}")
-                    break
-                
-                for place in data.get("results", []):
-                    if len(results) >= max_results:
-                        break
-                    result = PlaceSearchResult(
-                        place_id=place.get("place_id", ""),
-                        name=place.get("name", ""),
-                        address=place.get("formatted_address", ""),
-                        rating=place.get("rating"),
-                        total_ratings=place.get("user_ratings_total"),
-                        business_status=place.get("business_status"),
-                        types=place.get("types", []),
-                    )
-                    results.append(result)
-                
-                next_page_token = data.get("next_page_token")
-                pages_fetched += 1
-                
-                if not next_page_token:
-                    break
-            
-            # Get phone/website details for each place (batch)
-            for result in results:
-                if result.place_id:
-                    details = await _get_place_details(client, result.place_id, api_key)
-                    if details:
-                        result.phone = details.get("phone")
-                        result.website = details.get("website")
-                    
-        except httpx.HTTPError as e:
-            logger.error(f"HTTP error searching places: {e}")
-            if not results:
-                raise HTTPException(status_code=502, detail=f"Failed to connect to Google Places API: {e}")
-        except HTTPException:
-            raise
-        except Exception as e:
-            logger.error(f"Error searching places: {e}")
-            if not results:
-                raise HTTPException(status_code=500, detail=f"An unexpected error occurred while searching places: {e}")
-    
-    if not results:
-        logger.warning("0 results found via Google. Expand search radius or change category.")
-        
-    logger.info(f"Returning {len(results)} search results for '{search_query}'")
-    return results
+                for place in await _text_search(
+                        client, query, api_key, center, radius_meters, max_results):
+                    place_id = place.get("place_id")
+                    if not place_id or place_id in by_id:
+                        continue
+                    if place.get("business_status") not in (None, "OPERATIONAL"):
+                        continue
+                    result = _to_result(place, center)
+                    # Google treats the radius as a bias, not a limit; enforce it.
+                    if result.distance_miles is not None and result.distance_miles > radius_miles:
+                        continue
+                    by_id[place_id] = result
+        except httpx.HTTPError as exc:
+            logger.error("HTTP error searching places (%s)", type(exc).__name__)
+            if not by_id:
+                raise HTTPException(
+                    status_code=502, detail="Could not reach Google Places. Try again shortly.")
 
+        results = list(by_id.values())[:max_results]
+        semaphore = asyncio.Semaphore(DETAILS_CONCURRENCY)
 
-import re
-from bs4 import BeautifulSoup
+        async def enrich(result: PlaceSearchResult) -> PlaceSearchResult:
+            async with semaphore:
+                details = await _get_place_details(client, result.place_id, api_key)
+            return result.model_copy(update={
+                "phone": details.get("phone"),
+                "website": details.get("website"),
+                "business_status": details.get("business_status") or result.business_status,
+            })
 
-async def _scrape_email_from_website(client: httpx.AsyncClient, website: str) -> Optional[str]:
-    """Extremely lightweight web scraper to find an email address on a homepage."""
-    if not website:
-        return None
-        
-    try:
-        # Some simple headers to bypass basic anti-bot blocks
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
-        }
-        res = await client.get(website, headers=headers, timeout=5.0, follow_redirects=True)
-        if res.status_code != 200:
-            return None
-            
-        soup = BeautifulSoup(res.text, "html.parser")
-        
-        # Method 1: Look for mailto: links (most reliable)
-        mailto_links = soup.select('a[href^="mailto:"]')
-        for link in mailto_links:
-            href = link.get('href', '')
-            email_match = re.search(r'mailto:([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})', href, re.I)
-            if email_match:
-                return email_match.group(1)
-                
-        # Method 2: Look for email strings in the text body
-        text = soup.get_text(separator=' ')
-        email_matches = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', text)
-        for email in email_matches:
-            # Filter out common false positives (like example.com or image files like @2x.png)
-            email_lower = email.lower()
-            if not any(x in email_lower for x in ['.png', '.jpg', '.jpeg', '.gif', '.svg', 'example.com', 'yourdomain.com']):
-                return email
-                
-    except Exception as e:
-        logger.debug(f"Failed to scrape email from {website}: {str(e)}")
-        
-    return None
+        results = list(await asyncio.gather(*(enrich(r) for r in results)))
 
-async def _get_place_details(
-    client: httpx.AsyncClient,
-    place_id: str,
-    api_key: str,
-) -> Optional[dict]:
-    """Get phone and website details for a specific place, and scrape email if website is returned."""
-    url = "https://maps.googleapis.com/maps/api/place/details/json"
-    params = {
-        "place_id": place_id,
-        "fields": "formatted_phone_number,website,name",
-        "key": api_key,
-    }
-    
-    try:
-        response = await client.get(url, params=params, timeout=10.0)
-        response.raise_for_status()
-        data = response.json()
-        
-        if data.get("status") == "OK":
-            result = data.get("result", {})
-            website = result.get("website")
-            
-            # Auto-scrape email from the website if we have one
-            email = None
-            if website:
-                email = await _scrape_email_from_website(client, website)
-                
-            return {
-                "phone": result.get("formatted_phone_number"),
-                "website": website,
-                "email": email,
-            }
-    except Exception as e:
-        logger.warning(f"Error getting place details for {place_id}: {e}")
-    
-    return None
+    ranked: List[PlaceSearchResult] = []
+    for result in results:
+        score, reasons = score_prospect(
+            category, website=result.website, phone=result.phone, rating=result.rating,
+            total_ratings=result.total_ratings, business_status=result.business_status,
+        )
+        if score == 0:
+            continue
+        ranked.append(result.model_copy(update={"fit_score": score, "fit_reasons": reasons}))
+    ranked.sort(key=lambda r: r.fit_score, reverse=True)
 
-
+    logger.info("Returning %d ranked results for %s", len(ranked), queries)
+    return ranked

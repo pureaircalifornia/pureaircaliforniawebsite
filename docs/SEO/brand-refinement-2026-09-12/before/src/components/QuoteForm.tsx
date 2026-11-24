@@ -1,0 +1,381 @@
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Shield, Clock, CheckCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { submitFormWithBackend } from '@/utils/api';
+import { trackFormSubmission, trackFormStep, trackPhoneCall } from '@/utils/analytics';
+
+type FormData = {
+  service: string;
+  propertyType: string;
+  squareFootage: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  message: string;
+  preferredDate: string;
+};
+
+const QuoteForm = () => {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState<FormData>({
+    service: '',
+    propertyType: '',
+    squareFootage: '',
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    message: '',
+    preferredDate: '',
+  });
+
+  const services = [
+    'Commercial Air Duct Cleaning',
+    'Residential Air Duct Cleaning',
+    'Dryer Vent Cleaning',
+    'Electrostatic Filter Service',
+  ];
+
+  const propertyTypes = [
+    'Single Family Home',
+    'Apartment/Condo',
+    'Office Building',
+    'Restaurant',
+    'Healthcare Facility',
+    'Other Commercial',
+  ];
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+
+    let newValue = value;
+    if (name === 'phone') {
+      const formatPhone = (raw: string) => {
+        const digits = raw.replace(/\D/g, '').slice(0, 10);
+        const part1 = digits.slice(0, 3);
+        const part2 = digits.slice(3, 6);
+        const part3 = digits.slice(6, 10);
+        if (digits.length > 6) return `(${part1}) ${part2}-${part3}`;
+        if (digits.length > 3) return `(${part1}) ${part2}`;
+        if (digits.length > 0) return `(${part1}`;
+        return '';
+      };
+      newValue = formatPhone(value);
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: newValue }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Track form submission conversion for Google Ads
+    trackFormSubmission('quote_form', {
+      service: formData.service,
+      propertyType: formData.propertyType,
+      squareFootage: formData.squareFootage,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+    });
+
+    // First, save to backend (primary storage)
+    const backendResult = await submitFormWithBackend({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+      service: formData.service,
+      property_type: formData.propertyType,
+      square_footage: formData.squareFootage,
+      address: formData.address,
+      preferred_date: formData.preferredDate,
+      source: 'quote_form',
+    });
+
+    // Then, try to send email notification (secondary)
+    const emailData = {
+      to_email: 'info@pureaircalifornia.com',
+      service: formData.service,
+      property_type: formData.propertyType,
+      square_footage: formData.squareFootage,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+      message: formData.message,
+      preferred_date: formData.preferredDate,
+      subject: `Quote Request: ${formData.service} - ${formData.name}`
+    };
+
+    try {
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_QUOTE_TEMPLATE_ID || import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const userId = import.meta.env.VITE_EMAILJS_USER_ID;
+
+      if (serviceId && templateId && userId) {
+        await emailjs.send(serviceId, templateId, emailData, userId);
+      }
+    } catch (emailError) {
+      // Email notification failed, but lead is saved in backend
+    }
+
+    // Show success if backend saved OR if we got this far
+    if (backendResult.success) {
+      alert('Thank you for your quote request! We will contact you shortly.');
+    } else {
+      alert('Thank you for your quote request! We will contact you shortly. (Note: Please call us at (213) 792-4145 if you don\'t hear back within 24 hours.)');
+    }
+
+    // Reset form
+    setStep(1);
+    setFormData({
+      service: '',
+      propertyType: '',
+      squareFootage: '',
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      message: '',
+      preferredDate: '',
+    });
+  };
+
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-3">Service Type</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {services.map((service) => (
+                  <label
+                    key={service}
+                    className={`bg-white p-3 rounded-lg border cursor-pointer transition-all ${formData.service === service ? 'border-brand-500 bg-brand-50 ring-1 ring-brand-500' : 'border-gray-200 hover:border-brand-300'}`}
+                  >
+                    <input
+                      type="radio"
+                      name="service"
+                      value={service}
+                      checked={formData.service === service}
+                      onChange={handleInputChange}
+                      className="hidden"
+                    />
+                    <span className="text-sm font-medium text-gray-800">{service}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-3 mt-4">Property Type</label>
+              <div className="grid grid-cols-2 gap-3">
+                {propertyTypes.map((type) => (
+                  <label
+                    key={type}
+                    className={`bg-white p-3 rounded-lg border cursor-pointer transition-all text-center flex items-center justify-center min-h-[60px] ${formData.propertyType === type ? 'border-brand-500 bg-brand-50 ring-1 ring-brand-500' : 'border-gray-200 hover:border-brand-300'}`}
+                  >
+                    <input
+                      type="radio"
+                      name="propertyType"
+                      value={type}
+                      checked={formData.propertyType === type}
+                      onChange={handleInputChange}
+                      className="hidden"
+                    />
+                    <span className="text-xs sm:text-sm font-medium text-gray-800">{type}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Square Footage (approx.)</label>
+              <Input
+                type="text"
+                name="squareFootage"
+                value={formData.squareFootage}
+                onChange={handleInputChange}
+                inputMode="numeric"
+                pattern="[0-9]*"
+                placeholder="e.g., 2000"
+                className="h-12"
+                required
+              />
+            </div>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Full Name</label>
+              <Input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="h-12"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Email</label>
+              <Input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className="h-12"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Phone</label>
+              <Input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                inputMode="tel"
+                placeholder="(555) 123-4567"
+                className="h-12"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Service Address</label>
+              <Input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                className="h-12"
+                required
+              />
+            </div>
+          </div>
+        );
+      case 3:
+        return (
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Preferred Service Date</label>
+              <Input
+                type="date"
+                name="preferredDate"
+                value={formData.preferredDate}
+                onChange={handleInputChange}
+                min={new Date().toISOString().split('T')[0]}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Additional Notes</label>
+              <Textarea
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                placeholder="Any specific concerns or requirements?"
+                className="h-32"
+              />
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      {/* Progress Indicator */}
+      <div className="mb-8">
+        <div className="flex justify-between items-center">
+          {[1, 2, 3].map((num) => (
+            <div key={num} className="flex items-center">
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= num ? 'bg-brand-600 text-white' : 'bg-gray-200'
+                  }`}
+              >
+                {num}
+              </div>
+              {num < 3 && (
+                <div
+                  className={`h-1 w-24 ${step > num ? 'bg-brand-600' : 'bg-gray-200'
+                    }`}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-between mt-2 text-sm">
+          <span>Service Details</span>
+          <span>Contact Info</span>
+          <span>Schedule</span>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        {renderStep()}
+
+        {/* Trust Indicators */}
+        <div className="mt-6 pt-6 border-t">
+          <div className="flex justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <Shield className="h-4 w-4 text-brand-600" />
+              <span>Secure Form</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-brand-600" />
+              <span>Quick Response</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-brand-600" />
+              <span>100% Free Estimate. We never spam.</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation Buttons */}
+        <div className="mt-8 flex justify-between">
+          {step > 1 && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                trackFormStep('quote_form', step - 1, step === 2 ? 'Service Details' : 'Contact Info');
+                setStep((prev) => prev - 1);
+              }}
+            >
+              Previous
+            </Button>
+          )}
+          {step < 3 ? (
+            <Button
+              type="button"
+              className="ml-auto"
+              onClick={() => {
+                trackFormStep('quote_form', step + 1, step === 1 ? 'Contact Info' : 'Schedule');
+                setStep((prev) => prev + 1);
+              }}
+            >
+              Next
+            </Button>
+          ) : (
+            <Button type="submit" className="ml-auto">
+              Get Quote
+            </Button>
+          )}
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default QuoteForm;

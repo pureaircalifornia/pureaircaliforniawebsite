@@ -1,435 +1,66 @@
-import React from 'react';
-import NavBar from '@/components/NavBar';
-import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Filter, Check, Building, ArrowRight, Shield, Award, Clock, Zap, Users, Home } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Link } from 'react-router-dom';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-import ResponsiveImage from '@/components/ResponsiveImage';
-import HomeQuoteForm from '@/components/HomeQuoteForm';
-import TestimonialCard from '@/components/TestimonialCard';
-import SEOProvider from '@/components/SEOProvider';
-import SchemaMarkup from '@/components/SchemaMarkup';
-import { seoConfig } from '@/utils/seo/seoConfig';
-
-const ResidentialElectrostaticFilter = () => {
-  const faqs = [
+import ServiceDetailLayout from '@/components/ServiceDetailLayout';
+const service = {
+  "seoTitle": "Electrostatic Air Filter Service in Los Angeles",
+  "seoDescription": "A filter should fit your HVAC system and your maintenance routine. Talk to PAC about inspecting, cleaning or replacing compatible electrostatic filter medi",
+  "path": "/services/residential-electrostatic-filter",
+  "h1": "Electrostatic Air Filter Service in Los Angeles",
+  "intro": "A filter should fit your HVAC system and your maintenance routine. Talk to PAC about inspecting, cleaning or replacing compatible electrostatic filter media for your home.",
+  "serviceName": "Residential Electrostatic Filters",
+  "breadcrumbLabel": "Residential Electrostatic Filters",
+  "sections": [
     {
-      question: "How do electrostatic filters compare to HEPA filters?",
-      answer: "Electrostatic filters offer similar filtration efficiency to HEPA filters but are more cost-effective long-term. They're washable and reusable, eliminating ongoing replacement costs while providing excellent particle capture."
+      "heading": "Choose a filter that fits the system",
+      "body": "Size, airflow requirements and equipment compatibility matter. We discuss the filter you have and the manufacturer’s guidance before recommending the next step."
     },
     {
-      question: "How often do I need to clean my electrostatic filter?",
-      answer: "Most homeowners should clean their electrostatic filter every 1-3 months. If you have pets, allergies, or live in a dusty environment, more frequent cleaning may be necessary."
+      "heading": "Make maintenance easier to understand",
+      "body": "Reusable filters need care according to their instructions. Ask about cleaning, drying and reinstallation so your filter is maintained correctly.",
+      "bullets": [
+        "Confirm filter dimensions and type",
+        "Follow the manufacturer’s cleaning instructions",
+        "Allow washable media to dry fully before reuse"
+      ]
     },
     {
-      question: "Can electrostatic filters help with allergies?",
-      answer: "Yes! Electrostatic filters are excellent for allergy sufferers. They capture pollen, pet dander, dust mites, and other common allergens, significantly reducing their presence in your home's air."
+      "heading": "Look at more than the filter",
+      "body": "A filter is one part of indoor air care. If you notice excessive dust, recurring odors or airflow changes, the wider system may need assessment."
+    },
+    {
+      "heading": "Get clear advice before changing equipment",
+      "body": "An electrostatic filter is not automatically the best choice for every home. We help you identify what is compatible and where an HVAC professional’s advice is needed."
     }
-  ];
-  return (
-    <HelmetProvider>
-      <div className="min-h-screen flex flex-col">
-        <Helmet>
-          <title>Residential Electrostatic Air Filters Los Angeles | Washable | Pure Air California</title>
-          <meta name="description" content="Upgrade to electrostatic air filters in Los Angeles. Washable, reusable & superior filtration for allergies. Save money & improve air quality. (213) 792-4145" />
-          <meta name="keywords" content="electrostatic air filter Los Angeles, washable air filter LA, residential air filtration, allergy relief Los Angeles, permanent air filter" />
-          <meta name="robots" content="index, follow, max-image-preview:large" />
-          <meta name="geo.region" content="US-CA" />
-          <meta name="geo.placename" content="Los Angeles" />
-          <meta property="og:title" content="Residential Electrostatic Air Filters Los Angeles | Pure Air California" />
-          <meta property="og:description" content="Upgrade your home's air filtration with advanced electrostatic air filters in Los Angeles. Superior filtration, washable filters, improved air quality." />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://www.pureaircalifornia.com/services/residential-electrostatic-filter" />
-          <meta property="og:site_name" content="Pure Air California" />
-          <link rel="canonical" href="https://www.pureaircalifornia.com/services/residential-electrostatic-filter" />
-          <script type="application/ld+json">
-            {JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Service",
-              "serviceType": "Residential Electrostatic Air Filter",
-              "provider": {
-                "@type": "HVACBusiness",
-                "name": "Pure Air California",
-                "address": {
-                  "@type": "PostalAddress",
-                  "streetAddress": "1550 N Poinsettia Pl",
-                  "addressLocality": "Los Angeles",
-                  "addressRegion": "CA",
-                  "postalCode": "90046",
-                  "addressCountry": "US"
-                },
-                "telephone": "+1-213-792-4145"
-              },
-              "description": "Upgrade your home's air filtration with advanced electrostatic air filters in Los Angeles. Superior filtration, washable filters, improved air quality.",
-              "areaServed": {
-                "@type": "City",
-                "name": "Los Angeles"
-              }
-            })}
-          </script>
-        </Helmet>
-        <SEOProvider>
-          <SchemaMarkup schema={{
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": faqs.map(faq => ({
-              "@type": "Question",
-              "name": faq.question,
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": faq.answer
-              }
-            }))
-          }} />
-        </SEOProvider>
-
-        <NavBar />
-
-        {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(100,180,255,0.2), 0 0 60px rgba(100,180,255,0.1)' }}>Residential Electrostatic Air Filter Services</h1>
-              <p className="text-xl mb-8">
-                Upgrade your home's air filtration with advanced electrostatic air filters for superior indoor air quality.
-                Washable, reusable filters that capture microscopic particles and improve your family's health.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-                  <Link to="/quote">Get Free Quote</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-700">
-                  <Link to="/contact">Schedule Consultation</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Main Content Section */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl font-bold mb-6">Advanced Filtration Technology for Your Home</h2>
-                <p className="text-lg text-gray-600 mb-6">
-                  Electrostatic air filters use an electric charge to attract and capture airborne particles,
-                  offering superior filtration compared to standard filters. These advanced filters can trap
-                  microscopic contaminants including dust, pollen, pet dander, mold spores, bacteria, and even smoke particles,
-                  providing cleaner, healthier air for your family.
-                </p>
-
-                <div className="space-y-4 mb-8">
-                  <div className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
-                    </div>
-                    <p><span className="font-medium">Improved Air Quality</span> - Breathe cleaner, healthier air in your home</p>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
-                      <Check size={14} className="text-brand-600" />
-                    </div>
-                    <p><span className="font-medium">Superior Filtration</span> - Capture particles as small as 0.1 microns with 95%+ efficiency</p>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <ResponsiveImage
-                  src="/images/services/residential-electrostatic-filter-installation.jpg"
-                  alt="Professional technician installing electrostatic filter"
-                  className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <HomeQuoteForm />
-
-        {/* How It Works Section */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">How Electrostatic Filtration Works</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Understanding the science behind superior air filtration and how electrostatic technology captures even the smallest particles.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <Card className="border-0 shadow-md">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-4">
-                    <Zap size={24} className="text-brand-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Static Charge Generation</h3>
-                  <p className="text-gray-600">
-                    As air passes through the filter, it creates a static electrical charge that attracts and captures airborne particles.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 shadow-md">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-4">
-                    <Filter size={24} className="text-brand-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Particle Capture</h3>
-                  <p className="text-gray-600">
-                    Microscopic particles including dust, pollen, pet dander, and even bacteria are attracted to and held by the charged filter media.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 shadow-md">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-4">
-                    <Home size={24} className="text-brand-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Clean Air Delivery</h3>
-                  <p className="text-gray-600">
-                    Filtered, clean air is distributed throughout your home, providing a healthier environment for your family.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">What Our Customers Say</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Hear from satisfied homeowners who are breathing easier with Pure Air California.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <TestimonialCard
-                name="Sarah L."
-                location="Los Angeles, CA"
-                quote="The electrostatic filter has made a huge difference in our home. My son's allergies are much better, and the air just feels cleaner. Plus, I love that I can just wash and reuse the filter."
-                rating={5}
-              />
-              <TestimonialCard
-                name="Mark R."
-                location="Pasadena, CA"
-                quote="I was tired of buying new filters every few months. The electrostatic filter is a great investment. The installation was quick and professional, and I'm already saving money."
-                rating={5}
-              />
-              <TestimonialCard
-                name="Emily T."
-                location="Santa Monica, CA"
-                quote="I have two dogs, and the electrostatic filter has been amazing for reducing pet dander and odors. I can't believe how much it captures. A must-have for any pet owner."
-                rating={5}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Benefits Section */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Benefits of Electrostatic Air Filters</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Discover why electrostatic air filters are the superior choice for residential air filtration and indoor air quality improvement.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <Shield size={48} className="text-brand-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Health Benefits</h3>
-                <p className="text-gray-600">
-                  Reduce allergens, asthma triggers, and respiratory irritants for improved family health and comfort.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <Filter size={48} className="text-brand-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Superior Filtration Efficiency</h3>
-                <p className="text-gray-600">
-                  Capture particles as small as 0.1 microns with 95%+ efficiency, far exceeding standard disposable filters.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <Award size={48} className="text-brand-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Cost Savings</h3>
-                <p className="text-gray-600">
-                  Eliminate ongoing filter replacement costs. Washable filters last for years with proper maintenance.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <Home size={48} className="text-brand-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Environmental Impact</h3>
-                <p className="text-gray-600">
-                  Reduce waste by eliminating disposable filters and their packaging from landfills.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <Clock size={48} className="text-brand-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Low Maintenance</h3>
-                <p className="text-gray-600">
-                  Easy cleaning process that can be done at home. No need to remember filter replacement schedules.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <Zap size={48} className="text-brand-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-3">HVAC Protection</h3>
-                <p className="text-gray-600">
-                  Protect your HVAC system from dust and debris buildup, potentially extending its lifespan.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Installation Process */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Professional Installation Process</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Our certified technicians ensure proper installation and setup of your electrostatic air filter system for optimal performance.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-brand-600">1</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Assessment</h3>
-                <p className="text-gray-600">
-                  Evaluate your current HVAC system and determine the best electrostatic filter solution for your home.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-brand-600">2</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Installation</h3>
-                <p className="text-gray-600">
-                  Professional installation of the electrostatic filter system with proper sizing and fitment.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-brand-600">3</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Testing</h3>
-                <p className="text-gray-600">
-                  Verify proper operation and airflow to ensure optimal performance of your new filter system.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-brand-600">4</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Education</h3>
-                <p className="text-gray-600">
-                  Provide detailed instructions on maintenance and cleaning procedures for long-term performance.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Maintenance Guide */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">Maintenance & Care Guide</h2>
-                <p className="text-lg text-gray-600">
-                  Keep your electrostatic air filter performing at peak efficiency with proper maintenance and cleaning.
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-white p-6 rounded-lg shadow-sm">
-                  <h3 className="text-xl font-semibold mb-4">Cleaning Frequency</h3>
-                  <ul className="space-y-2 text-gray-600">
-                    <li>• Clean every 1-3 months depending on usage</li>
-                    <li>• More frequent cleaning if you have pets</li>
-                    <li>• Check monthly during allergy season</li>
-                    <li>• Clean when airflow seems restricted</li>
-                  </ul>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg shadow-sm">
-                  <h3 className="text-xl font-semibold mb-4">Cleaning Process</h3>
-                  <ul className="space-y-2 text-gray-600">
-                    <li>• Remove filter from HVAC system</li>
-                    <li>• Rinse with warm water and mild soap</li>
-                    <li>• Allow to air dry completely</li>
-                    <li>• Reinstall when fully dry</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Get answers to common questions about electrostatic air filters and their benefits.
-              </p>
-            </div>
-
-            <div className="max-w-4xl mx-auto space-y-6">
-              {faqs.map((faq, index) => (
-                <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
-                  <h3 className="text-xl font-semibold mb-2">{faq.question}</h3>
-                  <p className="text-gray-600">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-16 bg-brand-700 text-white">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-4">Upgrade Your Home's Air Quality Today</h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">
-              Experience the difference that advanced electrostatic air filtration can make in your home.
-              Contact us for a free consultation and quote.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-                <Link to="/quote">Get Free Quote</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-700">
-                <Link to="/contact">Schedule Consultation</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        <Footer />
-      </div>
-    </HelmetProvider>
-  );
+  ],
+  "faqs": [
+    {
+      "question": "Can every home use an electrostatic filter?",
+      "answer": "Compatibility depends on the system and filter specifications. Check sizing and airflow requirements before replacing your existing filter."
+    },
+    {
+      "question": "How often should a reusable filter be cleaned?",
+      "answer": "Follow the filter manufacturer’s instructions and inspect it based on use and conditions. There is no one interval that fits every home."
+    },
+    {
+      "question": "Will a new filter eliminate allergies?",
+      "answer": "No filter or cleaning service can promise that. Filtration is one part of indoor air management alongside ventilation and moisture control."
+    }
+  ],
+  "relatedLinks": [
+    {
+      "label": "All services",
+      "path": "/services/"
+    },
+    {
+      "label": "Commercial & industry services",
+      "path": "/industries/"
+    },
+    {
+      "label": "Los Angeles service guide",
+      "path": "/locations/los-angeles/"
+    },
+    {
+      "label": "Request a free estimate",
+      "path": "/quote/"
+    }
+  ]
 };
-
-export default ResidentialElectrostaticFilter;
+export default function ResidentialElectrostaticFilter(){return <ServiceDetailLayout {...service}/>;}

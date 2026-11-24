@@ -104,21 +104,21 @@ export default function AppointmentsList() {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
-                            <button className="p-2 hover:bg-gray-100 rounded-lg"><ChevronLeft className="w-5 h-5" /></button>
+                            <button title="Previous day" aria-label="Previous day" className="p-2 hover:bg-gray-100 rounded-lg"><ChevronLeft className="w-5 h-5" /></button>
                             <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-lg">
                                 <Calendar className="w-5 h-5 text-gray-600" />
                                 <span className="font-medium">
                                     {selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
                                 </span>
                             </div>
-                            <button className="p-2 hover:bg-gray-100 rounded-lg"><ChevronRight className="w-5 h-5" /></button>
+                            <button title="Next day" aria-label="Next day" className="p-2 hover:bg-gray-100 rounded-lg"><ChevronRight className="w-5 h-5" /></button>
                         </div>
-                        <button onClick={() => setSelectedDate(new Date())} className="px-4 py-2 text-sm font-medium text-sky-600 hover:bg-sky-50 rounded-lg">Today</button>
+                        <button title="Jump to today" aria-label="Jump to today" onClick={() => setSelectedDate(new Date())} className="px-4 py-2 text-sm font-medium text-sky-600 hover:bg-sky-50 rounded-lg">Today</button>
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <button onClick={() => setView('list')} className={`p-2 rounded-lg ${view === 'list' ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-100'}`}><List className="w-5 h-5" /></button>
-                        <button onClick={() => setView('calendar')} className={`p-2 rounded-lg ${view === 'calendar' ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-100'}`}><Grid className="w-5 h-5" /></button>
+                        <button title="Switch to list view" aria-label="Switch to list view" onClick={() => setView('list')} className={`p-2 rounded-lg ${view === 'list' ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-100'}`}><List className="w-5 h-5" /></button>
+                        <button title="Switch to calendar view" aria-label="Switch to calendar view" onClick={() => setView('calendar')} className={`p-2 rounded-lg ${view === 'calendar' ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-100'}`}><Grid className="w-5 h-5" /></button>
                     </div>
                 </div>
             </div>
@@ -129,12 +129,13 @@ export default function AppointmentsList() {
                     <div className="relative flex-1">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <input
+                            title="Search appointments by customer name" aria-label="Search appointments by customer name"
                             type="text" placeholder="Search appointments by customer..."
                             value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500"
                         />
                     </div>
-                    <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500">
+                    <select title="Filter appointments by status" aria-label="Filter appointments by status" value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500">
                         <option value="all">All Statuses</option>
                         <option value="scheduled">Scheduled</option>
                         <option value="confirmed">Confirmed</option>
@@ -222,11 +223,11 @@ export default function AppointmentsList() {
                                                     <span className="text-sm font-medium text-gray-700">{tech.first_name} {tech.last_name}</span>
                                                 </div>
                                             ) : (
-                                                <button className="px-3 py-1.5 text-sm font-medium text-sky-600 border border-sky-600 rounded-lg hover:bg-sky-50">
+                                                <button title="Assign technician to this appointment" aria-label="Assign technician to this appointment" className="px-3 py-1.5 text-sm font-medium text-sky-600 border border-sky-600 rounded-lg hover:bg-sky-50">
                                                     Assign Tech
                                                 </button>
                                             )}
-                                            <button className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
+                                            <button title="More appointment options" aria-label="More appointment options" className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
                                                 <MoreVertical className="w-5 h-5" />
                                             </button>
                                         </div>

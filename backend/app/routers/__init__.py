@@ -10,6 +10,8 @@ from .documents import router as documents_router
 from .reports import router as reports_router
 from .leads import router as leads_router
 from .lead_scanner import router as lead_scanner_router
+from .outreach import router as outreach_router
+from .outreach_public import router as outreach_public_router
 from .settings import router as settings_router
 from .reviews import router as reviews_router
 
@@ -25,6 +27,8 @@ __all__ = [
     "reports_router",
     "leads_router",
     "lead_scanner_router",
+    "outreach_router",
+    "outreach_public_router",
     "settings_router",
     "reviews_router",
 ]

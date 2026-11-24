@@ -152,7 +152,7 @@ export default function EstimateDetail() {
     return (
         <div className="max-w-4xl mx-auto space-y-6">
             <div className="flex items-center gap-4">
-                <button onClick={() => navigate('/admin/estimates')} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <button title="Go back to estimates" aria-label="Go back to estimates" onClick={() => navigate('/admin/estimates')} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                     <ArrowLeft className="w-5 h-5 text-gray-500" />
                 </button>
                 <div className="flex-1">
@@ -180,7 +180,7 @@ export default function EstimateDetail() {
                     <div className="grid grid-cols-2 gap-6">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Customer *</label>
-                            <select
+                            <select title="Select customer" aria-label="Select customer"
                                 value={formData.customer_id}
                                 onChange={(e) => setFormData(prev => ({ ...prev, customer_id: e.target.value }))}
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500"
@@ -195,9 +195,7 @@ export default function EstimateDetail() {
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Tax Rate (%)</label>
-                            <input
-                                type="number"
-                                step="0.1"
+                            <input title="Tax rate percentage" aria-label="Tax rate percentage" placeholder=" "
                                 value={formData.tax_rate}
                                 onChange={(e) => setFormData(prev => ({ ...prev, tax_rate: parseFloat(e.target.value) || 0 }))}
                                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500"
@@ -246,18 +244,14 @@ export default function EstimateDetail() {
                                         />
                                     </div>
                                     <div className="col-span-4 md:col-span-1">
-                                        <input
-                                            type="number"
-                                            min="1"
+                                        <input title="Item quantity" aria-label="Item quantity" placeholder=" "
                                             value={item.quantity}
                                             onChange={(e) => updateItem(idx, 'quantity', parseFloat(e.target.value) || 0)}
                                             className="w-full px-3 py-2 border rounded-lg text-sm text-right"
                                         />
                                     </div>
                                     <div className="col-span-4 md:col-span-2">
-                                        <input
-                                            type="number"
-                                            min="0"
+                                        <input title="Unit price" aria-label="Unit price" placeholder=" "
                                             step="0.01"
                                             value={item.unit_price}
                                             onChange={(e) => updateItem(idx, 'unit_price', parseFloat(e.target.value) || 0)}
@@ -268,7 +262,7 @@ export default function EstimateDetail() {
                                         ${(item.quantity * item.unit_price).toFixed(2)}
                                     </div>
                                     <div className="col-span-1 flex justify-end">
-                                        <button onClick={() => removeItem(idx)} className="p-2 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50 transition-colors">
+                                        <button title="Remove line item" aria-label="Remove line item" onClick={() => removeItem(idx)} className="p-2 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50 transition-colors">
                                             <Trash2 className="w-4 h-4" />
                                         </button>
                                     </div>

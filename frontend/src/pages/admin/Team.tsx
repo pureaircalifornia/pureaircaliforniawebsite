@@ -140,7 +140,7 @@ export default function Team() {
                     <div className="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh]">
                         <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-10">
                             <h3 className="font-semibold text-gray-900">Add Team Member</h3>
-                            <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-500">
+                            <button title="Close add team member modal" aria-label="Close add team member modal" onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-500">
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
@@ -157,7 +157,7 @@ export default function Team() {
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                                        <input
+                                        <input title="First name" aria-label="First name" placeholder="First name"
                                             type="text"
                                             required
                                             value={formData.first_name}
@@ -167,7 +167,7 @@ export default function Team() {
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                                        <input
+                                        <input title="Last name" aria-label="Last name" placeholder="Last name"
                                             type="text"
                                             required
                                             value={formData.last_name}
@@ -179,7 +179,7 @@ export default function Team() {
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                                    <input
+                                    <input title="Email address" aria-label="Email address" placeholder="email@example.com"
                                         type="email"
                                         required
                                         value={formData.email}
@@ -203,7 +203,7 @@ export default function Team() {
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Role / Permissions</label>
-                                    <select
+                                    <select title="Select team member role" aria-label="Select team member role"
                                         value={formData.role}
                                         onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                                         className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 outline-none bg-white"

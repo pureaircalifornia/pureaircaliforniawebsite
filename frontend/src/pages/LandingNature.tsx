@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+
 import SEOProvider from '@/components/SEOProvider';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import { seoConfig } from '@/utils/seo/seoConfig';
@@ -82,8 +82,8 @@ const LandingNature = () => {
     return (
         <div className="min-h-screen flex flex-col">
             <SEOProvider
-                title="Breathe Easier Today | Pure Air California | Professional Air Duct Cleaning LA"
-                description="Breathe fresher, cleaner air in your home. Pure Air California offers expert air duct & dryer vent cleaning in Los Angeles. NADCA certified. Free estimates! (213) 792-4145"
+                title="Breathe Easier in LA | Pure Air California"
+                description="Expert air duct & dryer vent cleaning in Los Angeles. NADCA certified, free estimates. Breathe fresher, cleaner air at home — (213) 792-4145."
                 keywords={["breathe easier", "clean air home", "air duct cleaning Los Angeles", "fresh air Los Angeles", "indoor air quality", "healthy home air", "NADCA certified air duct cleaning"]}
                 path="/"
                 disableDefaultSchema
@@ -117,7 +117,6 @@ const LandingNature = () => {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, delay: 0.3 }}
-                                    style={{ textShadow: '0 0 30px rgba(255,255,255,0.2), 0 0 60px rgba(100,200,150,0.15)' }}
                                 >
                                     Professional Air Duct Cleaning for{' '}
                                     <span className="text-emerald-400">Healthier Living</span>
@@ -203,9 +202,9 @@ const LandingNature = () => {
                     <div className="container mx-auto px-4 relative z-10">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
                             {[
+                                { icon: Heart, label: "Breathe with Confidence", color: "text-teal-300" },
                                 { icon: Wind, label: "Cleaner Air, Better Health", color: "text-emerald-300" },
-                                { icon: Leaf, label: "Eco-Conscious Cleaning", color: "text-green-300" },
-                                { icon: Heart, label: "Breathe with Confidence", color: "text-teal-300" }
+                                { icon: Leaf, label: "Eco-Conscious Cleaning", color: "text-green-300" }
                             ].map((item, i) => (
                                 <motion.div
                                     key={i}

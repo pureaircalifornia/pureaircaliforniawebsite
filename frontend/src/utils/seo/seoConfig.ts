@@ -4,11 +4,14 @@ export const seoConfig = {
   // Core SEO Settings
   siteName: 'Pure Air California',
   siteUrl: 'https://www.pureaircalifornia.com',
-  defaultTitle: '#1 Air Duct Cleaning Los Angeles | Pure Air California',
-  defaultDescription: 'Top-rated air duct & dryer vent cleaning in LA. NADCA certified. 448K+ happy customers over 40 years. Free estimates! Call (213) 792-4145.',
+  defaultTitle: 'Air Duct Cleaning Los Angeles | Pure Air California',
+  defaultDescription: 'Air duct and dryer vent cleaning for Los Angeles homes and businesses. Explore service options, pricing and local coverage. Request a free estimate.',
 
   // Content Configuration
-  defaultImage: 'https://www.pureaircalifornia.com/gallery/jason-hawke-fu7pSuUa2PE-unsplash.jpg',
+  // Site-wide og:image / twitter:image. The previous target 404'd — the file had
+  // been renamed — so every social share and Twitter card on the site rendered a
+  // broken image. This one is 1200x628, matching the declared og:image dimensions.
+  defaultImage: 'https://www.pureaircalifornia.com/brand/pac-brandmark-v2.webp',
   minWordCount: 300,
   headingDepth: 3,
   internalLinksPerPost: 3,
@@ -60,13 +63,13 @@ export const seoConfig = {
       '@id': 'https://www.pureaircalifornia.com/#organization',
       name: 'Pure Air California',
       url: 'https://www.pureaircalifornia.com',
-      logo: 'https://www.pureaircalifornia.com/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png',
-      description: 'Los Angeles premier air duct and dryer vent cleaning company. NADCA certified professionals serving residential and commercial clients.',
-      foundingDate: '2015',
+      logo: 'https://www.pureaircalifornia.com/brand/pac-brandmark-v2.webp',
+      description: 'Air duct and dryer vent cleaning for homes, businesses and managed properties in Greater Los Angeles.',
+      foundingDate: '1993',
       sameAs: [
         'https://www.facebook.com/pureaircalifornia',
         'https://www.instagram.com/pureaircalifornia',
-        'https://www.yelp.com/biz/pure-air-california',
+        'https://www.yelp.com/biz/pure-air-california-los-angeles-5',
         'https://twitter.com/pureaircalifornia'
       ],
       contactPoint: {
@@ -81,14 +84,15 @@ export const seoConfig = {
       '@type': 'Service',
       name: 'Air Duct Cleaning Los Angeles',
       serviceType: 'Air Duct Cleaning',
-      description: 'Professional NADCA-certified air duct cleaning services in Los Angeles. Improve indoor air quality, remove allergens, and boost HVAC efficiency.',
+      description: 'Air duct cleaning for Los Angeles homes and businesses, with a property-specific scope, equipment review and coordinated access.',
       areaServed: {
         '@type': 'City',
         name: 'Los Angeles',
         sameAs: 'https://en.wikipedia.org/wiki/Los_Angeles'
       },
       provider: {
-        '@type': 'LocalBusiness',
+        '@type': 'HVACBusiness',
+        '@id': 'https://www.pureaircalifornia.com/#business',
         name: 'Pure Air California',
         telephone: '+1-213-792-4145'
       },
@@ -129,7 +133,7 @@ export const seoConfig = {
       '@id': 'https://www.pureaircalifornia.com/#business',
       name: business.legalName,
       alternateName: 'Pure Air California Air Duct Cleaning',
-      image: 'https://www.pureaircalifornia.com/lovable-uploads/72fdde68-6f0b-49b3-ae09-0c49f6d931dd.png',
+      image: 'https://www.pureaircalifornia.com/brand/pac-brandmark-v2.webp',
       telephone: business.phone,
       email: business.email,
       url: business.url,
@@ -144,11 +148,8 @@ export const seoConfig = {
         postalCode: business.address.postalCode || undefined,
         addressCountry: business.address.addressCountry,
       },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: business.geo.latitude,
-        longitude: business.geo.longitude,
-      },
+      // The configured map point is an area center, not a verified PAC premises.
+      // Do not publish it as the exact location of this service-area business.
       openingHoursSpecification: business.hours.map(h => ({
         '@type': 'OpeningHoursSpecification',
         dayOfWeek: h.days,
@@ -167,13 +168,6 @@ export const seoConfig = {
         { '@type': 'City', name: 'Culver City' },
         { '@type': 'City', name: 'Malibu' }
       ],
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: business.aggregateRating.ratingValue,
-        reviewCount: business.aggregateRating.reviewCount,
-        bestRating: '5',
-        worstRating: '1',
-      },
       sameAs: business.sameAs,
       hasCredential: [
         {
@@ -190,7 +184,7 @@ export const seoConfig = {
         'Mold Remediation',
         'Allergen Removal'
       ],
-      slogan: 'Breathe Easier with Pure Air California'
+      slogan: 'A better breath begins at home.'
     }
   },
 
@@ -242,8 +236,8 @@ export const seoConfig = {
   // Page-specific SEO configurations
   pages: {
     home: {
-      title: '#1 Air Duct Cleaning Los Angeles | Pure Air California',
-      description: 'Stop breathing dirty air. LA\'s #1 NADCA-certified air duct & dryer vent cleaners. 448K+ happy customers. 40+ years experience. Get a Free Estimate!'
+      title: 'Air Duct Cleaning Los Angeles | Pure Air California',
+      description: 'Stop breathing dirty air. NADCA-certified air duct & dryer vent cleaners in LA. 448K+ customers, 40+ years experience. Get a free estimate!'
     },
     services: {
       title: '5-Star Air Duct & Dryer Vent Cleaning LA | Pure Air CA',

@@ -1,0 +1,1 @@
+require('sharp')('public/brand/pac-brandmark.svg').resize(620).png().toFile('../docs/SEO/brand-refinement-2026-09-12/pac-transparent-preview.png')

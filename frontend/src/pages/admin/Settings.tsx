@@ -74,7 +74,7 @@ export default function Settings() {
                             <div className="space-y-4 max-w-lg">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Company Name</label>
-                                    <input
+                                    <input title="Company name" aria-label="Company name" placeholder="Company name"
                                         type="text"
                                         value={settings.company_name}
                                         onChange={(e) => setSettings({ ...settings, company_name: e.target.value })}
@@ -83,7 +83,7 @@ export default function Settings() {
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Contact Email</label>
-                                    <input
+                                    <input title="Contact email address" aria-label="Contact email address" placeholder="email@company.com"
                                         type="email"
                                         value={settings.contact?.email || ''}
                                         onChange={(e) => setSettings({ ...settings, contact: { ...settings.contact, email: e.target.value } })}
@@ -92,7 +92,7 @@ export default function Settings() {
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Support Phone</label>
-                                    <input
+                                    <input title="Support phone number" aria-label="Support phone number" placeholder="(555) 555-5555"
                                         type="tel"
                                         value={settings.contact?.phone || ''}
                                         onChange={(e) => setSettings({ ...settings, contact: { ...settings.contact, phone: e.target.value } })}

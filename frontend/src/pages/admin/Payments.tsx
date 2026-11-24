@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CreditCard, Download, Search, Loader2, Eye, MapPin, Mail, Phone, Calendar } from 'lucide-react';
 import { getInvoices, getCustomers } from '@/utils/api';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 
 const statusStyles: Record<string, string> = {
     draft: 'bg-gray-100 text-gray-700',

@@ -1,25 +1,43 @@
+import businessCatalog from './businessCatalog.json';
+
 export const serviceGroups = [
- {id:'home',title:'For your home',intro:'Care for the systems you live with every day.',image:'/images/pac/residential.webp',alt:'Technician cleaning a ceiling duct opening in a home',items:[
-  {label:'Residential air duct cleaning',path:'/services/residential-air-duct-cleaning/',detail:'Supply and return ductwork'},
-  {label:'Residential dryer vent cleaning',path:'/services/residential-dryer-vent-cleaning/',detail:'Lint removal and exhaust care'},
-  {label:'Home electrostatic filters',path:'/services/residential-electrostatic-filter/',detail:'Reusable filter inspection and care'}]},
- {id:'business',title:'For your business',intro:'A clear scope. A plan around your operation.',image:'/images/pac/commercial.webp',alt:'Technician inspecting commercial metal ventilation ductwork',items:[
-  {label:'Commercial air duct cleaning',path:'/services/commercial-air-duct-cleaning/',detail:'Offices, facilities and shared buildings'},
-  {label:'Commercial dryer vent cleaning',path:'/services/commercial-dryer-vent-cleaning/',detail:'Hotels and shared laundry rooms'},
-  {label:'Commercial electrostatic filters',path:'/services/commercial-electrostatic-filter/',detail:'Collector-cell inspection and maintenance'},
-  {label:'Laundromat dryer vent cleaning',path:'/services/laundromat-dryer-vent-cleaning/',detail:'Dedicated commercial laundry exhaust'}]},
- {id:'system-care',title:'Complete system care',intro:'Specialized cleaning and ongoing attention.',image:'/images/pac/hvac.webp',alt:'Technicians working on HVAC system equipment',items:[
-  {label:'HVAC system cleaning',path:'/services/hvac-system-cleaning/',detail:'Equipment, components and connections'},
-  {label:'Dryer vent maintenance',path:'/services/dryer-vent-maintenance-program/',detail:'An ongoing plan for your property'},
-  {label:'Air duct sanitizing',path:'/services/air-duct-sanitizing/',detail:'Treatment options after assessment'}]},
+  {
+    id: 'home', title: 'For your home', shortTitle: 'Home', intro: 'For the rooms you live in.', landingPath: '/home-services/',
+    image: '/images/visual-story/home-family-640.webp', imagePosition: 'center 62%', alt: 'A family beside a blue couch in a sunlit living room',
+    items: [
+      { label: 'Residential air duct cleaning', shortLabel: 'Air duct cleaning', path: '/services/residential-air-duct-cleaning/', detail: 'See what’s inside your ducts.', image: '/images/services/residential-duct-640.webp', alt: 'Sunlit Los Angeles living room with architectural ceiling air diffuser', imagePosition: 'center 42%' },
+      { label: 'Residential dryer vent cleaning', shortLabel: 'Dryer vent cleaning', path: '/services/residential-dryer-vent-cleaning/', detail: 'Clear the lint. Care for the vent.', image: '/images/blog/dryer-vent-safety-guide-640.webp', alt: 'Pure Air California technician cleaning an exterior residential dryer vent with a rotary brush', imagePosition: 'center 35%' },
+      { label: 'Home electrostatic filters', shortLabel: 'Electrostatic filters', path: '/services/residential-electrostatic-filter/', detail: 'Care for your reusable filters.', image: '/images/visual-story/consultation-pac-v3-640.webp', alt: 'PAC technician reviewing an air filter with a homeowner', imagePosition: 'center 38%' },
+      { label: 'Wildfire smoke & hillside ducts', shortLabel: 'Wildfire smoke & ash', path: '/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles/', detail: 'Canyon ash & remodel dust.', image: '/images/cinematic/california-sky-v1.webp', alt: 'Los Angeles hillside homes overlooking the Santa Monica Mountains and basin', imagePosition: 'center 45%' },
+    ],
+  },
+  {
+    id: 'business', title: 'For your business', shortTitle: 'Business', intro: 'For the places people work and gather.', landingPath: '/industries/',
+    image: '/images/coastal-v1/commercial-640.webp', imagePosition: '65% center', alt: 'A technician inspecting an open commercial ventilation duct',
+    items: [
+      { label: 'Commercial air duct cleaning', shortLabel: 'Air duct cleaning', path: '/services/commercial-air-duct-cleaning/', detail: 'Offices, facilities & shared spaces.', image: '/images/coastal-v1/commercial-640.webp', alt: 'A technician inspecting commercial metal ductwork', imagePosition: '66% center' },
+      { label: 'Commercial dryer vent cleaning', shortLabel: 'Dryer vent cleaning', path: '/services/commercial-dryer-vent-cleaning/', detail: 'Hotels & shared laundry rooms.', image: '/images/hero/hvac-dryer-vent-realistic-640.webp', alt: 'Exterior commercial and residential dryer exhaust termination hood', imagePosition: 'center' },
+      { label: 'Commercial electrostatic filters', shortLabel: 'Electrostatic filters', path: '/services/commercial-electrostatic-filter/', detail: 'Collector-cell cleaning & care.', image: '/images/pac/spiral-duct-diffuser.webp', alt: 'Commercial spiral HVAC ductwork with linear supply diffuser', imagePosition: 'center' },
+      { label: 'Laundromat dryer vent cleaning', shortLabel: 'Laundromat vents', path: '/services/laundromat-dryer-vent-cleaning/', detail: 'Care for busy laundry exhausts.', image: '/images/pac/laundromat.webp', alt: 'Rows of commercial laundry machines in a laundromat', imagePosition: 'center' },
+      { label: 'Commercial & HOA air care', shortLabel: 'Commercial & HOA', path: '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles/', detail: 'Multi-unit dryer & HVAC systems.', image: '/images/industry-v2/property-management-640.webp', alt: 'Multifamily apartment and HOA courtyard in Los Angeles', imagePosition: 'center 48%' },
+    ],
+  },
+  {
+    id: 'system-care', title: 'Complete system care', shortTitle: 'System care', intro: 'For the equipment behind your comfort.', landingPath: '/services/#system-care',
+    image: '/images/pac/rooftop-hvac-ductwork.webp', imagePosition: 'center 45%', alt: 'Commercial rooftop HVAC unit and rectangular galvanized ductwork run',
+    items: [
+      { label: 'HVAC system cleaning', shortLabel: 'HVAC cleaning', path: '/services/hvac-system-cleaning/', detail: 'Equipment. Components. Connections.', image: '/images/pac/duct-cleaning-interior-v2.webp', alt: 'Rotary agitation brush cleaning inside a galvanized HVAC air duct', imagePosition: 'center' },
+      { label: 'Dryer vent maintenance', shortLabel: 'Vent maintenance', path: '/services/dryer-vent-maintenance-program/', detail: 'Make ongoing care part of the plan.', image: '/images/pac/dryer.webp', alt: 'A dryer vent cleaning brush removing accumulated lint', imagePosition: 'center' },
+      { label: 'Air duct sanitizing', shortLabel: 'Duct sanitizing', path: '/services/air-duct-sanitizing/', detail: 'Options after a system assessment.', image: '/images/pac/duct-interior-clean-v2.webp', alt: 'The inside of a spotless cleaned ventilation duct', imagePosition: 'center' },
+    ],
+  },
 ] as const;
-export const commercialMarkets = [
- {label:'Property managers & HOAs',detail:'Apartments and shared communities',path:'/property-managers/'},
- {label:'Offices & commercial real estate',detail:'Workplaces and managed buildings',path:'/industries/commercial-real-estate/'},
- {label:'Hotels & hospitality',detail:'Guestrooms, common areas and laundry',path:'/industries/hospitality/'},
- {label:'Restaurants',detail:'Dining areas and ventilation systems',path:'/industries/restaurants/'},
- {label:'Healthcare',detail:'Clinics, medical offices and facilities',path:'/industries/healthcare/'},
- {label:'Schools & education',detail:'Classrooms and campus buildings',path:'/industries/education/'},
- {label:'Manufacturing',detail:'Industrial facilities and equipment',path:'/industries/manufacturing/'},
- {label:'Retail',detail:'Stores, showrooms and shopping spaces',path:'/industries/retail/'},
-] as const;
+
+export type ServiceGroup = typeof serviceGroups[number];
+export type ServiceGroupId = ServiceGroup['id'];
+
+export const commercialMarkets = businessCatalog.map(market => ({
+  label: market.label, detail: market.intro, path: market.parentPath,
+  image: market.image.replace('-1280.webp', '-640.webp'),
+  alt: market.alt,
+}));

@@ -26,7 +26,7 @@ const TestimonialCard = ({
   return (
     <motion.div
       className="relative overflow-hidden rounded-2xl bg-white p-6 shadow-lg ring-1 ring-black/5 transition-all duration-300 hover:shadow-xl flex flex-col h-full"
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -68,7 +68,7 @@ const TestimonialCard = ({
           {[...Array(5)].map((_, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.5 }}
+              initial={false}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: 0.1 + (i * 0.05) }}
             >
@@ -82,7 +82,7 @@ const TestimonialCard = ({
           {platform && (
             <motion.span 
               className="ml-2 text-xs text-gray-400 self-center"
-              initial={{ opacity: 0 }}
+              initial={false}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
             >
@@ -95,7 +95,7 @@ const TestimonialCard = ({
       {/* Testimonial Quote */}
       <motion.blockquote 
         className="text-gray-600 mb-4 flex-grow relative z-10"
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >

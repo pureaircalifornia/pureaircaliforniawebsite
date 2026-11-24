@@ -1,99 +1,203 @@
 import PageHero from '@/components/PageHero';
-import React from 'react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import RelatedLinks from '@/components/RelatedLinks';
-
 import EstimateBuilder from '@/components/EstimateBuilder';
 import SEOProvider from '@/components/SEOProvider';
+import { Link } from '@/components/CanonicalLink';
+import { CheckCircle2, ClipboardCheck, ShieldCheck, Phone } from 'lucide-react';
+import { business } from '@/config/business';
+import { serializeJsonLd } from '@/utils/seo/jsonLd.mjs';
+
+const quoteFaqs = [
+  {
+    question: 'Is the estimate really free?',
+    answer:
+      'Yes, and there is no obligation attached to it. We review your layout and give you a clear written scope so you can decide at your own pace.',
+  },
+  {
+    question: 'How long does air duct or dryer vent cleaning take?',
+    answer:
+      'The number of systems, duct condition, and access determine the time required. Larger homes, hillside estates, and multi-unit or commercial properties receive their own work plan and expected time window when scope is confirmed.',
+  },
+  {
+    question: 'Do I need to be home for the visit?',
+    answer:
+      'A homeowner, estate manager, or authorized property contact needs to arrange access and approve the written scope. Let us know who will meet the crew and remain reachable if inspection turns up any additional findings.',
+  },
+  {
+    question: 'Will the price change once you arrive?',
+    answer:
+      'Not without your written agreement. If the on-site walkthrough uncovers an extra system, inaccessible trunk line, or unusual buildup that changes the scope, we explain it clearly and requote before doing any additional work.',
+  },
+  {
+    question: 'Do you serve my area of Los Angeles?',
+    answer:
+      'We serve Greater Los Angeles County and parts of Ventura County—including the Westside, Central LA, San Fernando Valley, San Gabriel Valley, South Bay, and hillside canyon communities. Share your 5-digit ZIP code in the estimator to confirm coverage.',
+  },
+  {
+    question: 'Can you quote a commercial building or HOA community?',
+    answer:
+      'Yes. Share the building type, approximate system or unit count, site contact, and required work hours. We coordinate COI paperwork, resident notices, and evening or weekend windows subject to availability.',
+  },
+];
 
 const QuotePage = () => {
-  // Title already contains the site name, so SEOProvider leaves it alone rather
-  // than appending the brand again and pushing it past the ~60 char SERP cutoff.
-  const pageTitle = "Free Air Duct Cleaning Quote | Pure Air California";
-  const pageDescription = "Build a preliminary air duct cleaning estimate for your Los Angeles home or business. Add property details for a tailored PAC quote, or call (213) 792-4145.";
+  const pageTitle = 'Free Air Duct Cleaning Quote Los Angeles | Pure Air CA';
+  const pageDescription =
+    'Request a free air duct or dryer vent cleaning estimate in Los Angeles. Residential ducts from $299, dryer vents from $149, plus custom HOA & commercial quotes.';
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: quoteFaqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  };
 
   return (
-    
-      <div className="min-h-screen flex flex-col">
-        <SEOProvider
-          title={pageTitle}
-          description={pageDescription}
-          keywords={["free air duct cleaning quote Los Angeles", "air duct cleaning estimate LA", "instant quote duct cleaning", "how much does air duct cleaning cost Los Angeles"]}
-          path="/quote"
-         isLocalBusiness />
+    <div className="min-h-screen flex flex-col">
+      <SEOProvider
+        title={pageTitle}
+        description={pageDescription}
+        keywords={[
+          'free air duct cleaning quote Los Angeles',
+          'air duct cleaning estimate LA',
+          'dryer vent cleaning quote Los Angeles',
+          'commercial property duct cleaning quote',
+        ]}
+        path="/quote/"
+        isLocalBusiness
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqSchema) }}
+      />
 
-        <NavBar alwaysOpaque />
+      <NavBar alwaysOpaque />
 
-        <PageHero title="Your space. Your estimate." description="Tell us a little about your property. We’ll discuss the scope, answer your questions and provide a free estimate."/><main className="flex-grow bg-gray-50 py-16">
-          <div className="container mx-auto px-4">
+      <PageHero
+        title={
+          <>
+            Request a Free Air Duct or
+            <br />
+            <em>Dryer Vent Cleaning Estimate.</em>
+          </>
+        }
+        description="Share your Los Angeles property type, system count, and what you’ve noticed. See transparent starting guidance immediately and receive a clear written scope before any work begins."
+        compact
+        meta={
+          <div className="pac-hero-compact-actions">
+            <a className="pac-button" href="#estimate-builder">
+              Start my estimate
+            </a>
+            <a
+              className="pac-hero-compact-secondary"
+              href={business.phoneHref}
+              data-call-location="quote-hero"
+            >
+              <Phone size={16} aria-hidden="true" /> Call {business.phone}
+            </a>
+          </div>
+        }
+      />
 
-            {/* Page heading. This page previously shipped with no <h1> at all, so
-                Google had no primary topic signal for the highest-intent URL on
-                the site. */}
+      <main className="flex-grow bg-gray-50 py-12 md:py-16">
+        <div className="container mx-auto px-4">
+          <div className="pac-quote-trust-bar" aria-label="Estimate commitments">
+            <div>
+              <ShieldCheck size={18} aria-hidden="true" />
+              <span>Written scope &amp; price confirmed before work begins</span>
+            </div>
+            <div>
+              <ClipboardCheck size={18} aria-hidden="true" />
+              <span>Residential ducts from $299 · Dryer vents from $149</span>
+            </div>
+            <div>
+              <CheckCircle2 size={18} aria-hidden="true" />
+              <span>Homes, estates, HOAs &amp; commercial buildings across LA</span>
+            </div>
+          </div>
 
+          <EstimateBuilder />
 
-            <EstimateBuilder />
-
-            {/* Objection handling and expectation setting. This is the highest-intent
-                page on the site and was the thinnest at 322 words. */}
-            <div className="max-w-3xl mt-16">
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900">What happens after you request a quote</h2>
-              <ol className="space-y-5 mb-12">
+          <div className="pac-quote-post-sections">
+            <section className="pac-quote-steps" aria-labelledby="quote-next-heading">
+              <span className="pac-eyebrow">SIMPLE, TRANSPARENT PROCESS</span>
+              <h2 id="quote-next-heading">What happens after you request a quote</h2>
+              <ol>
                 {[
-                  ['We call you back', 'We review your property details, discuss the systems and access, and help you understand the proposed scope.'],
-                  ['We confirm the price on site', 'A technician inspects the system and confirms the price before any work starts. If what we find changes the scope, you hear it then, not on the invoice.'],
-                  ['You approve, then we work', 'Nothing proceeds without your say-so. The price we agree is the price you pay.'],
-                  ['You see the results', 'We photograph the ductwork before and after, so you can see what came out rather than taking our word for it.'],
+                  [
+                    'Our LA team reviews your space',
+                    'We look at your property type, ZIP code, system count, and access notes—then follow up directly without call-center handoffs.',
+                  ],
+                  [
+                    'We confirm the written scope and price',
+                    'We clarify what components are included, whether a site inspection is helpful, and confirm pricing before any work starts.',
+                  ],
+                  [
+                    'You approve, then we schedule',
+                    'Pick a work window that fits your household, tenants, or business hours. Submitting this form never locks you into an appointment.',
+                  ],
+                  [
+                    'Walkthrough & completion record',
+                    'Review the completed work with our technicians, including requested before/after photos of accessible areas and notes on any unreachable runs.',
+                  ],
                 ].map(([t, d], i) => (
-                  <li key={t} className="flex gap-4">
-                    <span className="flex-shrink-0 w-9 h-9 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center" aria-hidden="true">{i + 1}</span>
+                  <li key={t}>
+                    <span className="pac-quote-step-num" aria-hidden="true">
+                      0{i + 1}
+                    </span>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-1">{t}</h3>
-                      <p className="text-gray-600">{d}</p>
+                      <h3>{t}</h3>
+                      <p>{d}</p>
                     </div>
                   </li>
                 ))}
               </ol>
+            </section>
 
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900">Common questions before booking</h2>
-              <dl className="space-y-6">
-                <div>
-                  <dt className="text-lg font-semibold text-gray-900 mb-1">Is the estimate really free?</dt>
-                  <dd className="text-gray-600">Yes, and there is no obligation attached to it. You can take the quote and do nothing with it.</dd>
-                </div>
-                <div>
-                  <dt className="text-lg font-semibold text-gray-900 mb-1">How long does the work take?</dt>
-                  <dd className="text-gray-600">For most Los Angeles homes, two to four hours. Larger homes, multiple systems and commercial properties take longer, and we tell you the expected window when you schedule.</dd>
-                </div>
-                <div>
-                  <dt className="text-lg font-semibold text-gray-900 mb-1">Do I need to be home?</dt>
-                  <dd className="text-gray-600">Someone needs to provide access and approve the work before it starts. After that you are free to carry on with your day.</dd>
-                </div>
-                <div>
-                  <dt className="text-lg font-semibold text-gray-900 mb-1">Will the price change once you arrive?</dt>
-                  <dd className="text-gray-600">Not without your agreement. If the inspection turns up something that changes the scope — an extra system, severe contamination — we explain it and requote before doing anything.</dd>
-                </div>
-                <div>
-                  <dt className="text-lg font-semibold text-gray-900 mb-1">Do you serve my area?</dt>
-                  <dd className="text-gray-600">We cover Los Angeles County and parts of Ventura County. If you are unsure, call and ask — the answer is usually yes.</dd>
-                </div>
-                <div>
-                  <dt className="text-lg font-semibold text-gray-900 mb-1">Can you quote a commercial property?</dt>
-                  <dd className="text-gray-600">Yes. Commercial jobs are scoped on site and scheduled around your operating hours, including evenings and weekends.</dd>
-                </div>
-              </dl>
-            </div>
+            <section className="pac-quote-faq" aria-labelledby="quote-faq-heading">
+              <span className="pac-eyebrow">BEFORE YOU BOOK</span>
+              <h2 id="quote-faq-heading">Common questions about our estimates</h2>
+              <div className="pac-faq-list">
+                {quoteFaqs.map((faq) => (
+                  <details key={faq.question}>
+                    <summary>{faq.question}</summary>
+                    <p>{faq.answer}</p>
+                  </details>
+                ))}
+              </div>
+              <div className="pac-quote-faq-cta">
+                <p>
+                  Not sure which systems need attention yet? Try our{' '}
+                  <Link to="/air-quality-calculator/">LA Indoor Air Care Checklist</Link> or call{' '}
+                  <a href={business.phoneHref}>
+                    <Phone size={14} aria-hidden="true" /> {business.phone}
+                  </a>
+                  .
+                </p>
+              </div>
+            </section>
           </div>
-        </main>
+        </div>
+      </main>
 
-        <RelatedLinks heading="Learn more before you book" links={[{ label: 'Air duct cleaning cost in Los Angeles', path: '/pricing' }, { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning' }, { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' }, { label: 'Commercial case studies', path: '/case-studies' }]} />
+      <RelatedLinks
+        heading="Learn more before you book"
+        links={[
+          { label: 'Air duct cleaning cost in Los Angeles', path: '/pricing/' },
+          { label: 'LA indoor air care checklist', path: '/air-quality-calculator/' },
+          { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning/' },
+          { label: 'Commercial & HOA air duct cleaning', path: '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles/' },
+        ]}
+      />
 
-        <Footer />
-      </div>
-    
+      <Footer />
+    </div>
   );
 };
 
 export default QuotePage;
-

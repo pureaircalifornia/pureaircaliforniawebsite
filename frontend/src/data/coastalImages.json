@@ -1,0 +1,66 @@
+{
+  "coast": {
+    "width": 1440,
+    "height": 754
+  },
+  "nature": {
+    "width": 1800,
+    "height": 1200
+  },
+  "losAngeles": {
+    "width": 1800,
+    "height": 942
+  },
+  "duct-dust-archive-v3": {
+    "width": 1800,
+    "height": 1350
+  },
+  "duct-clear-archive-v3": {
+    "width": 1200,
+    "height": 1600
+  },
+  "breath": {
+    "width": 1672,
+    "height": 941
+  },
+  "residential": {
+    "width": 1800,
+    "height": 1013
+  },
+  "commercial": {
+    "width": 1800,
+    "height": 1013
+  },
+  "hvac": {
+    "width": 1800,
+    "height": 1200
+  },
+  "living-forest": {
+    "width": 1440,
+    "height": 900
+  },
+  "coastal-breath": {
+    "width": 1440,
+    "height": 754
+  },
+  "california-palms": {
+    "width": 1440,
+    "height": 754
+  },
+  "trees-night": {
+    "width": 1440,
+    "height": 754
+  },
+  "quiet-mountains": {
+    "width": 1440,
+    "height": 810
+  },
+  "sunlit-leaves": {
+    "width": 1024,
+    "height": 1024
+  },
+  "ocean-pause": {
+    "width": 1440,
+    "height": 754
+  }
+}

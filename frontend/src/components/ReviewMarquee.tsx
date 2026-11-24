@@ -13,10 +13,9 @@ import { googleReviews } from '@/data/googleReviews';
  * Google's policies and US FTC rules on endorsements, quite apart from being
  * untrue. Do not add an entry here that is not a real, published review.
  *
- * The profile holds 7 reviews: these 6 five-star ones plus one 2-star review.
- * The carousel shows the positive ones, which is ordinary marketing selection —
- * but the aggregateRating in business.ts must always reflect ALL of them (4.6
- * from 7), because that figure is what Google validates as structured data.
+ * This is a dated selection, not a live rating feed. Link to the full profile
+ * for its current rating and all reviews. Do not publish self-serving review
+ * rich-result markup for PAC's own business.
  *
  * Reviews have no location attached on Google, so none is shown. The previous
  * "Beverly Hills, CA"-style lines were invented and are gone.
@@ -24,7 +23,7 @@ import { googleReviews } from '@/data/googleReviews';
 const reviews = googleReviews;
 
 const ReviewMarquee = () => {
-    const { aggregateRating, googleReviewUrl } = business;
+    const { googleProfileUrl } = business;
 
     return (
         <div className="w-full bg-slate-900 py-12 overflow-hidden border-y border-white/10 relative">
@@ -35,18 +34,18 @@ const ReviewMarquee = () => {
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-900 to-transparent z-10 pointer-events-none"></div>
 
             <div className="container mx-auto px-4 mb-8 text-center relative z-10">
-                <h2 className="text-2xl font-bold text-white mb-2">Serving Los Angeles Since 1993</h2>
+                <h2 className="text-2xl font-bold text-white mb-2">Experiences shared by PAC customers</h2>
                 <p className="text-gray-300">
-                    Real reviews from our{' '}
+                    Selected reviews from our{' '}
                     <a
-                        href={googleReviewUrl}
+                        href={googleProfileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sky-300 underline underline-offset-2 hover:text-sky-200"
                     >
                         Google Business Profile
                     </a>{' '}
-                    — {aggregateRating.ratingValue} stars from {aggregateRating.reviewCount} reviews
+                    . Visit the profile for all reviews and the current rating.
                 </p>
             </div>
 

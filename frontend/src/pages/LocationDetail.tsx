@@ -1,14 +1,22 @@
+import { locationImageAlt } from '@/data/locationImageAlts';
+import BusinessAreaDirectory from '@/components/BusinessAreaDirectory';
 import { localGuides } from '@/data/localGuides';
 import LocalServiceGuide from '@/components/LocalServiceGuide';
 import PageHero from '@/components/PageHero';
-import React from 'react';
 import NotFound from './NotFound';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 import { locationData } from './locations/data';
 import { getRegionContent } from './locations/regionContent';
+import {
+  buildLocationDescription,
+  buildLocationQuoteHref,
+  buildLocationTitle,
+} from './locations/locationSeo';
+import { REGION_LABELS } from './locations/NeighborhoodFinder';
 
 import ResponsiveImage from '@/components/ResponsiveImage';
 import HomeQuoteForm from '@/components/HomeQuoteForm';
@@ -18,288 +26,511 @@ import SchemaMarkup from '@/components/SchemaMarkup';
 import { seoConfig } from '@/utils/seo/seoConfig';
 import { canonicalUrl } from '@/utils/seo/canonicalUrl';
 import RelatedLinks from '@/components/RelatedLinks';
-import { getNearbyLocations, getServiceLinksForCity, getBlogLinksForCity, getIndustryLinksForCity } from '@/utils/internalLinks';
+import {
+  getNearbyLocations,
+  getServiceLinksForCity,
+  getBlogLinksForCity,
+  getIndustryLinksForCity,
+} from '@/utils/internalLinks';
 import { googleReviews } from '@/data/googleReviews';
 import { business } from '@/config/business';
-import { Phone, ArrowRight, CheckCircle } from 'lucide-react';
-
-
+import { Phone, ArrowRight, ArrowUpRight, CheckCircle, MapPin, ShieldCheck } from 'lucide-react';
 
 const LocationDetail = () => {
   const { locationSlug } = useParams<{ locationSlug: string }>();
-  const location = locationData.find(loc => loc.slug === locationSlug);
+  const location = locationData.find((loc) => loc.slug === locationSlug);
 
   if (!location) {
     return <NotFound />;
   }
 
   const guide = localGuides[location.slug];
-  const mapQuery = guide ? `${location.name}, ${guide.municipality === location.name ? '' : guide.municipality + ', '}California` : `${location.name}, ${location.county} County, California`;
-  const areaServed = { '@type': 'Place', name: location.name, containedInPlace: { '@type': 'AdministrativeArea', name: guide?.municipality === 'Los Angeles' ? 'Los Angeles, California' : `${location.county} County, California` } };
-
-  // Keep this short and let SEOProvider decide whether the brand still fits inside
-  // the ~60 char SERP cutoff. Hardcoding "| NADCA Certified | Pure Air California"
-  // pushed every one of the 54 location titles to 67-74 chars, so the city name —
-  // the entire point of the page — was competing for space with boilerplate.
-  // NADCA certification still appears in the description and on the page itself.
-  const pageTitle = guide?.municipality === "Los Angeles" ? `Air Duct Cleaning ${location.name}, Los Angeles` : `Air Duct Cleaning ${location.name} CA`;
-  // Kept under the ~160 char SERP cutoff so the closing call to action survives —
-  // the previous template ran 167-190 chars on every city and was always truncated
-  // mid-sentence. Two ZIPs rather than three keeps the longest city names in budget.
-  //
-  // "#1 rated" was removed deliberately: no ranking body awards it, so it is an
-  // unsubstantiated superlative. The claims here are all verifiable.
-  const pageDescription = `Air duct & dryer vent cleaning in ${location.name}, CA. Local service details, system care and free estimates. Call (213) 792-4145.`;
-  const pageUrl = `${seoConfig.siteUrl}/locations/${location.slug}`;
-
-  // Location-specific FAQs
   const regionContent = getRegionContent(location.region);
-  // Real neighbouring cities from the same dataset, reused as prose above and as
-  // links below, so the two agree rather than naming different places.
-  const nearbyNames = getNearbyLocations(location.slug, 4).map((l) => l.label);
+  const regionLabel = REGION_LABELS[location.region] || regionContent.label;
+  const municipality = guide?.municipality || location.municipality;
+  const mapQuery =
+    municipality === location.name
+      ? `${location.name}, California`
+      : `${location.name}, ${municipality}, California`;
 
-  // Which of the real Google reviews to show here.
-  //
-  // Showing the same four on all 54 city pages put 205 words of identical text on
-  // every one of them — 21% of the page, and the single largest block of shared
-  // content on the site. Google's bar for indexing a page is that it is worth its
-  // own slot; 54 pages that are 71% the same text do not clear it.
-  //
-  // Two reviews, rotated by the city's own index, so neighbouring cities show
-  // different ones and the six reviews spread across the corpus instead of four of
-  // them appearing 54 times. This selects which real reviews to display — it does
-  // NOT attach a review to a city, which would be a fabrication (googleReviews.ts,
-  // rule 2). The heading above still says plainly what these are.
+  const areaServed = {
+    '@type': 'Place',
+    name: location.name,
+    containedInPlace: {
+      '@type': 'AdministrativeArea',
+      name:
+        municipality === 'Los Angeles'
+          ? 'Los Angeles, California'
+          : `${location.county} County, California`,
+    },
+  };
+
+  const pageTitle = buildLocationTitle(location);
+  const pageDescription = buildLocationDescription(location);
+  const pageUrl = `${seoConfig.siteUrl}/locations/${location.slug}`;
+  const canonicalPageUrl = canonicalUrl(pageUrl);
+
+  const nearbyLocations = getNearbyLocations(location.slug, 6);
+  const nearbyNames = nearbyLocations.slice(0, 4).map((l) => l.label);
+
+  // Rotate two real Google reviews per city so neighboring pages don't duplicate
+  // the exact same testimonial block, while never fabricating city attribution.
   const reviewIndex = locationData.findIndex((l) => l.slug === location.slug);
   const reviewsForThisCity = [
     googleReviews[reviewIndex % googleReviews.length],
     googleReviews[(reviewIndex + 3) % googleReviews.length],
   ].filter(Boolean);
 
+  // Combine tailored city cost FAQ + unique per-city FAQs + unique region FAQ (4-5 total).
+  const citySpecificFaqs = guide?.faqs ?? location.localFaqs ?? [];
+  const regionalFaq = regionContent.faqs[0]
+    ? [{ question: regionContent.faqs[0].q, answer: regionContent.faqs[0].a }]
+    : [];
+
+  const zipListShort = location.zipCodes.slice(0, 3).join(', ');
   const locationFaqs = [
-    { question: `How much does air duct cleaning cost in ${location.name}?`, answer: `The price depends on the number of systems, the components included, access and the work needed. Request a written estimate for your ${location.name} property. Call (213) 792-4145 to discuss your home or business.` },
-    ...(guide?.faqs ?? [
-      { question: `Do you clean both residential and commercial air ducts in ${location.name}?`, answer: 'Yes. PAC quotes homes, apartments, offices and commercial properties. Tell us the property type and equipment count so the scope reflects your building.' },
-      { question: `How long will cleaning take at my ${location.name} property?`, answer: 'Timing depends on system size, condition and access. We will discuss the expected work window after reviewing the scope. Larger or shared systems may need a different schedule from a single home.' },
-      { question: 'What should I confirm before booking?', answer: 'Ask which supply and return ducts, registers, plenums, blowers and coils are included. Confirm access, written pricing and appointment availability. Dryer exhaust cleaning is a separate service unless included in your estimate.' },
-    ]),
+    {
+      question: `How much does air duct and dryer vent cleaning cost in ${location.name}?`,
+      answer: `Residential air duct cleaning in ${location.name}${zipListShort ? ` (${zipListShort})` : ''} starts at $299 for a single accessible HVAC system, and residential dryer vent cleaning starts at $149. Final written pricing follows your physical HVAC unit count, register layout, and access—confirmed on site before work begins. Call ${business.phone} or request a free estimate online.`,
+    },
+    ...citySpecificFaqs,
+    ...regionalFaq,
   ];
 
+  // Tailor the 6 local service cards to highlight region-relevant priorities first.
+  const allLocalServices = [
+    {
+      key: 'residential-duct',
+      title: 'Residential Air Duct Cleaning',
+      priceCue: 'From $299',
+      href: '/services/residential-air-duct-cleaning/',
+      quoteHref: buildLocationQuoteHref({ locationSlug: location.slug, service: 'air-duct', property: 'home' }),
+      desc: `HEPA negative-pressure supply, return, plenum, and grille cleaning tailored for ${location.name} homes and condos.`,
+    },
+    {
+      key: 'dryer-vent',
+      title: 'Residential Dryer Vent Cleaning',
+      priceCue: 'From $149',
+      href: '/services/residential-dryer-vent-cleaning/',
+      quoteHref: buildLocationQuoteHref({ locationSlug: location.slug, service: 'dryer-vent', property: 'home' }),
+      desc: `Mechanical lint extraction and wall or roof exhaust airflow verification for ${location.name} laundry runs.`,
+    },
+    {
+      key: 'wildfire-smoke',
+      title: 'Wildfire Smoke & Hillside Duct Care',
+      priceCue: 'Inspection-led',
+      href: '/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles/',
+      quoteHref: buildLocationQuoteHref({
+        locationSlug: location.slug,
+        service: 'air-duct',
+        property: 'home',
+        addons: ['wildfire-smoke'],
+      }),
+      desc: `Honest inspection and HEPA removal for canyon ash, regional smoke odors, and post-remodel dust in ${location.name}.`,
+    },
+    {
+      key: 'commercial-hoa',
+      title: 'Commercial & HOA Air Ducts & Vents',
+      priceCue: 'Building scope',
+      href: '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles/',
+      quoteHref: buildLocationQuoteHref({ locationSlug: location.slug, service: 'air-duct', property: 'managed' }),
+      desc: `Multi-unit HOA dryer risers, common-area HVAC ducts, and COI-ready scheduling for ${location.name} properties.`,
+    },
+    {
+      key: 'hvac-system',
+      title: 'HVAC System, Coil & Blower Cleaning',
+      priceCue: 'Component scope',
+      href: '/services/hvac-system-cleaning/',
+      quoteHref: buildLocationQuoteHref({
+        locationSlug: location.slug,
+        service: 'other',
+        property: 'home',
+        addons: ['hvac-coil'],
+      }),
+      desc: `Accessible evaporator coil, blower wheel, and air-handler cabinet cleaning to support steady ${location.name} airflow.`,
+    },
+    {
+      key: 'electrostatic-filter',
+      title: 'Electrostatic Air Filters',
+      priceCue: 'Washable & custom',
+      href: '/services/residential-electrostatic-filter/',
+      quoteHref: buildLocationQuoteHref({ locationSlug: location.slug, service: 'filter', property: 'home' }),
+      desc: `Custom-fit washable electrostatic filters sized to curb bypass dust in ${location.name} return chases.`,
+    },
+  ];
+
+  // Prioritize Wildfire or Commercial/HOA into slot 3 depending on the neighborhood's region.
+  const localServices =
+    location.region === 'urban-core' || location.region === 'westside'
+      ? [
+          allLocalServices[0],
+          allLocalServices[1],
+          allLocalServices[3],
+          allLocalServices[4],
+          allLocalServices[2],
+          allLocalServices[5],
+        ]
+      : allLocalServices;
+
+  const primaryQuoteHref = buildLocationQuoteHref({
+    locationSlug: location.slug,
+    service: 'air-duct',
+    property: 'home',
+  });
+
   return (
-    
-      <div className="min-h-screen flex flex-col">
-        {/* Single SEOProvider: a second childless one previously overrode the
-            city-specific title/description with site defaults (all 53 location
-            pages were emitting the generic homepage title). LocalBusiness is
-            provided by the city-customized SchemaMarkup below, so we don't set
-            isLocalBusiness here (avoids a duplicate, conflicting business node). */}
-        <SEOProvider
-          title={pageTitle}
-          description={pageDescription}
-          path={`/locations/${location.slug}`}
-          image={location.image}
-          imageAlt={"Architectural view of the " + location.name + " service area"}
-          mainEntityId={canonicalUrl(pageUrl) + "#service"}
-        >
-          <SchemaMarkup schema={seoConfig.schema.localBusiness} />
-          <SchemaMarkup schema={{
-            '@context': 'https://schema.org', '@type': 'Service',
-            '@id': canonicalUrl(pageUrl) + '#service',
+    <div className="min-h-screen flex flex-col">
+      <SEOProvider
+        title={pageTitle}
+        description={pageDescription}
+        path={`/locations/${location.slug}`}
+        image={location.image}
+        imageAlt={locationImageAlt(location.slug)}
+        mainEntityId={`${canonicalPageUrl}#service`}
+        isLocalBusiness
+      >
+        <SchemaMarkup
+          schema={{
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            '@id': `${canonicalPageUrl}#service`,
             name: `Air duct cleaning in ${location.name}`,
-            serviceType: 'Residential and commercial air duct cleaning',
+            serviceType: 'Residential and commercial air duct and dryer vent cleaning',
             description: guide?.summary ?? pageDescription,
-            url: canonicalUrl(pageUrl),
+            url: canonicalPageUrl,
             provider: { '@id': seoConfig.schema.localBusiness['@id'] },
             areaServed,
-          }} />
-          {/* BreadcrumbList Schema */}
-          <SchemaMarkup schema={{
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
+            offers: [
               {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": canonicalUrl("/")
+                '@type': 'Offer',
+                name: `Residential Air Duct Cleaning in ${location.name}`,
+                price: '299',
+                priceCurrency: 'USD',
+                url: canonicalUrl('/services/residential-air-duct-cleaning'),
               },
               {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Locations",
-                "item": canonicalUrl("/locations")
+                '@type': 'Offer',
+                name: `Residential Dryer Vent Cleaning in ${location.name}`,
+                price: '149',
+                priceCurrency: 'USD',
+                url: canonicalUrl('/services/residential-dryer-vent-cleaning'),
+              },
+            ],
+          }}
+        />
+        <SchemaMarkup
+          schema={{
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            '@id': `${canonicalPageUrl}#breadcrumb`,
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: canonicalUrl('/'),
               },
               {
-                "@type": "ListItem",
-                "position": 3,
-                "name": location.name,
-                "item": canonicalUrl(pageUrl)
-              }
-            ]
-          }} />
-          {/* FAQ Schema */}
-          <SchemaMarkup schema={{
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": locationFaqs.map(faq => ({
-              "@type": "Question",
-              "name": faq.question,
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": faq.answer
-              }
-            }))
-          }} />
-        </SEOProvider>
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Locations',
+                item: canonicalUrl('/locations'),
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: location.name,
+                item: canonicalPageUrl,
+              },
+            ],
+          }}
+        />
+        <SchemaMarkup
+          schema={{
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            '@id': `${canonicalPageUrl}#faq`,
+            mainEntity: locationFaqs.map((faq) => ({
+              '@type': 'Question',
+              name: faq.question,
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: faq.answer,
+              },
+            })),
+          }}
+        />
+      </SEOProvider>
 
-        <NavBar />
+      <NavBar />
 
-        {/* Hero Section with Location Image */}
-        <PageHero image={location.image} alt={"Architectural view illustrating the "+location.name+" service area"} eyebrow={"LOCAL AIR CARE · "+location.name} title={<>Air duct cleaning in {location.name}</>} description={<>Friendly air duct, dryer vent and HVAC care for homes and businesses in {location.name}. Talk with PAC about your property and scheduling.</>}/>
+      <main>
+        <PageHero
+          image={location.image}
+          srcSet={`/images/locations/${location.slug}-640.webp 640w, ${location.image} 1024w`}
+          alt={locationImageAlt(location.slug)}
+          eyebrow={`AIR DUCT & DRYER VENT CLEANING · ${location.name.toUpperCase()}, CA`}
+          title={
+            <>
+              Air Duct &amp; Dryer Vent Cleaning
+              <br />
+              <em>in {location.name}.</em>
+            </>
+          }
+          description={guide?.summary ?? location.description}
+          estimateHref={primaryQuoteHref}
+          estimateLabel={`Free ${location.name} estimate`}
+          caption={`Residential air ducts from $299 · Dryer vents from $149 · Covering ${location.name}${
+            location.zipCodes.length ? ` (${location.zipCodes.slice(0, 4).join(', ')})` : ''
+          }.`}
+          reassurance={`${regionLabel} · Written scope confirmed before work begins`}
+        />
 
-        {/* Location-specific content */}
-        <section className="py-16">
+        {/* Local Housing Stock, Micro-Climate & ZIP Coverage */}
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               <div>
-                <h2 className="text-3xl font-bold mb-6">Local Air Duct Cleaning Experts in {location.name}</h2>
-                {/* location.description and location.localContext are per-city copy that
-                    already existed (or was written) in locations/data.ts but was never
-                    rendered. Without it these 54 pages were 90%+ word-for-word identical
-                    to one another — the whole differentiator sat unused in the data file. */}
-                <p className="text-lg text-gray-600 mb-6">{guide?.summary ?? location.description}</p>
-                {!guide && location.localContext && (
-                  <p className="text-lg text-gray-600 mb-6">{location.localContext}</p>
+                <span className="pac-eyebrow text-brand-700 mb-3">
+                  <MapPin size={14} aria-hidden="true" />
+                  {regionLabel.toUpperCase()} · {municipality.toUpperCase()}, CA
+                </span>
+                <h2 className="text-3xl font-bold mb-4 text-slate-900">
+                  Local Air Duct &amp; Dryer Vent Care in {location.name}
+                </h2>
+                <p className="text-sm font-semibold text-brand-700 bg-brand-50 border border-brand-100 rounded-lg px-4 py-3 mb-6">
+                  Typical local properties: {location.housingProfile}
+                </p>
+
+                {location.localProfile && (
+                  <p className="text-lg text-gray-700 leading-relaxed mb-5">{location.localProfile}</p>
                 )}
-                {/* Researched, area-specific profile. This is the longest genuinely
-                    per-city block on the page and the main reason these 54 pages read
-                    as 54 documents rather than one template with the name swapped. */}
-                {!guide && location.localProfile && (
-                  <p className="text-lg text-gray-600 mb-6">{location.localProfile}</p>
+                {location.localContext && (
+                  <p className="text-lg text-gray-600 leading-relaxed mb-5">{location.localContext}</p>
                 )}
-                {/* Region conditions sit AFTER the city profile: they are shared by
-                    the 7-9 cities in the region, so they are supporting context, not
-                    the lead. */}
-                {!guide && <p className="text-lg text-gray-600 mb-6">{regionContent.conditions}</p>}
-                {/* Field notes: the crew's actual observations for this city.
-                    This is the one thing on the page that cannot be derived from
-                    geography or generated from a template — it comes from having
-                    done the work here. Cities without it fall back to the region
-                    copy above, which is why `npm run locations:report` lists which
-                    entries are still empty. */}
-                {!guide && location.fieldNotes && (
-                  <p className="text-lg text-gray-600 mb-6">{location.fieldNotes}</p>
+                <p className="text-base text-gray-600 leading-relaxed mb-5">{regionContent.conditions}</p>
+                {location.fieldNotes && (
+                  <p className="text-base text-gray-700 leading-relaxed mb-5">{location.fieldNotes}</p>
                 )}
 
-                <div className="mt-8">
-                  <h3 className="text-xl font-semibold mb-4">Zip codes we cover in {location.name}</h3>
-                  {/* Written out as a sentence as well as chips. The ZIP list and the
-                      neighbouring-city list are real, already in data.ts, and different
-                      for every city — so rendering them as prose adds genuinely unique
-                      wording to a page whose main weakness is shared boilerplate. */}
-                  <p className="text-lg text-gray-600 mb-4">
-                    We cover {location.zipCodes.length === 1 ? 'zip code' : 'all'}{' '}
+                <div className="flex flex-wrap gap-3 my-6">
+                  <Link to={primaryQuoteHref} className="pac-button">
+                    Get a {location.name} estimate <ArrowUpRight size={17} aria-hidden="true" />
+                  </Link>
+                  <a
+                    href={business.phoneHref}
+                    className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-brand-200 text-brand-700 font-semibold hover:bg-brand-50 transition-colors"
+                  >
+                    <Phone size={16} aria-hidden="true" /> {business.phone}
+                  </a>
+                  <Link
+                    to="/pricing/"
+                    className="inline-flex items-center gap-1.5 px-4 py-3 text-sm font-semibold text-brand-700 underline underline-offset-4 hover:text-brand-800"
+                  >
+                    See LA pricing ($299 / $149)
+                  </Link>
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-gray-200">
+                  <h3 className="text-xl font-semibold mb-3 text-slate-900">
+                    ZIP codes we serve in {location.name}
+                  </h3>
+                  <p className="text-base text-gray-600 mb-4 leading-relaxed">
+                    We cover {location.zipCodes.length === 1 ? 'ZIP code' : 'all'}{' '}
                     {location.zipCodes.length > 1 ? `${location.zipCodes.length} ` : ''}
-                    {location.name} zip code{location.zipCodes.length === 1 ? '' : 's'} —{' '}
+                    {location.name} ZIP code{location.zipCodes.length === 1 ? '' : 's'} —{' '}
                     {location.zipCodes.slice(0, -1).join(', ')}
                     {location.zipCodes.length > 1 ? ' and ' : ''}
                     {location.zipCodes[location.zipCodes.length - 1]}
                     {nearbyNames.length > 0 && (
-                      <> — along with neighbouring {nearbyNames.slice(0, -1).join(', ')}
-                        {nearbyNames.length > 1 ? ' and ' : ''}{nearbyNames[nearbyNames.length - 1]}</>
-                    )}. Confirm your service address and access when requesting an estimate.
+                      <>
+                        {' '}
+                        — along with neighboring {nearbyNames.slice(0, -1).join(', ')}
+                        {nearbyNames.length > 1 ? ' and ' : ''}
+                        {nearbyNames[nearbyNames.length - 1]}
+                      </>
+                    )}
+                    . Share your address and access notes when requesting an estimate.
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {location.zipCodes.map(zip => (
-                      <span key={zip} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">{zip}</span>
+                    {location.zipCodes.map((zip) => (
+                      <span
+                        key={zip}
+                        className="bg-brand-50 text-brand-800 border border-brand-100 px-3 py-1 rounded-full text-sm font-medium"
+                      >
+                        {zip}
+                      </span>
                     ))}
                   </div>
                 </div>
               </div>
-              <div>
-                <div className="rounded-xl overflow-hidden shadow-xl h-64 md:h-96 relative border border-gray-100">
-                  {import.meta.env.VITE_GOOGLE_MAPS_API_KEY && <iframe
-                    title={`Map of ${mapQuery}`}
-                    className="w-full h-full border-0"
-                    loading="lazy"
-                    allowFullScreen
-                    referrerPolicy="no-referrer-when-downgrade"
-                    src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY || ''}&q=${encodeURIComponent(mapQuery)}`}
-                  ></iframe>}
-                  {/* Fallback image if API key is missing */}
-                  {!import.meta.env.VITE_GOOGLE_MAPS_API_KEY && (
+
+              <div className="space-y-6">
+                <div className="rounded-xl overflow-hidden shadow-xl h-72 md:h-96 relative border border-gray-100">
+                  {import.meta.env.VITE_GOOGLE_MAPS_API_KEY ? (
+                    <iframe
+                      title={`Map of ${mapQuery}`}
+                      className="w-full h-full border-0"
+                      loading="lazy"
+                      allowFullScreen
+                      referrerPolicy="no-referrer-when-downgrade"
+                      src={`https://www.google.com/maps/embed/v1/place?key=${
+                        import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+                      }&q=${encodeURIComponent(mapQuery)}`}
+                    ></iframe>
+                  ) : (
                     <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-100">
                       <ResponsiveImage
                         src={location.image}
-                        alt={`Pure Air California service area in ${location.name}`}
+                        alt={locationImageAlt(location.slug)}
+                        width={1024}
+                        height={1024}
                         className="w-full h-full object-cover"
                         loading="lazy"
                       />
                     </div>
                   )}
                 </div>
+
+                {/* Transparent Starting-Price & Inspection Card */}
+                <aside className="bg-brand-50 border border-brand-100 rounded-xl p-6">
+                  <div className="flex items-center gap-2 text-brand-700 font-semibold text-sm mb-3">
+                    <ShieldCheck size={18} aria-hidden="true" />
+                    <span>{location.name} Inspection-Led Standards</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="bg-white rounded-lg p-4 border border-brand-100">
+                      <span className="block text-xs uppercase tracking-wider text-gray-500 font-semibold">
+                        Air Duct Cleaning
+                      </span>
+                      <strong className="text-xl text-slate-900">From $299</strong>
+                      <span className="block text-xs text-gray-600 mt-1">Single accessible HVAC system</span>
+                    </div>
+                    <div className="bg-white rounded-lg p-4 border border-brand-100">
+                      <span className="block text-xs uppercase tracking-wider text-gray-500 font-semibold">
+                        Dryer Vent Cleaning
+                      </span>
+                      <strong className="text-xl text-slate-900">From $149</strong>
+                      <span className="block text-xs text-gray-600 mt-1">Rotary lint extraction &amp; flow check</span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed mb-3">
+                    {regionContent.seasonal} Final pricing is confirmed in writing on site before work begins.
+                  </p>
+                  <Link to={primaryQuoteHref} className="pac-text-link">
+                    Customize a {location.name} estimate <ArrowUpRight size={15} aria-hidden="true" />
+                  </Link>
+                </aside>
               </div>
             </div>
           </div>
         </section>
 
-        {guide && <LocalServiceGuide guide={guide} />}
+        {guide && <LocalServiceGuide guide={guide} citySlug={location.slug} />}
 
-        {/* Location-Specific Challenges */}
+        {/* Location-Specific Visit Planning Challenges (all non-guide cities) */}
         {!guide && location.challenges && location.challenges.length > 0 && (
           <section className="py-16 bg-brand-50">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl font-bold mb-4">Plan a visit to your {location.name} property</h2>
+                  <span className="pac-eyebrow text-brand-700">PREPARING FOR YOUR VISIT</span>
+                  <h2 className="text-3xl font-bold mt-2 mb-4 text-slate-900">
+                    Planning air duct &amp; dryer vent service in {location.name}
+                  </h2>
                   <p className="text-lg text-gray-600">
-                    A few details help us prepare a useful scope for your home or business:
+                    Four local property details that help us confirm an accurate written scope on the first visit:
                   </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {location.challenges.map((challenge, index) => (
-                    <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-brand-100 flex items-start gap-4">
+                    <div
+                      key={index}
+                      className="bg-white p-6 rounded-xl shadow-sm border border-brand-100 flex items-start gap-4"
+                    >
                       <div className="flex-shrink-0 w-8 h-8 bg-brand-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
                         {index + 1}
                       </div>
-                      <p className="text-gray-700">{challenge}</p>
+                      <p className="text-gray-700 leading-relaxed">{challenge}</p>
                     </div>
                   ))}
-                </div>
-                <div className="mt-8 text-center">
-                  <p className="text-gray-600 mb-4">
-                    Discuss these details with PAC when you request an estimate for your {location.name} property.
-                  </p>
                 </div>
               </div>
             </div>
           </section>
         )}
 
-        <HomeQuoteForm />
-
-        {/* Reviews.
-            These are the company's real Google reviews. They are deliberately NOT
-            presented as being from this city: Google reviews carry no location, so
-            the previous "What Your Neighbors in {city} Say" heading over invented
-            named testimonials was a fabrication on all 54 location pages. The
-            heading now says exactly what these are. */}
+        {/* Tailored Services Available in This Area */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">What Our Customers Say</h2>
+              <span className="pac-eyebrow text-brand-700">SERVICES IN {location.name.toUpperCase()}</span>
+              <h2 className="text-3xl font-bold mt-2 mb-4 text-slate-900">
+                Our Services in {location.name}
+              </h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                {regionContent.priorityReason} Choose a service below to review scope details or launch an estimate
+                pre-filled for {location.name}.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {localServices.map((service) => (
+                <article
+                  key={service.key}
+                  className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all flex flex-col"
+                >
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-brand-600 flex-shrink-0 mt-1" aria-hidden="true" />
+                      <h3 className="font-bold text-lg text-gray-900">
+                        <Link to={service.href} className="hover:text-brand-700 transition-colors">
+                          {service.title}
+                        </Link>
+                      </h3>
+                    </div>
+                    <span className="text-xs font-semibold text-brand-800 bg-brand-50 border border-brand-100 px-2.5 py-1 rounded-full whitespace-nowrap">
+                      {service.priceCue}
+                    </span>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-5 flex-grow">{service.desc}</p>
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100 text-sm font-semibold">
+                    <Link
+                      to={service.href}
+                      className="text-brand-700 inline-flex items-center gap-1 hover:underline underline-offset-4"
+                    >
+                      Scope details <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    </Link>
+                    <Link
+                      to={service.quoteHref}
+                      className="text-slate-700 hover:text-brand-700 inline-flex items-center gap-1"
+                    >
+                      Quote <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <HomeQuoteForm />
+
+        {/* Real Google Reviews (rotated by city, truthfully attributed to GBP — never fabricated per-city) */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4 text-slate-900">What Our Customers Say</h2>
               <p className="text-lg text-gray-600">
-                Verified reviews from our{' '}
+                Selected reviews from our{' '}
                 <a
-                  href={business.googleReviewUrl}
+                  href={business.googleProfileUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-brand-700 underline underline-offset-2 hover:text-brand-900"
                 >
                   Google Business Profile
-                </a>{' '}
-                — {business.aggregateRating.ratingValue} stars from{' '}
-                {business.aggregateRating.reviewCount} reviews across Los Angeles County.
+                </a>
+                . Visit the profile for all reviews and the current rating.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -316,19 +547,21 @@ const LocationDetail = () => {
           </div>
         </section>
 
-        {/* FAQ Section */}
+        {/* Visible Hyperlocal FAQ Section (kept openly visible so FAQPage JSON-LD matches innerText verbatim) */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions About Air Duct Cleaning in {location.name}</h2>
+                <h2 className="text-3xl font-bold mb-4 text-slate-900">
+                  Frequently Asked Questions About Air Duct Cleaning in {location.name}
+                </h2>
                 <p className="text-lg text-gray-600">
-                  Plan air care for your {location.name} home or business.
+                  Local scope, pricing, and property-access answers for {location.name} homeowners and managers.
                 </p>
               </div>
               <div className="space-y-6">
                 {locationFaqs.map((faq, index) => (
-                  <div key={index} className="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                  <div key={index} className="bg-gray-50 p-6 rounded-xl border border-gray-200">
                     <h3 className="text-lg font-bold mb-3 text-gray-900">{faq.question}</h3>
                     <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
                   </div>
@@ -338,73 +571,49 @@ const LocationDetail = () => {
           </div>
         </section>
 
-        {/* Related Services */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Our Services in {location.name}</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                We offer a complete range of air quality services for {location.name} homes and businesses.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {[
-                { title: "Residential Air Duct Cleaning", href: "/services/residential-air-duct-cleaning", desc: "Complete home duct cleaning" },
-                { title: "Commercial Air Duct Cleaning", href: "/services/commercial-air-duct-cleaning", desc: "For offices and businesses" },
-                { title: "Dryer Vent Cleaning", href: "/services/residential-dryer-vent-cleaning", desc: "Fire prevention service" },
-              ].map((service, i) => (
-                <Link key={i} to={service.href} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all group">
-                  <div className="flex items-start gap-3 mb-3">
-                    <CheckCircle className="w-6 h-6 text-brand-600 flex-shrink-0 mt-0.5" />
-                    <h3 className="font-bold text-gray-900 group-hover:text-brand-600 transition-colors">{service.title}</h3>
-                  </div>
-                  <p className="text-gray-600 text-sm mb-3">{service.desc}</p>
-                  <span className="text-brand-600 text-sm font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                    Learn More <ArrowRight className="w-4 h-4" />
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Final CTA */}
+        {/* Final Conversion CTA */}
         <section className="py-16 bg-brand-600 text-white">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready for Cleaner Air in {location.name}?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready for Cleaner Ducts &amp; Dryer Vents in {location.name}?
+            </h2>
             <p className="text-xl mb-8 max-w-3xl mx-auto text-brand-100">
-              Tell us about your home or business. We will help you plan the next step with a clear scope and a free estimate.
+              Residential air duct cleaning starts at $299 and dryer vents start at $149—always confirmed in writing on
+              site before work begins.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" className="bg-white text-brand-700 hover:bg-gray-100 font-bold text-lg px-8 py-6 h-auto shadow-lg hover:scale-105 transition-transform" asChild>
-                <a href="tel:2137924145" className="flex items-center gap-2">
-                  <Phone className="fill-current" size={24} />
-                  Call (213) 792-4145
+              <Button
+                size="lg"
+                className="bg-white text-brand-700 hover:bg-gray-100 font-bold text-lg px-8 py-6 h-auto shadow-lg"
+                asChild
+              >
+                <a href={business.phoneHref} className="flex items-center gap-2">
+                  <Phone className="fill-current" size={22} aria-hidden="true" />
+                  Call {business.phone}
                 </a>
               </Button>
-              <Button size="lg" variant="outline" className="border-white bg-transparent text-white hover:bg-white/10 text-lg px-8 py-6 h-auto" asChild>
-                <Link to="/quote" className="flex items-center gap-2">
-                  Get a Free Quote
-                  <ArrowRight size={20} />
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-white bg-transparent text-white hover:bg-white hover:text-brand-700 text-lg px-8 py-6 h-auto"
+                asChild
+              >
+                <Link to={primaryQuoteHref} className="flex items-center gap-2">
+                  Build a {location.name} Estimate
+                  <ArrowRight size={20} aria-hidden="true" />
                 </Link>
               </Button>
             </div>
           </div>
         </section>
 
-        {/* Contextual internal links. Location pages previously had no outbound
-            links at all beyond nav and footer, which left 54 of the site's pages
-            as dead ends with no topical relationship to the services they sell. */}
+        {/* Internal Link Mesh: Services, Commercial Sectors, Nearby Neighborhoods & Articles */}
         <RelatedLinks
           heading={`Air Duct & Dryer Vent Services in ${location.name}`}
           intro={`${regionContent.priorityReason} Every service below is available throughout ${location.name} and the surrounding ${location.county} County area.`}
           links={getServiceLinksForCity(location.name, location.slug)}
         />
 
-        {/* Commercial visitors need a route from a neighbourhood page to the page
-            for their sector. Before this, the seven industry pages had 3-4
-            contextual inbound links each and nothing outside /industries/ linked
-            them at all. Rotated by city so this is not the same pair on all 54. */}
         <RelatedLinks
           heading={`Commercial Air Duct Cleaning in ${location.name}`}
           intro={`We work with businesses across ${location.name} as well as homeowners. These are the sectors we serve most often.`}
@@ -415,36 +624,28 @@ const LocationDetail = () => {
           heading={`Areas Near ${location.name} We Also Serve`}
           intro={`Explore other service areas around ${location.name}: ${nearbyNames.join(', ')}.`}
           links={[
-            ...getNearbyLocations(location.slug, 6),
-            // The county hub is the site's primary money page. Linking it from all
-            // 54 city pages gives it real internal authority; it previously had 8
-            // inbound links all reading "Los Angeles". The anchor carries the city
-            // name so the 54 links read as 54 distinct phrases rather than one
-            // phrase repeated — repetition across a whole template is the thing
-            // that looks manufactured.
+            ...nearbyLocations,
             {
-              label: `Explore the Greater Los Angeles service guide`,
+              label: `Greater Los Angeles guide from ${location.name}`,
               path: '/locations/los-angeles',
             },
-            { label: 'All Los Angeles areas', path: '/locations' },
+            { label: 'All 54 Los Angeles service areas', path: '/locations' },
           ]}
           variant="grid"
           className="bg-gray-50"
         />
 
-        {/* The blog had a median of 2 contextual inbound links per post against
-            56-76 for the service pages. These links close that gap from the 55 city
-            pages, rotating by city index so each city links a different slice of the
-            catalogue rather than all 55 repeating the same two articles. */}
         <RelatedLinks
           heading={`Air Quality Reading for ${location.name} Homeowners`}
-          intro={`${regionContent.seasonal}`}
+          intro={regionContent.seasonal}
           links={getBlogLinksForCity(location.slug, 3)}
         />
 
-        <Footer />
-      </div>
-    
+        <BusinessAreaDirectory citySlug={location.slug} />
+      </main>
+
+      <Footer />
+    </div>
   );
 };
 

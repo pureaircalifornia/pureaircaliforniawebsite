@@ -1,12 +1,39 @@
 /**
- * Form validation schemas using Zod
- * Provides client-side validation for quote and contact forms
+ * Form validation schemas and instant input helpers
+ * Provides client-side validation and clean US/LA phone formatting for quote and contact forms
  */
 
 import { z } from 'zod';
 
 // Phone number validation regex (US format)
 const phoneRegex = /^(\+1)?[\s.-]?\(?[0-9]{3}\)?[\s.-]?[0-9]{3}[\s.-]?[0-9]{4}$/;
+
+/**
+ * Formats US/LA phone input progressively as (213) 792-4145 without interfering with backspace.
+ */
+export function formatPhoneInput(raw: string): string {
+  const digitsOnly = raw.replace(/\D/g, '');
+  if (!digitsOnly) return '';
+  const digits = digitsOnly.length === 11 && digitsOnly.startsWith('1')
+    ? digitsOnly.slice(1)
+    : digitsOnly.slice(0, 10);
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+}
+
+export function isValidUSPhone(value: string): boolean {
+  const digits = value.replace(/\D/g, '');
+  return digits.length === 10 || (digits.length === 11 && digits.startsWith('1'));
+}
+
+export function isValidEmail(value: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim());
+}
+
+export function isValidZip(value: string): boolean {
+  return /^\d{5}$/.test(value.trim());
+}
 
 // Quote form validation schema
 export const quoteFormSchema = z.object({

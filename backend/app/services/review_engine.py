@@ -1,8 +1,7 @@
 """
 Review generation engine. Fired when a job completes: creates a tokenized
-review request and sends it (email now, SMS-ready). Routes ratings:
->=4 -> Google review; <4 -> private feedback + owner alert.
-Compliant: every customer is asked and always sees the Google option.
+review request and sends it (email now, SMS-ready). Every rating receives the
+same optional public-review link. Low ratings can also trigger a service alert.
 """
 import logging
 import secrets
@@ -37,7 +36,7 @@ def _review_email_html(name: str, feedback_url: str) -> str:
            Rate your experience
         </a>
       </p>
-      <p style="color:#64748b;font-size:13px">Pure Air California · NADCA Certified · (213) 792-4145</p>
+      <p style="color:#64748b;font-size:13px">Pure Air California · (213) 792-4145</p>
     </div>
     """
 
@@ -110,10 +109,9 @@ async def mark_clicked(token: str) -> dict | None:
 
 
 def _route_for(req: dict) -> dict:
+    """Keep the legacy response shape without screening public review access."""
     settings = get_settings()
-    if (req.get("rating") or 0) >= HIGH_RATING_THRESHOLD:
-        return {"route": "google", "google_review_url": settings.GOOGLE_REVIEW_URL or ""}
-    return {"route": "private"}
+    return {"route": "google", "google_review_url": settings.GOOGLE_REVIEW_URL or ""}
 
 
 async def record_feedback(token: str, rating: int, private_feedback: str | None) -> dict | None:
@@ -127,17 +125,17 @@ async def record_feedback(token: str, rating: int, private_feedback: str | None)
         return _route_for(req)
     settings = get_settings()
     high = rating >= HIGH_RATING_THRESHOLD
-    new_status = "reviewed" if high else "feedback_submitted"
+    # A private form submission is not evidence of a published Google review.
+    new_status = "feedback_submitted"
     await col.update_one({"token": token}, {"$set": {
         "rating": rating,
         "private_feedback": private_feedback,
         "status": new_status,
         "responded_at": datetime.utcnow().isoformat(),
     }})
-    if high:
-        return {"route": "google", "google_review_url": settings.GOOGLE_REVIEW_URL or ""}
-    await _notify_owner_of_feedback(req, rating, private_feedback, settings)
-    return {"route": "private"}
+    if not high:
+        await _notify_owner_of_feedback(req, rating, private_feedback, settings)
+    return _route_for(req)
 
 
 async def _notify_owner_of_feedback(req: dict, rating: int, feedback: str | None, settings) -> None:
@@ -152,7 +150,8 @@ async def _notify_owner_of_feedback(req: dict, rating: int, feedback: str | None
     html = (f"<h3>&#9888;&#65039; {rating}-star private feedback</h3>"
             f"<p><b>Customer:</b> {safe_name} ({safe_email})</p>"
             f"<p><b>Feedback:</b> {safe_feedback}</p>"
-            f"<p>Reach out to recover this customer before they post publicly.</p>")
+            f"<p>Follow up to understand and resolve the service concern. "
+            f"Public reviews remain optional for every customer.</p>")
     await send_transactional_email(settings.OWNER_NOTIFY_EMAIL,
                                    f"Service recovery: {rating}-star from {subject_name}",
                                    html, settings)

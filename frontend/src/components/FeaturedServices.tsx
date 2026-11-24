@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 import ServiceCard from './ServiceCard';
 import { ScrollReveal } from './ui/scroll-reveal';
 import { Fan, Wind, Filter } from 'lucide-react';
@@ -14,11 +13,11 @@ const FeaturedServices = () => {
         <div className="text-center mb-20">
           <ScrollReveal>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-slate-900 tracking-tight">
-              Premium <span className="text-sky-600">Health-First</span> Services
+              Inspection-Led <span className="text-sky-600">Los Angeles</span> Air Care
             </h2>
             <div className="w-24 h-1.5 bg-sky-600 mx-auto rounded-full mb-8"></div>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-              We leverage state-of-the-art technology and NADCA-certified protocols to ensure the highest standard of indoor air quality for your property.
+              Negative-pressure air duct cleaning, full-path dryer vent extraction, and commercial HVAC ventilation hygiene with clear written scopes confirmed before work starts.
             </p>
           </ScrollReveal>
         </div>
@@ -27,38 +26,38 @@ const FeaturedServices = () => {
           <ScrollReveal animation="slideInLeft" delay={0.1}>
             <ServiceCard
               title="Commercial Air Duct Cleaning"
-              description="Ensure a healthy environment for your employees and customers."
-              link="/services/commercial-air-duct-cleaning"
+              description="Building-specific HVAC ductwork, air handler, and exhaust cleaning coordinated around tenants and operating hours across LA County."
+              link="/services/commercial-air-duct-cleaning/"
               icon={Filter}
-              imageSrc="/images/hero/commercial-duct-v2.png"
+              imageSrc="/images/pac/commercial.webp"
             />
           </ScrollReveal>
 
           <ScrollReveal animation="fadeInUp" delay={0.2}>
             <ServiceCard
               title="Residential Air Duct Cleaning"
-              description="Improve your home's air quality with our thorough air duct cleaning services."
-              link="/services/residential-air-duct-cleaning"
+              description="Inspection-led source removal for supply and return ducts, registers, and trunk lines in Los Angeles homes and estates. Starting at $299."
+              link="/services/residential-air-duct-cleaning/"
               icon={Fan}
-              imageSrc="/images/hero/residential-duct-v2.png"
+              imageSrc="/images/pac/residential.webp"
             />
           </ScrollReveal>
 
           <ScrollReveal animation="slideInRight" delay={0.3}>
             <ServiceCard
               title="Residential Dryer Vent Cleaning"
-              description="Protect your home from fire hazards with our professional dryer vent cleaning."
-              link="/services/residential-dryer-vent-cleaning"
+              description="Clear compacted lint from behind the dryer to the exterior wall or roof termination hood to help restore safe exhaust flow. Starting at $149."
+              link="/services/residential-dryer-vent-cleaning/"
               icon={Wind}
-              imageSrc="/images/hero/dryer-vent-v2.png"
+              imageSrc="/images/pac/dryer.webp"
             />
           </ScrollReveal>
         </div>
 
         <div className="text-center mt-12">
           <ScrollReveal>
-            <Link to="/services" className="text-blue-600 hover:text-blue-700 font-medium">
-              View All Services →
+            <Link to="/services/" className="text-blue-600 hover:text-blue-700 font-medium">
+              Explore All 12 Services →
             </Link>
           </ScrollReveal>
         </div>

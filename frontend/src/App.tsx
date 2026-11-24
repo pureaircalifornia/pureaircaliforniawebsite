@@ -13,6 +13,19 @@ import PageMotionProvider from './components/PageMotionProvider';
 import CinematicLanding from './pages/CinematicLanding';
 import './cinematic.css';
 import './pac-refinement.css';
+import './breath.css';
+import './stillness.css';
+import './air-interiors.css';
+import './business-pages.css';
+import './coastal-refinement.css';
+import './home-cinema.css';
+import './brand-palette.css';
+import './visual-home.css';
+import './visual-navigation.css';
+import './visual-service-story.css';
+import './visual-breathing.css';
+import './visual-actions.css';
+import './booking.css';
 
 
 
@@ -25,6 +38,9 @@ const LandingCommercial = React.lazy(() => import('./pages/LandingCommercial'));
 
 
 import GoogleAnalytics from './components/GoogleAnalytics';
+import PrivacyChoices from './components/PrivacyChoices';
+import { installInteractionTracking } from './utils/interactionTracking';
+import './privacy.css';
 
 
 
@@ -34,16 +50,18 @@ const Locations = React.lazy(() => import('./pages/Locations'));
 const LosAngeles = React.lazy(() => import('./pages/locations/LosAngeles'));
 const LocationDetail = React.lazy(() => import('./pages/LocationDetail'));
 const Services = React.lazy(() => import('./pages/Services'));
+const HomeServices = React.lazy(() => import('./pages/HomeServices'));
 const About = React.lazy(() => import('./pages/About'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const Quote = React.lazy(() => import('./pages/Quote'));
+const BookingThankYou = React.lazy(() => import('./pages/BookingThankYou'));
+const FreeInspection = React.lazy(() => import('./pages/FreeInspection'));
+const Unsubscribe = React.lazy(() => import('./pages/Unsubscribe'));
 const Blog = React.lazy(() => import('./pages/Blog'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 const HealthBenefits = React.lazy(() => import('./pages/HealthBenefits'));
 const Pricing = React.lazy(() => import('./pages/Pricing'));
-const FreeInspection = React.lazy(() => import('./pages/FreeInspection'));
-const Unsubscribe = React.lazy(() => import('./pages/Unsubscribe'));
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = React.lazy(() => import('./pages/TermsOfService'));
 const AirQualityCalculator = React.lazy(() => import('./pages/AirQualityCalculator'));
@@ -53,8 +71,11 @@ const Feedback = React.lazy(() => import('./pages/Feedback'));
 const Industries = React.lazy(() => import('./pages/Industries'));
 const CaseStudies = React.lazy(() => import('./pages/CaseStudies'));
 const CaseStudyDetail = React.lazy(() => import('./pages/CaseStudyDetail'));
+const ProjectStories = React.lazy(() => import('./pages/ProjectStories'));
 
 // Lazy load individual service pages
+const CommercialHoaAirDuctDryerVentCleaning = React.lazy(() => import('./pages/services/CommercialHoaAirDuctDryerVentCleaning'));
+const WildfireSmokeHillsideAirDuctCleaning = React.lazy(() => import('./pages/services/WildfireSmokeHillsideAirDuctCleaning'));
 const CommercialAirDuctCleaning = React.lazy(() => import('./pages/services/CommercialAirDuctCleaning'));
 const ResidentialAirDuctCleaning = React.lazy(() => import('./pages/services/ResidentialAirDuctCleaning'));
 const CommercialDryerVentCleaning = React.lazy(() => import('./pages/services/CommercialDryerVentCleaning'));
@@ -74,6 +95,7 @@ const Education = React.lazy(() => import('./pages/industries/Education'));
 const Retail = React.lazy(() => import('./pages/industries/Retail'));
 const Manufacturing = React.lazy(() => import('./pages/industries/Manufacturing'));
 const CommercialRealEstate = React.lazy(() => import('./pages/industries/CommercialRealEstate'));
+const BusinessLocation = React.lazy(() => import('./pages/BusinessLocation'));
 
 // Lazy load admin pages
 const AdminLayout = React.lazy(() => import('./pages/admin').then(m => ({ default: m.AdminLayout })));
@@ -117,11 +139,15 @@ const routes: RouteConfig[] = [
   { path: "/locations/los-angeles", element: <LosAngeles /> },
   { path: "/locations/:locationSlug", element: <LocationDetail /> },
   { path: "/pricing", element: <Pricing /> },
+  { path: "/booking-thank-you", element: <BookingThankYou /> },
   // Outreach email destinations (noindex; prerendered so Apache serves them)
   { path: "/free-inspection", element: <FreeInspection /> },
   { path: "/unsubscribe", element: <Unsubscribe /> },
   { path: "/services", element: <Services /> },
+  { path: "/home-services", element: <HomeServices /> },
   // Individual service pages
+  { path: "/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles", element: <CommercialHoaAirDuctDryerVentCleaning /> },
+  { path: "/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles", element: <WildfireSmokeHillsideAirDuctCleaning /> },
   { path: "/services/commercial-air-duct-cleaning", element: <CommercialAirDuctCleaning /> },
   { path: "/services/residential-dryer-vent-cleaning", element: <ResidentialDryerVentCleaning /> },
   { path: "/services/residential-electrostatic-filter", element: <ResidentialElectrostaticFilter /> },
@@ -136,6 +162,7 @@ const routes: RouteConfig[] = [
   { path: "/services/electrostatic-filter-program", element: <Navigate to="/services/residential-electrostatic-filter" replace /> },
   // Industry pages
   { path: "/industries", element: <Industries /> },
+  { path: "/industries/:businessSlug/:citySlug", element: <BusinessLocation /> },
   { path: "/industries/healthcare", element: <HealthcareFacilities /> },
   { path: "/industries/hospitality", element: <Hospitality /> },
   { path: "/industries/restaurants", element: <Restaurants /> },
@@ -151,6 +178,7 @@ const routes: RouteConfig[] = [
   { path: "/quote", element: <Quote /> },
   { path: "/case-studies", element: <CaseStudies /> },
   { path: "/case-studies/:slug", element: <CaseStudyDetail /> },
+  { path: "/project-stories", element: <ProjectStories /> },
   { path: "/blog", element: <Blog /> },
   { path: "/blog/:slug", element: <BlogPost /> },
   { path: "/privacy-policy", element: <PrivacyPolicy /> },
@@ -170,29 +198,9 @@ const routes: RouteConfig[] = [
   { path: "/feedback/:token", element: <Feedback /> },
 ];
 
-// Track phone interactions once; ScrollToTop owns route and hash restoration.
+// One listener covers links and buttons, including nested icons and SPA content.
 const PhoneClickTracking = () => {
-
-  useEffect(() => {
-
-    // Global listener for phone clicks
-    const handlePhoneClick = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement).closest('a');
-      if (target && target.href.startsWith('tel:')) {
-        if (window.dataLayer) {
-          window.dataLayer.push({
-            event: 'phone_call_click',
-            link_url: target.href,
-            link_text: target.innerText
-          });
-        }
-      }
-    };
-
-    document.addEventListener('click', handlePhoneClick);
-    return () => document.removeEventListener('click', handlePhoneClick);
-  }, []);
-
+  useEffect(() => installInteractionTracking(), []);
   return null;
 };
 
@@ -214,10 +222,12 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <BrowserRouter>
-            <GoogleAnalytics />
+            <PrivacyChoices />
             <PhoneClickTracking />
             <ScrollToTop />
             <Suspense fallback={<LoadingFallback />}>
+              {/* Commit measurement with the loaded route, never its loading placeholder. */}
+              <GoogleAnalytics />
               <Routes>
                 {/* Admin Login (no layout) */}
                 <Route path="/admin/login" element={<AdminLogin />} />

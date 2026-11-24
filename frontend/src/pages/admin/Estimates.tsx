@@ -3,7 +3,7 @@ import {
     FileText, Plus, Search, Loader2, ArrowRight,
     CheckCircle2, Clock, Ban, Send
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 import { getEstimates } from '@/utils/api';
 
 const STATUS_COLORS: Record<string, string> = {

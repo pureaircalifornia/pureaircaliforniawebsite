@@ -1,12 +1,14 @@
 /**
- * Single source of truth for business identity (NAP), ratings, and GBP data.
- * Consumed by visible UI (hero, footer) AND JSON-LD schema so Google sees
- * perfectly consistent local signals. Update ratings here and everywhere updates.
+ * Business identity shared by visible copy and structured data.
+ * Historical review figures are not a live feed and are not review rich-result markup.
  */
 export const business = {
   legalName: 'Pure Air California',
   phone: '(213) 792-4145',
-  phoneHref: 'tel:2137924145',
+  phoneHref: 'tel:+12137924145',
+  phoneE164: '+12137924145',
+  tollFreePhone: '(877) 877-8745',
+  tollFreePhoneHref: 'tel:8778778745',
   email: 'lou@pureaircalifornia.com',
   url: 'https://www.pureaircalifornia.com',
   // Service-area business: Google Business Profile hides the street address.
@@ -34,30 +36,35 @@ export const business = {
   // Profile match.
   geo: { latitude: 34.1664, longitude: -118.3967 },
   priceRange: '$$',
-  // REAL Google rating + review count, re-verified directly from the Google
-  // Business Profile on 2026-09-02: 4.6 from 7 reviews (6x 5-star, 1x 2-star).
-  // The previous 4.7 / 9 no longer matched the profile. These power the
-  // LocalBusiness aggregateRating — they MUST match Google or the structured
-  // data is non-compliant and the item loses rich-result eligibility.
-  aggregateRating: { ratingValue: 4.6, reviewCount: 7 },
+  // Historical snapshot, checked 2026-11-22 against the live Maps listing (was 7
+  // on 2026-09-02); never label this as a current count.
+  // Self-serving LocalBusiness reviews are not eligible for Google review snippets.
+  aggregateRating: { ratingValue: 4.6, reviewCount: 8 },
+  reviewsVerifiedOn: '2026-11-22',
+  googleProfileUrl: 'https://www.google.com/maps?cid=4164883086478915552',
   // CID-based deep link that reliably opens the GBP listing (verified). For a
   // true one-tap review prompt, replace with the exact "g.page/r/<id>/review"
   // link from the GBP dashboard → "Ask for reviews".
-  googleReviewUrl: 'https://www.google.com/maps?cid=4164883086478915552',
-  // GBP shows "Open 24 hours" (24/7 emergency service).
-  hours: [
-    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' },
+  googleReviewUrl: 'https://g.page/r/CeC3m8QZo8w5EBM/review',
+  // Published availability is confirmed by phone; fixed hours are not verified.
+  categories: [
+    'Air duct cleaning service',
+    'Dryer vent cleaning service',
+    'HVAC contractor',
+    'Mold remediation service',
+    'Air conditioning contractor',
+    'Heating contractor',
+    'Cleaning service',
   ],
-  categories: ['Air duct cleaning service', 'HVAC contractor', 'Dryer vent cleaning service'],
   sameAs: [
     'https://www.google.com/maps?cid=4164883086478915552',
-    'https://www.facebook.com/pureaircalifornia',
-    'https://www.instagram.com/pureaircalifornia',
+    'https://www.facebook.com/AirDuctCleaningInLA',
+    'https://instagram.com/pureaircalifornia/',
+    'https://twitter.com/pureaircali',
     'https://www.yelp.com/biz/pure-air-california-los-angeles-5',
-    'https://twitter.com/pureaircalifornia',
   ],
+  // Founding year is intentionally omitted while legacy 1990/1993 claims are reconciled.
 } as const;
 
-// Honest, conversion-focused proof line. Uses the verified 4.6 Google rating plus
-// the owner-confirmed lifetime stats (NOT the 9 Google reviews, which read weak).
-export const ratingDisplay = `4.6★ on Google · 448K+ customers · 40+ years`;
+// Avoid repeating the disputed lifetime statistics in shared display copy.
+export const ratingDisplay = "Care for the air. Care for the people.";

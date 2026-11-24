@@ -1,8 +1,75 @@
+import { businessRoutes } from './business-routes.mjs';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer';
 import express from 'express';
+import sharp from 'sharp';
+
+const imageMetaCache = new Map();
+const FORMAT_MIME = { webp: 'image/webp', avif: 'image/avif', jpeg: 'image/jpeg', jpg: 'image/jpeg', png: 'image/png' };
+
+async function getBuildImageMeta(filePath) {
+    if (imageMetaCache.has(filePath)) return imageMetaCache.get(filePath);
+    try {
+        const meta = await sharp(filePath).metadata();
+        const info = { width: meta.width || undefined, height: meta.height || undefined, mime: FORMAT_MIME[meta.format] || undefined };
+        imageMetaCache.set(filePath, info);
+        return info;
+    } catch {
+        imageMetaCache.set(filePath, null);
+        return null;
+    }
+}
+
+async function enrichSocialImageAndSchemas(html, route, buildDir, errors) {
+    let out = html;
+    const expectedCanonical = `https://www.pureaircalifornia.com${route === '/' ? '/' : route + '/'}`;
+    const ldScripts = [...out.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi)].map(m => m[0]);
+    const breadcrumbScripts = ldScripts.filter(s => /"@type"\s*:\s*"BreadcrumbList"/.test(s));
+    if (breadcrumbScripts.length > 1) {
+        out = out.replace(/<script\b[^>]*data-pac-auto-breadcrumb="true"[^>]*>[\s\S]*?<\/script>/gi, '');
+    }
+    const ogMatch = out.match(/<meta\b[^>]*property="og:image"[^>]*content="([^"]+)"[^>]*>/i) || out.match(/<meta\b[^>]*content="([^"]+)"[^>]*property="og:image"[^>]*>/i);
+    if (!ogMatch) return out;
+    let parsed;
+    try { parsed = new URL(ogMatch[1]); } catch { return out; }
+    if (parsed.origin !== 'https://www.pureaircalifornia.com') return out;
+    const assetPath = path.join(buildDir, decodeURIComponent(parsed.pathname));
+    if (!fs.existsSync(assetPath)) {
+        if (route !== '/404') errors.push(`${route}: og:image file does not exist in build output — ${parsed.pathname}`);
+        return out;
+    }
+    const meta = await getBuildImageMeta(assetPath);
+    if (!meta || !meta.width || !meta.height) return out;
+    out = out.replace(/<meta\b[^>]*property="og:image:(?:width|height|type)"[^>]*>/gi, '');
+    const injectedMetas = [
+        meta.mime ? `<meta data-rh="true" property="og:image:type" content="${meta.mime}">` : '',
+        `<meta data-rh="true" property="og:image:width" content="${meta.width}">`,
+        `<meta data-rh="true" property="og:image:height" content="${meta.height}">`,
+    ].filter(Boolean).join('');
+    out = out.replace(ogMatch[0], `${ogMatch[0]}${injectedMetas}`);
+    out = out.replace(/(<script\b[^>]*type="application\/ld\+json"[^>]*>)([\s\S]*?)(<\/script>)/gi, (full, open, body, close) => {
+        try {
+            const parsedLd = JSON.parse(body);
+            let changed = false;
+            if (parsedLd && typeof parsedLd === 'object' && !Array.isArray(parsedLd)) {
+                if (parsedLd['@id'] === `${expectedCanonical}#webpage` && parsedLd.primaryImageOfPage) {
+                    parsedLd.primaryImageOfPage.width = meta.width;
+                    parsedLd.primaryImageOfPage.height = meta.height;
+                    changed = true;
+                }
+                if (parsedLd['@type'] === 'BreadcrumbList' && !parsedLd['@id']) {
+                    parsedLd['@id'] = `${expectedCanonical}#breadcrumb`;
+                    changed = true;
+                }
+            }
+            if (!changed) return full;
+            return `${open}${JSON.stringify(parsedLd).replace(/</g, '\\u003c')}${close}`;
+        } catch { return full; }
+    });
+    return out;
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,7 +92,7 @@ const extractSlugs = (relativePath) => {
 };
 
 const routes = [
-    '/', '/about', '/contact', '/quote', '/pricing', '/services', '/locations', '/blog',
+    '/', '/booking-thank-you', '/about', '/contact', '/quote', '/pricing', '/services', '/home-services', '/locations', '/blog',
     '/health-benefits', '/privacy-policy', '/terms-of-service',
 
     '/services/commercial-air-duct-cleaning', '/services/residential-air-duct-cleaning',
@@ -33,8 +100,10 @@ const routes = [
     '/services/hvac-system-cleaning', '/services/dryer-vent-maintenance-program',
     '/services/residential-electrostatic-filter', '/services/commercial-electrostatic-filter',
     '/services/air-duct-sanitizing', '/services/laundromat-dryer-vent-cleaning',
+    '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles',
+    '/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles',
 
-    '/industries', '/case-studies',
+    '/industries', '/case-studies', '/project-stories',
     '/industries/healthcare', '/industries/hospitality', '/industries/restaurants',
     '/industries/education', '/industries/retail', '/industries/manufacturing',
     '/industries/commercial-real-estate',
@@ -53,6 +122,8 @@ const routes = [
     // need a static file or Apache serves 404.html when a prospect clicks through.
     '/free-inspection', '/unsubscribe'
 ];
+
+// noindex businessRoutes excluded from static prerendering to preserve crawl budget
 
 const locationSlugs = extractSlugs('locations/data.ts');
 locationSlugs.forEach(slug => routes.push(`/locations/${slug}`));
@@ -150,11 +221,17 @@ async function prerender() {
     // homepage's metadata — which is exactly how all seven /industries/* pages ended
     // up canonicalised to the homepage and dropped from the index.
     // Serving the in-memory shell keeps every route booting from a clean head.
-    const shellHtml = fs.readFileSync(path.join(BUILD_DIR, 'index.html'), 'utf-8');
+    const rawIndex = fs.readFileSync(path.join(BUILD_DIR, 'index.html'), 'utf-8');
+    const shellHtml = rawIndex
+        .replace(/<title[^>]*data-rh="true"[^>]*>[\s\S]*?<\/title>/gi, '<title>Pure Air California | Air Duct &amp; Dryer Vent Cleaning Los Angeles</title>')
+        .replace(/<(?:meta|link)[^>]*data-rh="true"[^>]*>/gi, '')
+        .replace(/<script[^>]*data-rh="true"[^>]*>[\s\S]*?<\/script>/gi, '')
+        .replace(/<div id="root">[\s\S]*<\/div>(\s*<\/body>)/i, '<div id="root"></div>$1');
+    const entryScriptMatch = (shellHtml.match(/src="(\/assets\/index-[^"]+\.js)"/) || [])[1] || '';
 
     // Start local server
     const app = express();
-    app.use(express.static(BUILD_DIR, { index: false }));
+    app.use(express.static(BUILD_DIR, { index: false, redirect: false }));
 
     // Fallback to the pristine shell for SPA routing
     app.get('*', (req, res) => {
@@ -168,7 +245,9 @@ async function prerender() {
         let browser;
         let renderedCount = 0;
         try {
-            browser = await puppeteer.launch({ headless: "new" });
+            browser = await puppeteer.launch({ headless: true, args: ['--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows'] });
+            let nextRouteIdx = 0; const fileCache = new Map();
+            await Promise.all(Array.from({ length: 1 }, async () => {
             const page = await browser.newPage();
             const renderOrigin = `http://127.0.0.1:${port}`;
             // Production HTML is local content. Analytics, map widgets and remote
@@ -177,7 +256,18 @@ async function prerender() {
             page.on('request', request => {
                 const url = request.url();
                 if (url.startsWith(renderOrigin + '/') || url.startsWith('data:') || url.startsWith('blob:')) {
-                    request.continue();
+                    if (['image', 'media', 'font'].includes(request.resourceType())) { request.abort(); return; }
+                    if (url.startsWith('data:') || url.startsWith('blob:')) { request.continue(); return; }
+                    const reqPath = decodeURIComponent(new URL(url).pathname);
+                    const filePath = path.join(BUILD_DIR, reqPath);
+                    if (reqPath !== '/' && fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+                        const ext = path.extname(filePath).toLowerCase();
+                        const mime = { '.js': 'application/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.avif': 'image/avif', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.ico': 'image/x-icon', '.woff2': 'font/woff2', '.html': 'text/html; charset=utf-8' }[ext] || 'application/octet-stream';
+                        if (!fileCache.has(filePath)) fileCache.set(filePath, fs.readFileSync(filePath));
+                        request.respond({ status: 200, contentType: mime, headers: { 'Cache-Control': 'public, max-age=3600' }, body: fileCache.get(filePath) });
+                    } else {
+                        request.respond({ status: 200, contentType: 'text/html; charset=utf-8', body: shellHtml });
+                    }
                 } else {
                     request.abort();
                 }
@@ -199,7 +289,8 @@ async function prerender() {
                 window.__PRERENDERING__ = true;
             });
 
-            for (const route of routes) {
+            while (nextRouteIdx < routes.length) {
+                const route = routes[nextRouteIdx++];
                 console.log(`Prerendering ${route}...`);
                 await page.goto(`${renderOrigin}${route}`, { waitUntil: 'domcontentloaded' });
                 
@@ -216,18 +307,19 @@ async function prerender() {
                     const root = document.querySelector('#root');
                     if (!root || !root.querySelector('h1')) return false;
                     return !!document.querySelector('link[rel="canonical"][data-rh="true"]');
-                }, { timeout: 20000 }).catch(() => {
+                }, { polling: 50, timeout: 20000 }).catch(() => {
                     seoErrors.push(`${route}: timed out waiting for React + Helmet to render — page written without head tags`);
                 });
                 
                 // Lazy article bodies can mount after their outer SEOProvider.
                 // Once the H1 exists, give Helmet its animation-frame flush before capture.
                 await page.evaluate(() => new Promise(resolve => {
-                    requestAnimationFrame(() => requestAnimationFrame(resolve));
+                    setTimeout(resolve, 25);
                 }));
 
                 // Grab the HTML
-                const html = stripMapTiles(normalizeInternalLinks(await page.content()));
+                const rawHtml = stripMapTiles(normalizeInternalLinks(await page.content()));
+                const html = await enrichSocialImageAndSchemas(rawHtml, route, BUILD_DIR, seoErrors);
 
                 // Per-route SEO sanity check. These are the failures that silently
                 // de-index pages, so surface them at build time instead of finding
@@ -283,6 +375,9 @@ async function prerender() {
                     if (description.length > 160) {
                         seoWarnings.push(`${route}: meta description is ${description.length} chars, will be truncated in search results — "${description}"`);
                     }
+                    if (description && !/[.!?]$/.test(description.trim())) {
+                        seoErrors.push(`${route}: meta description appears truncated or lacks terminal punctuation — "${description}"`);
+                    }
                     // Structured-data dates must be ISO 8601. The blog previously emitted
                     // "February 28, 2026", which Search Console logged as unparsable
                     // every day for months before anyone noticed.
@@ -312,7 +407,7 @@ async function prerender() {
                 // Save HTML
                 fs.writeFileSync(absolutePath, html);
                 renderedCount += 1;
-                console.log(`✅ Saved ${routePath}`);
+                console.log(`✅ Saved ${routePath}`); } await page.close(); })); if (false) {
             }
             
 

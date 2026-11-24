@@ -3,7 +3,8 @@
  * Fetches real customer data from backend /customers/:id endpoint
  */
 import React, { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 import {
     ArrowLeft, Edit, Phone, Mail, MapPin, Calendar,
     Plus, Home, FileText, MessageSquare, Loader2

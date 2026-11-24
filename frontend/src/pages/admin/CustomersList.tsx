@@ -3,7 +3,7 @@
  * CRM module - fetches real customer data from backend API
  */
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 import {
     Search, Plus, Filter, Phone, Mail, MapPin,
     ChevronLeft, ChevronRight, Eye, Edit, Trash2, Download, Loader2

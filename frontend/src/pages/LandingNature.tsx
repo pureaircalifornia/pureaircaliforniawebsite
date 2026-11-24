@@ -6,7 +6,7 @@ import { seoConfig } from '@/utils/seo/seoConfig';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 import { Phone, Calendar, CheckCircle, ArrowRight, Shield, Award, Star, Clock, Leaf, Wind, Heart } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { motion, AnimatePresence } from 'framer-motion';

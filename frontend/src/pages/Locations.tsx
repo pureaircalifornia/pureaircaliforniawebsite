@@ -2,370 +2,206 @@ import WestsideGuides from '@/components/WestsideGuides';
 import PageHero from '@/components/PageHero';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { MapPin, Compass, Navigation, CheckCircle } from 'lucide-react';
+import { Link } from '@/components/CanonicalLink';
+import { ArrowUpRight, CheckCircle, MapPin, Phone } from 'lucide-react';
 import EnhancedQuoteForm from '@/components/EnhancedQuoteForm';
-import { Helmet } from 'react-helmet-async';
 import { locationData } from './locations/data';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import SEOProvider from '@/components/SEOProvider';
+import NeighborhoodFinder from './locations/NeighborhoodFinder';
+import { buildLocationQuoteHref } from './locations/locationSeo';
+import { canonicalUrl } from '@/utils/seo/canonicalUrl';
+import { serializeJsonLd } from '@/utils/seo/jsonLd.mjs';
+import { business } from '@/config/business';
 
 const Locations = () => {
+  const pageUrl = canonicalUrl('/locations');
+  const itemListId = `${pageUrl}#locations`;
+
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': itemListId,
+    name: 'Pure Air California Los Angeles Service Areas',
+    description:
+      'Neighborhood-specific air duct, HVAC component, and dryer vent cleaning guides across Greater Los Angeles and Ventura.',
+    numberOfItems: locationData.length + 1,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Los Angeles Air Duct & Dryer Vent Cleaning Guide',
+        url: canonicalUrl('/locations/los-angeles'),
+      },
+      ...locationData.map((loc, idx) => ({
+        '@type': 'ListItem',
+        position: idx + 2,
+        name: `${loc.name} Air Duct Cleaning`,
+        url: canonicalUrl(`/locations/${loc.slug}`),
+      })),
+    ],
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <SEOProvider
-        title="Air Duct Cleaning Locations | Pure Air California"
-        description="Air duct & dryer vent cleaning across Los Angeles County — Beverly Hills, Santa Monica, Pasadena, Burbank, Glendale and more. Call (213) 792-4145."
-        keywords={["air duct cleaning locations", "Los Angeles service areas", "duct cleaning near me"]}
+        title="Los Angeles Air Duct Cleaning Locations | Pure Air CA"
+        description="Air duct cleaning (from $299) & dryer vents across 54 Los Angeles neighborhoods — Beverly Hills, Santa Monica, Pasadena & the Valley. Call (213) 792-4145."
         path="/locations"
+        mainEntityId={itemListId}
         isLocalBusiness={true}
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(itemListSchema) }} />
 
       <NavBar />
 
-      {/* Hero Section */}
-      <PageHero title="Local air care. Across Los Angeles." description="From a home in the hills to a busy commercial property, find PAC air duct and dryer vent cleaning services in your neighborhood."/>
-      <WestsideGuides />
+      <main>
+        <PageHero
+          eyebrow="GREATER LOS ANGELES SERVICE AREAS · 54 LOCAL GUIDES"
+          title={
+            <>
+              Los Angeles Air Duct &amp; Dryer Vent
+              <br />
+              <em>Cleaning Service Areas.</em>
+            </>
+          }
+          description="Search by neighborhood, region, or ZIP code for inspection-led residential air duct cleaning (starting at $299), dryer vent cleaning (starting at $149), and commercial HOA HVAC care across Greater Los Angeles."
+          estimateHref={buildLocationQuoteHref({ locationSlug: 'los-angeles', service: 'air-duct', property: 'home' })}
+          estimateLabel="Get your free LA estimate"
+          caption="Serving Westside, Coastal, Central LA, San Fernando Valley, San Gabriel Foothills, and South Bay corridors."
+          reassurance="Transparent written scope before work begins · Call (213) 792-4145"
+        />
 
-      {/* Locations Grid */}
-      <section className="py-20 relative bg-slate-50 overflow-hidden">
-        <div className="absolute inset-0 bg-mesh opacity-20"></div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black mb-6 text-slate-900 tracking-tight">
-              Find air duct cleaning <span className="text-sky-600">near you.</span>
-            </h2>
-            <div className="w-24 h-1.5 bg-sky-600 mx-auto rounded-full mb-8"></div>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
-              Explore our Greater Los Angeles service areas. Choose your neighborhood for duct cleaning, dryer vent care and help planning a visit.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {locationData.map((location) => (
-              <div key={location.slug} className="glass-card group flex flex-col h-full border-white/60">
-                <div className="h-64 w-full overflow-hidden relative">
-                  <ResponsiveImage
-                    src={location.image}
-                    alt={`Air duct cleaning in ${location.name}`}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 p-2 glass-premium rounded-xl">
-                    <Navigation className="w-5 h-5 text-sky-400" />
-                  </div>
-                </div>
-                <div className="p-8 flex flex-col flex-grow">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-1.5 h-6 bg-sky-600 rounded-full"></div>
-                    <h3 className="font-black text-2xl text-slate-800 tracking-tight">{location.name}</h3>
-                  </div>
-                  <p className="text-slate-600 mb-8 leading-relaxed font-medium flex-grow">{location.description}</p>
-                  <Button asChild variant="outline" className="w-full justify-between group/btn py-6 px-6 glass-premium border-sky-100 text-sky-700 font-bold rounded-2xl hover:bg-sky-600 hover:text-white transition-all duration-300">
-                    <Link to={`/locations/${location.slug}`}>
-                      <span>Explore local services</span>
-                      <Compass className="w-5 h-5 transition-transform group-hover/btn:rotate-45" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Service Coverage Map */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
-              <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6">
-                Comprehensive Coverage Throughout Los Angeles
-              </h2>
-              <p className="text-lg text-gray-600 mb-6">
-                Pure Air California provides expert air duct and dryer vent cleaning services
-                across Los Angeles County and neighboring areas. Our extensive service coverage ensures
-                that we can help you breathe cleaner air, no matter where you're located.
-              </p>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-4 gap-x-2 mb-6">
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Beverly Hills</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Malibu</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Century City</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Hollywood</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Downtown LA</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Ventura</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Santa Monica</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Brentwood</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Pasadena</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Bel Air</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Westwood</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Pacific Palisades</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Glendale</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Monterey Park</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Burbank</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Studio City</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Encino</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Tarzana</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Reseda</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Canoga Park</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Woodland Hills</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Calabasas</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Valley Village</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Van Nuys</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Panorama City</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Northridge</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Sun Valley</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Central LA</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Los Feliz</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Culver City</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>West Hollywood</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Chatsworth</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Laurel Canyon</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Fairfax</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Larchmont</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Koreatown</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>West Los Angeles</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>North of Montana</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Sawtelle</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Beverly Glen</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Mid Wilshire</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Sherman Oaks</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Encino Village</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Lake Balboa</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Valley Glen</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Magnolia Park</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Toluca Lake</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Sherwood Forest</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Winnetka</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Granada Hills</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Mission Hills</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Porter Ranch</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>North Hollywood</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Sepulveda Basin</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Hidden Hills</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} className="text-[#0A3D7C]" />
-                  <span>Deer Lake Highlands</span>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild className="bg-[#0A3D7C] hover:bg-[#072c5a]">
-                  <Link to="/quote">Schedule Service</Link>
-                </Button>
-                <Button asChild variant="outline" className="border-[#0A3D7C] text-[#0A3D7C] hover:bg-[#0A3D7C] hover:text-white">
-                  <Link to="/contact">Check Availability</Link>
-                </Button>
-              </div>
-            </div>
-
-            <div className="order-1 lg:order-2">
-              <div className="rounded-xl shadow-lg overflow-hidden h-80 md:h-96 lg:h-[500px]">
-                <ResponsiveImage
-                  src="/images/locations/service-map.jpg"
-                  alt="Los Angeles service area map"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Quote Form Section */}
-      <section className="py-32 relative overflow-hidden bg-white">
-        <div className="absolute inset-0 bg-mesh opacity-10"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        {/* Los Angeles Pillar Guide Spotlight */}
+        <section className="pac-loc-pillar-band" aria-label="Greater Los Angeles pillar guide">
+          <div className="pac-container pac-loc-pillar-inner">
             <div>
-              <div className="space-y-6">
+              <span className="pac-eyebrow">REGIONAL HUB GUIDE</span>
+              <h2>Start with our complete Greater Los Angeles Service Guide</h2>
+              <p>
+                Compare LA micro-climate ductwork realities—from Santa Monica marine layers and 1920s Los Feliz plaster
+                homes to San Fernando Valley summer AC runs and Pasadena foothill smoke care—plus transparent starting
+                rates and FAQs.
+              </p>
+            </div>
+            <div className="pac-loc-pillar-actions">
+              <Link to="/locations/los-angeles/" className="pac-button">
+                Read the Los Angeles guide <ArrowUpRight size={17} aria-hidden="true" />
+              </Link>
+              <Link to="/pricing/" className="pac-text-link">
+                See LA starting prices ($299 / $149) <ArrowUpRight size={15} aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Interactive Neighborhood, Region & ZIP Directory */}
+        <section className="pac-section pac-container" id="service-area-directory">
+          <NeighborhoodFinder
+            variant="cards"
+            heading="Find air duct & dryer vent cleaning near you"
+            intro="Filter all 54 local service guides by region, neighborhood name, or 5-digit ZIP code—or launch a pre-filled estimate directly for your area."
+          />
+        </section>
+
+        {/* Featured Westside Guides */}
+        <WestsideGuides />
+
+        {/* Greater LA Coverage Summary & Service Map */}
+        <section className="pac-process-section">
+          <div className="pac-container pac-loc-coverage-grid">
+            <div>
+              <span className="pac-eyebrow">COUNTY-WIDE DISPATCH</span>
+              <h2>
+                Comprehensive coverage across
+                <br />
+                <em>Greater Los Angeles.</em>
+              </h2>
+              <p>
+                Beyond our 54 dedicated neighborhood guides, Pure Air California serves residential homes,
+                condominiums, HOA portfolios, and commercial properties across Los Angeles County—including Bel Air,
+                Silver Lake, Venice, Marina del Rey, Altadena, San Gabriel Valley, Torrance, and Long Beach—as well as
+                extended Ventura coastal routes.
+              </p>
+              <ul className="pac-loc-coverage-bullets">
                 {[
-                  "Free, high-integrity estimates for all LACo locations",
-                  "VIP Priority scheduling for residential & commercial partners",
-                  "Same-week rapid response teams available daily"
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl glass-premium flex items-center justify-center border-sky-100">
-                      <CheckCircle className="w-5 h-5 text-sky-600" />
-                    </div>
-                    <span className="text-lg text-slate-700 font-bold">{item}</span>
-                  </div>
+                  'Free, inspection-led written estimates with zero bait-and-switch coupon upsells',
+                  'Residential air duct cleaning from $299 & dryer vent cleaning from $149',
+                  'Portable HEPA equipment for hillside canyon streets, condos, and historic homes',
+                  'COI-ready scheduling for HOA boards, commercial offices, studios, and restaurants',
+                ].map((item) => (
+                  <li key={item}>
+                    <CheckCircle size={18} aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
                 ))}
+              </ul>
+              <div className="pac-actions" style={{ marginTop: 26 }}>
+                <Link
+                  to={buildLocationQuoteHref({ locationSlug: 'los-angeles', service: 'air-duct', property: 'home' })}
+                  className="pac-button"
+                >
+                  Schedule your estimate <ArrowUpRight size={17} aria-hidden="true" />
+                </Link>
+                <a href={business.phoneHref} className="pac-text-link">
+                  <Phone size={15} aria-hidden="true" /> Confirm coverage: {business.phone}
+                </a>
+              </div>
+            </div>
+
+            <div className="pac-loc-map-frame">
+              <ResponsiveImage
+                src="/images/locations/service-map.webp"
+                alt="Greater Los Angeles and Ventura service area coverage map for Pure Air California"
+                width={1024}
+                height={1024}
+                loading="lazy"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="w-full h-full object-cover"
+              />
+              <span className="pac-loc-map-caption">
+                <MapPin size={15} aria-hidden="true" />
+                Greater Los Angeles · Westside · Valley · Foothills · South Bay
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* Direct Quote Form Section */}
+        <section className="pac-section pac-container">
+          <div className="pac-loc-quote-grid">
+            <div>
+              <span className="pac-eyebrow">CONFIRM YOUR ADDRESS &amp; SCOPE</span>
+              <h2>
+                Ready for a clear written
+                <br />
+                <em>local estimate?</em>
+              </h2>
+              <p>
+                Share your ZIP code, property type, HVAC system count, and whether you need air duct cleaning, dryer
+                vent care, or post-smoke inspection. We review access details upfront and confirm your written price on
+                site before work begins.
+              </p>
+              <div className="pac-loc-quick-links">
+                <Link to="/services/residential-air-duct-cleaning/" className="pac-text-link">
+                  Residential air ducts (from $299) <ArrowUpRight size={15} aria-hidden="true" />
+                </Link>
+                <Link to="/services/residential-dryer-vent-cleaning/" className="pac-text-link">
+                  Dryer vent cleaning (from $149) <ArrowUpRight size={15} aria-hidden="true" />
+                </Link>
+                <Link to="/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles/" className="pac-text-link">
+                  Wildfire smoke &amp; hillside ducts <ArrowUpRight size={15} aria-hidden="true" />
+                </Link>
+                <Link to="/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles/" className="pac-text-link">
+                  Commercial &amp; HOA portfolios <ArrowUpRight size={15} aria-hidden="true" />
+                </Link>
               </div>
             </div>
 
             <EnhancedQuoteForm />
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>
@@ -373,4 +209,3 @@ const Locations = () => {
 };
 
 export default Locations;
-

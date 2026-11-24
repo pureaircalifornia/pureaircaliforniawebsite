@@ -10,10 +10,11 @@
  *  2. Do not attach a review to a city, neighbourhood or service it does not
  *     mention. Google reviews carry no location, so claiming one is a
  *     fabrication even when the review itself is genuine.
- *  3. The profile currently holds 7 reviews (6 x 5-star, 1 x 2-star). These six
- *     are the five-star ones. Selecting positive reviews for a carousel is
- *     ordinary marketing; misreporting the AGGREGATE is not — so
- *     `business.aggregateRating` must always reflect all 7 (4.6 average).
+ *  3. On 2 September 2026 the profile held 7 reviews (6 x 5-star, 1 x 2-star);
+ *     these six are the five-star ones. By 22 November 2026 it held 8 (4.6
+ *     average); the eighth has not been transcribed here yet. Selecting positive
+ *     reviews for a carousel is ordinary marketing; misreporting the AGGREGATE is
+ *     not — so `business.aggregateRating` must always reflect every review.
  *
  * These replaced 54 invented per-city testimonials and 6 invented marquee
  * testimonials that carried fake reviewer names and fake LA neighbourhoods.

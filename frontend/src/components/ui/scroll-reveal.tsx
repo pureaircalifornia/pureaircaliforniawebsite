@@ -2,7 +2,6 @@ import { usePageMotion } from '@/hooks/usePageMotion';
 
 import React, { ReactNode } from 'react';
 import { motion, Variants, HTMLMotionProps, useReducedMotion } from 'framer-motion';
-import useScrollAnimation from '@/hooks/useScrollAnimation';
 import { cn } from '@/lib/utils';
 import * as animations from '@/lib/animation';
 
@@ -18,7 +17,7 @@ export interface ScrollRevealProps extends Omit<HTMLMotionProps<"div">, "animate
 }
 
 /**
- * ScrollReveal component that creates premium scroll-triggered animations
+ * Content is visible at mount; motion must never gate text behind scrolling.
  */
 export function ScrollReveal({
   children,
@@ -34,11 +33,6 @@ export function ScrollReveal({
   const reducedMotion = useReducedMotion();
   const { paused } = usePageMotion();
   const showImmediately = paused || reducedMotion || (typeof window !== "undefined" && window.__PRERENDERING__);
-  const [ref, isInView] = useScrollAnimation<HTMLDivElement>({
-    threshold,
-    rootMargin: margin,
-    once
-  });
 
   const getAnimationVariant = (): Variants => {
     const animationKey = animation as keyof typeof animations;
@@ -67,9 +61,8 @@ export function ScrollReveal({
 
   return (
     <motion.div
-      ref={ref}
-      initial={showImmediately ? false : "hidden"}
-      animate={showImmediately ? { opacity: 1, x: 0, y: 0, scale: 1, transition: { duration: 0, repeat: 0 } } : isInView ? "visible" : "hidden"}
+      initial={false}
+      animate={showImmediately ? { opacity: 1, x: 0, y: 0, scale: 1, transition: { duration: 0, repeat: 0 } } : "visible"}
       exit={showImmediately ? undefined : "exit"}
       variants={getAnimationVariant()}
       className={cn(className)}
@@ -97,7 +90,6 @@ export function StaggerContainer({
   const reducedMotion = useReducedMotion();
   const { paused } = usePageMotion();
   const showImmediately = paused || reducedMotion || (typeof window !== "undefined" && window.__PRERENDERING__);
-  const [ref, isInView] = useScrollAnimation<HTMLDivElement>();
   
   const staggerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -111,9 +103,8 @@ export function StaggerContainer({
   
   return (
     <motion.div
-      ref={ref}
-      initial={showImmediately ? false : "hidden"}
-      animate={showImmediately ? { opacity: 1, x: 0, y: 0, scale: 1, transition: { duration: 0, repeat: 0 } } : isInView ? "visible" : "hidden"}
+      initial={false}
+      animate={showImmediately ? { opacity: 1, x: 0, y: 0, scale: 1, transition: { duration: 0, repeat: 0 } } : "visible"}
       variants={staggerVariants}
       className={cn(className)}
       {...props}

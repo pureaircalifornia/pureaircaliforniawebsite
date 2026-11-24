@@ -1,0 +1,44 @@
+/* PAC logo palette. Keep these shared roles after the scene styles so a
+   photographic art direction cannot redefine the site's brand colors. */
+.pac-site {
+  --pac-brand-navy: #0a3d7c;
+  --pac-brand-aqua: #64bdc8;
+  --pac-brand-light: #d8f1f5;
+  --pac-brand-surface: #f2f8fc;
+  --pac-ink: #123b56;
+  --pac-paper: #ffffff;
+  --pac-muted: #536b79;
+  --pac-line: #dce7ee;
+  --primary: 213 85% 26%;
+  --primary-foreground: 0 0% 100%;
+  --ring: 213 85% 26%;
+}
+
+.pac-site .pac-header { background: #ffffff; }
+.pac-site .pac-button { background: var(--pac-brand-navy); border-color: var(--pac-brand-navy); }
+.pac-site .pac-button:hover { background: #082f60; border-color: #082f60; }
+.pac-site .pac-text-link:hover { color: var(--pac-brand-navy); }
+.pac-site .pac-home-main { --pac-paper: #ffffff; --pac-line: #dce7ee; background: var(--pac-paper); }
+.pac-site .pac-home-main :is(.pac-breath-mission, .pac-everyday-air) { background: var(--pac-paper); }
+.pac-site :is(.pac-proof-strip, .pac-process-section),
+.pac-site .pac-home-main :is(.pac-proof-strip, .pac-process-section) { background: var(--pac-brand-surface); }
+.pac-site .pac-home-main .pac-estimate-band,
+.pac-site .pac-footer { background: var(--pac-brand-navy); }
+.pac-site .pac-film .pac-button,
+.pac-site .pac-home-main .pac-estimate-band .pac-button,
+.pac-site .pac-footer .pac-button-light,
+.pac-site .pac-button-light { background: var(--pac-brand-light); border-color: var(--pac-brand-light); color: var(--pac-brand-navy); }
+.pac-site .pac-film .pac-button:hover,
+.pac-site .pac-home-main .pac-estimate-band .pac-button:hover,
+.pac-site .pac-footer .pac-button-light:hover,
+.pac-site .pac-button-light:hover { background: #ffffff; border-color: #ffffff; color: var(--pac-brand-navy); }
+.pac-site .pac-film h1 em,
+.pac-site .pac-film-copy > .pac-eyebrow,
+.pac-site .pac-footer em { color: var(--pac-brand-light); }
+.pac-site .pac-footer .pac-footer-top h2 { color: #ffffff; }
+.pac-site .pac-footer .pac-footer-top h2 em { color: var(--pac-brand-light); }
+.pac-film-chapters button[aria-current] { color: var(--pac-brand-light); border-color: var(--pac-brand-aqua); }
+.pac-film-progress { background: var(--pac-brand-aqua); }
+.pac-site :is(.pac-film-brand, .pac-footer-brand .pac-wordmark) { background: #ffffff; }
+.pac-contact-dock a { color: var(--pac-brand-navy); border-color: var(--pac-brand-navy); }
+.pac-contact-dock a:first-child { background: var(--pac-brand-navy); color: #ffffff; }

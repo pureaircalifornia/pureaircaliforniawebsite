@@ -1,0 +1,289 @@
+/* Make the next step visible, with the same navy/aqua language throughout PAC. */
+.pac-site a.pac-text-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 10px 16px;
+  border: 1px solid currentColor;
+  border-radius: 10px;
+  background: #64bdc814;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: background-color .18s, box-shadow .18s, transform .18s;
+}
+.pac-site a.pac-text-link svg { flex-shrink: 0; transition: transform .18s ease; }
+.pac-site a.pac-text-link:hover { background: #64bdc830; box-shadow: 0 3px 12px #0a3d7c10; }
+.pac-site a.pac-text-link:hover svg { transform: translate(1px, -1px); }
+.pac-site a.pac-text-link:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+.pac-site :is(.pac-source-note, .pac-service-detail-card, .pac-prose) a {
+  text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px; font-weight: 600;
+}
+.pac-site .pac-proof-strip a { padding: 10px 14px; border: 1px solid #0a3d7c; border-radius: 10px; font-weight: 600; transition: background-color .18s, color .18s; }
+.pac-site .pac-proof-strip a:hover { background: #0a3d7c; color: #ffffff; }
+.pac-site .pac-proof-strip a.pac-proof-price-link { background: #d8f1f580; border-color: #64bdc8; color: #0a3d7c; }
+.pac-site .pac-proof-strip a.pac-proof-price-link:hover { background: #0a3d7c; border-color: #0a3d7c; color: #ffffff; }
+
+/* Ensure every inner-page hero preserves container gutters, crisp glass card contrast, and above-fold trust cues. */
+.pac-site .pac-container.pac-coverage-layout {
+  width: min(1320px, calc(100% - 112px));
+  margin-inline: auto;
+}
+.pac-coverage-trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #d8f1f5;
+}
+.pac-coverage-trust li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.pac-coverage-trust svg {
+  color: #9ce6f0;
+  flex-shrink: 0;
+}
+.pac-site .pac-coverage-note {
+  padding: 20px 22px;
+  background: rgba(7, 32, 54, 0.62);
+  border: 1px solid rgba(156, 230, 240, 0.32);
+  border-radius: 16px;
+  box-shadow: 0 14px 36px rgba(4, 19, 34, 0.28);
+  backdrop-filter: blur(10px);
+}
+
+/* Homepage FAQ & Footer actions polish */
+.pac-faq-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 18px;
+}
+.pac-faq-list summary .pac-faq-plus {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f2f8fc;
+  color: #0a3d7c;
+  font-size: 19px;
+  font-weight: 400;
+  flex-shrink: 0;
+  transition: transform .22s ease, background-color .22s ease;
+}
+.pac-faq-list details[open] summary .pac-faq-plus {
+  transform: rotate(45deg);
+  background: #d8f1f5;
+}
+.pac-footer-top-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 20px;
+}
+.pac-footer-top-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 1px solid rgba(216, 241, 245, 0.45);
+  border-radius: 8px;
+  color: #f1fbff;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color .18s ease, border-color .18s ease;
+}
+.pac-footer-top-phone:hover {
+  background: rgba(216, 241, 245, 0.14);
+  border-color: #d8f1f5;
+}
+
+/* Non-obstructive PrivacyChoices dock: top-right below header on desktop (never covering hero CTAs or H1),
+   compact slim bar above ContactDock on mobile. */
+@media (min-width: 901px) {
+  html body section.pac-privacy-choices {
+    top: 104px;
+    right: 24px;
+    left: auto;
+    bottom: auto;
+    width: min(350px, calc(100vw - 40px));
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 12.5px;
+    line-height: 1.45;
+    box-shadow: 0 14px 38px rgba(10, 36, 60, 0.22);
+  }
+  html body section.pac-privacy-choices h2 {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  html body section.pac-privacy-choices p {
+    margin-bottom: 10px;
+  }
+  html body section.pac-privacy-choices button {
+    min-height: 38px;
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+  html body section.pac-privacy-choices .pac-privacy-customize {
+    min-height: 30px;
+    margin-top: 4px;
+    padding: 3px 6px;
+    font-size: 11.5px;
+  }
+}
+@media (max-width: 900px) {
+  html body section.pac-privacy-choices {
+    left: 10px;
+    right: 10px;
+    width: auto;
+    bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+    top: auto;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 11.5px;
+    line-height: 1.38;
+    box-shadow: 0 10px 28px rgba(10, 36, 60, 0.25);
+  }
+  html body section.pac-privacy-choices h2 {
+    font-size: 13px;
+    margin-bottom: 3px;
+  }
+  html body section.pac-privacy-choices p {
+    margin-bottom: 7px;
+  }
+  html body section.pac-privacy-choices > div {
+    gap: 6px;
+  }
+  html body section.pac-privacy-choices button {
+    min-height: 36px;
+    padding: 6px 8px;
+    font-size: 11.5px;
+  }
+  html body section.pac-privacy-choices .pac-privacy-customize {
+    min-height: 28px;
+    margin-top: 2px;
+    padding: 2px 4px;
+    font-size: 11px;
+  }
+}
+
+/* Responsive container & footer grid overrides */
+@media (max-width: 1200px) {
+  .pac-site .pac-container.pac-coverage-layout {
+    width: calc(100% - 64px);
+  }
+  .pac-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 38px 32px;
+  }
+  .pac-footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 900px) {
+  .pac-site .pac-container.pac-coverage-layout {
+    width: calc(100% - 48px);
+  }
+}
+@media (max-width: 600px) {
+  .pac-site .pac-container.pac-coverage-layout {
+    width: calc(100% - 36px);
+  }
+  .pac-coverage-trust {
+    font-size: 11.5px;
+    gap: 6px 14px;
+    margin-top: 14px;
+  }
+  .pac-site .pac-coverage-note {
+    padding: 16px 18px;
+  }
+}
+
+.pac-site .pac-disclosure { border: 1px solid #91c9d3; border-radius: 12px; background: #fff; color: #0a3d7c; }
+.pac-site .pac-disclosure > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  padding: 13px 16px; min-height: 48px; font-size: 13px; font-weight: 600; line-height: 1.5;
+  cursor: pointer; list-style: none; text-decoration: none;
+}
+.pac-site .pac-disclosure > summary::-webkit-details-marker { display: none; }
+.pac-site .pac-disclosure > summary::after { content: '+'; font-size: 23px; line-height: 1; font-weight: 400; flex-shrink: 0; }
+.pac-site .pac-disclosure[open] > summary::after { content: '−'; }
+.pac-site .pac-disclosure > summary:hover { background: #d8f1f566; border-radius: 12px; }
+.pac-site .pac-disclosure > summary:focus-visible { outline: 3px solid #0a3d7c; outline-offset: 4px; border-radius: 12px; }
+.pac-disclosure-content { padding: 0 16px 14px; }
+.pac-essential-context { font-size: 12px; gap: 16px; }
+.pac-essential-context > details { max-width: 490px; }
+.pac-site .pac-essential-context a { padding: 9px 0; font-size: 13px; font-weight: 600; text-decoration-thickness: 1.5px; }
+.pac-site :is(.pac-service-intro-details, .pac-mission-more) > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  width: fit-content; max-width: 100%; min-height: 44px; padding: 10px 14px;
+  border: 1px solid #91c9d3; border-radius: 10px; background: #d8f1f54d;
+  color: #0a3d7c; font-size: 13px; font-weight: 600; line-height: 1.5;
+  list-style: none; text-decoration: none; cursor: pointer;
+}
+.pac-site :is(.pac-service-intro-details, .pac-mission-more) > summary::-webkit-details-marker { display: none; }
+.pac-site :is(.pac-service-intro-details, .pac-mission-more) > summary::after { content: '+'; font-size: 22px; line-height: 1; font-weight: 400; }
+.pac-site :is(.pac-service-intro-details, .pac-mission-more)[open] > summary::after { content: '−'; }
+.pac-site :is(.pac-service-intro-details, .pac-mission-more) > summary:hover { background: #d8f1f5; }
+.pac-site :is(.pac-service-intro-details, .pac-mission-more) > summary:focus-visible { outline: 3px solid #0a3d7c; outline-offset: 4px; }
+
+/* A compact, stationary client wall keeps every logo discoverable. */
+.pac-site .pac-commercial-proof.pac-client-wall { padding: 44px 0; background: #f2f8fc; }
+.pac-client-wall .pac-client-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 25px; }
+.pac-site .pac-client-wall h2 { margin: 10px 0 0; font-size: clamp(26px, 3vw, 38px); line-height: 1.15; letter-spacing: -.035em; color: #0a3d7c; }
+.pac-client-wall .pac-eyebrow { font-size: 10px; }
+.pac-client-wall .pac-client-logo-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; list-style: none; margin: 0; padding: 0; }
+.pac-client-logo-grid li { min-width: 0; }
+.pac-client-logo-tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; height: 124px; padding: 16px 12px 13px; border: 1px solid #d6e5ed; border-radius: 12px; background: white; color: #0a3d7c; text-align: center; text-decoration: none; transition: border-color .18s, background-color .18s; }
+.pac-client-logo-tile:hover { border-color: #0a3d7c; background: #fafdff; }
+.pac-client-logo-tile:focus-visible { outline: 3px solid #0a3d7c; outline-offset: 3px; }
+.pac-client-logo-art { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; height: 61px; max-width: 144px; overflow: hidden; }
+.pac-client-logo-art > img { display: block; width: 100%; height: 100%; object-fit: contain; }
+/* The official Sheraton image includes a large square border; frame the unchanged wordmark. */
+.pac-client-logo-art--sheraton > img { position: absolute; width: 150%; height: auto; max-width: none; }
+.pac-client-logo-art--inverse { background: #0a3d7c; border-radius: 9px; padding: 5px; }
+.pac-client-logo-name { display: grid; place-items: center; height: 61px; font-size: 19px; font-weight: 700; letter-spacing: -.5px; line-height: 1.15; }
+.pac-client-logo-tile > small { display: flex; justify-content: center; align-items: center; gap: 5px; font-size: 10px; line-height: 1.4; color: #536b79; }
+.pac-client-logo-tile small svg { flex-shrink: 0; color: #0a3d7c; }
+.pac-client-wall .pac-client-records { margin-top: 16px; }
+.pac-client-records .pac-client-record-grid { list-style: none; margin: 0; padding: 4px 18px 18px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.pac-client-record-grid li { font-size: 12px; line-height: 1.7; color: #536b79; }
+.pac-client-record-grid strong { display: block; color: #0a3d7c; font-size: 13px; }
+.pac-client-record-grid a { display: inline-block; margin-top: 6px; text-decoration: underline; text-underline-offset: 4px; font-weight: 600; color: #0a3d7c; }
+.pac-client-wall .pac-client-note { margin: 12px 0 0; font-size: 11px; line-height: 1.7; color: #536b79; }
+.pac-client-wall .pac-client-note a { color: #0a3d7c; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 1000px) {
+  .pac-client-wall .pac-client-logo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .pac-site .pac-commercial-proof.pac-client-wall { padding: 32px 0; }
+  .pac-client-wall .pac-client-heading { align-items: flex-start; flex-direction: column; gap: 16px; margin-bottom: 20px; }
+  .pac-client-wall .pac-client-logo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+  .pac-client-logo-tile { height: 100px; padding: 10px 7px; gap: 8px; }
+  .pac-client-logo-art, .pac-client-logo-name { height: 48px; }
+  .pac-client-logo-name { font-size: 15px; }
+  .pac-client-logo-tile > small { font-size: 9px; }
+  .pac-client-records .pac-client-record-grid { grid-template-columns: 1fr 1fr; gap: 20px 15px; }
+  .pac-essential-context > details { margin-top: 10px; }
+}
+@media (max-width: 350px) {
+  .pac-client-wall .pac-client-logo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pac-client-records .pac-client-record-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pac-site a.pac-text-link, .pac-site a.pac-text-link svg, .pac-client-logo-tile, .pac-faq-list summary .pac-faq-plus { transition: none; }
+}

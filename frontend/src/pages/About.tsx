@@ -1,373 +1,340 @@
-import PageHero from '@/components/PageHero';
-import React from 'react';
-
+import { Link } from '@/components/CanonicalLink';
+import { ArrowUpRight, ArrowDown, Phone, Check } from 'lucide-react';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
-import RelatedLinks from '@/components/RelatedLinks';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { Shield, Clock, CheckCircle, Award, Users, Building, Star, Phone, Mail, MapPin } from 'lucide-react';
-import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import ResponsiveImage from '@/components/ResponsiveImage';
-import TestimonialCard from '@/components/TestimonialCard';
 import SEOProvider from '@/components/SEOProvider';
-import TrustedBy from '@/components/TrustedBy';
-import AnimatedCounter from '@/components/AnimatedCounter';
+import PageHero from '@/components/PageHero';
+import AirSymbol from '@/components/AirSymbol';
+import { NaturePhoto } from '@/components/BreathMission';
+import { business } from '@/config/business';
 
+const visitStandards = [
+  [
+    'Inspection-first evaluation',
+    'We look at accessible ducts, registers, and exhaust routes first—recommending cleaning when system conditions warrant it, in line with EPA homeowner guidance.',
+  ],
+  [
+    'Written scope & price upfront',
+    'Every included system, component, exclusion, and price is confirmed in writing before work begins. Eligible residential air duct scopes start at $299; dryer vents start at $149.',
+  ],
+  [
+    'Care for floors, finishes & rooms',
+    'From studio apartments to multi-zone hillside estates and commercial offices, we protect work paths, furnishings, and registers throughout the visit.',
+  ],
+  [
+    'Documented commercial & HOA closeouts',
+    'For property managers, HOA boards, and facilities teams across LA County, we provide COI documentation, phased scheduling, and unit-by-unit completion records.',
+  ],
+];
 
-const About = () => {
+export default function About() {
   return (
-    
-      <div className="min-h-screen flex flex-col">
-        <SEOProvider
-          title="About Pure Air California | Los Angeles Air Care"
-          description="Meet the PAC team serving Los Angeles homes and businesses. Learn about our approach to air duct and dryer vent cleaning, project records and customer care."
-          keywords={["about pure air california", "air duct cleaning company Los Angeles", "NADCA certified Los Angeles", "best air duct cleaning team LA", "professional HVAC cleaning Los Angeles"]}
-          path="/about"
-          isLocalBusiness
+    <div className="pac-about-page pac-mission-page">
+      <SEOProvider
+        title="About Pure Air California | Los Angeles Air Duct Care"
+        description="Meet Pure Air California: inspection-first air duct, dryer vent & HVAC cleaning across Greater Los Angeles with written upfront scopes. Call (213) 792-4145."
+        path="/about/"
+        isLocalBusiness
+      />
+      <NavBar alwaysOpaque />
+      <main>
+        <div id="our-mission">
+          <PageHero
+            title={
+              <>
+                Everything begins
+                <br />
+                with <em>a breath.</em>
+              </>
+            }
+            description="Before the day begins. Before everything you love. There is this. Discover why inspection-led care for the air in our Los Angeles homes and workplaces is the heart of Pure Air California."
+            image="/images/breath/living-forest-1920.webp"
+            alt="Sunlit mountain meadow and evergreen forest beneath a golden California sky"
+            eyebrow="ABOUT PURE AIR CALIFORNIA · LOS ANGELES"
+            caption="Inspection-first air duct, dryer vent, and HVAC cleaning led by trained local technicians across Greater Los Angeles."
+            estimateHref="/quote/?service=air-duct&property=home#estimate-builder"
+            estimateLabel="Request a free written estimate"
+          />
+        </div>
+
+        <section className="pac-notice-section" id="notice-the-air" aria-labelledby="notice-title">
+          <div className="pac-container pac-notice-grid">
+            <div>
+              <span className="pac-eyebrow">01 / SOMETHING INVISIBLE. SOMETHING ESSENTIAL.</span>
+              <h2 id="notice-title">
+                You are breathing.
+                <br />
+                <em>What are you breathing in?</em>
+              </h2>
+            </div>
+            <div>
+              <p className="pac-editorial-lead">
+                Air is not simply the space around us. It is part of every moment we are alive.
+              </p>
+              <p>
+                Cool against your skin. Moving through the trees. Quietly entering and leaving your lungs. It is easy to forget something that is always there.
+              </p>
+              <p>
+                Now bring that attention indoors. Air has a quality. What moves through a room matters, even when we cannot see or smell it.
+              </p>
+              <a className="pac-text-link" href="#why-breath-matters">
+                Why this matters <ArrowDown size={17} aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="pac-essential-section"
+          id="why-breath-matters"
+          aria-labelledby="essential-title"
         >
-        </SEOProvider>
+          <NaturePhoto
+            name="cloud-sea"
+            alt="Clouds stretching into the distance in the soft light of evening"
+            className="pac-essential-photo"
+          />
+          <div className="pac-container pac-essential-content">
+            <span className="pac-eyebrow">02 / THE BREATH THAT SUSTAINS US</span>
+            <h2 id="essential-title">
+              A lifetime of moments.
+              <br />
+              <em>Only minutes without oxygen.</em>
+            </h2>
+            <p>
+              We can go far longer without food or water than without air. Our bodies need a continuous supply of oxygen. Without it, the brain can be harmed within minutes.
+            </p>
+            <p className="pac-essential-belief">
+              Something this essential
+              <br />
+              should never be an afterthought.
+            </p>
+            <a
+              className="pac-science-note"
+              href="https://medlineplus.gov/ency/article/001435.htm"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Why oxygen matters · MedlinePlus <ArrowUpRight size={13} aria-hidden="true" />
+            </a>
+          </div>
+        </section>
 
-        <NavBar />
+        <section className="pac-purpose-section pac-container" aria-labelledby="purpose-title">
+          <span className="pac-eyebrow">03 / THIS IS OUR WHY</span>
+          <h2 id="purpose-title">
+            Care for the air.
+            <br />
+            <em>Care for the life it holds.</em>
+          </h2>
+          <p className="pac-purpose-statement">
+            We believe breathing pure air is essential to our health and well-being. That belief is the reason Pure Air California exists.
+          </p>
+          <p>
+            For the breath that begins the day. For the people gathered around your table. For all the ordinary moments that make a life. We want the air in the places you live and work across Greater Los Angeles to receive the attention it deserves.
+          </p>
+          <div className="pac-purpose-values">
+            {[
+              {
+                kind: 'breath' as const,
+                title: 'Attention to the unseen.',
+                text: 'Our mission begins with awareness: the air pathways inside our homes and buildings deserve honest, careful inspection.',
+              },
+              {
+                kind: 'leaf' as const,
+                title: 'Respect for what sustains us.',
+                text: 'Nature reminds us that air connects living things. We carry that sense of care into every residence and workplace we enter.',
+              },
+              {
+                kind: 'care' as const,
+                title: 'Care made practical.',
+                text: 'Listen carefully. Explain clearly. Recommend work based on the actual condition of your system and confirm the written scope before work starts.',
+              },
+            ].map((value) => (
+              <article key={value.kind}>
+                <AirSymbol kind={value.kind} />
+                <h3>{value.title}</h3>
+                <p>{value.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
 
-        {/* Hero Section */}
-        <PageHero title="Good air starts with good people." description="We’re Pure Air California. A hands-on team helping Los Angeles homeowners, property managers and businesses care for the systems behind their everyday comfort."/>
+        <section className="pac-air-path-section" aria-labelledby="air-path-title">
+          <div className="pac-container pac-air-path-grid">
+            <div className="pac-air-path-photos">
+              <NaturePhoto
+                name="living-forest"
+                alt="A sunlit mountain meadow and evergreen forest beneath an open sky"
+              />
+              <figure>
+                <img
+                  src="/images/pac/duct-interior-clean-v2.webp"
+                  alt="Inside a clean galvanized metal air duct after source-removal cleaning"
+                  width={700}
+                  height={470}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>A closer look at the path your indoor air follows.</figcaption>
+              </figure>
+            </div>
+            <div>
+              <span className="pac-eyebrow">04 / FROM THE OPEN SKY TO THE PLACE YOU CALL HOME</span>
+              <h2 id="air-path-title">
+                Outside, a world of air.
+                <br />
+                <em>Inside, a path worth caring for.</em>
+              </h2>
+              <p>
+                Your heating and cooling system moves air through a network of supply and return ducts into the rooms where life happens. Over time, remodel dust, lint, and debris can settle along that path.
+              </p>
+              <p>
+                That is where our work begins: understanding your system, inspecting what needs attention, and carefully cleaning the agreed areas under negative pressure.
+              </p>
+              <p>
+                Duct care is one part of indoor air care, alongside appropriate filtration, ventilation, and moisture control.
+              </p>
+              <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4">
+                <Link className="pac-text-link" to="/services/residential-air-duct-cleaning/">
+                  Residential air duct cleaning <ArrowUpRight size={17} aria-hidden="true" />
+                </Link>
+                <Link className="pac-text-link" to="/services/commercial-air-duct-cleaning/">
+                  Commercial air duct cleaning <ArrowUpRight size={17} aria-hidden="true" />
+                </Link>
+                <Link className="pac-text-link" to="/pricing/">
+                  Transparent LA pricing <ArrowUpRight size={17} aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        {/* Trusted By Brands */}
-        <TrustedBy />
-
-        <main>
-          <div className="container mx-auto px-4 py-16">
-
-            {/* Company Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-              {[
-                { label: 'Years of Experience', target: 40, suffix: '+' },
-                { label: 'Customers Since 1993', target: 448, suffix: 'K+' },
-                { label: 'Satisfaction Guarantee', target: 100, suffix: '%' },
-                { label: 'Emergency Service', value: '24/7' }
-              ].map((stat, i) => (
-                <ScrollReveal key={i} animation="fadeInUp" delay={0.1 * (i + 1)}>
-                  <div className="glass-premium p-6 rounded-2xl text-center hover:scale-105 transition-transform duration-300">
-                    <div className="text-3xl md:text-4xl font-bold text-brand-600 mb-2">
-                      {stat.value ? stat.value : <AnimatedCounter target={stat.target!} suffix={stat.suffix} duration={2200} />}
-                    </div>
-                    <div className="text-sm md:text-base text-gray-600 font-medium">{stat.label}</div>
-                  </div>
-                </ScrollReveal>
+        {/* On-Site Standards Across Los Angeles */}
+        <section
+          className="pac-notice-section"
+          id="visit-standards"
+          aria-labelledby="visit-standards-title"
+        >
+          <div className="pac-container">
+            <span className="pac-eyebrow">05 / WHAT TO EXPECT ON EVERY VISIT</span>
+            <h2 id="visit-standards-title">
+              Practical standards.
+              <br />
+              <em>Zero guesswork at the door.</em>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+              {visitStandards.map(([heading, copy]) => (
+                <article
+                  key={heading}
+                  className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm"
+                >
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                    <Check size={19} className="text-brand-700 flex-shrink-0" aria-hidden="true" />
+                    <span>{heading}</span>
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">{copy}</p>
+                </article>
               ))}
             </div>
-
-            {/* Our Story */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-              <ScrollReveal animation="slideInLeft">
-                <div>
-                  <h2 className="text-3xl font-bold mb-6 text-slate-900 drop-shadow-sm">Our Story</h2>
-                  <p className="text-lg text-gray-600 mb-6">
-                    {/* Founding year matches llms.txt and the company record. The page
-                        previously said "founded over 40 years ago", which contradicted the
-                        stated 1993 founding — the 40+ years figure refers to our founder's
-                        experience in air quality, not the age of the company. */}
-                    Pure Air California was founded in 1993 with a simple mission: to provide the highest quality air duct cleaning services
-                    to Southern California residents and businesses, drawing on our founder's 40+ years of hands-on air quality experience.
-                    What started as a small family business has grown into one of the region's most trusted air quality specialists.
-                  </p>
-                  <p className="text-lg text-gray-600 mb-6">
-                    Our founder, Lou, recognized the critical importance of clean indoor air after witnessing firsthand how poor air quality
-                    affected his family's health. This personal experience drives our commitment to excellence and customer satisfaction.
-                  </p>
-                  <p className="text-lg text-gray-600">
-                    Today, we serve thousands of customers across Los Angeles, Orange County, and surrounding areas, maintaining the same
-                    family values and attention to detail that made us successful from day one.
-                  </p>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal animation="slideInRight">
-                <div className="relative group">
-                  <div className="absolute -inset-2 bg-gradient-to-r from-brand-500 to-sky-500 rounded-2xl opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500"></div>
-                  <div className="relative glass-premium p-2 rounded-2xl overflow-hidden shadow-2xl">
-                    <ResponsiveImage
-                      src="/images/logo/pac-logo.png"
-                      alt="Pure Air California"
-                      className="w-full h-64 object-contain rounded-xl p-8 bg-white group-hover:scale-105 transition-transform duration-700"
-                      loading="lazy"
-                      width={400}
-                      height={400}
-                    />
-                    <div className="absolute bottom-6 left-6 glass-premium backdrop-blur-md p-4 rounded-xl shadow-2xl border-white/40">
-                      <div className="flex items-center gap-2">
-                        <Star className="h-5 w-5 text-yellow-500 fill-current" />
-                        <span className="font-bold text-slate-900">4.6★ on Google</span>
-                      </div>
-                      <p className="text-xs text-slate-600 font-medium mt-1">448K+ customers · 40+ years</p>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-              <ScrollReveal animation="fadeInUp">
-                <div className="glass-card p-8 h-full">
-                  <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-slate-900">
-                    <div className="p-2 bg-brand-50 rounded-lg text-brand-600">
-                      <Shield className="h-6 w-6" />
-                    </div>
-                    Our Mission
-                  </h2>
-                  <p className="text-slate-600 text-lg mb-8 leading-relaxed">
-                    To improve indoor air quality for homes and businesses throughout Southern California by providing professional,
-                    reliable, and affordable air duct cleaning services that promote health, comfort, and energy efficiency.
-                  </p>
-                  <div className="space-y-4">
-                    {[
-                      'NADCA certified technicians',
-                      'Fully licensed and insured',
-                      'Advanced equipment and techniques',
-                      '100% satisfaction guarantee'
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-3">
-                        <div className="w-6 h-6 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0">
-                          <CheckCircle className="h-4 w-4 text-green-600" />
-                        </div>
-                        <span className="text-slate-600 font-medium">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal animation="fadeInUp" delay={0.2}>
-                <div className="glass-card p-8 h-full">
-                  <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-slate-900">
-                    <div className="p-2 bg-brand-50 rounded-lg text-brand-600">
-                      <Award className="h-6 w-6" />
-                    </div>
-                    Our Values
-                  </h2>
-                  <div className="space-y-6">
-                    {[
-                      {
-                        title: 'Integrity',
-                        icon: <Shield className="h-6 w-6" />,
-                        desc: 'We conduct business with honesty and transparency, always putting our customers\' needs first.'
-                      },
-                      {
-                        title: 'Excellence',
-                        icon: <Users className="h-6 w-6" />,
-                        desc: 'We strive for the highest standards in everything we do, from customer service to technical expertise.'
-                      },
-                      {
-                        title: 'Reliability',
-                        icon: <Clock className="h-6 w-6" />,
-                        desc: 'We show up on time, complete our work efficiently, and stand behind our results.'
-                      }
-                    ].map((value, i) => (
-                      <div key={i} className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/40 transition-colors duration-300">
-                        <div className="flex-shrink-0">
-                          <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-brand-600">
-                            {value.icon}
-                          </div>
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-slate-900 mb-1">{value.title}</h3>
-                          <p className="text-slate-600 text-sm leading-relaxed">{value.desc}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </ScrollReveal>
-            </div>
-
-            {/* Team Section */}
-            <div className="mb-16">
-              <ScrollReveal animation="fadeInUp">
-                <div className="text-center mb-12">
-                  <h2 className="text-3xl font-bold mb-4 text-slate-900 drop-shadow-sm">Meet Our Team</h2>
-                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                    Our experienced professionals are dedicated to providing exceptional service and maintaining the highest standards of air quality.
-                  </p>
-                </div>
-              </ScrollReveal>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[
-                  {
-                    name: 'Lou Chanab',
-                    role: 'Founder & CEO',
-                    image: '/images/team/team-lou-chanab-headshot-professional.png',
-                    desc: 'With over 40 years of experience in the air quality industry, Lou founded Pure Air California with a passion for helping families breathe cleaner air.',
-                    delay: 0.1
-                  },
-                  {
-                    name: 'Maya Chanab',
-                    role: 'VP Client Relations',
-                    image: '/images/team/team-maya-chanab-headshot-professional.png',
-                    desc: 'Maya brings a wealth of empathy and expertise, leading our customer relationship strategies to ensure every client has a positive, stress-free experience.',
-                    delay: 0.2
-                  },
-                  {
-                    name: 'Sarah',
-                    role: 'Customer Relations',
-                    image: '/images/team/team-customer-relations-manager.jpg',
-                    desc: 'Sarah ensures every customer receives exceptional service from initial contact through project completion and follow-up.',
-                    delay: 0.3
-                  }
-                ].map((member, i) => (
-                  <ScrollReveal key={i} animation="fadeInUp" delay={member.delay}>
-                    <div className="glass-card group h-full flex flex-col overflow-hidden hover:shadow-2xl transition-all duration-500">
-                      <div className="relative h-64 overflow-hidden">
-                        <div className="absolute inset-0 bg-brand-900/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
-                        <ResponsiveImage
-                          src={member.image}
-                          alt={`${member.name}, ${member.role}`}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                          loading="lazy"
-                          width={400}
-                          height={400}
-                        />
-                      </div>
-                      <div className="p-8 flex flex-col flex-grow">
-                        <h3 className="text-xl font-bold text-slate-900 mb-1">{member.name}</h3>
-                        <p className="text-brand-600 font-semibold text-sm mb-4 uppercase tracking-wider">{member.role}</p>
-                        <p className="text-slate-600 text-sm leading-relaxed">
-                          {member.desc}
-                        </p>
-                      </div>
-                    </div>
-                  </ScrollReveal>
-                ))}
-              </div>
-            </div>
-
-            {/* Certifications & Awards */}
-            <div className="bg-gray-50 rounded-xl p-8 mb-16">
-              <ScrollReveal animation="fadeInUp">
-                <div className="text-center mb-12">
-                  <h2 className="text-3xl font-bold mb-4 text-slate-900 drop-shadow-sm">Certifications & Awards</h2>
-                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                    We maintain the highest industry standards and are proud of our certifications and recognition.
-                  </p>
-                </div>
-              </ScrollReveal>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <ScrollReveal animation="fadeInUp" delay={0.1}>
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                      <Award className="h-10 w-10 text-brand-600" />
-                    </div>
-                    <h3 className="font-semibold mb-2">NADCA Certified</h3>
-                    <p className="text-sm text-gray-600">National Air Duct Cleaners Association certification for quality standards</p>
-                  </div>
-                </ScrollReveal>
-
-                <ScrollReveal animation="fadeInUp" delay={0.2}>
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                      <Shield className="h-10 w-10 text-brand-600" />
-                    </div>
-                    <h3 className="font-semibold mb-2">Fully Insured</h3>
-                    <p className="text-sm text-gray-600">Comprehensive liability and workers compensation coverage</p>
-                  </div>
-                </ScrollReveal>
-
-                <ScrollReveal animation="fadeInUp" delay={0.3}>
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                      <Star className="h-10 w-10 text-yellow-500 fill-current" />
-                    </div>
-                    <h3 className="font-semibold mb-2">4.6★ on Google</h3>
-                    <p className="text-sm text-gray-600">Rated 4.6 stars by our Google customers, with 448K+ served over 40+ years</p>
-                  </div>
-                </ScrollReveal>
-
-                <ScrollReveal animation="fadeInUp" delay={0.4}>
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                      <Building className="h-10 w-10 text-brand-600" />
-                    </div>
-                    <h3 className="font-semibold mb-2">Licensed & Bonded</h3>
-                    <p className="text-sm text-gray-600">Fully licensed and bonded for your protection and peace of mind</p>
-                  </div>
-                </ScrollReveal>
-              </div>
-            </div>
-
-            {/* Testimonials */}
-            <div className="mb-16">
-              <ScrollReveal animation="fadeInUp">
-                <div className="text-center mb-12">
-                  <h2 className="text-3xl font-bold mb-4 text-slate-900 drop-shadow-sm">What Our Customers Say</h2>
-                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                    Don't just take our word for it. Here's what our satisfied customers have to say about our services.
-                  </p>
-                </div>
-              </ScrollReveal>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <ScrollReveal animation="fadeInUp" delay={0.1}>
-                  <TestimonialCard
-                    name="David M."
-                    location="Beverly Hills"
-                    quote="Exceptional service! The team was professional, thorough, and respectful of our home. The difference in air quality was noticeable immediately."
-                    rating={5}
-                  />
-                </ScrollReveal>
-
-                <ScrollReveal animation="fadeInUp" delay={0.2}>
-                  <TestimonialCard
-                    name="Jennifer L."
-                    location="Downtown LA"
-                    quote="Professional, reliable, and reasonably priced. They cleaned our entire office building and the improvement in air quality was remarkable. Highly recommend!"
-                    rating={5}
-                  />
-                </ScrollReveal>
-
-                <ScrollReveal animation="fadeInUp" delay={0.3}>
-                  <TestimonialCard
-                    name="Robert K."
-                    location="Santa Monica"
-                    quote="Outstanding service from start to finish. The team was knowledgeable, efficient, and left our home spotless. My allergies have improved significantly!"
-                    rating={5}
-                  />
-                </ScrollReveal>
-              </div>
-            </div>
-
-            {/* Contact CTA */}
-            <ScrollReveal animation="fadeInUp">
-              <div className="bg-gradient-to-r from-brand-600 to-brand-700 rounded-xl p-8 text-white text-center shadow-lg">
-                <h2 className="text-3xl font-bold mb-4 drop-shadow-md text-shadow-sm">Ready to Experience Pure Air?</h2>
-                <p className="text-xl mb-8 max-w-2xl mx-auto text-brand-50">
-                  Join thousands of satisfied customers who trust Pure Air California for their air duct cleaning needs.
-                  Contact us today for a free consultation and quote.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button asChild size="lg" className="bg-white text-brand-700 hover:bg-gray-100">
-                    <Link to="/quote">Get Free Quote</Link>
-                  </Button>
-                  <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-brand-700">
-                    <a href="tel:+12137924145">
-                      <Phone className="w-4 h-4 mr-2 inline" />
-                      (213) 792-4145
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </ScrollReveal>
           </div>
-        </main>
-        <RelatedLinks heading="Explore our work" links={[{ label: 'Commercial case studies', path: '/case-studies' }, { label: 'Industries we serve', path: '/industries' }, { label: 'Areas we serve', path: '/locations' }, { label: 'Air duct cleaning cost in Los Angeles', path: '/pricing' }]} />
+        </section>
 
-        <section className="pac-section pac-container" id="editorial-standards"><div className="max-w-3xl"><span className="pac-eyebrow">THE PAC AIR CARE JOURNAL</span><h2>Useful information.<br/><em>Clear about its limits.</em></h2><p>Our guides help homeowners and property teams understand service options and ask better questions. We identify PAC as the publisher, link to relevant public guidance and show when an article was revised.</p><p>Project stories describe the scope recorded for the property and date shown. General service information does not replace an assessment of your equipment, medical advice or a facility’s own requirements.</p><p><Link className="pac-text-link" to="/blog/">Explore the air care journal →</Link></p></div></section>
-        <Footer />
-      </div>
-    
+        <section className="pac-mission-people pac-container" aria-labelledby="people-title">
+          <div>
+            <span className="pac-eyebrow">THE PEOPLE BEHIND THE PURPOSE</span>
+            <h2 id="people-title">
+              A conversation.
+              <br />
+              <em>A little human care.</em>
+            </h2>
+            <p>
+              Have a question about your Los Angeles home, HOA, or commercial workplace? Tell us what you’ve noticed. We’ll help you understand the next step.
+            </p>
+          </div>
+          <div className="pac-mission-names">
+            <div>
+              <span>LOU CHANAB</span>
+              <p>Founder &amp; CEO</p>
+            </div>
+            <div>
+              <span>MAYA CHANAB</span>
+              <p>VP Client Relations</p>
+            </div>
+            <a className="pac-text-link" href={business.phoneHref}>
+              Speak with the PAC team: {business.phone}{' '}
+              <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+          </div>
+        </section>
+
+        <section
+          className="pac-notice-section"
+          id="information-standards"
+          aria-labelledby="standards-title"
+        >
+          <div className="pac-container pac-notice-grid">
+            <div>
+              <span className="pac-eyebrow">HOW WE SHARE INFORMATION</span>
+              <h2 id="standards-title">
+                Clear information.
+                <br />
+                <em>Room for questions.</em>
+              </h2>
+            </div>
+            <div>
+              <p>
+                Our service guides explain the work and the decisions to discuss before a visit. They are general information, not a diagnosis of your system or medical advice.
+              </p>
+              <p>
+                Health and safety guidance links to its public sources. Our{' '}
+                <Link to="/case-studies/">documented project notes</Link> and{' '}
+                <Link to="/project-stories/">project stories</Link> distinguish recorded scopes from measured outcomes; we do not turn a cleaning visit into a promise of medical symptom relief, guaranteed energy savings, or code certification.
+              </p>
+              <p>
+                Reviews shown on this website are a historical selection. Visit our{' '}
+                <a
+                  href={business.googleProfileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Google Business Profile
+                </a>{' '}
+                for our live Maps listing and full review history, or explore our{' '}
+                <Link to="/locations/los-angeles/">Los Angeles service areas</Link>.
+              </p>
+              <p>
+                Spotted an error or need a source clarified?{' '}
+                <Link to="/contact/">Contact the PAC team</Link> and include the page and detail you would like us to check.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="pac-purpose-cta" aria-labelledby="purpose-cta-title">
+          <div className="pac-container">
+            <span className="pac-eyebrow">LET THAT AWARENESS BECOME CARE</span>
+            <h2 id="purpose-cta-title">
+              Your next breath matters.
+              <br />
+              <em>Let’s care for the air behind it.</em>
+            </h2>
+            <p>Start with a conversation about your Los Angeles space.</p>
+            <div className="pac-actions">
+              <a className="pac-button pac-button-light" href={business.phoneHref}>
+                <Phone size={17} aria-hidden="true" /> Call {business.phone}
+              </a>
+              <Link
+                className="pac-text-link"
+                to="/quote/?service=air-duct&property=home#estimate-builder"
+              >
+                Request a free estimate <ArrowUpRight size={17} aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
   );
-};
-
-export default About;
-
+}

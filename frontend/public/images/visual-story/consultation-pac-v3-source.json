@@ -1,0 +1,6 @@
+{
+  "tool": "built-in image_gen",
+  "source": "exec-29053d8b-9d35-4179-8f2e-a74de45a3cb9.png",
+  "prompt": "Precise object edit. Use supplied image 1 as the edit target. Keep the two people, their faces, pose, clothing, hands, filter, entire room, framing and lighting unchanged. Change ONLY the Pure Air California chest logo on the navy polo shirt: remove the white rectangular patch and all white background completely. Render the same exact PURE AIR California wordmark and its wave flourishes as small tasteful embroidery directly on the navy shirt fabric, in light aqua thread (#64bdc8) with lighter aqua highlights so lettering is legible without a backing patch. Preserve the uppercase PURE AIR typography, flowing California script and waves of this logo. It must look realistically embroidered into the navy fabric, following its folds and perspective, understated, no rectangle, no sticker, no white block, no border, no badge. No other changes.",
+  "description": "Illustrative edited photo with direct aqua embroidery; no white logo backing."
+}

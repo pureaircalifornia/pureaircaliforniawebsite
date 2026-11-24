@@ -1,0 +1,335 @@
+[
+  {
+    "slug": "education",
+    "parentPath": "/industries/education/",
+    "label": "Schools & education",
+    "shortLabel": "School",
+    "service": "School air duct cleaning",
+    "image": "/images/industry-v2/education-1280.webp",
+    "alt": "Sunlit modern California classroom with clean overhead ventilation and natural daylight",
+    "eyebrow": "SCHOOL, CAMPUS & CHILDCARE VENTILATION · LOS ANGELES",
+    "promise": "Classroom, gymnasium, and administrative HVAC duct cleaning scheduled around academic calendars and break windows.",
+    "intro": "Plan classroom, office and common-area duct care with the people who know your campus. Start with the buildings and equipment, then work around the school day.",
+    "schedule": "Bring the academic calendar, after-school activities and available break dates. Agree on which rooms can be released together, the escort contact and the point at which each area can return to use.",
+    "contact": "Campus facilities lead and the person authorized to approve contractor access",
+    "boundary": "Classroom comfort-air ducts, science-lab exhaust, kitchen hoods and specialist extraction are different systems. Identify each separately; an ordinary duct-cleaning scope does not cover them all.",
+    "scope": [
+      {
+        "name": "Classrooms & learning spaces",
+        "detail": "Map supply and return openings to the equipment serving each classroom wing. Include portable classrooms only when their separate equipment is listed."
+      },
+      {
+        "name": "Offices & shared rooms",
+        "detail": "Identify the library, auditorium, gym and administration areas separately so access and cleaning boundaries are clear."
+      },
+      {
+        "name": "Campus coordination",
+        "detail": "Confirm escort arrangements, equipment isolation responsibilities, work-area protection and the completion information the school needs."
+      }
+    ],
+    "checklist": [
+      "Building names and classroom or room numbers",
+      "HVAC unit identifiers and access locations",
+      "Term dates, activities and available work windows",
+      "Campus entry, escort and documentation requirements"
+    ],
+    "question": "Can work take place during a school break?",
+    "answer": "Share the dates, buildings and rooms available. PAC will review the proposed scope and crew availability before confirming a break, weekend or phased work window. Keep any reopening or staff-return deadline in the written plan."
+  },
+  {
+    "slug": "healthcare",
+    "parentPath": "/industries/healthcare/",
+    "label": "Healthcare facilities",
+    "shortLabel": "Healthcare",
+    "service": "Healthcare duct cleaning",
+    "image": "/images/pac/healthcare.webp",
+    "alt": "Bright hospital and medical clinic corridor with clean ceiling ventilation diffusers",
+    "eyebrow": "HEALTHCARE & MEDICAL FACILITY HVAC CARE · LOS ANGELES",
+    "promise": "Containment-aware air duct and HVAC component cleaning coordinated with clinic and facility operations teams.",
+    "intro": "A considered maintenance plan for clinics, medical offices and healthcare facilities, coordinated with the team responsible for your building and its occupants.",
+    "schedule": "Agree on patient-area boundaries, authorized access and room availability with facilities staff. Include the infection-prevention contact when the facility requires it, and document who releases an area for work and return to service.",
+    "contact": "Facilities manager and any infection-prevention or clinical contact required by the facility",
+    "boundary": "Cleaning is a defined maintenance activity. It does not establish healthcare compliance or replace pressure verification, ventilation balancing, air testing or a facility's own approval process.",
+    "scope": [
+      {
+        "name": "Clinical & support areas",
+        "detail": "Identify the units serving patient-facing rooms, waiting areas, offices and back-of-house spaces. Confirm what can be accessed without entering occupied treatment areas."
+      },
+      {
+        "name": "Equipment & access",
+        "detail": "Provide equipment identifiers, mechanical-room locations and any facility-specific contractor requirements before the scope is approved."
+      },
+      {
+        "name": "Handover requirements",
+        "detail": "Agree on service records, inaccessible components and the facility's process for reviewing completed work."
+      }
+    ],
+    "checklist": [
+      "Equipment and clinical-zone identifiers",
+      "Authorized facilities and clinical contacts",
+      "Work-area precautions specified by the facility",
+      "Access, approval and service-record requirements"
+    ],
+    "question": "Does duct cleaning establish healthcare compliance?",
+    "answer": "No. Your facility determines applicable requirements and any independent testing, engineering assessment or sign-off. The proposal should define cleaning work and its limitations clearly."
+  },
+  {
+    "slug": "hospitality",
+    "parentPath": "/industries/hospitality/",
+    "label": "Hotels & hospitality",
+    "shortLabel": "Hotel",
+    "service": "Hotel air duct cleaning",
+    "image": "/images/pac/hotel.webp",
+    "alt": "Sunlit California hotel guest room with clean, quiet air conditioning and ventilation",
+    "eyebrow": "HOSPITALITY & HOTEL VENTILATION CLEANING · LOS ANGELES",
+    "promise": "Guest-room HVAC, corridor supply, and commercial laundry exhaust maintenance planned around occupancy and turnover.",
+    "intro": "Coordinate guestroom, common-area and back-of-house air care around occupancy and the team that keeps your property welcoming.",
+    "schedule": "Plan room blocks with engineering, housekeeping and front-desk staff. Identify check-in constraints, unavailable rooms, noise-sensitive areas and how the work sequence can change if occupancy changes.",
+    "contact": "Engineering lead, housekeeping coordinator and the property contact approving access",
+    "boundary": "Guestroom HVAC, common-area ducts and laundry exhaust need separately identified scopes. Cleaning does not certify indoor air quality or resolve every source of an odor.",
+    "scope": [
+      {
+        "name": "Guestroom equipment",
+        "detail": "Group rooms by unit type and system. A central air handler and individual room units need different access and component lists."
+      },
+      {
+        "name": "Shared hospitality spaces",
+        "detail": "List meeting rooms, corridors, reception and staff areas with the systems serving them. Identify work routes that avoid guest circulation where possible."
+      },
+      {
+        "name": "Laundry exhaust",
+        "detail": "If dryers are included, list machine count, exhaust routes and termination access as a separate part of the estimate."
+      }
+    ],
+    "checklist": [
+      "Room list and HVAC equipment types",
+      "Occupancy window and room-release contact",
+      "Common-area and back-of-house access",
+      "Laundry equipment if exhaust service is requested"
+    ],
+    "question": "Can cleaning be phased around occupancy?",
+    "answer": "Share the available rooms and preferred sequence. PAC will review system layout, access and crew availability before confirming phases; not every system can be divided room by room."
+  },
+  {
+    "slug": "restaurants",
+    "parentPath": "/industries/restaurants/",
+    "label": "Restaurants & food service",
+    "shortLabel": "Restaurant",
+    "service": "Restaurant duct cleaning",
+    "image": "/images/industry-v2/restaurants-1280.webp",
+    "alt": "Upscale Los Angeles restaurant dining room with clean comfort HVAC ventilation",
+    "eyebrow": "RESTAURANT & DINING ROOM HVAC CARE · LOS ANGELES",
+    "promise": "Dining room comfort, supply and return duct hygiene, and make-up air coordination scheduled outside peak service hours.",
+    "intro": "A clear HVAC plan for dining rooms, service areas and staff spaces, arranged around the rhythm of your restaurant.",
+    "schedule": "Describe preparation, delivery and service hours. Agree on equipment shutdowns, food and surface protection, entry arrangements and the time needed to put the work area back in order.",
+    "contact": "Owner or general manager, plus the person responsible for building equipment",
+    "boundary": "Dining-room comfort HVAC is different from a cooking hood and grease-exhaust system. Hood cleaning, suppression work and compliance certification are not included unless explicitly agreed and appropriately scoped.",
+    "scope": [
+      {
+        "name": "Dining-room HVAC",
+        "detail": "Identify the heating and cooling equipment serving seating areas and the supply and return ducts included in the quote."
+      },
+      {
+        "name": "Kitchen versus comfort air",
+        "detail": "Label cooking exhaust and make-up air separately so estimates are compared for the same systems and components."
+      },
+      {
+        "name": "Work-area protection",
+        "detail": "Agree on the route for equipment, protection of food and surfaces, and the person who checks the space before service resumes."
+      }
+    ],
+    "checklist": [
+      "HVAC units and spaces served",
+      "Cooking exhaust identified separately",
+      "Preparation, delivery and service hours",
+      "Food protection and landlord approval arrangements"
+    ],
+    "question": "Is kitchen hood cleaning included?",
+    "answer": "Only work listed in the written scope is included. Describe whether you need comfort-air duct cleaning, cooking exhaust work or both so the requirements can be reviewed separately."
+  },
+  {
+    "slug": "retail",
+    "parentPath": "/industries/retail/",
+    "label": "Retail & showrooms",
+    "shortLabel": "Retail",
+    "service": "Retail air duct cleaning",
+    "image": "/images/industry-v2/retail-1280.webp",
+    "alt": "Modern Los Angeles retail showroom with clean overhead ventilation and display lighting",
+    "eyebrow": "RETAIL & SHOWROOM AIR DUCT CLEANING · LOS ANGELES",
+    "promise": "Off-hours supply register, exposed spiral duct, and rooftop package unit cleaning that keeps sales floors spotless.",
+    "intro": "Air-system care for shops, showrooms and retail properties, with attention to merchandise, customer routes and building responsibilities.",
+    "schedule": "Share trading hours, delivery times and display restrictions. Confirm who can authorize rooftop or shared equipment access and how a work area can be separated from the sales floor.",
+    "contact": "Store manager and the landlord or center manager responsible for shared equipment",
+    "boundary": "A tenant's sales area and the shopping center's common HVAC may have different owners and access rules. The estimate must identify which equipment the tenant can authorize.",
+    "scope": [
+      {
+        "name": "Sales floor & showroom",
+        "detail": "Map the areas served by each unit and identify fragile displays, stock or fixtures near the work route."
+      },
+      {
+        "name": "Tenant equipment",
+        "detail": "Check the lease or building rules for the boundary between tenant units, common systems and roof access."
+      },
+      {
+        "name": "Opening-day readiness",
+        "detail": "Agree on the work window, merchandise protection and the handover contact before the next trading period."
+      }
+    ],
+    "checklist": [
+      "Unit identifiers and spaces served",
+      "Tenant and landlord responsibilities",
+      "Merchandise and display protection needs",
+      "Opening hours and approved access window"
+    ],
+    "question": "Should the landlord approve duct cleaning?",
+    "answer": "Check your lease and building rules. Common systems and roof equipment may require the property manager's authorization even when the work is requested by a single store."
+  },
+  {
+    "slug": "manufacturing",
+    "parentPath": "/industries/manufacturing/",
+    "label": "Manufacturing & industrial",
+    "shortLabel": "Industrial",
+    "service": "Industrial duct cleaning",
+    "image": "/images/pac/industrial.webp",
+    "alt": "Pure Air California industrial ventilation crew servicing high-bay overhead ductwork",
+    "eyebrow": "INDUSTRIAL, WAREHOUSE & STUDIO VENTILATION · LOS ANGELES",
+    "promise": "High-bay ductwork, process area ventilation, and facility HVAC cleaning built around shift schedules and safety protocols.",
+    "intro": "Start with the purpose of your system, the materials involved and the facility's requirements. Industrial work needs a site-specific conversation.",
+    "schedule": "Coordinate proposed shutdowns, isolation responsibilities and equipment access with the facility lead. Identify contractor inductions and any activities that must stop or be separated from the work area.",
+    "contact": "Facilities or maintenance lead and the site's designated safety contact",
+    "boundary": "Comfort HVAC, process exhaust and dust collection are not interchangeable. Materials or specialized hazards may require a different provider, method or assessment; routine duct cleaning is not a compliance certification.",
+    "scope": [
+      {
+        "name": "System identification",
+        "detail": "Provide the system's purpose, equipment list and known process materials before any method or cleaning scope is selected."
+      },
+      {
+        "name": "Access & shutdowns",
+        "detail": "Identify service platforms, machinery restrictions, isolation responsibilities and the work route through the operating facility."
+      },
+      {
+        "name": "Service records",
+        "detail": "Agree on the component list, completion documentation and how inaccessible areas or specialist follow-up will be recorded."
+      }
+    ],
+    "checklist": [
+      "System purpose and process materials",
+      "Equipment list and service access",
+      "Shutdown and isolation responsibilities",
+      "Contractor requirements and facility safety contact"
+    ],
+    "question": "Can all industrial exhaust be cleaned like HVAC?",
+    "answer": "No. The system purpose, materials and site requirements must be reviewed first. Specialized process exhaust or hazardous materials may be outside a routine HVAC cleaning scope."
+  },
+  {
+    "slug": "commercial-real-estate",
+    "parentPath": "/industries/commercial-real-estate/",
+    "label": "Offices & commercial real estate",
+    "shortLabel": "Office",
+    "service": "Office air duct cleaning",
+    "image": "/images/locations/century-city.webp",
+    "alt": "Century City commercial office towers and palm-lined plaza in Los Angeles",
+    "eyebrow": "COMMERCIAL REAL ESTATE & OFFICE VENTILATION · LOS ANGELES",
+    "promise": "Coordinate tenant access, protect operating schedules, and document HVAC and dryer exhaust care across your portfolio.",
+    "intro": "A practical plan for offices and managed commercial buildings, with clear boundaries between tenant equipment and common systems.",
+    "schedule": "Review loading, roof access, mechanical-room keys and escort requirements. Coordinate tenant notifications and work-hour restrictions before confirming the service sequence.",
+    "contact": "Authorized property manager and tenant contacts for the areas involved",
+    "boundary": "A tenant request may not authorize work on central equipment. Confirm approval for common systems and identify cleaning, repair, balancing and testing as separate tasks.",
+    "scope": [
+      {
+        "name": "Tenant & common systems",
+        "detail": "Use equipment and zone identifiers to separate tenant-serving HVAC from shared building assets."
+      },
+      {
+        "name": "Building logistics",
+        "detail": "Agree on loading, lifts, mechanical-room and rooftop access, and the person who can release each area."
+      },
+      {
+        "name": "Owner-ready records",
+        "detail": "Request a service record organized by the same equipment list used in the quote, with exceptions and follow-up items identified."
+      }
+    ],
+    "checklist": [
+      "Tenant areas and central equipment list",
+      "Authorized owner or manager contact",
+      "Loading, roof and mechanical-room access",
+      "Tenant notices and reporting requirements"
+    ],
+    "question": "Can a tenant authorize central-system cleaning?",
+    "answer": "Confirm authority with the building manager first. Central equipment or common systems usually involve the property contact responsible for those assets. Record the approval and access arrangements in the scope."
+  },
+  {
+    "slug": "property-management",
+    "parentPath": "/property-managers/",
+    "label": "Property managers & HOAs",
+    "shortLabel": "HOA",
+    "service": "HOA & apartment duct cleaning",
+    "image": "/images/industry-v2/property-management-1280.webp",
+    "alt": "Sunlit Los Angeles apartment and HOA courtyard with balconies and palm trees",
+    "eyebrow": "FOR PROPERTY MANAGERS, HOAS & MULTIFAMILY PORTFOLIOS",
+    "promise": "Multi-unit dryer vent stacks, common-area HVAC cleaning, COI compliance, and resident scheduling built for property portfolios.",
+    "intro": "Coordinate duct and dryer-exhaust care across apartments, shared spaces and managed properties with a clear plan for residents and building teams.",
+    "schedule": "Prepare resident notices, unit-access permissions and a plan for missed appointments. Group work only after individual and shared systems have been identified, and establish how additional findings reach the manager.",
+    "contact": "Property manager or HOA representative authorized to approve work and resident access",
+    "boundary": "Individual dwelling equipment, common HVAC and shared dryer exhaust may have different ownership. Unit count alone does not define system count or the final price.",
+    "scope": [
+      {
+        "name": "Individual residences",
+        "detail": "Identify accessible unit equipment and the permissions needed to enter occupied homes."
+      },
+      {
+        "name": "Shared building systems",
+        "detail": "List common-area HVAC and laundry exhaust separately, including roof terminations and any access restrictions."
+      },
+      {
+        "name": "Resident coordination",
+        "detail": "Agree on notifications, unit schedules, missed-access handling and records the manager needs for each completed area."
+      }
+    ],
+    "checklist": [
+      "Unit list and individual versus common systems",
+      "Resident access and notice arrangements",
+      "Shared laundry and roof access",
+      "Manager approval and completion-record format"
+    ],
+    "question": "Can a whole community be handled as one project?",
+    "answer": "Share the buildings, units and system types first. PAC can discuss a coordinated scope and sequence, subject to access and availability. Missed units and common equipment should be accounted for explicitly."
+  },
+  {
+    "slug": "laundromats",
+    "parentPath": "/services/laundromat-dryer-vent-cleaning/",
+    "label": "Laundromats & shared laundry",
+    "shortLabel": "Laundromat",
+    "service": "Laundromat dryer vent cleaning",
+    "image": "/images/pac/laundromat.webp",
+    "alt": "Commercial laundromat dryer bank with overhead rigid galvanized exhaust manifolds and risers",
+    "eyebrow": "LAUNDROMAT DRYER EXHAUST CLEANING · LOS ANGELES",
+    "promise": "High-volume dryer bank, common manifold trunk, booster fan, and rooftop termination cleaning planned around your operating hours.",
+    "intro": "Plan commercial dryer-exhaust care around machine banks, shared routes and the practical demands of a working laundry.",
+    "schedule": "Provide opening hours, machine availability and the route to each exhaust termination. Discuss whether banks can be taken out of service separately and who is responsible for equipment shutdown and return to use.",
+    "contact": "Laundry owner or operator and the person responsible for building exhaust access",
+    "boundary": "Dryer exhaust, booster equipment and general HVAC are separate systems. Cleaning does not repair a damaged vent, correct an unsuitable installation or replace equipment servicing.",
+    "scope": [
+      {
+        "name": "Machine banks",
+        "detail": "List dryer count, appliance types and whether machines connect to individual runs or shared exhaust."
+      },
+      {
+        "name": "Exhaust route",
+        "detail": "Identify access panels, changes in direction, roof terminations and any booster equipment to be assessed."
+      },
+      {
+        "name": "Operating plan",
+        "detail": "Agree on shutdown windows, customer notices and the records needed to plan future maintenance from actual findings."
+      }
+    ],
+    "checklist": [
+      "Dryer count and equipment information",
+      "Individual versus shared exhaust routes",
+      "Termination and booster-equipment access",
+      "Operating hours and shutdown contact"
+    ],
+    "question": "Is the number of dryers enough for a quote?",
+    "answer": "It is a starting point. Exhaust length, shared connections, access, equipment and condition also affect the scope. Photos and a route description help identify what still needs an on-site review."
+  }
+]

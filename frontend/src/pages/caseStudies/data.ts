@@ -26,6 +26,56 @@ export interface CaseStudy {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: 'four-seasons-los-angeles-ventilation',
+    client: 'Four Seasons Hotel Los Angeles',
+    title: 'Guestroom Ventilation Care at Four Seasons Los Angeles',
+    seoTitle: 'Four Seasons LA Ventilation Project | Pure Air California',
+    seoDescription: 'PAC’s June 2015 service record documents a two-system guestroom ventilation, blower and interior coil cleaning scope at Four Seasons Hotel Los Angeles.',
+    vertical: 'Hospitality', location: 'Los Angeles, CA', year: '2015', recordBased: true,
+    image: '/images/pac/hotel.webp',
+    imageAlt: 'PAC technicians at work; service archive image, not identified as this hotel project',
+    stats: [{ label: 'Project year', value: '2015' }, { label: 'Recorded systems', value: '2' }, { label: 'Property type', value: 'Hotel' }],
+    challenge: ['The hotel service record identifies two systems serving guestroom spaces.', 'For hospitality estimates, the guestroom systems and accessible components need to be identified individually.'],
+    approach: ['The June 16, 2015 invoice records guestroom ventilation cleaning.', 'The recorded scope includes blower cleaning and interior coil cleaning, marked for two systems.'],
+    outcome: ['The record documents a specific two-system scope at the Los Angeles hotel.', 'It does not establish work throughout the hotel or a current relationship with the Four Seasons brand.'],
+    scope: ['Guestroom ventilation cleaning', 'Blower cleaning', 'Interior coil cleaning', 'Two-system recorded scope'],
+    relatedService: { label: 'Hotel and hospitality air care', path: '/industries/hospitality/' },
+  },
+  {
+    slug: 'westchester-ymca-ventilation',
+    client: 'Westchester Family YMCA',
+    title: 'Ventilation and HVAC Component Care in Westchester',
+    seoTitle: 'Westchester YMCA HVAC Project | Pure Air California',
+    seoDescription: 'Explore PAC’s April 2015 Westchester Family YMCA service record: ventilation, plenum, blower/HVAC unit and coil cleaning at the named facility.',
+    vertical: 'Community / Recreation', location: 'Westchester, Los Angeles, CA', year: '2015', recordBased: true,
+    image: '/images/pac/duct-interior-clean-v2.webp',
+    imageAlt: 'Metal ventilation duct from the PAC field archive; not identified as this YMCA project',
+    stats: [{ label: 'Project year', value: '2015' }, { label: 'Location', value: 'Westchester' }, { label: 'Scope', value: 'Ventilation + HVAC' }],
+    challenge: ['The community-facility record lists ventilation and HVAC components together.', 'The scope matters: cleaning a visible grille alone is different from addressing the components identified in this project.'],
+    approach: ['The April 29, 2015 invoice identifies selected ventilation and plenum cleaning.', 'The recorded work also includes blower/HVAC unit and coil cleaning.'],
+    outcome: ['PAC’s archive documents work at the Westchester Family YMCA on the date shown.', 'No measured air-quality change, energy saving or organization-wide maintenance contract is claimed.'],
+    scope: ['Selected ventilation cleaning', 'Plenum cleaning', 'Blower/HVAC unit cleaning', 'Coil cleaning'],
+    relatedService: { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning/' },
+  },
+  {
+    slug: 'panera-pasadena-ventilation',
+    client: 'Panera Bread — Pasadena café',
+    title: 'Ventilation and HVAC Care for a Pasadena Café',
+    seoTitle: 'Pasadena Café HVAC Project | Pure Air California',
+    seoDescription: 'PAC’s January 2018 Pasadena Panera Bread café record lists ventilation, plenum, blower/furnace box and coil cleaning. Explore the location-specific scope.',
+    vertical: 'Restaurant / Café', location: 'Pasadena, CA', year: '2018', recordBased: true,
+    image: '/images/pac/duct-interior-clean-v2.webp',
+    imageAlt: 'Metal ventilation duct from the PAC field archive; not identified as this café project',
+    stats: [{ label: 'Project year', value: '2018' }, { label: 'Location', value: 'Pasadena' }, { label: 'Property type', value: 'Café' }],
+    challenge: ['The café project record lists ventilation and several HVAC components.', 'A food-service location can have separate comfort ventilation and cooking exhaust systems; the estimate must identify which is included.'],
+    approach: ['The January 1, 2018 invoice records selected ventilation and plenum cleaning.', 'The named components include the blower/furnace box and coils.'],
+    outcome: ['The record supports a location-specific ventilation and HVAC cleaning project.', 'The record is not presented as a kitchen hood fire-code inspection, electrostatic filter project or brand-wide endorsement.'],
+    scope: ['Selected ventilation cleaning', 'Plenum cleaning', 'Blower/furnace box cleaning', 'Coil cleaning'],
+    relatedService: { label: 'Restaurant air care', path: '/industries/restaurants/' },
+    localLinks: [{ label: 'Pasadena air care', path: '/locations/pasadena/' }],
+  },
+
+  {
     slug: 'apartment-community-42-units',
     client: 'A Los Angeles property management company',
     title: '42-Unit Apartment Community: Full Property Ventilation Clean',
@@ -47,7 +97,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     approach: [
       'Scheduled the property in blocks so each occupied unit was offline for the shortest possible window and residents kept access to laundry throughout.',
-      'Cleaned in-unit supply and return ductwork to NADCA standards, including registers, plenums and the blower and furnace assemblies.',
+      'Cleaned in-unit supply and return ductwork, including registers, plenums and the blower and furnace assemblies.',
       'Cleared each dryer vent run end to end and confirmed correct termination — long or crushed runs are the common failure point in multifamily buildings.',
       'Cleaned the parking garage exhaust system, which handles vehicle exhaust and is frequently the most neglected system on a residential property.',
       'Photographed every area before and after so the manager received per-area evidence rather than a single completion note.',
@@ -119,6 +169,11 @@ export const caseStudies: CaseStudy[] = [
     {
       "label": "West Hollywood air duct cleaning",
       "path": "/locations/west-hollywood/"
+    },
+    { "label": "HVAC system cleaning", "path": "/services/hvac-system-cleaning/" },
+    { "label": "Commercial electrostatic filters", "path": "/services/commercial-electrostatic-filter/" },
+    { "label": "Residential air duct cleaning", "path": "/services/residential-air-duct-cleaning/" },
+    { "label": "Commercial dryer vent cleaning", "path": "/services/commercial-dryer-vent-cleaning/"
     }
   ]
 },

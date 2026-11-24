@@ -48,7 +48,7 @@ async def get_feedback(token: str, request: Request):
 
 @router.post("/feedback/{token}", response_model=dict)
 async def submit_feedback(token: str, body: FeedbackSubmission, request: Request):
-    """PUBLIC: record rating. >=4 -> google route; <4 -> private + owner alert."""
+    """PUBLIC: record private feedback; every rating gets the same review option."""
     _enforce_rate_limit(request)
     out = await review_engine.record_feedback(token, body.rating, body.private_feedback)
     if out is None:

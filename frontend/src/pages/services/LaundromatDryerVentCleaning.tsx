@@ -1,89 +1,132 @@
-import React from 'react';
-import ServiceDetailLayout from '@/components/ServiceDetailLayout';
+import IndustryPageLayout from '@/components/IndustryPageLayout';
+import { Link } from '@/components/CanonicalLink';
+import { findBusiness } from '@/data/businessLocations';
+import { Check } from 'lucide-react';
 
-const LaundromatDryerVentCleaning = () => (
-  <ServiceDetailLayout
-    seoTitle="Laundromat Dryer Vent Cleaning LA"
-    seoDescription="Commercial dryer vent cleaning for Los Angeles laundromats and shared laundry rooms. Cut fire risk, shorten dry times, lower gas costs. Call (213) 792-4145."
-    path="/services/laundromat-dryer-vent-cleaning"
-    breadcrumbLabel="Laundromat Dryer Vents"
-    serviceName="Laundromat and Commercial Dryer Vent Cleaning"
-    h1="Laundromat Dryer Vent Cleaning in Los Angeles"
-    intro="High-volume dryers produce lint far faster than domestic machines. For laundromats and shared laundry rooms, vent cleaning is a fire-prevention measure with a direct payback in gas and turnaround time."
-    sections={[
-      {
-        heading: 'Why laundromats are a different job',
-        body:
-          'A household dryer runs a few loads a week. A laundromat machine may run continuously for twelve hours a day, and the lint load scales with it. Commercial installations also tend to have long shared duct runs serving banks of machines, often routed through walls or up to a roof termination, which means more surface for lint to settle on and more places for a restriction to develop out of sight.',
-        bullets: [
-          'Continuous operation producing lint at many times domestic rates',
-          'Long shared duct runs serving multiple machines',
-          'Booster fans that themselves accumulate lint and lose efficiency',
-          'Rooftop or long horizontal terminations that are rarely inspected',
-        ],
-      },
-      {
-        heading: 'The fire risk is the headline, but not the only cost',
-        body:
-          'Lint is highly combustible and dryers supply both heat and airflow, which is why clogged vents are a well-documented cause of laundry fires. That is the reason to stay on a schedule. The operational costs are what make it pay for itself in between.',
-        bullets: [
-          'Restricted airflow means longer cycles and higher gas consumption per load',
-          'Machines run hotter, which shortens component life and increases service calls',
-          'Longer dry times reduce throughput, which directly limits revenue per machine',
-          'Insurers and fire inspectors increasingly ask for a maintenance record',
-        ],
-      },
-      {
-        heading: 'How we work around an operating business',
-        body:
-          'A laundromat that is closed is not earning. We schedule around your quietest hours or overnight, and work through the machine bank in sections so the floor never goes fully offline. For shared laundry rooms in apartment buildings, we coordinate with property management on resident notice so nobody is caught out mid-load.',
-        bullets: [
-          'Overnight or off-peak scheduling to protect trading hours',
-          'Section-by-section work so machines stay available throughout',
-          'Full duct run cleared from machine connection to exterior termination',
-          'Booster fans cleaned and terminations checked for correct operation',
-          'Before-and-after documentation for your maintenance and insurance records',
-        ],
-      },
-      {
-        heading: 'How often it needs doing',
-        body:
-          'Frequency follows volume rather than the calendar. A busy laundromat may need quarterly attention; a small shared laundry room in an apartment building is often fine annually. The practical test is whether dry times have crept up — that is usually the first symptom of a restriction, and it appears well before anything becomes dangerous.',
-      },
-    ]}
-    faqs={[
-      {
-        question: 'How often should a laundromat clean its dryer vents?',
-        answer:
-          'It depends on volume. High-traffic laundromats commonly need quarterly service, while lower-volume or shared residential laundry rooms are often adequate on a semi-annual or annual schedule. If dry times are increasing, the interval is already too long.',
-      },
-      {
-        question: 'Can you work without closing the laundromat?',
-        answer:
-          'Yes. We work overnight or during your quietest hours and take the machine bank in sections, so part of the floor is always available. Closing the business is rarely necessary.',
-      },
-      {
-        question: 'Will this actually reduce our gas bill?',
-        answer:
-          'A restricted vent forces the dryer to run longer to shift the same moisture, so it burns more gas per load. Clearing the restriction shortens cycles. The size of the saving depends on how restricted the system had become, which is why we document the before condition.',
-      },
-      {
-        question: 'Do you handle apartment building shared laundry rooms?',
-        answer:
-          'Yes, and they are among the most commonly neglected systems we see, because no individual resident treats the vent as their responsibility. We coordinate with property management on scheduling and resident notice.',
-      },
-      {
-        question: 'Do you provide documentation for insurance or inspection?',
-        answer:
-          'Yes. Every job includes before-and-after documentation and a written service report, which operators keep for insurance requirements and fire inspections.',
-      },
-    ]}
-    relatedLinks={[
-      { label: 'Commercial dryer vent cleaning', path: '/services/commercial-dryer-vent-cleaning' },
-      { label: 'Dryer vent maintenance program', path: '/services/dryer-vent-maintenance-program' },
-      { label: 'Property managers and HOAs', path: '/property-managers' },
-    ]}
-  />
-);
+const market = findBusiness('laundromats')!;
 
-export default LaundromatDryerVentCleaning;
+export default function LaundromatDryerVentCleaning() {
+  return (
+    <IndustryPageLayout
+      title="Laundromat Dryer Vent Cleaning in Los Angeles"
+      subtitle="Keep high-volume dryer banks, shared exhaust manifolds, booster fans, and rooftop terminations clear of compacted lint—scheduled around your laundromat’s operating hours so machines dry quickly and safely."
+      seoTitle="Laundromat Dryer Vent Cleaning Los Angeles | Pure Air CA"
+      seoDescription="High-volume laundromat dryer vent, manifold & roof exhaust cleaning in Los Angeles. Off-hours scheduling & written scopes. Call (213) 792-4145."
+      path="/services/laundromat-dryer-vent-cleaning"
+      breadcrumbLabel={market.label}
+      serviceName={market.service}
+      heroReassurance="High-volume dryer banks · Shared manifolds · Early-morning & phased LA scheduling"
+      estimateLabel="Get a laundromat vent quote"
+      process={[
+        {
+          step: 'Map the dryer banks, manifolds & roof exits',
+          detail:
+            'Review machine count, single vs. stacked tumbler configurations, individual vs. shared overhead manifolds, cleanout hatches, and roof/wall terminations.',
+        },
+        {
+          step: 'Confirm a written scope & off-peak work window',
+          detail:
+            'Agree on phased bank shutdowns or early-morning/overnight hours, COI documentation if leased, and confirmed pricing before any work starts.',
+        },
+        {
+          step: 'Clear the full accessible path & log findings',
+          detail:
+            'Extract compacted lint across machine chases, manifolds, and accessible booster fans/caps, then review completion records and recommended cleaning intervals.',
+        },
+      ]}
+      faqs={[
+        { question: market.question, answer: market.answer },
+        {
+          question: 'What details help speed up a Los Angeles laundromat vent estimate?',
+          answer:
+            'Share your city/ZIP, total number of dryer pockets/stacks, whether exhaust ties into a common overhead manifold, roof or alley termination access, and your preferred off-peak work hours.',
+        },
+        {
+          question: 'Can you clean one dryer bank at a time so our store stays open?',
+          answer:
+            'Yes—when machine layout and exhaust manifolds allow phased isolation, we can coordinate bank-by-bank windows or schedule outside peak customer hours.',
+        },
+        {
+          question: 'How often should a busy Los Angeles laundromat clean its exhaust manifolds?',
+          answer:
+            'High-turnover coin and wash-and-fold laundromats typically need quarterly or semi-annual exhaust cleaning depending on daily load volume, lint-box design, and manifold length. Base your interval on actual inspected buildup.',
+        },
+        {
+          question: 'Does exhaust cleaning include dryer repair, gas work, or duct fabrication?',
+          answer: market.boundary,
+        },
+      ]}
+    >
+      <section className="pac-business-intro pac-container">
+        <div>
+          <span className="pac-eyebrow">FOR HIGH-VOLUME LAUNDRY OPERATORS</span>
+          <h2>{market.promise}</h2>
+          <p>{market.intro}</p>
+
+          <h3 className="text-xl font-semibold mt-7 mb-3 text-gray-900">
+            Warning signs your laundromat exhaust manifold is restricting airflow
+          </h3>
+          <ul className="space-y-2.5 mb-7">
+            {[
+              'Customers report machines taking extra quarters or cycles to dry normal loads',
+              'Dryer pockets overheating, tripping high-limit switches, or throwing airflow fault codes',
+              'Visible lint dust accumulating behind bulkheads, around cleanout doors, or on the roof',
+              'Heavy heat buildup in the rear service aisle despite daily lint-drawer emptying',
+            ].map((item) => (
+              <li key={item} className="flex gap-2.5 text-gray-700">
+                <Check size={18} className="text-brand-600 flex-shrink-0 mt-1" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+
+          <h3 className="text-xl font-semibold mb-2 text-gray-900">A work window built around your customers</h3>
+          <p className="mb-6">{market.schedule}</p>
+
+          <div className="flex flex-wrap gap-x-6 gap-y-3">
+            <Link className="pac-text-link" to="/services/dryer-vent-maintenance-program/">
+              Recurring maintenance programs →
+            </Link>
+            <Link className="pac-text-link" to="/services/commercial-dryer-vent-cleaning/">
+              Commercial dryer vent cleaning →
+            </Link>
+            <Link className="pac-text-link" to="/blog/laundromat-dryer-vent-cleaning-safety/">
+              Laundromat exhaust planning guide →
+            </Link>
+            <Link className="pac-text-link" to="/pricing/">
+              Pricing &amp; written estimates →
+            </Link>
+          </div>
+        </div>
+        <figure>
+          <img
+            src={market.image}
+            alt={market.alt}
+            width={800}
+            height={600}
+            loading="lazy"
+            decoding="async"
+            className="w-full rounded-sm"
+          />
+        </figure>
+      </section>
+
+      <section className="pac-business-scope">
+        <div className="pac-container">
+          <span className="pac-eyebrow">FULL-PATH EXHAUST CARE</span>
+          <h2>Follow the exhaust path from tumbler bank to roof cap.</h2>
+          <div className="pac-business-scope-grid">
+            {market.scope.map((part, index) => (
+              <article key={part.name}>
+                <span className="pac-scope-number">0{index + 1}</span>
+                <h3>{part.name}</h3>
+                <p>{part.detail}</p>
+              </article>
+            ))}
+          </div>
+          <p className="pac-scope-boundary">{market.boundary}</p>
+        </div>
+      </section>
+    </IndustryPageLayout>
+  );
+}

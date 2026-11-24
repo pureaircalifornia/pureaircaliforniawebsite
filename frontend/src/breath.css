@@ -1,0 +1,67 @@
+/* Nature and everyday life, carried through the shared PAC experience. */
+.pac-site{--pac-ink:#23374c;--pac-paper:#f2f7fa;--pac-muted:#59656a;--pac-line:#d8e0e3;--primary:210 70% 26%;--ring:210 70% 26%}
+.pac-site .pac-header{background:rgba(242,247,250,.97)}
+.pac-site .pac-button:hover{background:#384f66}
+.pac-site .pac-text-link:hover{color:#426271}
+.pac-breath-mission{padding:110px 0;background:#e6eff3;color:#23374c}
+.pac-breath-mission-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(38px,6vw,100px)}
+.pac-breath-portrait{position:relative;min-height:610px;height:100%;overflow:hidden;border-radius:46% 46% 3px 3px}
+.pac-breath-portrait>img{position:absolute;width:100%;height:100%;object-fit:cover;object-position:48% center}
+.pac-breath-portrait:after{content:'';position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(14,25,36,.86))}
+.pac-breath-portrait-note{position:absolute;z-index:1;bottom:38px;left:36px;right:24px;color:white}
+.pac-breath-portrait-note>span{font-size:9px;letter-spacing:.16em}
+.pac-breath-portrait-note p{font-size:clamp(30px,3.2vw,46px);line-height:1.22;margin:18px 0 0;font-weight:300;letter-spacing:-.035em}
+.pac-site .pac-breath-mission h2,.pac-site .pac-everyday-air h2{font-size:clamp(38px,4.1vw,62px);line-height:1.1;letter-spacing:-.05em;font-weight:400;color:#23374c;margin:25px 0 30px}
+.pac-breath-mission-copy>p{color:#525e63;font-size:16px;line-height:1.85;margin:0 0 20px;max-width:590px}
+.pac-breath-mission-copy>.pac-breath-lead{font-size:20px;line-height:1.65;color:#23374c}
+.pac-breath-mission-copy>.pac-mission-signature{font-family:Georgia,serif;font-size:26px;font-style:italic;color:#23374c;margin-top:30px}
+.pac-mission-signature>span{font:10px Inter,Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase}
+.pac-everyday-air{padding:105px 0 115px;background:#f2f7fa;color:#23374c}
+.pac-everyday-heading{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:40px}
+.pac-everyday-heading>p{max-width:370px;line-height:1.85;color:#59656a;font-size:16px;margin-bottom:30px}
+.pac-moments-grid{display:grid;grid-template-columns:1.15fr .85fr 1fr;gap:24px;align-items:start}
+.pac-moments-grid>figure{margin:0}.pac-moments-grid>figure:nth-child(2){padding-top:75px}.pac-moments-grid>figure:nth-child(3){padding-top:30px}
+.pac-moments-grid img{width:100%;height:380px;object-fit:cover;border-radius:3px}.pac-moments-grid>figure:nth-child(2) img{height:330px;border-radius:150px 150px 3px 3px}
+.pac-moments-grid figcaption{padding-top:24px}.pac-site .pac-moments-grid h3{font-family:Georgia,serif;font-size:30px;line-height:1.2;font-weight:400;margin:12px 0;color:#23374c}.pac-moments-grid p{font-size:14px;color:#59656a;line-height:1.7;max-width:290px}
+.pac-breath-pause{position:relative;isolation:isolate;overflow:hidden;background:#182b3e;color:#fff}
+.pac-breath-pause-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.pac-breath-pause:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,29,43,.86),rgba(15,29,43,.66));z-index:-1}
+.pac-breath-pause-inner{display:grid;grid-template-columns:1.6fr 1fr;gap:65px;align-items:center;padding-block:90px}
+.pac-breath-pause blockquote{font-family:Georgia,'Times New Roman',serif;font-size:clamp(30px,3.5vw,50px);line-height:1.28;letter-spacing:-.025em;margin:27px 0 22px;max-width:820px;text-wrap:pretty}
+.pac-reflection-credit{font-size:10px;letter-spacing:.08em;color:#d9e3e7;margin-bottom:24px}.pac-breath-pause .pac-text-link{color:white}
+.pac-breath-practice{text-align:center;display:flex;flex-direction:column;align-items:center}.pac-breath-practice>p{font-size:12px;color:#e8eff2;margin:20px 0 14px}
+.pac-breath-orbit{position:relative;width:210px;height:210px;display:grid;place-items:center}
+.pac-breath-orbit>span{position:absolute;inset:0;border:1px solid #dbe9f066;border-radius:50%;transform:scale(.9)}.pac-breath-orbit>span:nth-child(2){inset:18px;border-color:#dbe9f080}.pac-breath-orbit>span:nth-child(3){inset:36px;background:#ffffff0a;border-color:#dbe9f099}
+.pac-breath-orbit>em{font-size:22px;position:relative;color:#fff}.pac-breath-orbit.is-breathing>span{animation:pac-quiet-breath 8s ease-in-out infinite}
+.pac-breath-toggle{display:inline-flex;align-items:center;gap:9px;border-bottom:1px solid #ffffff80;min-height:44px;padding:8px 4px;color:white;font-size:12px}
+@keyframes pac-quiet-breath{0%,100%{transform:scale(.86);opacity:.7}50%{transform:scale(1.08);opacity:1}}
+.pac-site .pac-footer{background:#15293d;color:#edf4f7}.pac-footer-brand>p.pac-footer-purpose{font-family:Georgia,serif;font-size:19px;line-height:1.6;color:#d9e4e9;max-width:260px}
+.pac-site .pac-footer .pac-button-light{color:#23374c;background:#e5eff4;border-color:#e5eff4}
+.pac-hero-mission-link{display:inline-flex;align-items:center;gap:10px;margin-top:22px;min-height:44px;border-bottom:1px solid #ffffff80;font-size:12px;color:white}
+.pac-health-opening{margin-bottom:32px}.pac-health-opening>img{width:100%;height:320px;object-fit:cover;border-radius:4px;margin:25px 0}.pac-health-opening>p{font-size:19px}
+@media(min-width:701px){.pac-breath-mission:has(.pac-mission-signature) .pac-breath-portrait{min-height:760px}}
+@media(max-width:1000px){.pac-breath-mission-grid{gap:35px}.pac-breath-portrait{min-height:580px}.pac-breath-pause-inner{gap:30px}.pac-moments-grid{gap:18px}.pac-moments-grid img{height:300px}}
+@media(max-width:700px){.pac-breath-mission,.pac-everyday-air{padding:64px 0}.pac-breath-mission-grid{grid-template-columns:1fr;gap:38px}.pac-breath-portrait{min-height:460px;max-height:520px}.pac-breath-portrait-note{left:28px;bottom:30px}.pac-breath-mission-copy>.pac-breath-lead{font-size:19px}.pac-breath-mission-copy>p{font-size:16px}.pac-site .pac-breath-mission h2,.pac-site .pac-everyday-air h2{font-size:40px}.pac-everyday-heading{display:block;margin-bottom:30px}.pac-everyday-heading>p{max-width:100%;margin-bottom:0}.pac-moments-grid{grid-template-columns:1fr;gap:35px}.pac-moments-grid>figure:nth-child(n){padding-top:0}.pac-moments-grid>figure:nth-child(n) img{height:360px}.pac-moments-grid>figure:nth-child(2){width:85%;justify-self:center}.pac-breath-pause-inner{grid-template-columns:1fr;gap:38px;padding-block:65px}.pac-breath-pause blockquote{font-size:33px}.pac-breath-orbit{width:170px;height:170px}.pac-health-opening>img{height:240px}.pac-hero-mission-link{margin-top:12px}}
+@media(prefers-reduced-motion:reduce){.pac-breath-orbit.is-breathing>span{animation:none}}
+/* Keep the reflective typography distinct from the service interface. */
+.pac-site :is(.pac-breath-mission,.pac-everyday-air,.pac-breath-pause,.pac-footer) em{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;color:inherit}
+.pac-site .pac-breath-mission-copy h2 em,.pac-site .pac-everyday-heading h2 em{color:#576971}
+.pac-site .pac-breath-portrait-note em{color:#dae9f0}
+.pac-site .pac-footer em{color:#bed7e3}
+.pac-photo-journey .pac-scene-sky .pac-story-shade{background:linear-gradient(90deg,#e9f3f7ee 0%,#e9f3f7b8 40%,#e9f3f700 85%),linear-gradient(0deg,#182b3f99,transparent 30%)}
+.pac-photo-journey .pac-hero-copy h1{font-weight:450;font-size:clamp(52px,5.7vw,82px)}
+.pac-site .pac-hero-copy h1 em{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;color:#384f66}
+.pac-hero-copy .pac-hero-mission-link{color:#23374c;border-color:#23374c70}
+.pac-photo-journey .pac-journey-controls{background:rgba(24,43,62,.94)}
+.pac-about-page>main{overflow-x:clip}
+.pac-site .pac-about-page .pac-page-hero h1 em{color:#cfe3ed;font-family:Georgia,'Times New Roman',serif;font-weight:400;font-style:italic}
+@media(max-width:700px){.pac-photo-journey .pac-hero-copy h1{font-size:46px}.pac-hero-copy .pac-hero-mission-link{font-size:11px}}
+@media(max-width:700px){
+ .pac-photo-journey .pac-scene-sky .pac-story-shade{background:linear-gradient(90deg,#e9f3f7ee,#e9f3f7bb)}
+ .pac-photo-journey .pac-hero-copy{padding-top:120px}
+ .pac-photo-journey .pac-hero-copy h1{font-size:42px}
+ .pac-photo-journey .pac-hero-copy p{color:#23374c;font-size:16px;line-height:1.7}
+ .pac-photo-journey.is-still .pac-scene-sky{height:auto;min-height:0;padding-bottom:48px}
+ .pac-photo-journey.is-still .pac-journey-controls{bottom:auto}
+}
+@media(min-width:701px) and (max-height:700px){.pac-photo-journey.is-still .pac-scene-sky{height:auto;min-height:700px;padding-bottom:55px}}

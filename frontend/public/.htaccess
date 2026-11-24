@@ -2,6 +2,11 @@
   Options +SymLinksIfOwnerMatch
   RewriteEngine On
   RewriteBase /
+
+  # Redirect explicit index.html requests only; internal DirectoryIndex lookups
+  # must remain untouched or directory URLs would loop.
+  RewriteCond %{THE_REQUEST} \s/+[^?\s]*index\.html(?:[?\s]) [NC]
+  RewriteRule ^(.*)index\.html$ https://www.pureaircalifornia.com/$1 [R=301,L]
   
   # ---------------------------------------------------------------------------
   # LEGACY URL RECOVERY (pre-hack WordPress site)
@@ -35,25 +40,29 @@
   RewriteRule ^/?(feed|comments)/?$ /blog/ [R=301,L]
 
   # WordPress remnants and its old XML/HTML sitemaps. The CMS is gone, so these
-  # are permanently gone — 410 rather than 404 so Google drops them faster, and
+  # are permanently gone — 410 expresses that intentional removal, and
   # so the endless bot probing of /wp-login.php and /xmlrpc.php gets a terminal
   # answer instead of being handed the 404 page every time.
   RewriteRule ^/?(wordpress|wp-content|wp-includes|wp-json|wp-admin)(/.*)?$ - [G,NC,L]
   RewriteRule ^/?(wp-login\.php|xmlrpc\.php|wp-cron\.php)$ - [G,NC,L]
   RewriteRule ^/?sitemap(-[a-z0-9-]+)?\.html$ - [G,NC,L]
 
-  # Return HTTP 410 Gone for legacy Italian spam directories to purge them from Google Search Console
+  # Return HTTP 410 Gone for known removed Italian spam directories.
+  # Google can still revisit removed URLs; 404 and 410 both prevent indexing.
   RewriteRule ^/?(cartoleria-scuola|cd|classifica|ebook|film|giochi-giocattoli|idee-regalo|libri-inglese|libri-testi-universitari|libri|mio-ibs|offerte-ebook|ordina-come-ospite|shop)(/.*)?$ - [G,NC,L]
   RewriteRule ^/?search/?$ - [G,NC,L]
   # Injected dropshipping product URLs all end in "-p-<digits>" (e.g. /Tappo-...-p-497907).
-  # No legitimate page matches this, so 410 them to deindex the ~60K spam URLs faster than 404.
+  # No legitimate page matches this; keep these removed products out of the site.
   RewriteRule "-p-[0-9]+/?$" - [G,NC,L]
 
-  # Second wave of hack-era URLs. These were still answering 404 rather than 410,
-  # which tells Google "try again later" instead of "this is permanently gone" and
-  # keeps them sitting in the crawl queue. Every segment below is Italian-bookshop
-  # spam with no counterpart in this site's routes.
+  # Other confirmed hack-era Italian-bookshop paths. These have no counterpart
+  # in this site's routes. Removal status is not a promise of immediate recrawl
+  # cessation or disappearance from historical Search Console reports.
   RewriteRule ^/?(vinili|happy-card|libri-vintage|seller|servizi|contattaci|who-we-are|faq|offerte-[a-z0-9-]+)(/.*)?$ - [G,NC,L]
+
+  # Additional spam families in the September 27, 2026 Search Console export.
+  # Match complete path segments, leaving similarly named legitimate URLs alone.
+  RewriteRule ^/?(audiolibri|audiolibri-inglese|offerte|affiliati)(/.*)?$ - [G,NC,L]
 
   # Injected product detail URLs carry an ISBN under /e/, e.g.
   # /mio-primo-carezzalibro-...-fiona-watt/e/9781409515449?inventoryId=336928050
@@ -94,6 +103,9 @@
   # for a crawler here: Apache has already answered 404.html, so the redirect was
   # invisible to Google and the old URL read as dead. Do it server-side instead.
   RewriteRule ^/?services/electrostatic-filter-program/?$ /services/residential-electrostatic-filter/ [R=301,L]
+  RewriteRule ^/?industries/property-management/(?:santa-monica|beverly-hills|glendale|malibu|century-city|hollywood|downtown-la|ventura|pasadena|burbank|studio-city|encino|tarzana|reseda|canoga-park|woodland-hills|calabasas|valley-village|van-nuys|panorama-city|northridge|sun-valley|central-la|pacific-palisades|brentwood|los-feliz|culver-city|west-hollywood|chatsworth|laurel-canyon|fairfax|larchmont|koreatown|west-la|westwood|north-of-montana|sawtelle|beverly-glen|mid-wilshire|sherman-oaks|encino-village|lake-balboa|valley-glen|magnolia-park|toluca-lake|sherwood-forest|winnetka|granada-hills|mission-hills|porter-ranch|north-hollywood|sepulveda-basin|hidden-hills|deer-lake-highlands)/?$ /property-managers/ [R=301,L]
+  RewriteRule ^/?industries/laundromats/(?:santa-monica|beverly-hills|glendale|malibu|century-city|hollywood|downtown-la|ventura|pasadena|burbank|studio-city|encino|tarzana|reseda|canoga-park|woodland-hills|calabasas|valley-village|van-nuys|panorama-city|northridge|sun-valley|central-la|pacific-palisades|brentwood|los-feliz|culver-city|west-hollywood|chatsworth|laurel-canyon|fairfax|larchmont|koreatown|west-la|westwood|north-of-montana|sawtelle|beverly-glen|mid-wilshire|sherman-oaks|encino-village|lake-balboa|valley-glen|magnolia-park|toluca-lake|sherwood-forest|winnetka|granada-hills|mission-hills|porter-ranch|north-hollywood|sepulveda-basin|hidden-hills|deer-lake-highlands)/?$ /services/laundromat-dryer-vent-cleaning/ [R=301,L]
+  RewriteRule ^/?industries/(education|healthcare|hospitality|restaurants|retail|manufacturing|commercial-real-estate)/(?:santa-monica|beverly-hills|glendale|malibu|century-city|hollywood|downtown-la|ventura|pasadena|burbank|studio-city|encino|tarzana|reseda|canoga-park|woodland-hills|calabasas|valley-village|van-nuys|panorama-city|northridge|sun-valley|central-la|pacific-palisades|brentwood|los-feliz|culver-city|west-hollywood|chatsworth|laurel-canyon|fairfax|larchmont|koreatown|west-la|westwood|north-of-montana|sawtelle|beverly-glen|mid-wilshire|sherman-oaks|encino-village|lake-balboa|valley-glen|magnolia-park|toluca-lake|sherwood-forest|winnetka|granada-hills|mission-hills|porter-ranch|north-hollywood|sepulveda-basin|hidden-hills|deer-lake-highlands)/?$ /industries/$1/ [R=301,L]
 
   # Client-side-only routes: no static file is prerendered for these because the
   # URL carries a dynamic segment, so they must fall through to the SPA shell.
@@ -118,12 +130,19 @@ DirectoryIndex index.html
   AddOutputFilterByType DEFLATE text/html text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml
 </IfModule>
 
+# Serve modern image formats with accurate MIME types
+<IfModule mod_mime.c>
+  AddType image/avif .avif
+  AddType image/webp .webp
+</IfModule>
+
 # Cache static assets (1 year — filenames are content-hashed by Vite)
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresDefault "access plus 1 month"
   ExpiresByType text/css "access plus 1 year"
   ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/avif "access plus 1 year"
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType image/png "access plus 1 year"
   ExpiresByType image/jpeg "access plus 1 year"
@@ -139,9 +158,13 @@ DirectoryIndex index.html
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
-  Header set X-XSS-Protection "1; mode=block"
-  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-XSS-Protection "0"
+  Header set Referrer-Policy "strict-origin-when-cross-origin" "expr=%{THE_REQUEST} !~ m#\s/+(admin|feedback)(/|\?|\s)#i"
   Header set Permissions-Policy "camera=(), microphone=(), geolocation=(self)"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" "expr=%{HTTPS} == 'on'"
+  # Defense in depth for tokenized feedback and the admin shell, before JS runs.
+  Header always set X-Robots-Tag "noindex, nofollow" "expr=%{THE_REQUEST} =~ m#\s/+(admin|feedback)(/|\?|\s)#i"
+  Header always set Referrer-Policy "no-referrer" "expr=%{THE_REQUEST} =~ m#\s/+(admin|feedback)(/|\?|\s)#i"
 
   # No cache for HTML
   <FilesMatch "\.html$">
@@ -150,9 +173,14 @@ DirectoryIndex index.html
     Header set Expires "0"
   </FilesMatch>
 
-  # Immutable cache for hashed assets
-  <FilesMatch "\.(js|css|woff2|woff|png|jpg|jpeg|webp|svg|ico)$">
-    Header set Cache-Control "public, max-age=31536000, immutable"
+  # Public images/fonts have stable names and must be able to refresh.
+  <FilesMatch "\.(js|css|woff2|woff|png|jpg|jpeg|webp|avif|svg|ico)$">
+    Header set Cache-Control "public, max-age=86400, must-revalidate" "expr=%{REQUEST_URI} !~ m#^/assets/[^/]+-[A-Za-z0-9_-]{8,}\.(js|css)$#"
+  </FilesMatch>
+  Header set Cache-Control "public, max-age=31536000, immutable" "expr=%{REQUEST_URI} =~ m#^/assets/[^/]+-[A-Za-z0-9_-]{8,}\.(js|css)$#"
+  <FilesMatch "^(sitemap\.xml|robots\.txt|llms\.txt|llms-full\.txt)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+    Header set Expires "0"
   </FilesMatch>
 </IfModule>
 
@@ -160,7 +188,7 @@ DirectoryIndex index.html
 Options -Indexes
 
 # Block access to hidden files
-<FilesMatch "^\.(?!htaccess)">
+<FilesMatch "^\.">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>

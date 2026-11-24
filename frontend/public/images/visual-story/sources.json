@@ -1,0 +1,24 @@
+{
+  "tool": "built-in image_gen",
+  "generatedAt": "2026-10-11",
+  "assets": [
+    {
+      "name": "home-family",
+      "source": "exec-5b81d26d-d95a-406b-8d61-5fd2438db5ea.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide 16:9 editorial lifestyle website hero for Pure Air California air duct care. A beautiful warm sunlit Los Angeles living room with a distinctive deep blue couch, pale wood floor and cream rug. A baby around 12 months old plays sitting on the rug with wooden blocks, a parent sits nearby watching warmly. A real small white low wall supply air vent is visible at a safe distance about a metre from the child. Show the whole baby, blue sofa and the vent together, central composition so all three remain visible when cropped to a square mobile image. Natural candid feeling, soft afternoon LA light, tasteful lived-in design, real skin and fabric texture, premium magazine photograph. No text, no logos, no exaggerated dust or germ particles, no medical imagery, no cables, safe uncluttered environment. Airflow will be added in website code so do not paint arrows. 1920x1080 landscape composition.",
+      "description": "AI generated illustrative home scene; not a customer or medical evidence."
+    },
+    {
+      "name": "allergy-home",
+      "source": "exec-7fb71474-f725-492d-ba0f-3a61f9de21e3.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide editorial lifestyle website image for a California home air-care story. A young adult woman sitting on a beautiful deep blue living room sofa at home, caught in a gentle natural sneeze into a white tissue held at her nose, eyes momentarily closed. Small tissue box on nearby pale wood table. A small white wall air vent visible behind the sofa but not emphasized. Warm Los Angeles daylight, cream and pale wood interior, understated premium editorial photography, candid believable expression, natural anatomy, realistic textures. Composition places her face near center and includes blue sofa and tissue so the meaning survives square mobile crop. No text, no brand marks, no germ clouds, no dramatic suffering, no implication of cure, no split screen. 1920x1080 landscape.",
+      "description": "AI generated illustrative sneeze scene; no claim that duct cleaning treats allergies."
+    },
+    {
+      "name": "consultation-pac-v2",
+      "source": "exec-dfc05a1b-ead6-4c01-9f55-e7671bf6d22a.png",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target: an illustrative photo of a technician in a navy polo holding a filter beside a homeowner. Image 2 is the exact authoritative Pure Air California logo insert reference. Change ONLY the chest shirt logo, replacing the incorrect existing PureAir droplet logo with the exact supplied PURE AIR California wordmark, including its wave flourishes, navy PURE AIR text, aqua California script. Use a small tidy white embroidered rectangular patch under that exact logo so its dark navy letters remain legible on the navy polo, realistically fitted to shirt perspective and fabric. Preserve both people, faces, expressions, bodies, hands, filter, room, lighting and composition exactly. Do not invent a different logo or add any other text. Remove the tiny white Nike-style sleeve mark too, leaving plain navy fabric.",
+      "description": "AI edited illustrative existing consultation photo using original PAC logo reference."
+    }
+  ]
+}

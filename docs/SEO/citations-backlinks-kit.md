@@ -13,12 +13,13 @@ everywhere (inconsistent NAP is the #1 thing that suppresses local rankings).
 > **Business name:** Pure Air California
 > **Phone:** (213) 792-4145
 > **Website:** https://www.pureaircalifornia.com
+> **Direct Review Link:** https://g.page/r/CeC3m8QZo8w5EBM/review
 > **Service area:** Los Angeles County & parts of Ventura County (service-area business — no storefront)
 > **Hours:** Open 24 hours, 7 days a week
-> **Founded:** 1993
+> **Founded:** 1990
 > **Primary category:** Air duct cleaning service
-> **Other categories:** HVAC contractor, Dryer vent cleaning service
-> **Short description (≤ 200 chars):** NADCA-certified air duct & dryer vent cleaning in Los Angeles since 1993. Licensed, bonded & insured. 448K+ customers served. Free estimates. Call (213) 792-4145.
+> **Other categories:** Dryer vent cleaning service, HVAC contractor, Mold remediation service, Air conditioning contractor, Heating contractor, Cleaning service
+> **Short description (≤ 200 chars):** NADCA-certified air duct, dryer vent & mold cleaning in LA since 1990. Licensed & insured. 448K+ clients served. 24/7 service. Free estimates. Call (213) 792-4145.
 
 **Rules:**
 - Use the *exact* same name, phone, and URL on every site — no variations ("PAC", "Pure Air CA", different phone formats).
@@ -37,7 +38,7 @@ Do these first; they carry the most weight and feed AI answer engines.
 | Bing Places | bingplaces.com | Powers Bing + Copilot; import from Google in 1 click. |
 | Apple Business Connect | businessconnect.apple.com | Apple Maps + Siri + Apple Intelligence. |
 | Yelp | https://www.yelp.com/biz/pure-air-california-los-angeles-5 | Already exists — claim & complete it. Major for AI citations. |
-| Facebook Page | https://www.facebook.com/pureaircalifornia | Already exists — verify NAP matches. |
+| Facebook Page | https://www.facebook.com/AirDuctCleaningInLA | Already exists — verify NAP matches. |
 | Instagram | https://www.instagram.com/pureaircalifornia | Link in bio → website. |
 | Nextdoor Business | nextdoor.com/business | Huge for local LA home-services. |
 

@@ -1,107 +1,40 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import ResponsiveImage from './ResponsiveImage';
+import logos from '@/data/commercialWorkLogos.json';
 
-// Updated client list with available logo files
-const clients = [
-  {
-    name: 'Ford',
-    logo: '/logo/VectorWiki-WfVlH__ford-logo-flat.svg',
-    alt: 'Ford logo',
-  },
-  {
-    name: 'Four Seasons',
-    logo: '/logo/VectorWiki-8ZQSp__four-seasons-hotels-and-resorts.svg',
-    alt: 'Four Seasons Hotels and Resorts logo',
-  },
-  {
-    name: 'USPS',
-    logo: '/logo/VectorWiki-s2d88__united-states-postal-service.svg',
-    alt: 'United States Postal Service logo',
-  },
-  {
-    name: 'Warner Bros',
-    logo: '/logo/VectorWiki-9Z0W8__the-wb-television-network.svg',
-    alt: 'Warner Bros logo',
-  },
-  {
-    name: 'YMCA',
-    logo: '/logo/ymca.png',
-    alt: 'YMCA logo',
-  },
-  {
-    name: 'Taco Bell',
-    logo: '/logo/VectorWiki-N35KO__taco-bell.svg',
-    alt: 'Taco Bell logo',
-  },
-  {
-    name: 'Pure Air California',
-    logo: '/logo/pac-logo.png',
-    alt: 'Pure Air California logo',
-  }
-];
+const featuredClients = logos.slice(0, 6);
 
 const TrustedBy = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const logoVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 }
-    }
-  };
-
   return (
-    <section className="py-8 bg-white border-b border-gray-100">
+    <section className="py-10 bg-white border-b border-[#dce7ee]" aria-label="Selected commercial work">
       <div className="container mx-auto px-4">
-        <h2 className="text-center text-lg font-semibold text-gray-700 mb-6 tracking-wide uppercase">Trusted by Leading Brands</h2>
-        <motion.div
-          className="flex flex-wrap justify-center items-center gap-8 md:gap-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          {clients.map((client) => (
-            <motion.div
+        <h2 className="text-center text-sm font-semibold text-[#536b79] mb-6 tracking-widest uppercase">
+          Selected Commercial Work in Los Angeles
+        </h2>
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+          {featuredClients.map((client) => (
+            <div
               key={client.name}
-              className="flex items-center justify-center h-14 grayscale hover:grayscale-0 transition-all duration-300 hover:scale-110"
-              variants={logoVariants}
-              whileHover={{ scale: 1.1 }}
+              className="flex items-center justify-center h-14 px-4 py-2 transition-transform duration-200 hover:-translate-y-0.5"
+              title={client.name}
             >
-              <div
-                className="flex items-center justify-center h-full px-4 py-2"
-                aria-label={client.alt}
-                title={client.name}
-                tabIndex={0}
-              >
-                <ResponsiveImage
-                  src={client.logo}
-                  alt={client.alt}
-                  className="h-8 md:h-10 w-auto mx-auto object-contain"
-                  loading="lazy"
-                />
-              </div>
-            </motion.div>
+              <img
+                src={client.src}
+                alt={client.name}
+                width={140}
+                height={56}
+                className="h-9 md:h-11 w-auto max-w-[140px] object-contain"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
           ))}
-        </motion.div>
-        <p className="text-center text-sm text-gray-500 mt-6">
-          Serving Southern California's premier residential and commercial properties since 1993
+        </div>
+        <p className="text-center text-xs text-[#536b79] mt-6">
+          Past work at selected Los Angeles locations. Logos belong to their respective owners and do not imply a current or brand-wide partnership.
         </p>
       </div>
     </section>
   );
 };
 
-export default TrustedBy; 
+export default TrustedBy;

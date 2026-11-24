@@ -54,7 +54,7 @@ async def test_record_feedback_high_rating_returns_google_url(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_record_feedback_low_rating_routes_private(monkeypatch):
+async def test_record_feedback_low_rating_preserves_public_option(monkeypatch):
     fake_col = AsyncMock()
     fake_col.find_one = AsyncMock(return_value={"id": "r1", "token": "t", "status": "clicked",
                                                 "customer_name": "J", "customer_email": "j@x.com"})
@@ -63,7 +63,8 @@ async def test_record_feedback_low_rating_routes_private(monkeypatch):
     monkeypatch.setattr(review_engine, "get_review_requests_collection", lambda: fake_col)
     monkeypatch.setattr(review_engine, "_notify_owner_of_feedback", notify)
     out = await review_engine.record_feedback("t", rating=2, private_feedback="late")
-    assert out["route"] == "private"
+    assert out["route"] == "google"
+    assert out["google_review_url"]
     notify.assert_awaited_once()
 
 
@@ -80,6 +81,18 @@ async def test_record_feedback_ignores_resubmission(monkeypatch):
     monkeypatch.setattr(review_engine, "get_review_requests_collection", lambda: fake_col)
     monkeypatch.setattr(review_engine, "_notify_owner_of_feedback", notify)
     out = await review_engine.record_feedback("t", rating=1, private_feedback="spam")
-    assert out["route"] == "private"
+    assert out["route"] == "google"
     fake_col.update_one.assert_not_awaited()
     notify.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("rating", [1, 2, 3, 4, 5])
+async def test_every_rating_has_same_public_review_choice(monkeypatch, rating):
+    fake_col = AsyncMock()
+    fake_col.find_one.return_value = {"token": "t", "status": "clicked"}
+    monkeypatch.setattr(review_engine, "get_review_requests_collection", lambda: fake_col)
+    monkeypatch.setattr(review_engine, "_notify_owner_of_feedback", AsyncMock())
+    result = await review_engine.record_feedback("t", rating, "My experience")
+    assert result == review_engine._route_for({"rating": 5})
+    assert fake_col.update_one.call_args.args[1]["$set"]["status"] == "feedback_submitted"

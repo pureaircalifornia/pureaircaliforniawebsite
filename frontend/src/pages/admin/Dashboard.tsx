@@ -3,7 +3,7 @@
  * Shows key metrics from the backend API, recent leads, and quick actions
  */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 import {
     Users,
     Calendar,

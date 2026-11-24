@@ -1,85 +1,122 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { MapPin, Clock, Car, AlertCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { MapPin, ArrowUpRight, Phone, AlertCircle } from 'lucide-react';
+import { Link } from '@/components/CanonicalLink';
+import { business } from '@/config/business';
 
-// The small Maps surface used here, including legacy and advanced markers.
-interface GoogleMapInstance { panTo(position: unknown): void; }
+interface GoogleMapInstance {
+  panTo(position: unknown): void;
+}
 interface GoogleMapMarker {
- position?: unknown;
- addListener(event: string, handler: () => void): unknown;
- setMap?: (map: GoogleMapInstance | null) => void;
- getPosition?: () => unknown;
- setAnimation?: (animation: unknown) => void;
+  position?: unknown;
+  addListener(event: string, handler: () => void): unknown;
+  setMap?: (map: GoogleMapInstance | null) => void;
+  getPosition?: () => unknown;
 }
 interface GoogleInfoWindow {
- open(options: unknown, marker?: GoogleMapMarker): void;
- close(): void;
+  open(options: unknown, marker?: GoogleMapMarker): void;
+  close(): void;
 }
-interface MapEntry { marker: GoogleMapMarker; infoWindow: GoogleInfoWindow | null; areaName: string; }
-declare global {
- interface Window {
-  google: { maps: {
-   Map: new (element: HTMLElement, options: Record<string, unknown>) => GoogleMapInstance;
-   MapTypeId: { ROADMAP: string };
-   marker?: { AdvancedMarkerElement: new (options: Record<string, unknown>) => GoogleMapMarker };
-   Marker: new (options: Record<string, unknown>) => GoogleMapMarker;
-   LatLng: new (lat: number, lng: number) => unknown;
-   Size: new (width: number, height: number) => unknown;
-   Point: new (x: number, y: number) => unknown;
-   InfoWindow: new (options: Record<string, unknown>) => GoogleInfoWindow;
-   Animation?: { BOUNCE: unknown };
-   event?: { clearInstanceListeners(instance: unknown): void };
-  }};
-  initializeGoogleMapsCallback: () => void;
- }
+interface MapEntry {
+  marker: GoogleMapMarker;
+  infoWindow: GoogleInfoWindow | null;
+  areaName: string;
 }
 
-// Define service areas
+declare global {
+  interface Window {
+    google: {
+      maps: {
+        Map: new (element: HTMLElement, options: Record<string, unknown>) => GoogleMapInstance;
+        MapTypeId: { ROADMAP: string };
+        marker?: { AdvancedMarkerElement: new (options: Record<string, unknown>) => GoogleMapMarker };
+        Marker: new (options: Record<string, unknown>) => GoogleMapMarker;
+        Size: new (width: number, height: number) => unknown;
+        Point: new (x: number, y: number) => unknown;
+        InfoWindow: new (options: Record<string, unknown>) => GoogleInfoWindow;
+        event?: { clearInstanceListeners(instance: unknown): void };
+      };
+    };
+    initializeGoogleMapsCallback: () => void;
+  }
+}
+
 const serviceAreas = [
   {
     name: 'Beverly Hills',
-    travelTime: '15-20 minutes',
-    description: 'Premium residential and commercial services',
-    coordinates: { lat: 34.0736, lng: -118.4004 }
+    slug: 'beverly-hills',
+    region: 'Westside',
+    description: 'Multi-zone residences, condos, and Golden Triangle commercial spaces',
+    coordinates: { lat: 34.0736, lng: -118.4004 },
   },
   {
     name: 'Santa Monica',
-    travelTime: '20-25 minutes',
-    description: 'Beachfront properties and commercial spaces',
-    coordinates: { lat: 34.0195, lng: -118.4912 }
+    slug: 'santa-monica',
+    region: 'Coastal',
+    description: 'Coastal bungalows, multi-unit condos, and Silicon Beach workplaces',
+    coordinates: { lat: 34.0195, lng: -118.4912 },
   },
   {
-    name: 'Malibu',
-    travelTime: '30-35 minutes',
-    description: 'Luxury homes and estates',
-    coordinates: { lat: 34.0259, lng: -118.7798 }
+    name: 'Pasadena',
+    slug: 'pasadena',
+    region: 'Foothills',
+    description: 'Historic Craftsman homes, foothill properties, and Old Pasadena suites',
+    coordinates: { lat: 34.1478, lng: -118.1445 },
   },
   {
-    name: 'West Hollywood',
-    travelTime: '10-15 minutes',
-    description: 'Commercial and residential services',
-    coordinates: { lat: 34.0900, lng: -118.3617 }
+    name: 'Sherman Oaks',
+    slug: 'sherman-oaks',
+    region: 'San Fernando Valley',
+    description: 'Hillside split-levels, Valley ranch homes, and Ventura Blvd offices',
+    coordinates: { lat: 34.1508, lng: -118.449 },
   },
   {
     name: 'Century City',
-    travelTime: '15-20 minutes',
-    description: 'Commercial office buildings and high-rises',
-    coordinates: { lat: 34.0556, lng: -118.4174 }
-  }
+    slug: 'century-city',
+    region: 'Central & Metro LA',
+    description: 'High-rise condominiums, Class-A office towers, and medical suites',
+    coordinates: { lat: 34.0556, lng: -118.4174 },
+  },
+  {
+    name: 'Malibu',
+    slug: 'malibu',
+    region: 'Coastal & Canyons',
+    description: 'Beachfront homes and Santa Monica Mountains canyon residences',
+    coordinates: { lat: 34.0259, lng: -118.7798 },
+  },
 ];
 
-// Create a separate Map component to handle Google Maps integration
 const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const mapInstanceRef = useRef<GoogleMapInstance | null>(null);
   const markersRef = useRef<MapEntry[]>([]);
-  const officeLocationRef = useRef({ lat: 34.0984, lng: -118.3301 }); // LA center
+  const centerPointRef = useRef({ lat: business.geo.latitude, lng: business.geo.longitude });
   const scriptElementRef = useRef<HTMLScriptElement | null>(null);
   const scriptLoadedRef = useRef<boolean>(false);
 
-  // Function to initialize map
+  const cleanupMapResources = useCallback(() => {
+    if (markersRef.current.length > 0 && window.google?.maps) {
+      markersRef.current.forEach((m) => {
+        try {
+          if (m.marker && typeof m.marker.setMap === 'function') {
+            m.marker.setMap(null);
+          }
+          if (m.marker && window.google?.maps?.event?.clearInstanceListeners) {
+            window.google.maps.event.clearInstanceListeners(m.marker);
+          }
+          if (m.infoWindow) {
+            m.infoWindow.close();
+          }
+        } catch {
+          // Ignore cleanup errors
+        }
+      });
+    }
+    markersRef.current = [];
+    mapInstanceRef.current = null;
+  }, []);
+
   const initializeMap = useCallback(() => {
     if (!window.google?.maps || !mapContainerRef.current) {
       setLoadError(true);
@@ -87,404 +124,123 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
     }
 
     try {
-      // Create map
-      const mapOptions = {
+      mapInstanceRef.current = new window.google.maps.Map(mapContainerRef.current, {
         zoom: 10,
-        center: officeLocationRef.current,
+        center: centerPointRef.current,
         mapTypeId: window.google.maps.MapTypeId.ROADMAP,
         mapTypeControl: false,
         fullscreenControl: false,
-        styles: [
-          {
-            featureType: "administrative",
-            elementType: "geometry",
-            stylers: [{ visibility: "simplified" }]
-          },
-          {
-            featureType: "water",
-            elementType: "geometry",
-            stylers: [{ color: "#e9e9e9" }]
-          },
-          {
-            featureType: "poi",
-            stylers: [{ visibility: "off" }]
-          }
-        ]
-      };
+      });
 
-      // Create map instance
-      mapInstanceRef.current = new window.google.maps.Map(
-        mapContainerRef.current,
-        mapOptions
-      );
-
-      // Check if AdvancedMarkerElement is available - preferred method
       const useAdvancedMarker = !!window.google.maps.marker?.AdvancedMarkerElement;
 
-      // Add office marker
-      if (useAdvancedMarker) {
-        try {
-          const markerElement = document.createElement('div');
-          markerElement.innerHTML = `
-            <div style="width: 32px; height: 32px;">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="#B45309">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-              </svg>
-            </div>
-          `;
-
-          const officeMarker = new window.google.maps.marker.AdvancedMarkerElement({
-            position: officeLocationRef.current,
+      serviceAreas.forEach((area) => {
+        let marker: GoogleMapMarker;
+        if (useAdvancedMarker && window.google.maps.marker) {
+          const el = document.createElement('div');
+          el.innerHTML =
+            '<div style="width:26px;height:26px;background:#135778;border:2px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.25)"></div>';
+          marker = new window.google.maps.marker.AdvancedMarkerElement({
+            position: area.coordinates,
             map: mapInstanceRef.current,
-            content: markerElement,
-            title: "Pure Air California Office"
+            content: el,
+            title: area.name,
           });
-
-          // Store marker reference for cleanup
-          markersRef.current.push({
-            marker: officeMarker,
-            infoWindow: null,
-            areaName: "office"
-          });
-        } catch (error) {
-          // Fallback to regular marker
-          const officeMarker = new window.google.maps.Marker({
-            position: officeLocationRef.current,
-            map: mapInstanceRef.current,
-            icon: {
-              url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32' fill='%23B45309'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E",
-              scaledSize: new window.google.maps.Size(32, 32),
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(16, 32)
-            },
-            title: "Pure Air California Office"
-          });
-
-          // Store marker reference for cleanup
-          markersRef.current.push({
-            marker: officeMarker,
-            infoWindow: null,
-            areaName: "office"
-          });
-        }
-      } else {
-        // Fallback to regular marker
-        const officeMarker = new window.google.maps.Marker({
-          position: officeLocationRef.current,
-          map: mapInstanceRef.current,
-          icon: {
-            url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32' fill='%23B45309'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E",
-            scaledSize: new window.google.maps.Size(32, 32),
-            origin: new window.google.maps.Point(0, 0),
-            anchor: new window.google.maps.Point(16, 32)
-          },
-          title: "Pure Air California Office"
-        });
-
-        // Store marker reference for cleanup
-        markersRef.current.push({
-          marker: officeMarker,
-          infoWindow: null,
-          areaName: "office"
-        });
-      }
-
-      // Add area markers
-      serviceAreas.forEach(area => {
-        let marker;
-
-        if (useAdvancedMarker) {
-          try {
-            const markerElement = document.createElement('div');
-            markerElement.innerHTML = `
-              <div style="width: 28px; height: 28px;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="#2563EB">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                </svg>
-              </div>
-            `;
-
-            marker = new window.google.maps.marker.AdvancedMarkerElement({
-              position: area.coordinates,
-              map: mapInstanceRef.current,
-              content: markerElement,
-              title: area.name
-            });
-          } catch (error) {
-            // Fallback to regular marker if advanced marker fails
-            marker = new window.google.maps.Marker({
-              position: area.coordinates,
-              map: mapInstanceRef.current,
-              icon: {
-                url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='28' height='28' fill='%232563EB'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E",
-                scaledSize: new window.google.maps.Size(28, 28),
-                origin: new window.google.maps.Point(0, 0),
-                anchor: new window.google.maps.Point(14, 28)
-              },
-              title: area.name
-            });
-          }
         } else {
-          // Fallback to regular marker
           marker = new window.google.maps.Marker({
             position: area.coordinates,
             map: mapInstanceRef.current,
-            icon: {
-              url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='28' height='28' fill='%232563EB'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E",
-              scaledSize: new window.google.maps.Size(28, 28),
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(14, 28)
-            },
-            title: area.name
+            title: area.name,
           });
         }
 
-        // Create info window
         const infoWindow = new window.google.maps.InfoWindow({
-          content: `
-            <div style="padding: 5px 10px; max-width: 200px;">
-              <h3 style="font-weight: bold; margin-bottom: 5px;">${area.name}</h3>
-              <p style="font-size: 12px; margin-bottom: 5px;">${area.description}</p>
-              <div style="font-size: 11px; color: #666;">
-                ${area.travelTime} from our office
-              </div>
-            </div>
-          `
+          content: `<div style="padding:6px 10px;max-width:210px"><strong style="display:block;margin-bottom:4px">${area.name}</strong><p style="font-size:12px;margin:0">${area.description}</p></div>`,
         });
 
-        // Add click listener (works for both marker types)
-        try {
-          marker.addListener('click', () => {
-            // Close all other info windows
-            markersRef.current.forEach(m => {
-              if (m.infoWindow) m.infoWindow.close();
-            });
-
-            // Open the info window - handle differences between marker types
-            if (useAdvancedMarker && 'position' in marker) {
-              infoWindow.open({
-                anchor: marker,
-                map: mapInstanceRef.current
-              });
-            } else {
-              infoWindow.open(mapInstanceRef.current, marker);
-            }
-          });
-        } catch (error) {
-          // Error adding marker click listener
-        }
-
-        // Store marker reference
-        markersRef.current.push({
-          marker,
-          infoWindow,
-          areaName: area.name
+        marker.addListener('click', () => {
+          markersRef.current.forEach((m) => m.infoWindow?.close());
+          if (useAdvancedMarker && 'position' in marker) {
+            infoWindow.open({ anchor: marker, map: mapInstanceRef.current });
+          } else {
+            infoWindow.open(mapInstanceRef.current, marker);
+          }
         });
+
+        markersRef.current.push({ marker, infoWindow, areaName: area.name });
       });
 
       setMapLoaded(true);
-    } catch (error) {
+    } catch {
       setLoadError(true);
     }
   }, []);
 
-  // Function to load Google Maps API
-  const loadGoogleMapsAPI = useCallback(() => {
-    try {
-      // If Google Maps is already loaded, initialize the map
-      if (window.google?.maps) {
-        initializeMap();
-        return () => {
-          // Cleanup function in case we already had Google Maps loaded
-          cleanupMapResources();
-        };
-      }
-
-      // Already attempted to load script but failed
-      if (scriptLoadedRef.current) {
-        setLoadError(true);
-        return;
-      }
-
-      // Set script as loaded to prevent duplicate attempts
-      scriptLoadedRef.current = true;
-
-      // Create a unique callback name
-      const callbackName = 'initializeGoogleMapsCallback';
-      window[callbackName] = initializeMap;
-
-      // Get API key from environment variable
-      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
-      if (!apiKey) {
-        // Google Maps API key is missing - show fallback UI
-        setLoadError(true);
-        return;
-      }
-
-      // Create script element
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=${callbackName}&loading=async`;
-      script.async = true;
-      script.defer = true;
-      script.id = 'google-maps-api-script';
-      script.crossOrigin = 'anonymous'; // Add crossOrigin attribute
-
-      script.onerror = (error) => {
-        setLoadError(true);
-        // Clean up callback
-        if (window[callbackName]) delete window[callbackName];
-      };
-
-      // Store reference to the script element for cleanup
-      scriptElementRef.current = script;
-      document.head.appendChild(script);
-
-      return () => {
-        cleanupMapResources();
-
-        // Clean up script and globals
-        if (scriptElementRef.current && document.head.contains(scriptElementRef.current)) {
-          document.head.removeChild(scriptElementRef.current);
-        }
-
-        // Clean up callback
-        if (window[callbackName]) delete window[callbackName];
-      };
-    } catch (error) {
-      setLoadError(true);
-      return undefined;
-    }
-  }, [initializeMap]);
-
-  // Helper function to clean up map resources
-  const cleanupMapResources = () => {
-    // Clean up markers and listeners
-    if (markersRef.current.length > 0 && window.google?.maps) {
-      markersRef.current.forEach(m => {
-        try {
-          if (m.marker) {
-            // Different cleanup method depending on marker type
-            if (typeof m.marker.setMap === 'function') {
-              m.marker.setMap(null);
-            }
-
-            // Remove all event listeners
-            if (window.google?.maps?.event?.clearInstanceListeners) {
-              window.google.maps.event.clearInstanceListeners(m.marker);
-            }
-          }
-
-          // Close and clean up info windows
-          if (m.infoWindow) {
-            m.infoWindow.close();
-            if (window.google?.maps?.event?.clearInstanceListeners) {
-              window.google.maps.event.clearInstanceListeners(m.infoWindow);
-            }
-          }
-        } catch (error) {
-          // Error cleaning up map resources
-        }
-      });
-    }
-
-    // Clear marker references
-    markersRef.current = [];
-
-    // Clear map instance
-    mapInstanceRef.current = null;
-  };
-
-  // Effect to load map
   useEffect(() => {
-    // Create and store a cleanup function
-    let cleanup: (() => void) | undefined;
-
-    try {
-      cleanup = loadGoogleMapsAPI();
-    } catch (e) {
+    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+    if (window.google?.maps) {
+      initializeMap();
+      return cleanupMapResources;
+    }
+    if (!apiKey || scriptLoadedRef.current) {
       setLoadError(true);
+      return cleanupMapResources;
     }
 
-    // Return cleanup function
+    scriptLoadedRef.current = true;
+    const callbackName = 'initializeGoogleMapsCallback';
+    window[callbackName] = initializeMap;
+
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=${callbackName}&loading=async`;
+    script.async = true;
+    script.defer = true;
+    script.id = 'google-maps-api-script';
+    script.crossOrigin = 'anonymous';
+    script.onerror = () => setLoadError(true);
+
+    scriptElementRef.current = script;
+    document.head.appendChild(script);
+
     return () => {
-      if (typeof cleanup === 'function') {
-        cleanup();
-      } else {
-        cleanupMapResources();
+      cleanupMapResources();
+      if (scriptElementRef.current && document.head.contains(scriptElementRef.current)) {
+        document.head.removeChild(scriptElementRef.current);
       }
     };
-  }, [loadGoogleMapsAPI]);
+  }, [initializeMap, cleanupMapResources]);
 
-  // Effect to update selected area
   useEffect(() => {
     if (!selectedArea || !mapInstanceRef.current || !window.google?.maps) return;
-
-    const selectedMarker = markersRef.current.find(
-      m => m.areaName === selectedArea
-    );
-
-    if (selectedMarker) {
-      try {
-        // Close all info windows
-        markersRef.current.forEach(m => {
-          if (m.infoWindow) m.infoWindow.close();
-        });
-
-        // Handle both marker types
-        const marker = selectedMarker.marker;
-        const infoWindow = selectedMarker.infoWindow;
-
-        if (infoWindow) {
-          // Check if it's a regular marker or advanced marker
-          if (typeof marker.getPosition === 'function') {
-            // Regular Marker
-            infoWindow.open(mapInstanceRef.current, marker);
-
-            // Pan to marker
-            mapInstanceRef.current.panTo(marker.getPosition());
-
-            // Bounce animation if supported
-            if (window.google.maps.Animation && typeof marker.setAnimation === 'function') {
-              marker.setAnimation(window.google.maps.Animation.BOUNCE);
-              setTimeout(() => {
-                if (marker) {
-                  marker.setAnimation?.(null);
-                }
-              }, 700);
-            }
-          } else {
-            // Advanced Marker Element
-            infoWindow.open({
-              anchor: marker,
-              map: mapInstanceRef.current
-            });
-
-            // Pan to marker
-            mapInstanceRef.current.panTo(marker.position);
-          }
-        }
-      } catch (error) {
-        // Error highlighting selected area
+    const selectedMarker = markersRef.current.find((m) => m.areaName === selectedArea);
+    if (!selectedMarker) return;
+    markersRef.current.forEach((m) => m.infoWindow?.close());
+    const { marker, infoWindow } = selectedMarker;
+    if (infoWindow) {
+      if (typeof marker.getPosition === 'function') {
+        infoWindow.open(mapInstanceRef.current, marker);
+        mapInstanceRef.current.panTo(marker.getPosition());
+      } else {
+        infoWindow.open({ anchor: marker, map: mapInstanceRef.current });
+        mapInstanceRef.current.panTo(marker.position);
       }
     }
   }, [selectedArea]);
 
-  // Render fallback UI if map fails to load
   if (loadError) {
     return (
-      <div className="flex flex-col items-center justify-center h-full bg-gray-50 rounded-lg p-6">
-        <AlertCircle className="w-12 h-12 text-amber-600 mb-4" />
-        <h3 className="text-lg font-semibold mb-2">Map Unavailable</h3>
-        <p className="text-gray-600 text-center mb-4">
-          We couldn't load the map. This may be due to an ad blocker or network issue.
+      <div className="flex flex-col items-center justify-center h-full bg-slate-50 rounded-lg p-6 text-center">
+        <AlertCircle className="w-10 h-10 text-brand-700 mb-3" aria-hidden="true" />
+        <h3 className="text-lg font-semibold mb-2 text-slate-900">Greater Los Angeles Service-Area Dispatch</h3>
+        <p className="text-gray-600 mb-4 max-w-sm text-sm">
+          Pure Air California serves residential and commercial properties across Los Angeles County and Ventura.
         </p>
         <a
-          href="tel:2137924145"
-          className="inline-flex items-center gap-2 bg-brand-600 text-white px-4 py-2 rounded-md hover:bg-brand-700 transition-colors"
+          href={business.phoneHref}
+          className="inline-flex items-center gap-2 bg-brand-600 text-white px-4 py-2 rounded-md hover:bg-brand-700 transition-colors text-sm font-semibold"
         >
-          <MapPin className="w-4 h-4" />
-          Contact Us Directly
+          <Phone className="w-4 h-4" aria-hidden="true" />
+          Call {business.phone}
         </a>
       </div>
     );
@@ -493,96 +249,88 @@ const GoogleMap = ({ selectedArea }: { selectedArea: string | null }) => {
   return (
     <div className="relative h-full">
       <div ref={mapContainerRef} className="h-full w-full" />
-
       {!mapLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-50 bg-opacity-80">
-          <div className="text-center">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              className="w-12 h-12 border-4 border-brand-600 border-t-transparent rounded-full mx-auto mb-4"
-            />
-            <p className="text-gray-700">Loading map...</p>
-          </div>
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-50/90">
+          <p className="text-gray-700 text-sm font-medium">Loading Greater Los Angeles map...</p>
         </div>
       )}
     </div>
   );
 };
 
-// Main component
 const ServiceAreaMap = () => {
   const [selectedArea, setSelectedArea] = useState<string | null>(null);
 
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">Our Service Area</h2>
+        <h2 className="text-3xl font-bold text-center mb-4 text-slate-900">Greater Los Angeles Service Area</h2>
         <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-          We proudly serve the greater Los Angeles area, with special focus on high-end residential
-          and commercial properties. Our team is ready to provide exceptional service throughout
-          these premium locations.
+          Select a Los Angeles hub below or explore all 54 local service guides across the Westside, Central LA, San
+          Fernando Valley, and San Gabriel foothills.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Map Container */}
-          <div className="bg-gray-100 rounded-lg overflow-hidden h-[350px] sm:h-[400px] lg:h-[500px] relative shadow-lg order-2 lg:order-1">
+          <div className="bg-gray-100 rounded-lg overflow-hidden h-[350px] sm:h-[400px] lg:h-[480px] relative shadow-lg order-2 lg:order-1">
             <GoogleMap selectedArea={selectedArea} />
           </div>
 
-          {/* Area Information */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 order-1 lg:order-2">
-            {serviceAreas.map((area) => (
-              <motion.div
-                key={area.name}
-                className={`p-6 rounded-lg border ${selectedArea === area.name
-                  ? 'border-brand-600 bg-brand-50 shadow-md'
-                  : 'border-gray-200 hover:border-brand-300 hover:bg-brand-50/50'
-                  } transition-all duration-200 cursor-pointer`}
-                onClick={() => setSelectedArea(area.name)}
-                whileHover={{ y: -3 }}
-                animate={{
-                  scale: selectedArea === area.name ? 1.02 : 1,
-                  transition: { duration: 0.2 }
-                }}
-              >
-                <h3 className="text-xl font-semibold mb-2 flex items-center">
-                  <MapPin className={`w-5 h-5 mr-2 ${selectedArea === area.name ? 'text-brand-600' : 'text-gray-400'}`} />
-                  {area.name}
-                </h3>
-                <p className="text-gray-600 mb-4">{area.description}</p>
-                <div className="flex items-center gap-4 text-sm text-gray-500">
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    <span>{area.travelTime}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Car className="w-4 h-4" />
-                    <span>From our location</span>
-                  </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 order-1 lg:order-2">
+            {serviceAreas.map((area) => {
+              const isSelected = selectedArea === area.name;
+              return (
+                <div
+                  key={area.slug}
+                  className={`p-5 rounded-xl border transition-all cursor-pointer flex flex-col ${
+                    isSelected
+                      ? 'border-brand-600 bg-brand-50 shadow-md'
+                      : 'border-gray-200 hover:border-brand-300 hover:bg-brand-50/40'
+                  }`}
+                  onClick={() => setSelectedArea(area.name)}
+                >
+                  <span className="text-xs font-semibold uppercase tracking-wider text-brand-700 mb-1">
+                    {area.region}
+                  </span>
+                  <h3 className="text-lg font-semibold mb-2 flex items-center text-slate-900">
+                    <MapPin
+                      className={`w-4 h-4 mr-2 flex-shrink-0 ${isSelected ? 'text-brand-600' : 'text-gray-400'}`}
+                      aria-hidden="true"
+                    />
+                    {area.name}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 flex-grow">{area.description}</p>
+                  <Link
+                    to={`/locations/${area.slug}/`}
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-brand-700 hover:underline underline-offset-4"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    View {area.name} guide <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                  </Link>
                 </div>
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">
-            Don't see your area? Contact us to check availability
-          </p>
-          <motion.a
-            href="tel:2137924145"
-            className="inline-flex items-center gap-2 bg-brand-600 text-white px-6 py-3 rounded-full hover:bg-brand-700 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+        <div className="mt-12 text-center flex flex-wrap justify-center gap-4">
+          <Link
+            to="/locations/"
+            className="inline-flex items-center gap-2 bg-brand-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-700 transition-colors"
           >
-            <MapPin className="w-5 h-5" />
-            Check Your Area
-          </motion.a>
+            <MapPin className="w-4 h-4" aria-hidden="true" />
+            Browse All 54 LA Areas
+          </Link>
+          <a
+            href={business.phoneHref}
+            className="inline-flex items-center gap-2 border border-brand-600 text-brand-700 px-6 py-3 rounded-lg font-semibold hover:bg-brand-50 transition-colors"
+          >
+            <Phone className="w-4 h-4" aria-hidden="true" />
+            Confirm Your ZIP: {business.phone}
+          </a>
         </div>
       </div>
     </section>
   );
 };
 
-export default ServiceAreaMap; 
+export default ServiceAreaMap;

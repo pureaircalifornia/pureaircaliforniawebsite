@@ -1,242 +1,163 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
-// Slide configuration
 interface HeroSlide {
-    image: string;
-    alt: string;
-    overlayGradient?: string;
+  image: string;
+  alt: string;
+  overlayGradient?: string;
 }
 
 interface HeroSliderProps {
-    slides?: HeroSlide[];
-    interval?: number;
-    showControls?: boolean;
-    showIndicators?: boolean;
-    children?: React.ReactNode;
-    overlayClassName?: string;
-    theme?: 'default' | 'nature';
+  slides?: HeroSlide[];
+  interval?: number;
+  showControls?: boolean;
+  showIndicators?: boolean;
+  children?: React.ReactNode;
+  overlayClassName?: string;
+  theme?: 'default' | 'nature';
 }
 
-// Default slides with high-quality images
 const defaultSlides: HeroSlide[] = [
-    {
-        image: '/images/hero/hvac-technicians.webp',
-        alt: 'Professional HVAC cleaning technician team',
-    },
-    {
-        image: '/images/hero/hvac-3d-render.jpg',
-        alt: 'Advanced ventilation system technology',
-    },
-    {
-        image: '/images/hero/hvac-closeup-1.jpg',
-        alt: 'Detailed view of clean air duct system',
-    },
-    {
-        image: '/images/hero/hero-foggy-mountains.jpg',
-        alt: 'Fresh air standard we aim for',
-    },
+  {
+    image: '/images/coastal-v1/losAngeles-1440.webp',
+    alt: 'Los Angeles cityscape across Pure Air California service areas',
+  },
+  {
+    image: '/images/pac/duct-cleaning-interior-v2.webp',
+    alt: 'Rotary brush cleaning inside a metal air duct',
+  },
+  {
+    image: '/images/pac/duct-interior-clean-v2.webp',
+    alt: 'Clean interior of a galvanized sheet-metal air duct',
+  },
 ];
 
-// Nature-themed slides
 const natureSlides: HeroSlide[] = [
-    {
-        image: '/images/hero/hero-foggy-mountains.jpg',
-        alt: 'Fresh misty mountain air - Pure Air California',
-    },
-    {
-        image: '/images/hero/hero-river-forest.jpg',
-        alt: 'Crystal clear river and forest air',
-    },
-    {
-        image: '/images/hero/hero-mountain-landscape.jpg',
-        alt: 'Expansive mountain landscape with clean air',
-    },
-    {
-        image: '/images/hero/hero-misty-trees.jpg',
-        alt: 'Misty forest trees representing fresh indoor air',
-    },
-    {
-        image: '/images/hero/hero-coastal.jpg',
-        alt: 'Fresh coastal breeze and clean air',
-    },
+  {
+    image: '/images/breath/living-forest-1440.webp',
+    alt: 'Sunlit mountain forest and meadow beneath open California skies',
+  },
+  {
+    image: '/images/breath/coastal-breath-1440.webp',
+    alt: 'Fresh California coastline waves and clear sky',
+  },
+  {
+    image: '/images/breath/cloud-sea-1440.webp',
+    alt: 'Soft evening light across a sea of clouds',
+  },
 ];
 
 const HeroSlider: React.FC<HeroSliderProps> = ({
-    slides,
-    interval = 6000,
-    showControls = true,
-    showIndicators = true,
-    children,
-    overlayClassName,
-    theme = 'default',
+  slides,
+  interval = 6000,
+  showControls = true,
+  showIndicators = true,
+  children,
+  overlayClassName,
+  theme = 'default',
 }) => {
-    const activeSlides = slides || (theme === 'nature' ? natureSlides : defaultSlides);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-    const [direction, setDirection] = useState(1); // 1 for next, -1 for prev
+  const activeSlides = slides || (theme === 'nature' ? natureSlides : defaultSlides);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-    const goToNext = useCallback(() => {
-        setDirection(1);
-        setCurrentIndex((prev) => (prev + 1) % activeSlides.length);
-    }, [activeSlides.length]);
+  const goToNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % activeSlides.length);
+  }, [activeSlides.length]);
 
-    const goToPrev = useCallback(() => {
-        setDirection(-1);
-        setCurrentIndex((prev) => (prev - 1 + activeSlides.length) % activeSlides.length);
-    }, [activeSlides.length]);
+  const goToPrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + activeSlides.length) % activeSlides.length);
+  }, [activeSlides.length]);
 
-    const goToSlide = useCallback((index: number) => {
-        setDirection(index > currentIndex ? 1 : -1);
-        setCurrentIndex(index);
-    }, [currentIndex]);
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const timer = window.setInterval(goToNext, interval);
+    return () => window.clearInterval(timer);
+  }, [isAutoPlaying, interval, goToNext]);
 
-    // Auto-play functionality
-    useEffect(() => {
-        if (!isAutoPlaying) return;
-        const timer = setInterval(goToNext, interval);
-        return () => clearInterval(timer);
-    }, [isAutoPlaying, interval, goToNext]);
+  return (
+    <div
+      className="absolute inset-0 overflow-hidden bg-slate-900"
+      onMouseEnter={() => setIsAutoPlaying(false)}
+      onMouseLeave={() => setIsAutoPlaying(true)}
+    >
+      {activeSlides.map((slide, index) => {
+        const isActive = index === currentIndex;
+        return (
+          <div
+            key={slide.image}
+            className="absolute inset-0 w-full h-full transition-opacity duration-700"
+            style={{ opacity: isActive ? 1 : 0, zIndex: isActive ? 1 : 0 }}
+            aria-hidden={!isActive}
+          >
+            <img
+              src={slide.image}
+              alt={slide.alt}
+              className="w-full h-full object-cover"
+              loading={index === 0 || isActive ? 'eager' : 'lazy'}
+              decoding="async"
+              {...{ fetchpriority: index === 0 ? 'high' : 'low' }}
+              width={1440}
+              height={960}
+            />
+            <div
+              className={`absolute inset-0 ${
+                theme === 'nature'
+                  ? 'bg-gradient-to-r from-[#082e4d]/75 via-slate-900/45 to-transparent'
+                  : 'bg-gradient-to-r from-[#082e4d]/85 via-slate-900/55 to-transparent'
+              }`}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#082e4d]/80 via-transparent to-slate-900/30" />
+          </div>
+        );
+      })}
 
-    // Pause auto-play on hover
-    const handleMouseEnter = () => setIsAutoPlaying(false);
-    const handleMouseLeave = () => setIsAutoPlaying(true);
+      {overlayClassName && <div className={overlayClassName} />}
+      {children}
 
-    // Preload next image
-    useEffect(() => {
-        const nextIndex = (currentIndex + 1) % activeSlides.length;
-        const img = new Image();
-        img.src = activeSlides[nextIndex].image;
-    }, [currentIndex, activeSlides]);
+      {showControls && (
+        <>
+          <button
+            type="button"
+            onClick={goToPrev}
+            className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/25 transition-colors"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-6 h-6" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={goToNext}
+            className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/25 transition-colors"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-6 h-6" aria-hidden="true" />
+          </button>
+        </>
+      )}
 
-    // Parallax Wipe Variants
-    const slideVariants = {
-        enter: (direction: number) => ({
-            clipPath: direction > 0
-                ? 'inset(0 0 0 100%)' // Enter from right (wipes left)
-                : 'inset(0 100% 0 0)', // Enter from left (wipes right)
-            scale: 1.2,
-            filter: 'brightness(0.5)',
-            zIndex: 1
-        }),
-        center: {
-            clipPath: 'inset(0 0 0 0)',
-            scale: 1,
-            filter: 'brightness(1)',
-            zIndex: 2,
-            transition: {
-                clipPath: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }, // Custom bezier for premium feel
-                scale: { duration: 10, ease: "linear" }, // Subtle zoom
-                filter: { duration: 1.2, ease: "easeOut" }
-            }
-        },
-        exit: (direction: number) => ({
-            scale: 1, // Keep scale slightly distinct
-            filter: 'brightness(0.8)',
-            zIndex: 0,
-            transition: {
-                duration: 1.2,
-                ease: [0.22, 1, 0.36, 1]
-            }
-        })
-    };
-
-    return (
-        <div
-            className="absolute inset-0 overflow-hidden bg-slate-900"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-        >
-            <AnimatePresence initial={false} custom={direction} mode="popLayout">
-                <motion.div
-                    key={currentIndex}
-                    custom={direction}
-                    variants={slideVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    className="absolute inset-0 w-full h-full"
-                >
-                    <img
-                        src={activeSlides[currentIndex].image}
-                        alt={activeSlides[currentIndex].alt}
-                        className="w-full h-full object-cover"
-                        loading="eager"
-                        fetchPriority="high"
-                        width={1920}
-                        height={1080}
-                    />
-
-                    {/* Integrated Overlay */}
-                    <div className={`absolute inset-0 ${theme === 'nature'
-                        ? 'bg-gradient-to-r from-emerald-900/60 via-slate-900/40 to-transparent'
-                        : 'bg-gradient-to-r from-slate-900/80 via-slate-900/50 to-transparent'
-                        }`} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-slate-900/30" />
-                </motion.div>
-            </AnimatePresence>
-
-            {/* Premium Atmospheric Effects */}
-            {theme === 'nature' ? (
-                <>
-                    <motion.div
-                        className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-yellow-100/10 via-transparent to-transparent opacity-50 pointer-events-none"
-                        animate={{ opacity: [0.3, 0.6, 0.3] }}
-                        transition={{ duration: 5, repeat: Infinity }}
-                    />
-                </>
-            ) : (
-                <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none"></div>
-            )}
-
-            {/* Custom Overlay Content (passed as children) */}
-            {overlayClassName && <div className={overlayClassName}></div>}
-
-            {/* The actual text content is rendered by the parent, but we handle the background/slider here */}
-            {children}
-
-            {/* Navigation Controls */}
-            {showControls && (
-                <>
-                    <button
-                        onClick={goToPrev}
-                        className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white hover:bg-white/20 transition-all duration-300 group hover:scale-110"
-                        aria-label="Previous slide"
-                    >
-                        <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
-                    </button>
-                    <button
-                        onClick={goToNext}
-                        className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white hover:bg-white/20 transition-all duration-300 group hover:scale-110"
-                        aria-label="Next slide"
-                    >
-                        <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
-                    </button>
-                </>
-            )}
-
-            {/* Slide Indicators */}
-            {showIndicators && (
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3">
-                    {activeSlides.map((_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => goToSlide(index)}
-                            className="group relative py-2"
-                            aria-label={`Go to slide ${index + 1}`}
-                        >
-                            <div className={`h-1 rounded-full transition-all duration-500 ${index === currentIndex
-                                ? 'w-12 bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)]'
-                                : 'w-6 bg-white/30 group-hover:bg-white/50'
-                                }`} />
-                        </button>
-                    ))}
-                </div>
-            )}
+      {showIndicators && (
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+          {activeSlides.map((_, index) => (
+            <button
+              type="button"
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className="py-2"
+              aria-label={`Go to slide ${index + 1}`}
+              aria-current={index === currentIndex ? 'true' : undefined}
+            >
+              <div
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  index === currentIndex ? 'w-12 bg-white' : 'w-6 bg-white/40 hover:bg-white/60'
+                }`}
+              />
+            </button>
+          ))}
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default HeroSlider;

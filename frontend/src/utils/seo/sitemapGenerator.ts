@@ -1,135 +1,40 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { format } from 'date-fns';
+import { canonicalUrl } from './canonicalUrl';
+import { isSearchIndexable } from './searchPolicy.mjs';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-interface SitemapItem {
+/**
+ * Runtime-safe sitemap metadata definitions aligned with `searchPolicy.mjs`
+ * and `scripts/generate-sitemap.js`. The production `sitemap.xml` and
+ * `robots.txt` files are generated exclusively by `scripts/generate-sitemap.js`
+ * and enriched after prerendering by `scripts/enrich-sitemap.mjs`.
+ */
+export interface SitemapItem {
   loc: string;
-  lastmod: string;
-  changefreq: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'always' | 'never';
+  changefreq: 'daily' | 'weekly' | 'monthly' | 'yearly';
   priority: number;
 }
 
-const generateSitemap = () => {
-  const sitemapItems: SitemapItem[] = [
-    {
-      loc: 'https://www.pureaircalifornia.com',
-      lastmod: format(new Date(), 'yyyy-MM-dd'),
-      changefreq: 'daily',
-      priority: 1.0
-    },
-    {
-      loc: 'https://www.pureaircalifornia.com/services',
-      lastmod: format(new Date(), 'yyyy-MM-dd'),
-      changefreq: 'weekly',
-      priority: 0.9
-    },
-    {
-      loc: 'https://www.pureaircalifornia.com/locations',
-      lastmod: format(new Date(), 'yyyy-MM-dd'),
-      changefreq: 'weekly',
-      priority: 0.8
-    },
-    {
-      loc: 'https://www.pureaircalifornia.com/blog',
-      lastmod: format(new Date(), 'yyyy-MM-dd'),
-      changefreq: 'weekly',
-      priority: 0.8
-    },
-    {
-      loc: 'https://www.pureaircalifornia.com/about',
-      lastmod: format(new Date(), 'yyyy-MM-dd'),
-      changefreq: 'monthly',
-      priority: 0.7
-    },
-    {
-      loc: 'https://www.pureaircalifornia.com/contact',
-      lastmod: format(new Date(), 'yyyy-MM-dd'),
-      changefreq: 'monthly',
-      priority: 0.7
-    }
-  ];
+const CORE_ROUTES: ReadonlyArray<{ path: string; changefreq: SitemapItem['changefreq']; priority: number }> = [
+  { path: '/', changefreq: 'daily', priority: 1.0 },
+  { path: '/locations/los-angeles/', changefreq: 'weekly', priority: 1.0 },
+  { path: '/services/', changefreq: 'weekly', priority: 0.9 },
+  { path: '/home-services/', changefreq: 'monthly', priority: 0.9 },
+  { path: '/pricing/', changefreq: 'weekly', priority: 0.9 },
+  { path: '/quote/', changefreq: 'monthly', priority: 0.9 },
+  { path: '/locations/', changefreq: 'weekly', priority: 0.9 },
+  { path: '/industries/', changefreq: 'monthly', priority: 0.9 },
+  { path: '/blog/', changefreq: 'weekly', priority: 0.8 },
+  { path: '/about/', changefreq: 'monthly', priority: 0.8 },
+  { path: '/contact/', changefreq: 'monthly', priority: 0.8 },
+];
 
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapItems
-  .map(item => `
-  <url>
-    <loc>${item.loc}</loc>
-    <lastmod>${item.lastmod}</lastmod>
-    <changefreq>${item.changefreq}</changefreq>
-    <priority>${item.priority}</priority>
-  </url>
-`)
-  .join('')}
-</urlset>`;
+export function getCoreSitemapItems(): SitemapItem[] {
+  return CORE_ROUTES
+    .filter((route) => isSearchIndexable(route.path))
+    .map((route) => ({
+      loc: canonicalUrl(route.path),
+      changefreq: route.changefreq,
+      priority: route.priority,
+    }));
+}
 
-  const sitemapPath = path.join(__dirname, '../../public/sitemap.xml');
-  fs.writeFileSync(sitemapPath, sitemap);
-
-  // Also create a robots.txt
-  const robotsTxt = `User-agent: *
-Allow: /
-
-Sitemap: https://www.pureaircalifornia.com/sitemap.xml
-
-# Google News
-User-agent: Googlebot-News
-Allow: /
-
-# Bingbot
-User-agent: bingbot
-Allow: /
-
-# Yandex
-User-agent: Yandex
-Allow: /
-
-# Baidu
-User-agent: Baiduspider
-Allow: /
-
-# Allow crawling of AMP pages
-Allow: /amp
-
-# Block specific directories
-Disallow: /admin/
-Disallow: /api/
-Disallow: /node_modules/
-
-# Block specific file types
-Disallow: /*.js$
-Disallow: /*.css$
-Disallow: /*.json$
-
-# Block specific URL patterns
-Disallow: /*?*
-Disallow: /*&*
-
-# Block specific file extensions
-Disallow: /*.pdf$
-Disallow: /*.doc$
-Disallow: /*.docx$
-Disallow: /*.xls$
-Disallow: /*.xlsx$
-
-# Block specific URL parameters
-Disallow: /*sort=
-Disallow: /*filter=
-Disallow: /*page=
-
-# Allow specific directories
-Allow: /blog/
-Allow: /services/
-Allow: /locations/
-Allow: /about/
-Allow: /contact/`;
-
-  const robotsPath = path.join(__dirname, '../../public/robots.txt');
-  fs.writeFileSync(robotsPath, robotsTxt);
-};
-
-export default generateSitemap;
+export default getCoreSitemapItems;

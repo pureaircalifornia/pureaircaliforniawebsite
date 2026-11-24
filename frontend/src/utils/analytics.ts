@@ -1,10 +1,10 @@
 /**
  * Analytics Utility Module
- * Centralized tracking for GTM, GA4, and Google Ads
- * 
- * This module pushes events to the dataLayer which are then
- * picked up by Google Tag Manager to fire appropriate tags.
+ * Consent-gated GA4 events. No personal form fields are sent to analytics.
  */
+
+import { analyticsAllowed, safeAnalyticsUrl } from './privacy.mjs';
+import { measurementContext, normalizeMeasurement } from './measurementContext.mjs';
 
 declare global {
     interface Window {
@@ -21,14 +21,16 @@ if (typeof window !== 'undefined') {
  * Push an event to the dataLayer
  */
 export const pushToDataLayer = (event: string, data?: Record<string, any>) => {
-    if (typeof window === 'undefined') return;
-
+    if (!analyticsAllowed()) return;
+    const measured = { ...normalizeMeasurement({ ...measurementContext(), ...data }), page_location: safeAnalyticsUrl(window.location.href),
+        page_referrer: safeAnalyticsUrl(document.referrer) };
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
         event,
-        ...data,
+        ...measured,
         timestamp: new Date().toISOString(),
     });
+    if (typeof window.gtag === 'function') { try { window.gtag('event', event, measured); } catch { /* Optional measurement cannot interrupt the user flow. */ } }
 };
 
 /**
@@ -36,10 +38,10 @@ export const pushToDataLayer = (event: string, data?: Record<string, any>) => {
  */
 export const trackPageView = (pagePath: string, pageTitle?: string) => {
     pushToDataLayer('page_view', {
-        page_path: pagePath,
+        page_path: pagePath.split(/[?#]/)[0],
         page_title: pageTitle || document.title,
-        page_referrer: document.referrer,
-        page_location: window.location.href,
+        page_referrer: safeAnalyticsUrl(document.referrer),
+        page_location: safeAnalyticsUrl(window.location.href),
     });
 };
 
@@ -67,7 +69,7 @@ export const trackFormSubmission = (
         square_footage: formData.squareFootage,
         ab_variant: formData.abVariant || 'none',
         currency: 'USD',
-        value: getEstimatedLeadValue(formData.service, formData.propertyType),
+        estimated_lead_value: getEstimatedLeadValue(formData.service, formData.propertyType),
     });
 
     // Form submission event for Google Ads conversion
@@ -101,15 +103,10 @@ export const trackPhoneCall = (location: string) => {
     pushToDataLayer('phone_click', {
         click_location: location,
         phone_number: '(213) 792-4145',
-        conversion_type: 'phone_call',
+        conversion_type: 'phone_link_click',
     });
 
-    // Explicit Google Ads Conversion
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('event', 'conversion', {
-            'send_to': 'AW-1120420693/phoneClickLabel' // User to replace with actual conversion label
-        });
-    }
+    // A phone click is an interaction, not proof of a call or a paid lead.
 };
 
 /**
@@ -119,7 +116,7 @@ export const trackCTAClick = (ctaName: string, location: string, destination?: s
     pushToDataLayer('cta_click', {
         cta_name: ctaName,
         click_location: location,
-        destination_url: destination,
+        destination_url: destination ? safeAnalyticsUrl(destination, window.location.origin) : undefined,
     });
 };
 
@@ -184,7 +181,7 @@ export const trackEngagement = (
  */
 export const trackOutboundLink = (url: string, linkText: string) => {
     pushToDataLayer('outbound_link', {
-        outbound_url: url,
+        outbound_url: safeAnalyticsUrl(url),
         link_text: linkText,
     });
 };
@@ -219,7 +216,7 @@ export const trackABVariantExposure = (
 
 /**
  * Estimate lead value based on service type and property
- * Used for Google Ads value-based bidding
+ * Internal estimate only; never report this as revenue or a purchase value.
  */
 const getEstimatedLeadValue = (
     service?: string,

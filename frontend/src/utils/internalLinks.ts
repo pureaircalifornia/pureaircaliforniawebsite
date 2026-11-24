@@ -1,16 +1,14 @@
 import { locationData } from '@/pages/locations/data';
 
 /**
- * Internal linking helpers.
+ * Contextual internal linking helpers that distribute PageRank and topical
+ * relevance cleanly across:
+ *   Homepage <-> Core LA Services <-> /locations/los-angeles/ <->
+ *   54 LA Neighborhoods <-> Industries & Case Studies <-> Blog Guides <->
+ *   /pricing/ & /quote/.
  *
- * Before this, 79 of 107 pages had no contextual outbound links at all — every
- * link on them came from the nav or footer. That leaves the site as a set of
- * leaf nodes hanging off global chrome, with no topical relationships for either
- * a crawler or a visitor to follow.
- *
- * These helpers build those relationships from data that already exists (a
- * location's region, a service's subject) rather than from a hand-maintained
- * list that would drift out of date as pages are added.
+ * All rotations are deterministic by index/seed so builds stay stable and
+ * avoid repetitive footprints across sibling city/industry pages.
  */
 
 export interface LinkItem {
@@ -20,13 +18,26 @@ export interface LinkItem {
   note?: string;
 }
 
+const normalizePath = (value: string): string => {
+  const clean = value.split(/[?#]/)[0].replace(/\/+$/, '');
+  return clean || '/';
+};
+
 /**
- * Cities near `slug`, drawn from the same region.
- *
- * The starting offset is derived from the city's own index so that the 24 San
- * Fernando Valley pages don't all link to the same handful of neighbours —
- * otherwise a few cities would absorb every internal link and the rest would get
- * none. Deterministic, so the output is stable between builds.
+ * High-authority Los Angeles pillar & conversion hubs for cross-cluster linking.
+ */
+export const CORE_LA_HUB_LINKS: LinkItem[] = [
+  { label: 'Los Angeles air duct & dryer vent guide', path: '/locations/los-angeles', note: 'Local coverage, micro-climates & access planning' },
+  { label: 'Home air duct & dryer vent services', path: '/home-services', note: 'Residential cleaning options for LA homes & condos' },
+  { label: 'Los Angeles pricing guide', path: '/pricing', note: 'Starting at $299 air ducts · $149 dryer vents' },
+  { label: 'Indoor air care checklist', path: '/air-quality-calculator', note: 'Check whether an HVAC or dryer vent inspection makes sense' },
+  { label: 'Indoor air quality & HVAC journal', path: '/blog', note: 'Practical LA guides on costs, wildfire smoke & safety' },
+  { label: 'Request a free written estimate', path: '/quote', note: 'Property-specific scope before any work starts' },
+];
+
+/**
+ * Cities near `slug`, drawn first from the same LA region then rotated across
+ * neighboring regions so all 54 neighborhood pages receive balanced link equity.
  */
 export const getNearbyLocations = (slug: string, count = 6): LinkItem[] => {
   const self = locationData.find((l) => l.slug === slug);
@@ -51,53 +62,58 @@ export const getNearbyLocations = (slug: string, count = 6): LinkItem[] => {
   }));
 };
 
-/** Core service pages, phrased for the city they are being linked from. */
+/** Core and rotating specialized service links phrased for a specific city page. */
 export const getServiceLinksForCity = (cityName: string, slug?: string): LinkItem[] => {
-  // Three core services on every city page. These are the primary money pages and
-  // the ones a visitor on a neighbourhood page is most likely to actually want.
   const core: LinkItem[] = [
     {
       label: `Residential air duct cleaning in ${cityName}`,
       path: '/services/residential-air-duct-cleaning',
+      note: 'Starting at $299 for eligible residential scopes',
+    },
+    {
+      label: `Residential dryer vent cleaning in ${cityName}`,
+      path: '/services/residential-dryer-vent-cleaning',
+      note: 'Starting at $149 for eligible residential scopes',
     },
     {
       label: `Commercial air duct cleaning in ${cityName}`,
       path: '/services/commercial-air-duct-cleaning',
     },
     {
-      label: `Dryer vent cleaning in ${cityName}`,
-      path: '/services/residential-dryer-vent-cleaning',
+      label: `HVAC system cleaning in ${cityName}`,
+      path: '/services/hvac-system-cleaning',
     },
   ];
 
-  // The remaining services, rotated by the city's index.
-  //
-  // This function previously returned a fixed list, which meant the same five
-  // service pages were linked from all 54 city pages and the other five were linked
-  // from none. Measured: the fixed five had 56-79 contextual inbound links each
-  // while commercial-electrostatic-filter and laundromat-dryer-vent-cleaning had 3.
-  // Internal authority was pooling in half the catalogue and starving the rest.
-  //
-  // Rotating spreads roughly 54x3 inbound links across seven pages instead of
-  // concentrating them on two, and it keeps the set on any single page short enough
-  // to read as a genuine recommendation rather than a link list.
+  // Rotate specialized services deterministically across the 54 city pages so
+  // every service page receives steady contextual equity without boilerplate.
   const rotating: LinkItem[] = [
-    { label: `HVAC system cleaning in ${cityName}`, path: '/services/hvac-system-cleaning' },
-    { label: `Air duct sanitizing in ${cityName}`, path: '/services/air-duct-sanitizing' },
+    {
+      label: `Wildfire smoke & hillside duct assessment in ${cityName}`,
+      path: '/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles',
+    },
+    {
+      label: `Commercial & HOA duct & dryer vent care in ${cityName}`,
+      path: '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles',
+    },
     {
       label: `Commercial dryer vent cleaning in ${cityName}`,
       path: '/services/commercial-dryer-vent-cleaning',
     },
     {
-      label: `Electrostatic air filters in ${cityName}`,
+      label: `Air duct sanitizing assessment in ${cityName}`,
+      path: '/services/air-duct-sanitizing',
+    },
+    {
+      label: `Residential electrostatic air filters in ${cityName}`,
       path: '/services/residential-electrostatic-filter',
     },
     {
-      label: `Commercial electrostatic filters in ${cityName}`,
+      label: `Commercial electrostatic air filters in ${cityName}`,
       path: '/services/commercial-electrostatic-filter',
     },
     {
-      label: `Dryer vent maintenance plans in ${cityName}`,
+      label: `Scheduled dryer vent maintenance in ${cityName}`,
       path: '/services/dryer-vent-maintenance-program',
     },
     {
@@ -113,33 +129,15 @@ export const getServiceLinksForCity = (cityName: string, slug?: string): LinkIte
   return [
     ...core,
     ...picked,
-    { label: `What duct cleaning costs in ${cityName}`, path: '/pricing' },
+    { label: 'Greater Los Angeles air duct service guide', path: '/locations/los-angeles' },
+    { label: `Air duct & dryer vent pricing for ${cityName}`, path: '/pricing' },
+    { label: `Request a free estimate in ${cityName}`, path: '/quote' },
   ];
 };
 
 /**
- * Industry pages to link from a city page.
- *
- * The seven industry pages are well written and 80.7% unique between them, but they
- * had 3-4 contextual inbound links each because nothing outside /industries/ pointed
- * at them. A restaurant owner searching from a neighbourhood page had no route to
- * the restaurant page at all.
- *
- * Rotated by city index for the same reason the service and blog links are: 54 pages
- * linking the same two industries is a footprint, 54 pages linking a rotating pair
- * distributes the authority and reads as editorial.
- */
-/**
- * Service-area links for an industry page.
- *
- * The city pages link out to the industry pages, but the return path did not exist:
- * each industry page linked to /locations/los-angeles/ and nothing else. That left
- * the seven industry pages topically disconnected from the 54 city pages, and left a
- * commercial visitor with no route to anything local.
- *
- * Rotated by the industry's path so the seven pages list different cities rather
- * than repeating one block, and drawn from locationData so it cannot drift when a
- * location is added or removed.
+ * Service-area links for an industry or commercial page, always anchored by
+ * the Los Angeles pillar hub plus rotated neighborhood hubs.
  */
 export const getAreaLinksForIndustry = (path: string, count = 8): LinkItem[] => {
   const seed = path.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
@@ -147,7 +145,7 @@ export const getAreaLinksForIndustry = (path: string, count = 8): LinkItem[] => 
   const start = cities.length ? seed % cities.length : 0;
   const rotated = [...cities.slice(start), ...cities.slice(0, start)];
   return [
-    { label: 'All of Los Angeles', path: '/locations/los-angeles' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
     ...rotated.slice(0, Math.max(0, count - 1)).map((l) => ({
       label: l.name,
       path: `/locations/${l.slug}`,
@@ -164,6 +162,7 @@ export const getIndustryLinksForCity = (slug: string, count = 2): LinkItem[] => 
     { label: 'Retail spaces', path: '/industries/retail' },
     { label: 'Manufacturing and industrial', path: '/industries/manufacturing' },
     { label: 'Offices and commercial real estate', path: '/industries/commercial-real-estate' },
+    { label: 'Property managers and HOAs', path: '/property-managers' },
   ];
   const index = locationData.findIndex((l) => l.slug === slug);
   if (index < 0) return industries.slice(0, count);
@@ -171,173 +170,345 @@ export const getIndustryLinksForCity = (slug: string, count = 2): LinkItem[] => 
   return [...industries.slice(start), ...industries.slice(0, start)].slice(0, count);
 };
 
-/** Related services for a given service page, keyed by its path. */
+/**
+ * Related services, guides, and hubs for ALL 12 service pages, keyed by
+ * normalized path without trailing slash.
+ */
 export const RELATED_SERVICES: Record<string, LinkItem[]> = {
   '/services/residential-air-duct-cleaning': [
+    { label: 'Home services overview', path: '/home-services' },
     { label: 'Residential dryer vent cleaning', path: '/services/residential-dryer-vent-cleaning' },
     { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
-    { label: 'Air duct sanitizing', path: '/services/air-duct-sanitizing' },
-    { label: 'Air duct cleaning cost in Los Angeles', path: '/pricing' },
-    { label: 'About Pure Air California', path: '/about' },
-    { label: 'Refer a customer to us', path: '/partners' },
+    { label: 'Wildfire smoke & hillside duct assessment', path: '/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles' },
+    { label: 'Air duct sanitizing assessment', path: '/services/air-duct-sanitizing' },
+    { label: 'Los Angeles air duct cleaning guide', path: '/locations/los-angeles' },
+    { label: 'Air duct cleaning cost in Los Angeles (from $299)', path: '/pricing' },
+    { label: 'Indoor air care checklist', path: '/air-quality-calculator' },
+    { label: 'Air duct cleaning FAQ', path: '/blog/air-duct-cleaning-faq' },
+    { label: 'Is air duct cleaning worth it?', path: '/blog/is-air-duct-cleaning-worth-it' },
+    { label: 'How to avoid vague duct cleaning quotes in LA', path: '/blog/avoid-air-duct-cleaning-scams-los-angeles' },
+    { label: '7 questions before booking duct cleaning in LA', path: '/blog/signs-los-angeles-air-ducts-need-cleaning-2026' },
   ],
   '/services/commercial-air-duct-cleaning': [
+    { label: 'Commercial & HOA air duct & dryer vent cleaning', path: '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles' },
     { label: 'Commercial dryer vent cleaning', path: '/services/commercial-dryer-vent-cleaning' },
-    { label: 'Healthcare facility duct cleaning', path: '/industries/healthcare' },
-    { label: 'Restaurant kitchen exhaust cleaning', path: '/industries/restaurants' },
-    { label: 'Office building duct cleaning', path: '/industries/commercial-real-estate' },
-    { label: 'Manufacturing and industrial ventilation', path: '/industries/manufacturing' },
-    { label: 'Commercial case studies', path: '/case-studies' },
+    { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
+    { label: 'Commercial electrostatic air filters', path: '/services/commercial-electrostatic-filter' },
     { label: 'Property managers and HOAs', path: '/property-managers' },
-    { label: 'About Pure Air California', path: '/about' },
+    { label: 'Commercial industries we serve', path: '/industries' },
+    { label: 'Los Angeles commercial service guide', path: '/locations/los-angeles' },
+    { label: 'Commercial case studies', path: '/case-studies' },
+    { label: 'HVAC & trade referral partnerships', path: '/partners' },
+    { label: 'Commercial air duct cleaning guide for LA businesses', path: '/blog/commercial-air-duct-cleaning-los-angeles-businesses' },
+    { label: 'Commercial indoor air quality guide', path: '/blog/commercial-indoor-air-quality-guide' },
+    { label: 'Request a commercial estimate', path: '/quote' },
   ],
   '/services/residential-dryer-vent-cleaning': [
+    { label: 'Home services overview', path: '/home-services' },
     { label: 'Dryer vent maintenance program', path: '/services/dryer-vent-maintenance-program' },
     { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning' },
-    { label: 'Dryer vent safety guide', path: '/blog/dryer-vent-safety-guide' },
+    { label: 'Los Angeles dryer vent & pricing guide (from $149)', path: '/pricing' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Indoor air care checklist', path: '/air-quality-calculator' },
+    { label: 'Dryer vent safety checklist for homeowners', path: '/blog/dryer-vent-safety-guide' },
+    { label: 'Air duct cleaning FAQ', path: '/blog/air-duct-cleaning-faq' },
+    { label: 'Request a free estimate', path: '/quote' },
   ],
   '/services/commercial-dryer-vent-cleaning': [
+    { label: 'Commercial & HOA air duct & dryer vent cleaning', path: '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles' },
     { label: 'Laundromat dryer vent cleaning', path: '/services/laundromat-dryer-vent-cleaning' },
     { label: 'Dryer vent maintenance program', path: '/services/dryer-vent-maintenance-program' },
-    { label: 'Hotel and hospitality air quality', path: '/industries/hospitality' },
     { label: 'Property managers and HOAs', path: '/property-managers' },
-    { label: 'Commercial case studies', path: '/case-studies' },
+    { label: 'Hotel and hospitality ventilation', path: '/industries/hospitality' },
+    { label: 'SoulCycle Westside dryer vent projects', path: '/case-studies/soulcycle-westside-dryer-vents' },
+    { label: '42-unit apartment community case study', path: '/case-studies/apartment-community-42-units' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Laundromat dryer vent cleaning planning guide', path: '/blog/laundromat-dryer-vent-cleaning-safety' },
+    { label: 'Request a commercial estimate', path: '/quote' },
   ],
   '/services/hvac-system-cleaning': [
     { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning' },
     { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
-    { label: 'Electrostatic air filters', path: '/services/residential-electrostatic-filter' },
-    { label: 'Indoor air quality calculator', path: '/air-quality-calculator' },
+    { label: 'Residential electrostatic air filters', path: '/services/residential-electrostatic-filter' },
+    { label: 'Air duct sanitizing assessment', path: '/services/air-duct-sanitizing' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Pricing & scope guide', path: '/pricing' },
+    { label: 'Indoor air care checklist', path: '/air-quality-calculator' },
+    { label: 'HVAC maintenance vs. air duct cleaning', path: '/blog/importance-of-regular-air-duct-cleaning' },
+    { label: 'Westchester YMCA HVAC project record', path: '/case-studies/westchester-ymca-ventilation' },
+    { label: 'Request a free estimate', path: '/quote' },
   ],
   '/services/dryer-vent-maintenance-program': [
     { label: 'Residential dryer vent cleaning', path: '/services/residential-dryer-vent-cleaning' },
+    { label: 'Commercial dryer vent cleaning', path: '/services/commercial-dryer-vent-cleaning' },
+    { label: 'Commercial & HOA air duct & dryer vent cleaning', path: '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles' },
     { label: 'Laundromat dryer vent cleaning', path: '/services/laundromat-dryer-vent-cleaning' },
     { label: 'Property managers and HOAs', path: '/property-managers' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Pricing & estimates', path: '/pricing' },
+    { label: 'Dryer vent safety guide', path: '/blog/dryer-vent-safety-guide' },
+    { label: 'Hotel ventilation and laundry exhaust guide', path: '/blog/hotel-air-quality-guest-satisfaction' },
   ],
   '/services/residential-electrostatic-filter': [
-    { label: 'Commercial electrostatic filters', path: '/services/commercial-electrostatic-filter' },
+    { label: 'Home services overview', path: '/home-services' },
+    { label: 'Commercial electrostatic air filters', path: '/services/commercial-electrostatic-filter' },
     { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
-    { label: 'Health benefits of clean air', path: '/health-benefits' },
+    { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning' },
+    { label: 'Indoor air quality: what to know', path: '/health-benefits' },
+    { label: 'Indoor air care checklist', path: '/air-quality-calculator' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Air duct cleaning & allergies: what to know', path: '/blog/clean-air-ducts-allergy-relief' },
+    { label: 'Request a free estimate', path: '/quote' },
   ],
   '/services/commercial-electrostatic-filter': [
-    { label: 'Residential electrostatic filters', path: '/services/residential-electrostatic-filter' },
+    { label: 'Residential electrostatic air filters', path: '/services/residential-electrostatic-filter' },
     { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
-    { label: 'Retail store air quality', path: '/industries/retail' },
-    { label: 'School and campus duct cleaning', path: '/industries/education' },
-    { label: 'Industries we serve', path: '/industries' },
+    { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
+    { label: 'Retail store air duct cleaning', path: '/industries/retail' },
+    { label: 'School and campus ventilation', path: '/industries/education' },
+    { label: 'Commercial real estate & offices', path: '/industries/commercial-real-estate' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Commercial indoor air quality guide', path: '/blog/commercial-indoor-air-quality-guide' },
+    { label: 'Request a commercial estimate', path: '/quote' },
+  ],
+  '/services/air-duct-sanitizing': [
+    { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning' },
+    { label: 'Wildfire smoke & hillside duct assessment', path: '/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles' },
+    { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
+    { label: 'Indoor air quality: evidence and limits', path: '/health-benefits' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Pricing & written scope guide', path: '/pricing' },
+    { label: 'Air duct cleaning and health: evidence & limits', path: '/blog/health-benefits-air-duct-cleaning' },
+    { label: 'Air duct cleaning FAQ', path: '/blog/air-duct-cleaning-faq' },
+    { label: 'Request a scope review', path: '/quote' },
+  ],
+  '/services/laundromat-dryer-vent-cleaning': [
+    { label: 'Commercial dryer vent cleaning', path: '/services/commercial-dryer-vent-cleaning' },
+    { label: 'Dryer vent maintenance program', path: '/services/dryer-vent-maintenance-program' },
+    { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
+    { label: 'Property managers and HOAs', path: '/property-managers' },
+    { label: 'SoulCycle Westside dryer exhaust projects', path: '/case-studies/soulcycle-westside-dryer-vents' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Laundromat dryer vent cleaning planning guide', path: '/blog/laundromat-dryer-vent-cleaning-safety' },
+    { label: 'Request a commercial estimate', path: '/quote' },
+  ],
+  '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles': [
+    { label: 'Property managers and HOAs', path: '/property-managers' },
+    { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
+    { label: 'Commercial dryer vent cleaning', path: '/services/commercial-dryer-vent-cleaning' },
+    { label: 'Dryer vent maintenance program', path: '/services/dryer-vent-maintenance-program' },
+    { label: '42-unit apartment community case study', path: '/case-studies/apartment-community-42-units' },
+    { label: 'WHCHC West Hollywood office HVAC project', path: '/case-studies/nonprofit-housing-office-hvac' },
+    { label: 'Offices & commercial real estate', path: '/industries/commercial-real-estate' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Commercial duct cleaning planning in LA', path: '/blog/commercial-air-duct-cleaning-los-angeles-businesses' },
+    { label: 'Request an HOA or commercial proposal', path: '/quote' },
+  ],
+  '/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles': [
+    { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning' },
+    { label: 'Home services overview', path: '/home-services' },
+    { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
+    { label: 'Air duct sanitizing assessment', path: '/services/air-duct-sanitizing' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'After wildfire smoke: planning HVAC assessment in LA', path: '/blog/air-duct-cleaning-after-wildfire-los-angeles' },
+    { label: 'Air duct cleaning cost in Los Angeles', path: '/blog/air-duct-cleaning-cost-los-angeles' },
+    { label: 'Indoor air care checklist', path: '/air-quality-calculator' },
+    { label: 'Pricing & scope guide', path: '/pricing' },
+    { label: 'Request a hillside duct assessment', path: '/quote' },
   ],
 };
 
-/** Related content for each industry vertical. */
+/** Helper supporting either with or without trailing slash. */
+export const getRelatedServices = (path: string): LinkItem[] =>
+  RELATED_SERVICES[normalizePath(path)] || CORE_LA_HUB_LINKS;
+
+/** Related content for each industry vertical & B2B hub. */
 export const RELATED_BY_INDUSTRY: Record<string, LinkItem[]> = {
+  '/property-managers': [
+    { label: 'Commercial & HOA air duct & dryer vent cleaning', path: '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles' },
+    { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
+    { label: 'Commercial dryer vent cleaning', path: '/services/commercial-dryer-vent-cleaning' },
+    { label: 'Dryer vent maintenance program', path: '/services/dryer-vent-maintenance-program' },
+    { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
+    { label: '42-unit apartment community case study', path: '/case-studies/apartment-community-42-units' },
+    { label: 'WHCHC West Hollywood office HVAC project', path: '/case-studies/nonprofit-housing-office-hvac' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'HVAC & trade referral partnerships', path: '/partners' },
+  ],
   '/industries/healthcare': [
     { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
     { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
-    { label: 'Hospital duct cleaning and air quality', path: '/blog/hospital-healthcare-air-duct-cleaning' },
+    { label: 'Commercial electrostatic air filters', path: '/services/commercial-electrostatic-filter' },
+    { label: 'Healthcare duct cleaning planning guide', path: '/blog/hospital-healthcare-air-duct-cleaning' },
+    { label: 'Los Angeles commercial service guide', path: '/locations/los-angeles' },
+    { label: 'Commercial case studies', path: '/case-studies' },
     { label: 'All industries we serve', path: '/industries' },
     { label: 'Education facilities', path: '/industries/education' },
   ],
   '/industries/hospitality': [
+    { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
     { label: 'Commercial dryer vent cleaning', path: '/services/commercial-dryer-vent-cleaning' },
-    { label: 'Hotel air quality and guest satisfaction', path: '/blog/hotel-air-quality-guest-satisfaction' },
-    { label: 'Commercial case studies', path: '/case-studies' },
+    { label: 'Dryer vent maintenance program', path: '/services/dryer-vent-maintenance-program' },
+    { label: 'Four Seasons Hotel LA ventilation record', path: '/case-studies/four-seasons-los-angeles-ventilation' },
+    { label: 'Hotel ventilation & laundry exhaust guide', path: '/blog/hotel-air-quality-guest-satisfaction' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
     { label: 'All industries we serve', path: '/industries' },
     { label: 'Restaurants and food service', path: '/industries/restaurants' },
   ],
   '/industries/restaurants': [
     { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
-    { label: 'Restaurant kitchen air duct dangers', path: '/blog/restaurant-kitchen-air-duct-cleaning' },
+    { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
+    { label: 'Panera Bread Pasadena HVAC record', path: '/case-studies/panera-pasadena-ventilation' },
+    { label: 'Taco Bell Canoga Park HVAC record', path: '/case-studies/taco-bell-canoga-park-hvac' },
+    { label: 'Restaurant HVAC vs. kitchen exhaust guide', path: '/blog/restaurant-kitchen-air-duct-cleaning' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
     { label: 'All industries we serve', path: '/industries' },
     { label: 'Hotels and hospitality', path: '/industries/hospitality' },
   ],
   '/industries/education': [
     { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
-    { label: 'Health benefits of clean air ducts', path: '/health-benefits' },
+    { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
+    { label: 'Westchester Family YMCA HVAC record', path: '/case-studies/westchester-ymca-ventilation' },
+    { label: 'Indoor air quality: what to know', path: '/health-benefits' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
     { label: 'All industries we serve', path: '/industries' },
     { label: 'Healthcare facilities', path: '/industries/healthcare' },
   ],
   '/industries/retail': [
     { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
-    { label: 'Commercial electrostatic filters', path: '/services/commercial-electrostatic-filter' },
+    { label: 'Commercial electrostatic air filters', path: '/services/commercial-electrostatic-filter' },
+    { label: 'Bassett Furniture Torrance showroom record', path: '/case-studies/bassett-torrance-showroom' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
     { label: 'All industries we serve', path: '/industries' },
     { label: 'Commercial real estate', path: '/industries/commercial-real-estate' },
   ],
   '/industries/manufacturing': [
     { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
-    { label: 'Industrial duct cleaning standards', path: '/blog/industrial-air-duct-cleaning-safety-efficiency' },
+    { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
+    { label: 'Industrial duct cleaning planning guide', path: '/blog/industrial-air-duct-cleaning-safety-efficiency' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
     { label: 'All industries we serve', path: '/industries' },
     { label: 'Retail spaces', path: '/industries/retail' },
   ],
   '/industries/commercial-real-estate': [
     { label: 'Property managers and HOAs', path: '/property-managers' },
-    { label: '42-unit apartment community case study', path: '/case-studies/apartment-community-42-units' },
+    { label: 'Commercial & HOA air duct & dryer vent cleaning', path: '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles' },
     { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
-    { label: 'All industries we serve', path: '/industries' },
-    { label: 'Manufacturing and industrial', path: '/industries/manufacturing' },
+    { label: 'WHCHC West Hollywood office HVAC project', path: '/case-studies/nonprofit-housing-office-hvac' },
+    { label: '42-unit apartment community case study', path: '/case-studies/apartment-community-42-units' },
+    { label: 'Commercial air duct cleaning guide for LA businesses', path: '/blog/commercial-air-duct-cleaning-los-angeles-businesses' },
+    { label: 'Commercial indoor air quality guide', path: '/blog/commercial-indoor-air-quality-guide' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'HVAC & trade referral partnerships', path: '/partners' },
   ],
 };
 
 /**
- * Related pages for a blog post, chosen by its category so posts point at the
- * commercial page that matches their subject rather than a generic CTA.
+ * Related pages for a blog post, chosen by category so every editorial guide
+ * funnels readers directly into matching LA services, local hubs, and `/quote/`.
  */
 export const RELATED_BY_BLOG_CATEGORY: Record<string, LinkItem[]> = {
   Commercial: [
-    { label: 'Commercial air duct cleaning', path: '/services/commercial-air-duct-cleaning' },
-    { label: 'Industries we serve', path: '/industries' },
+    { label: 'Commercial air duct cleaning in Los Angeles', path: '/services/commercial-air-duct-cleaning' },
+    { label: 'Commercial & HOA duct & dryer vent care', path: '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles' },
+    { label: 'Property managers and HOAs', path: '/property-managers' },
+    { label: 'Commercial industries we serve', path: '/industries' },
     { label: 'Commercial case studies', path: '/case-studies' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Request a commercial estimate', path: '/quote' },
   ],
   Safety: [
-    { label: 'Residential dryer vent cleaning', path: '/services/residential-dryer-vent-cleaning' },
+    { label: 'Residential dryer vent cleaning (from $149)', path: '/services/residential-dryer-vent-cleaning' },
     { label: 'Dryer vent maintenance program', path: '/services/dryer-vent-maintenance-program' },
     { label: 'Laundromat dryer vent cleaning', path: '/services/laundromat-dryer-vent-cleaning' },
+    { label: 'Wildfire smoke & hillside duct assessment', path: '/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles' },
+    { label: 'Los Angeles pricing guide', path: '/pricing' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Request a free estimate', path: '/quote' },
   ],
   Health: [
-    { label: 'Health benefits of air duct cleaning', path: '/health-benefits' },
-    { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning' },
-    { label: 'Indoor air quality calculator', path: '/air-quality-calculator' },
+    { label: 'Air duct cleaning & indoor air quality: what to know', path: '/health-benefits' },
+    { label: 'Residential air duct cleaning in Los Angeles', path: '/services/residential-air-duct-cleaning' },
+    { label: 'Wildfire smoke & hillside duct assessment', path: '/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles' },
+    { label: 'Residential electrostatic air filters', path: '/services/residential-electrostatic-filter' },
+    { label: 'Indoor air care checklist', path: '/air-quality-calculator' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Request a free estimate', path: '/quote' },
   ],
   FAQ: [
-    { label: 'Air duct cleaning cost in Los Angeles', path: '/pricing' },
+    { label: 'Air duct cleaning cost in Los Angeles (from $299)', path: '/pricing' },
     { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning' },
-    { label: 'Get a free quote', path: '/quote' },
+    { label: 'Home services overview', path: '/home-services' },
+    { label: 'Indoor air care checklist', path: '/air-quality-calculator' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'All LA indoor air quality guides', path: '/blog' },
+    { label: 'Request a free written estimate', path: '/quote' },
+  ],
+  Pricing: [
+    { label: 'Air duct & dryer vent pricing in Los Angeles', path: '/pricing' },
+    { label: 'Residential air duct cleaning (from $299)', path: '/services/residential-air-duct-cleaning' },
+    { label: 'Residential dryer vent cleaning (from $149)', path: '/services/residential-dryer-vent-cleaning' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Request a property-specific estimate', path: '/quote' },
+  ],
+  'Air Quality': [
+    { label: 'Wildfire smoke & hillside duct assessment', path: '/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles' },
+    { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning' },
+    { label: 'Indoor air quality: evidence and limits', path: '/health-benefits' },
+    { label: 'Indoor air care checklist', path: '/air-quality-calculator' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Request a free estimate', path: '/quote' },
+  ],
+  Residential: [
+    { label: 'Home air duct & dryer vent services', path: '/home-services' },
+    { label: 'Residential air duct cleaning (from $299)', path: '/services/residential-air-duct-cleaning' },
+    { label: 'Residential dryer vent cleaning (from $149)', path: '/services/residential-dryer-vent-cleaning' },
+    { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
+    { label: 'Los Angeles pricing guide', path: '/pricing' },
+    { label: 'Request a free estimate', path: '/quote' },
+  ],
+  Maintenance: [
+    { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
+    { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning' },
+    { label: 'Dryer vent maintenance program', path: '/services/dryer-vent-maintenance-program' },
+    { label: 'Indoor air care checklist', path: '/air-quality-calculator' },
+    { label: 'Los Angeles pricing guide', path: '/pricing' },
+    { label: 'Request a free estimate', path: '/quote' },
   ],
   default: [
-    { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning' },
+    { label: 'Residential air duct cleaning in Los Angeles', path: '/services/residential-air-duct-cleaning' },
+    { label: 'Home services overview', path: '/home-services' },
+    { label: 'Los Angeles air duct cleaning guide', path: '/locations/los-angeles' },
     { label: 'Air duct cleaning cost in Los Angeles', path: '/pricing' },
-    { label: 'Areas we serve across Los Angeles', path: '/locations' },
+    { label: 'All service areas across LA County', path: '/locations' },
+    { label: 'All LA HVAC & air quality guides', path: '/blog' },
+    { label: 'Request a free estimate', path: '/quote' },
   ],
 };
 
 /**
- * A stable set of high-demand service areas, linked from service pages so those
- * pages point into the location cluster rather than only being pointed at.
+ * High-demand Greater Los Angeles service areas for linking from core service
+ * and authority pages back into the local neighborhood cluster.
  */
 export const LA_AREA_LINKS: LinkItem[] = [
-  { label: 'Air duct cleaning in Los Angeles', path: '/locations/los-angeles' },
+  { label: 'Los Angeles service guide', path: '/locations/los-angeles' },
   { label: 'Beverly Hills', path: '/locations/beverly-hills' },
   { label: 'Santa Monica', path: '/locations/santa-monica' },
+  { label: 'Brentwood', path: '/locations/brentwood' },
+  { label: 'Culver City', path: '/locations/culver-city' },
+  { label: 'West Hollywood', path: '/locations/west-hollywood' },
   { label: 'Pasadena', path: '/locations/pasadena' },
   { label: 'Glendale', path: '/locations/glendale' },
   { label: 'Burbank', path: '/locations/burbank' },
   { label: 'Sherman Oaks', path: '/locations/sherman-oaks' },
+  { label: 'Studio City', path: '/locations/studio-city' },
   { label: 'Woodland Hills', path: '/locations/woodland-hills' },
-  { label: 'All service areas', path: '/locations' },
+  { label: 'All Greater Los Angeles areas', path: '/locations' },
 ];
 
 /**
- * Blog articles to link from a city page.
- *
- * Measured before this existed: the 14 blog posts had a median of 2 contextual
- * inbound links each, while the primary service pages had 56-76. The articles were
- * effectively leaf nodes — reachable from /blog/ and little else.
- *
- * The 55 city pages are the natural place to fix that, but linking the same two
- * articles from all 55 would be a templated footprint rather than a topical signal.
- * So the starting offset is derived from the city's own index in locationData, the
- * same deterministic rotation getNearbyLocations uses: every city links to a
- * different slice, the inbound links spread evenly across the catalogue, and the
- * output is stable between builds.
+ * Evergreen blog guides rotated deterministically across the 54 city pages so
+ * every LA guide receives steady contextual inbound links.
  */
 export const getBlogLinksForCity = (slug: string, count = 3): LinkItem[] => {
   const index = locationData.findIndex((l) => l.slug === slug);
@@ -351,18 +522,21 @@ export const getBlogLinksForCity = (slug: string, count = 3): LinkItem[] => {
   return rotated.slice(0, count);
 };
 
-/**
- * Evergreen articles worth linking from a city page. Deliberately a curated subset
- * rather than every post — the industry-specific pieces (laundromats, hospitals)
- * have no business being linked from a residential neighbourhood page.
- */
 const CITY_LINKABLE_POSTS: LinkItem[] = [
-  { label: 'Signs your air ducts need cleaning', path: '/blog/signs-air-ducts-need-cleaning' },
-  { label: 'What air duct cleaning costs in Los Angeles', path: '/blog/air-duct-cleaning-cost-los-angeles' },
-  { label: 'Cleaning air ducts after a wildfire', path: '/blog/air-duct-cleaning-after-wildfire-los-angeles' },
-  { label: 'Air duct cleaning FAQ', path: '/blog/air-duct-cleaning-faq' },
-  { label: 'Health benefits of air duct cleaning', path: '/blog/health-benefits-air-duct-cleaning' },
-  { label: 'Clean air ducts and allergy relief', path: '/blog/clean-air-ducts-allergy-relief' },
-  { label: 'Dryer vent safety guide', path: '/blog/dryer-vent-safety-guide' },
-  { label: 'How often to clean your air ducts', path: '/blog/importance-of-regular-air-duct-cleaning' },
+  { label: 'Air duct cleaning cost in Los Angeles: quote guide', path: '/blog/air-duct-cleaning-cost-los-angeles' },
+  { label: 'After wildfire smoke: planning HVAC assessment in LA', path: '/blog/air-duct-cleaning-after-wildfire-los-angeles' },
+  { label: 'Air duct cleaning FAQ: scope, timing & cost', path: '/blog/air-duct-cleaning-faq' },
+  { label: 'Is air duct cleaning worth it? Decide from the scope', path: '/blog/is-air-duct-cleaning-worth-it' },
+  { label: 'Los Angeles duct cleaning: 7 questions before booking', path: '/blog/signs-los-angeles-air-ducts-need-cleaning-2026' },
+  { label: 'Choosing a duct cleaner in LA: avoid vague quotes', path: '/blog/avoid-air-duct-cleaning-scams-los-angeles' },
+  { label: '5 reasons to have your air ducts inspected', path: '/blog/signs-air-ducts-need-cleaning' },
+  { label: 'Dryer vent safety: a homeowner checklist', path: '/blog/dryer-vent-safety-guide' },
+  { label: 'Home air duct cleaning in Los Angeles: planning guide', path: '/blog/residential-air-duct-cleaning-los-angeles' },
+  { label: 'HVAC maintenance vs. air duct cleaning', path: '/blog/importance-of-regular-air-duct-cleaning' },
+  { label: 'Air duct cleaning and health: evidence and limits', path: '/blog/health-benefits-air-duct-cleaning' },
+  { label: 'Air duct cleaning and allergies: what to know', path: '/blog/clean-air-ducts-allergy-relief' },
+  { label: 'Commercial duct cleaning in LA: planning the scope', path: '/blog/commercial-air-duct-cleaning-los-angeles-businesses' },
+  { label: 'Commercial indoor air quality: a manager guide', path: '/blog/commercial-indoor-air-quality-guide' },
+  { label: 'Indoor air quality & HVAC journal', path: '/blog' },
+  { label: 'Indoor air care checklist', path: '/air-quality-calculator' },
 ];

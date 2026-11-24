@@ -1,51 +1,67 @@
 import React from 'react';
-import { Calendar, Leaf, Shield, TrendingUp } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Calendar, Clock, ArrowRight } from 'lucide-react';
+import { Link } from '@/components/CanonicalLink';
+import { blogPosts as catalog } from '@/pages/blog/data';
+
+const featuredSlugs = [
+  'air-duct-cleaning-cost-los-angeles',
+  'signs-air-ducts-need-cleaning',
+  'commercial-air-duct-cleaning-los-angeles-businesses',
+];
 
 const BlogSection = () => {
-  const blogPosts = [
-    {
-      title: "The Importance of Regular Air Duct Cleaning",
-      excerpt: "Learn why regular air duct cleaning is essential for your health and HVAC system efficiency.",
-      link: "/blog/importance-of-regular-air-duct-cleaning",
-      date: "March 15, 2024"
-    },
-    {
-      title: "Signs Your Air Ducts Need Cleaning",
-      excerpt: "Discover the common indicators that your air ducts require professional cleaning.",
-      link: "/blog/signs-your-air-ducts-need-cleaning",
-      date: "March 10, 2024"
-    },
-    {
-      title: "Commercial Air Duct Cleaning: A Business Essential",
-      excerpt: "Why businesses in Los Angeles need regular air duct maintenance.",
-      link: "/blog/commercial-air-duct-cleaning-business-essential",
-      date: "March 5, 2024"
-    }
-  ];
+  const posts = featuredSlugs
+    .map((slug) => catalog.find((item) => item.slug === slug))
+    .filter((item): item is (typeof catalog)[number] => Boolean(item));
 
   return (
-    <div className="bg-white py-16">
+    <section className="bg-white py-16" aria-labelledby="latest-blog-heading">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">Latest from Our Blog</h2>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+          <div>
+            <h2 id="latest-blog-heading" className="text-3xl font-bold text-gray-900">
+              Latest from the PAC Air Care Journal
+            </h2>
+            <p className="text-gray-600 mt-2">
+              Practical Los Angeles guides on scope, pricing, dryer vent safety, and commercial HVAC planning.
+            </p>
+          </div>
+          <Link to="/blog/" className="text-brand-700 font-semibold hover:underline inline-flex items-center gap-1">
+            Browse all guides <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {blogPosts.map((post) => (
-            <div key={post.title} className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-              <p className="text-gray-600 mb-4">{post.excerpt}</p>
-              <p className="text-sm text-gray-500 mb-4">{post.date}</p>
-              <Link 
-                to={post.link}
-                className="text-brand-600 hover:text-brand-700 font-medium"
+          {posts.map((post) => (
+            <article key={post.slug} className="bg-gray-50 rounded-xl p-6 border border-gray-100 flex flex-col">
+              <div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
+                <span className="inline-flex items-center gap-1">
+                  <Calendar size={13} aria-hidden="true" />
+                  <time dateTime={post.date}>{new Date(`${post.date}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <Clock size={13} aria-hidden="true" />
+                  {post.readTime}
+                </span>
+              </div>
+              <h3 className="text-xl font-semibold mb-2 text-gray-900">
+                <Link to={`/blog/${post.slug}/`} className="hover:text-brand-700">
+                  {post.title}
+                </Link>
+              </h3>
+              <p className="text-gray-600 mb-5 flex-1">{post.excerpt}</p>
+              <Link
+                to={`/blog/${post.slug}/`}
+                className="text-brand-700 hover:text-brand-900 font-semibold inline-flex items-center gap-1"
               >
-                Read More →
+                Read guide <ArrowRight size={15} aria-hidden="true" />
               </Link>
-            </div>
+            </article>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default BlogSection; 
+export default BlogSection;

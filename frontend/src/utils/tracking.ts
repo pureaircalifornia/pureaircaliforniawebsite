@@ -1,5 +1,11 @@
-export const GA_TRACKING_ID = 'G-XXXXXXXXXX'; // Replace with actual measurement ID
-export const AW_CONVERSION_ID = 'AW-1120420693'; // Pure Air California Google Ads ID
+import { analyticsAllowed, advertisingAllowed, safeAnalyticsUrl } from './privacy.mjs';
+import { adsConfiguration, createLeadDispatcher } from './leadMeasurement.mjs';
+import type { SubmissionResult } from './api';
+import { measurementContext, normalizeMeasurement } from './measurementContext.mjs';
+export const GA_TRACKING_ID = 'G-SK8BHVML0W';
+// No guessed account or conversion labels. Missing configuration disables Ads dispatch.
+export const getAdsConfiguration = () => adsConfiguration(import.meta.env.VITE_GOOGLE_ADS_ID, import.meta.env.VITE_GOOGLE_ADS_LEAD_LABEL);
+const dispatchLead = createLeadDispatcher();
 
 // Base interface for the window object to include dataLayer and gtag
 declare global {
@@ -13,8 +19,9 @@ declare global {
  * Utility to track custom events (Google Analytics 4)
  */
 export const trackEvent = (eventName: string, eventParameters = {}) => {
-    if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', eventName, eventParameters);
+    if (analyticsAllowed() && typeof window.gtag === 'function') {
+        try { window.gtag('event', eventName, { ...normalizeMeasurement({ ...measurementContext(), ...eventParameters }),
+            page_location: safeAnalyticsUrl(window.location.href), page_referrer: safeAnalyticsUrl(document.referrer) }); } catch { /* Optional measurement. */ }
     }
 };
 
@@ -24,14 +31,12 @@ export const trackEvent = (eventName: string, eventParameters = {}) => {
  * @param value Optional conversion value
  * @param currency Optional currency code (e.g., 'USD')
  */
-export const trackConversion = (sendTo: string, value?: number, currency: string = 'USD') => {
-    if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'conversion', {
-            'send_to': sendTo,
-            'value': value,
-            'currency': currency
-        });
-    }
+export const trackAcceptedLead = (result: SubmissionResult, formType: string, service: string, property?: string) => {
+    if (!result.success) return;
+    dispatchLead({ submissionId: result.submission_id, deliveryChannel: result.delivery_channel,
+        formType, service, property, analytics: analyticsAllowed(), advertising: advertisingAllowed(),
+        config: getAdsConfiguration(), gtag: typeof window !== 'undefined' ? window.gtag : undefined,
+        pageLocation: safeAnalyticsUrl(window.location.href), pageReferrer: safeAnalyticsUrl(document.referrer) });
 };
 
 /**
@@ -42,30 +47,15 @@ export const trackPhoneClick = () => {
         method: 'link'
     });
 
-    // Example Ads Conversion for Phone Click (You'll need to replace with actual conversion label)
-    // trackConversion('AW-1120420693/phoneClickLabel');
+    // A telephone link click is secondary interaction, not a completed call.
 };
 
 /**
  * Utility to track a successful Quote Form submission
  */
-export const trackQuoteSubmission = () => {
-    trackEvent('generate_lead', {
-        lead_type: 'quote_request'
-    });
-
-    // Example Ads Conversion for Quote Lead (You'll need to replace with actual conversion label)
-    // trackConversion('AW-1120420693/quoteSubmitLabel');
-};
+export const trackQuoteSubmission = (result: SubmissionResult, service: string, property?: string) => trackAcceptedLead(result, 'quote_form', service, property);
 
 /**
  * Utility to track a successful Contact Form submission
  */
-export const trackContactSubmission = () => {
-    trackEvent('generate_lead', {
-        lead_type: 'contact_form'
-    });
-
-    // Example Ads Conversion for Contact Lead (You'll need to replace with actual conversion label)
-    // trackConversion('AW-1120420693/contactSubmitLabel');
-};
+export const trackContactSubmission = (result: SubmissionResult, service: string, property?: string) => trackAcceptedLead(result, 'contact_form', service, property);

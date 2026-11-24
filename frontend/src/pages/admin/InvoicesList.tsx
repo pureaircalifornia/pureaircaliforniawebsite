@@ -3,7 +3,8 @@
  * Fetches real invoice data from backend API with functional buttons
  */
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 import {
     Plus, Search, Download, Send, Eye, Trash2,
     DollarSign, AlertCircle, CheckCircle, Clock,

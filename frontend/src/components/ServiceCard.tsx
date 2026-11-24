@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 import { LucideIcon } from 'lucide-react';
 import ResponsiveImage from '@/components/ResponsiveImage';
 
@@ -14,23 +13,23 @@ export interface ServiceCardProps {
 }
 
 const ServiceCard = ({ title, description, link, icon: Icon, slug, imageSrc }: ServiceCardProps) => {
-  const finalLink = link || (slug ? `/services/${slug}` : '#');
+  const finalLink = link || (slug ? `/services/${slug}/` : '#');
 
   return (
     <div className="glass-card group h-full flex flex-col overflow-hidden">
       <div className="relative h-56 w-full overflow-hidden bg-slate-900/10">
         <ResponsiveImage
-          src={imageSrc || "/images/services/placeholder.jpg"}
+          src={imageSrc || '/images/pac/duct-interior-clean-v2.webp'}
           alt={title}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           width={800}
-          height={400}
+          height={533}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
         {Icon && (
           <div className="absolute bottom-4 left-4 p-3 glass-premium rounded-xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-            <Icon className="h-6 w-6 text-sky-400" />
+            <Icon className="h-6 w-6 text-sky-400" aria-hidden="true" />
           </div>
         )}
       </div>
@@ -52,7 +51,7 @@ const ServiceCard = ({ title, description, link, icon: Icon, slug, imageSrc }: S
               Explore Service
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-sky-200 scale-x-0 group-hover/link:scale-x-100 transition-transform origin-left"></span>
             </span>
-            <svg className="w-5 h-5 ml-2 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 ml-2 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>

@@ -3,7 +3,8 @@
  * Authentication page for admin portal access
  */
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 import { Eye, EyeOff, Lock, Mail, AlertCircle } from 'lucide-react';
 import { loginUser } from '@/utils/api';
 

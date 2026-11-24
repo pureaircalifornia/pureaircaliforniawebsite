@@ -1,3 +1,5 @@
+import { businessRoutes } from './business-routes.mjs';
+import { isSearchIndexable } from '../src/utils/seo/searchPolicy.mjs';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -6,28 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const DOMAIN = 'https://www.pureaircalifornia.com';
-// A route's content date includes the data files used to render it.
-// Do not manufacture freshness from the date this build happens to run.
-const contentDependencies = {
-    CinematicLanding: ['components/HomeServiceDirectory.tsx', 'data/serviceNavigation.ts', 'data/faqs.ts', 'components/CommercialProof.tsx', 'components/AirJourney.tsx'],
-    LocationDetail: ['pages/locations/data.ts', 'pages/locations/regionContent.ts', 'data/localGuides.ts', 'components/LocalServiceGuide.tsx'],
-    Locations: ['pages/locations/data.ts', 'components/WestsideGuides.tsx'],
-    'locations/LosAngeles': ['components/WestsideGuides.tsx'],
-    CaseStudies: ['pages/caseStudies/data.ts'],
-    CaseStudyDetail: ['pages/caseStudies/data.ts'],
-    Industries: ['components/CommercialProof.tsx', 'data/industryContent.ts'],
-    Quote: ['components/EstimateBuilder.tsx', 'utils/estimate.ts'],
-    Blog: ['pages/blog/data.ts', 'pages/blog/post-data.ts'],
-    BlogPost: ['pages/blog/data.ts', 'pages/blog/post-data.ts'],
-};
-const getFileModDate = (filePath) => {
-    const dependencies = ['pages/' + filePath + '.tsx', 'components/SEOProvider.tsx', 'utils/seo/seoConfig.ts', 'data/pageHeroes.ts', 'data/heroChapters.ts', 'components/NavBar.tsx', 'components/PageHero.tsx', 'data/serviceNavigation.ts', 'components/RelatedLinks.tsx', ...(contentDependencies[filePath] || [])];
-    if (filePath.startsWith('industries/')) dependencies.push('data/industryContent.ts', 'components/IndustryServicePage.tsx', 'components/IndustryPageLayout.tsx');
-    if (filePath.startsWith('services/')) dependencies.push('components/ServiceDetailLayout.tsx', 'components/ServiceResources.tsx', 'components/ServiceFieldPhotos.tsx');
-    const timestamps = dependencies.map(file => path.join(__dirname, '../src', file))
-        .filter(file => fs.existsSync(file)).map(file => fs.statSync(file).mtimeMs);
-    return timestamps.length ? new Date(Math.max(...timestamps)).toISOString().split('T')[0] : null;
-};
+// Optional lastmod is added only from a visible editorial date after rendering.
 
 // Helper to extract slugs dynamically from localized TS data files
 const extractSlugs = (relativePath) => {
@@ -56,6 +37,7 @@ const routes = [
     { path: '/quote', priority: '0.9', changefreq: 'monthly', file: 'Quote' },
     { path: '/pricing', priority: '0.9', changefreq: 'weekly', file: 'Pricing' },
     { path: '/services', priority: '0.9', changefreq: 'weekly', file: 'Services' },
+    { path: '/home-services', priority: '0.9', changefreq: 'monthly', file: 'HomeServices' },
     { path: '/locations', priority: '0.9', changefreq: 'weekly', file: 'Locations' },
     // Dedicated Los Angeles hub. This is a standalone route rather than one of the
     // locations/data.ts slugs, so it has to be listed by hand — it was missing from
@@ -81,10 +63,13 @@ const routes = [
     { path: '/services/commercial-electrostatic-filter', priority: '0.8', changefreq: 'monthly', file: 'services/CommercialElectrostaticFilter' },
     { path: '/services/air-duct-sanitizing', priority: '0.8', changefreq: 'monthly', file: 'services/AirDuctSanitizing' },
     { path: '/services/laundromat-dryer-vent-cleaning', priority: '0.8', changefreq: 'monthly', file: 'services/LaundromatDryerVentCleaning' },
+    { path: '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles', priority: '0.9', changefreq: 'weekly', file: 'services/CommercialHoaAirDuctDryerVentCleaning' },
+    { path: '/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles', priority: '0.9', changefreq: 'weekly', file: 'services/WildfireSmokeHillsideAirDuctCleaning' },
 
-    // Industry hub + commercial case studies
+    // Industry hub + commercial case studies & project stories
     { path: '/industries', priority: '0.9', changefreq: 'monthly', file: 'Industries' },
     { path: '/case-studies', priority: '0.8', changefreq: 'monthly', file: 'CaseStudies' },
+    { path: '/project-stories', priority: '0.9', changefreq: 'weekly', file: 'ProjectStories' },
 
     // Industry Pages
     { path: '/industries/healthcare', priority: '0.8', changefreq: 'monthly', file: 'industries/HealthcareFacilities' },
@@ -97,6 +82,8 @@ const routes = [
 ];
 
 // Add Location Pages
+businessRoutes.forEach(path => routes.push({path, priority: '0.7', changefreq: 'monthly', file: 'BusinessLocation'}));
+
 const locationSlugs = extractSlugs('locations/data.ts');
 locationSlugs.forEach(slug => {
     routes.push({
@@ -134,36 +121,29 @@ blogSlugs.forEach(slug => {
 });
 
 const generateSitemap = () => {
+    const indexableRoutes = routes.filter(route => isSearchIndexable(route.path));
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${routes.map(route => `  <url>
+${indexableRoutes.map(route => `  <url>
     <loc>${DOMAIN}${route.path}${route.path.endsWith('/') ? '' : '/'}</loc>
-    ${getFileModDate(route.file) ? `<lastmod>${getFileModDate(route.file)}</lastmod>` : ''}
-    <changefreq>${route.changefreq}</changefreq>
-    <priority>${route.priority}</priority>
   </url>`).join('\n')}
 </urlset>`;
 
     const outputPath = path.join(__dirname, '../public/sitemap.xml');
     fs.writeFileSync(outputPath, sitemap);
     
-    // Also generate an optimized robots.txt file right alongside sitemap
-    // One group keeps the same exclusions for search and AI crawlers.
-    // Specific Allow-only groups would override these Disallow rules.
-    const robotsTxt = `User-agent: *
-Allow: /
-Disallow: /admin
-Disallow: /api/
-Disallow: /node_modules/
-Disallow: /*.pdf$
-
-Sitemap: ${DOMAIN}/sitemap.xml
-`;
-
+    // Named groups override the wildcard group; every group needs the same
+    // private-path exclusions. Generate them together so a build cannot undo
+    // a manually corrected public/robots.txt.
+    const agents = ['*', 'OAI-SearchBot', 'ChatGPT-User', 'PerplexityBot',
+        'Claude-SearchBot', 'ClaudeBot', 'Google-Extended', 'Applebot-Extended', 'Bingbot'];
+    const rules = 'Allow: /\nDisallow: /admin\nDisallow: /api/\nDisallow: /node_modules/\n';
+    const robotsTxt = agents.map(agent => `User-agent: ${agent}\n${rules}`).join('\n')
+        + `\nSitemap: ${DOMAIN}/sitemap.xml\n`;
     const robotsPath = path.join(__dirname, '../public/robots.txt');
     fs.writeFileSync(robotsPath, robotsTxt);
 
-    console.log(`✅ Sitemap generated at ${outputPath} with ${routes.length} URLs`);
+    console.log(`✅ Sitemap generated at ${outputPath} with ${indexableRoutes.length} URLs`);
     console.log(`✅ robots.txt generated at ${robotsPath}`);
 };
 

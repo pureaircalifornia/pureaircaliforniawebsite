@@ -1,6 +1,6 @@
 import SEOProvider from '@/components/SEOProvider';
 
-import { Link } from "react-router-dom";
+import { Link } from '@/components/CanonicalLink';
 import { Button } from "@/components/ui/button";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
@@ -10,7 +10,7 @@ const NotFound = () => {
   return (
     
       <div className="min-h-screen flex flex-col">
-        <SEOProvider title="404 - Page Not Found | Pure Air California" />
+        <SEOProvider title="404 - Page Not Found | Pure Air California" noIndex />
         <NavBar alwaysOpaque />
 
         <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

@@ -1,0 +1,203 @@
+.pac-business-page{background:#eff4f7;color:#192b3e}
+.pac-business-page main{overflow:clip}
+.pac-business-page .pac-page-hero h1{font-size:clamp(2.5rem,5.4vw,4.75rem);max-width:1000px}
+.pac-business-page h2{font-size:clamp(2rem,3.5vw,3.3rem);line-height:1.12;letter-spacing:-.035em;margin:16px 0 28px;color:#192b3e}
+.pac-business-page h2 em{font-family:Georgia,serif;font-weight:400}
+.pac-business-page h3{font-size:1.2rem;line-height:1.4;margin:22px 0 12px}
+.pac-business-page p{line-height:1.8}
+.pac-business-breadcrumb{display:flex;flex-wrap:wrap;gap:12px;padding-top:26px;padding-bottom:26px;font-size:.85rem}
+.pac-business-intro,.pac-business-story{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(28px,6vw,90px);padding-top:80px;padding-bottom:80px;align-items:center}
+.pac-business-intro p,.pac-business-story p{margin:0 0 20px}
+.pac-business-local-note{background:#e1e9ed;padding:clamp(24px,4vw,48px);border-radius:3px}
+.pac-business-local-note dt{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;margin-top:24px}
+.pac-business-local-note dd{margin:8px 0 24px;line-height:1.65}
+.pac-business-scope{padding:80px 0;background:#e1e9ed}
+.pac-business-scope-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;margin-top:46px}
+.pac-business-scope-grid article{border-top:1px solid #84939a;padding-top:26px}
+.pac-scope-number{font-family:Georgia,serif;font-size:2rem;color:#526a75}
+.pac-scope-boundary{font-size:.88rem;border-top:1px solid #b7c2c7;padding-top:24px;margin-top:36px;max-width:900px}
+.pac-business-story figure{margin:0}
+.pac-business-story figure img{width:100%;height:510px;object-fit:cover;border-radius:3px}
+.pac-business-story figcaption{font-size:.75rem;margin-top:12px;color:#536269}
+.pac-business-story ul{list-style:none;padding:0;margin:22px 0}
+.pac-business-story li{display:flex;gap:14px;align-items:flex-start;margin:16px 0;line-height:1.7}
+.pac-business-story li svg{flex-shrink:0;margin-top:5px}
+.pac-business-faq{padding-top:60px;padding-bottom:80px;max-width:1000px}
+.pac-business-faq details{border-bottom:1px solid #bdc7cb;padding:24px 0}
+.pac-business-faq summary{cursor:pointer;font-size:1.1rem;font-weight:600;line-height:1.5}
+.pac-business-faq details p{padding-top:16px;max-width:850px}
+.pac-business-enquiry{background:#192b3e;padding:80px 0;scroll-margin-top:110px;color:#e9f1f4}
+.pac-business-enquiry>.pac-container{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:center}
+.pac-business-enquiry h2{color:#fff}
+.pac-business-enquiry .pac-eyebrow{color:#c8d6dd}
+.pac-business-enquiry .pac-button{display:inline-flex;align-items:center;gap:10px;background:#e1e9ed;color:#192b3e;padding:16px 24px;margin:20px 0;border-radius:4px}
+.pac-business-small{font-size:.85rem}
+.pac-business-directory{background:#e7edf0;padding:80px 0;scroll-margin-top:100px;color:#192b3e}
+.pac-business-directory h2{font-size:clamp(1.8rem,3.5vw,3rem);line-height:1.15;margin:16px 0 24px;color:#192b3e}
+.pac-business-filters{display:flex;flex-wrap:wrap;gap:24px;margin:32px 0 20px}
+.pac-business-filters>div{flex:1;min-width:min(100%,250px)}
+.pac-business-filters label{display:block;font-size:.85rem;font-weight:600;margin-bottom:10px}
+.pac-business-filters select,.pac-city-search{background:#fff;border:1px solid #9eaaaf;border-radius:4px;width:100%;min-height:52px;color:#192b3e}
+.pac-business-filters select{padding:12px}
+.pac-city-search{display:flex;align-items:center;gap:12px;padding:0 14px}
+.pac-city-search input{width:100%;min-width:0;background:transparent;padding:14px 0;outline-offset:3px}
+.pac-directory-count{font-size:.85rem;margin:18px 0 32px}
+.pac-area-groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 50px;margin-bottom:36px}
+.pac-area-groups h3{display:flex;align-items:center;gap:10px;font-size:1rem;border-bottom:1px solid #b9c3c8;padding-bottom:15px;margin:0 0 10px}
+.pac-area-groups ul{list-style:none;padding:0}
+.pac-area-groups a{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;font-size:.93rem;text-decoration-thickness:1px;text-underline-offset:5px}
+.pac-area-groups a:hover{text-decoration:underline}
+.pac-local-market-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:30px}
+.pac-local-market-links a{display:flex;justify-content:space-between;align-items:center;gap:14px;background:#fff;padding:22px;border:1px solid #c0cacf;border-radius:3px}
+.pac-local-market-links svg{flex-shrink:0}
+.pac-business-nearby{padding-top:70px;padding-bottom:70px}
+.pac-business-nearby h2{font-size:2rem}
+.pac-business-nearby>div{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}
+.pac-business-nearby>div a{display:flex;align-items:center;gap:16px;border:1px solid #bcc6ca;padding:14px 18px;border-radius:3px}
+.pac-business-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 26px;padding:30px 0 80px}
+.pac-business-card{display:block;border-bottom:1px solid #b9c3c8;padding-bottom:26px}
+.pac-business-card img{width:100%;aspect-ratio:4/3;object-fit:cover;transition:filter .4s ease}
+.pac-business-card:hover img{filter:brightness(1.08)}
+.pac-business-card h2{font-size:1.5rem;margin:20px 0 12px;letter-spacing:-.02em}
+.pac-business-card p{font-size:.94rem;margin:0 0 18px}
+.pac-business-card .pac-text-link{font-size:.88rem}
+@media(max-width:850px){.pac-business-intro,.pac-business-story,.pac-business-enquiry>.pac-container{grid-template-columns:1fr;gap:36px}.pac-business-cards,.pac-local-market-links,.pac-area-groups{grid-template-columns:repeat(2,minmax(0,1fr))}.pac-business-scope-grid{gap:24px}.pac-business-story figure img{height:400px}}
+@media(max-width:540px){.pac-business-intro,.pac-business-story,.pac-business-faq,.pac-business-nearby{padding-top:48px;padding-bottom:48px}.pac-business-scope,.pac-business-directory,.pac-business-enquiry{padding:48px 0}.pac-business-scope-grid,.pac-business-cards,.pac-local-market-links,.pac-area-groups{grid-template-columns:1fr}.pac-business-story figure img{height:360px}.pac-business-page .pac-page-hero h1{font-size:2.35rem;overflow-wrap:anywhere}.pac-business-breadcrumb{font-size:.75rem}.pac-business-cards{gap:32px}}
+@media(prefers-reduced-motion:reduce){.pac-business-card img{transition:none}}
+
+.pac-site .pac-business-page .pac-page-hero h1 em{color:#d3e3ea!important;font-family:Georgia,serif;font-weight:400;font-style:italic}
+.pac-business-page .pac-page-hero-content{padding-bottom:100px}
+
+.pac-site .pac-business-page h2 em{color:inherit;font-family:Georgia,serif;font-style:italic;font-weight:400}
+.pac-site .pac-business-enquiry h2 em{color:#d3e3ea!important}
+.pac-site .pac-business-page .pac-callback h2{font-size:27px;line-height:1.2;letter-spacing:-.02em}
+
+.pac-site .pac-business-enquiry .pac-button,.pac-site .pac-business-enquiry .pac-button:hover{background:#e1e9ed;color:#192b3e}
+.pac-site .pac-business-enquiry .pac-button:hover{background:#cfdce2}
+
+
+/* Hyperlocal Los Angeles Pillar, Directory & Interactive Neighborhood Finder */
+.pac-la-pricing-strip{background:#edf6fa;border-bottom:1px solid #d5e5ee;padding:30px 0}
+.pac-la-strip-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:24px;align-items:center}
+.pac-la-strip-grid strong{display:block;font-size:1.5rem;font-weight:700;color:#123b56;margin:4px 0 6px;letter-spacing:-.02em}
+.pac-la-strip-grid p{margin:0;font-size:.88rem;line-height:1.55;color:#4a6474}
+.pac-la-strip-cta{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+
+.pac-la-micro-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:34px}
+.pac-la-micro-card{background:#fff;border:1px solid #d6e4ec;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 8px 26px rgba(18,59,86,.05)}
+.pac-la-micro-card:last-child:nth-child(odd){grid-column:1 / -1}
+.pac-la-micro-head{display:flex;align-items:flex-start;gap:14px}
+.pac-la-micro-icon{width:44px;height:44px;border-radius:12px;background:#e6f3f9;color:#135778;display:grid;place-items:center;flex-shrink:0}
+.pac-la-micro-card h3{margin:0;font-size:1.4rem;font-weight:650;color:#123b56;letter-spacing:-.025em}
+.pac-la-micro-corridor{margin:4px 0 0;font-size:.82rem;font-weight:600;color:#1b6687;line-height:1.45}
+.pac-la-micro-summary{margin:0;font-size:.96rem;line-height:1.72;color:#4a6474}
+.pac-la-micro-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.pac-la-micro-list li{display:flex;align-items:flex-start;gap:10px;font-size:.9rem;line-height:1.55;color:#27475b}
+.pac-la-micro-list svg{color:#156e94;flex-shrink:0;margin-top:3px}
+.pac-la-micro-links{display:flex;flex-wrap:wrap;gap:8px;padding-top:6px}
+.pac-la-micro-chip{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:999px;background:#f0f7fa;border:1px solid #cfe1eb;font-size:.82rem;font-weight:600;color:#135778;text-decoration:none;transition:background .2s,border-color .2s}
+.pac-la-micro-chip:hover{background:#dff0f8;border-color:#72afc8}
+.pac-la-micro-service{margin-top:auto;align-self:flex-start}
+
+.pac-la-service-tile{gap:10px}
+.pac-la-service-top{display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px}
+.pac-la-price-pill{font-size:.76rem;font-weight:700;color:#124e6f;background:#e6f4fa;border:1px solid #c4e0ee;border-radius:999px;padding:4px 10px;white-space:nowrap}
+.pac-la-service-actions{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:auto;padding-top:14px;border-top:1px solid #e3eef3;gap:12px}
+.pac-la-service-actions .pac-service-link{width:auto;gap:6px;margin-top:0}
+.pac-la-inline-quote{font-size:.86rem;font-weight:700;color:#124e6f;text-decoration:none;padding:6px 12px;border-radius:8px;background:#edf6fa;transition:background .2s}
+.pac-la-inline-quote:hover{background:#d7ecf6}
+
+.pac-loc-pillar-band{background:#123b56;color:#f3f9fc;padding:44px 0}
+.pac-loc-pillar-inner{display:grid;grid-template-columns:1.4fr auto;gap:32px;align-items:center}
+.pac-loc-pillar-band .pac-eyebrow{color:#b6e3f5}
+.pac-loc-pillar-band h2{margin:10px 0 12px;font-size:clamp(1.6rem,2.8vw,2.25rem);font-weight:600;color:#fff;letter-spacing:-.03em;line-height:1.18}
+.pac-loc-pillar-band p{margin:0;color:#d6e9f2;font-size:.98rem;line-height:1.7;max-width:720px}
+.pac-loc-pillar-actions{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.pac-loc-pillar-band .pac-button{background:#eef8fb;color:#123b56;border-color:#eef8fb}
+.pac-loc-pillar-band .pac-button:hover{background:#fff}
+.pac-loc-pillar-band .pac-text-link{color:#cbe9f7}
+
+.pac-loc-finder{display:flex;flex-direction:column;gap:22px}
+.pac-loc-finder-header{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:end}
+.pac-loc-finder-header h2{margin:10px 0 10px;font-size:clamp(1.9rem,3.4vw,2.85rem);line-height:1.12;letter-spacing:-.035em;font-weight:600;color:#123b56}
+.pac-loc-finder-header p{margin:0;color:#4a6474;font-size:1rem;line-height:1.68}
+.pac-loc-search-wrap{width:100%}
+.pac-loc-search-box{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #9ab7c7;border-radius:12px;padding:0 14px;min-height:54px;box-shadow:0 4px 16px rgba(18,59,86,.06);transition:border-color .2s,box-shadow .2s}
+.pac-loc-search-box:focus-within{border-color:#135778;box-shadow:0 0 0 3px rgba(19,87,120,.16)}
+.pac-loc-search-box svg{color:#2c6b88;flex-shrink:0}
+.pac-loc-search-box input{width:100%;min-width:0;border:0;background:transparent;font-size:1rem;color:#123b56;padding:12px 0;outline:none;min-height:46px}
+.pac-loc-search-clear{display:grid;place-items:center;width:34px;height:34px;border-radius:8px;border:0;background:#edf5f8;color:#123b56;cursor:pointer;flex-shrink:0}
+.pac-loc-search-clear:hover{background:#dcecf3}
+
+.pac-loc-region-tabs{display:flex;flex-wrap:wrap;gap:8px}
+.pac-loc-region-pill{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:8px 14px;border-radius:999px;border:1px solid #c6dbe6;background:#fff;color:#174762;font-size:.86rem;font-weight:600;cursor:pointer;transition:background .18s,border-color .18s,color .18s}
+.pac-loc-region-pill:hover{background:#eaf5fa;border-color:#6ea7c2}
+.pac-loc-region-pill.is-active{background:#123b56;border-color:#123b56;color:#fff}
+.pac-loc-region-count{font-size:.75rem;padding:2px 7px;border-radius:999px;background:#eaf4f8;color:#165270}
+.pac-loc-region-pill.is-active .pac-loc-region-count{background:rgba(255,255,255,.18);color:#fff}
+
+.pac-loc-status-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.9rem;color:#4a6474;padding-bottom:6px;border-bottom:1px solid #dbe7ee}
+.pac-loc-reset-btn{border:0;background:transparent;color:#135778;font-weight:600;font-size:.88rem;text-decoration:underline;text-underline-offset:4px;cursor:pointer;min-height:36px;padding:4px 6px}
+
+.pac-loc-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.pac-loc-card{background:#fff;border:1px solid #d5e4ec;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s}
+.pac-loc-card:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(18,59,86,.09);border-color:#87b8cf}
+.pac-loc-card-media{position:relative;display:block;aspect-ratio:16 / 10;overflow:hidden;background:#dce9f0}
+.pac-loc-card-img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.pac-loc-card:hover .pac-loc-card-img{transform:scale(1.04)}
+.pac-loc-card-badge{position:absolute;top:12px;left:12px;background:rgba(16,55,82,.88);color:#eef8fc;font-size:.74rem;font-weight:600;letter-spacing:.03em;padding:5px 10px;border-radius:999px}
+.pac-loc-card-body{padding:22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.pac-loc-card-title-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pac-loc-card-body h3{margin:0;font-size:1.3rem;font-weight:700;color:#123b56;letter-spacing:-.02em}
+.pac-loc-card-body h3 a{color:inherit;text-decoration:none}
+.pac-loc-card-body h3 a:hover{color:#17688f}
+.pac-loc-card-zip{display:inline-flex;align-items:center;gap:4px;font-size:.78rem;font-weight:600;color:#4f6b7b}
+.pac-loc-card-housing{margin:0;font-size:.82rem;font-weight:600;color:#165c7f;line-height:1.45}
+.pac-loc-card-desc{margin:0;font-size:.9rem;line-height:1.6;color:#516a79;flex:1}
+.pac-loc-card-actions{display:grid;grid-template-columns:1fr auto;gap:10px;padding-top:12px;border-top:1px solid #e6eff4;margin-top:6px}
+.pac-loc-card-guide-link,.pac-loc-card-quote-link{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:8px 14px;border-radius:9px;font-size:.86rem;font-weight:650;text-decoration:none;transition:background .2s,color .2s}
+.pac-loc-card-guide-link{background:#eef6fa;color:#123b56;justify-content:space-between}
+.pac-loc-card-guide-link:hover{background:#dceef6}
+.pac-loc-card-quote-link{background:#123b56;color:#fff}
+.pac-loc-card-quote-link:hover{background:#18678c}
+
+.pac-loc-compact-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.pac-loc-compact-item{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #d4e3eb;border-radius:12px;padding:14px 16px}
+.pac-loc-compact-main{min-width:0;display:flex;flex-direction:column;gap:4px}
+.pac-loc-compact-name{display:inline-flex;align-items:center;gap:6px;font-size:.98rem;font-weight:650;color:#123b56;text-decoration:none}
+.pac-loc-compact-name:hover{color:#166d94;text-decoration:underline;text-underline-offset:3px}
+.pac-loc-compact-meta{font-size:.78rem;color:#556f7e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pac-loc-compact-cta{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:6px 12px;border-radius:8px;background:#eaf4f9;color:#124a6a;font-size:.8rem;font-weight:700;text-decoration:none}
+.pac-loc-compact-cta:hover{background:#123b56;color:#fff}
+.pac-loc-compact-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:6px}
+.pac-loc-compact-footer p{margin:0;font-size:.9rem;color:#4a6474}
+
+.pac-loc-empty{background:#fff;border:1px solid #cfe0ea;border-radius:16px;padding:32px;text-align:center}
+.pac-loc-empty h3{margin:0 0 10px;font-size:1.3rem;color:#123b56}
+.pac-loc-empty p{margin:0 auto 20px;max-width:640px;color:#4d6777;line-height:1.68}
+.pac-loc-empty-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;align-items:center}
+.pac-loc-secondary-btn{display:inline-flex;align-items:center;gap:8px;min-height:50px;padding:12px 20px;border:1.5px solid #123b56;border-radius:8px;color:#123b56;font-weight:650;font-size:.92rem;text-decoration:none}
+.pac-loc-secondary-btn:hover{background:#eaf4f9}
+
+.pac-loc-coverage-grid,.pac-loc-quote-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+.pac-loc-coverage-bullets{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:12px}
+.pac-loc-coverage-bullets li{display:flex;align-items:flex-start;gap:12px;font-size:.98rem;line-height:1.6;color:#244457}
+.pac-loc-coverage-bullets svg{color:#156e94;flex-shrink:0;margin-top:3px}
+.pac-loc-map-frame{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16 / 11;box-shadow:0 16px 36px rgba(18,59,86,.12);background:#dce8ef}
+.pac-loc-map-caption{position:absolute;left:16px;bottom:16px;right:16px;display:inline-flex;align-items:center;gap:8px;background:rgba(16,55,82,.9);color:#f0f8fc;padding:10px 14px;border-radius:10px;font-size:.82rem;font-weight:600;width:fit-content;max-width:calc(100% - 32px)}
+.pac-loc-quick-links{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin-top:24px}
+
+@media(max-width:1050px){
+  .pac-la-strip-grid{grid-template-columns:1fr 1fr}
+  .pac-loc-card-grid,.pac-loc-compact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pac-loc-finder-header,.pac-loc-pillar-inner,.pac-loc-coverage-grid,.pac-loc-quote-grid{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .pac-la-strip-grid,.pac-la-micro-grid,.pac-loc-card-grid,.pac-loc-compact-grid,.pac-loc-quick-links{grid-template-columns:1fr}
+  .pac-la-micro-card{padding:22px}
+  .pac-loc-pillar-band{padding:32px 0}
+}
+@media(prefers-reduced-motion:reduce){
+  .pac-loc-card,.pac-loc-card-img{transition:none}
+  .pac-loc-card:hover,.pac-loc-card:hover .pac-loc-card-img{transform:none}
+}

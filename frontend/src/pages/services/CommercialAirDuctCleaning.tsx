@@ -1,83 +1,177 @@
 import ServiceDetailLayout from '@/components/ServiceDetailLayout';
+import { Link } from '@/components/CanonicalLink';
 
 const content = {
-  "seoTitle": "Commercial Air Duct Cleaning Los Angeles",
-  "seoDescription": "Plan commercial air duct cleaning in Los Angeles. Coordinate system scope, building access and scheduling for offices, retail and managed properties.",
-  "path": "/services/commercial-air-duct-cleaning",
-  "h1": "Commercial Air Duct Cleaning Los Angeles",
-  "intro": "Air care that works with your building. Pure Air California helps Los Angeles businesses and property managers plan duct cleaning around system requirements, access and daily operations.",
-  "serviceName": "Commercial Air Duct Cleaning",
-  "breadcrumbLabel": "Commercial Air Duct Cleaning",
-  "sections": [
-    {
-      "heading": "Begin with a building-specific scope",
-      "body": "Commercial buildings can contain multiple air handlers, zones and duct configurations. Share the building type, system count, plans if available and the concern prompting the request. A useful proposal distinguishes the ductwork being cleaned from equipment maintenance or repairs."
-    },
-    {
-      "heading": "Coordinate the people and the space",
-      "body": "Plan access with building management, tenants and facilities staff. Discuss work areas, occupancy, loading access, parking and where equipment can be placed. If particular work hours are required, raise those constraints before the appointment is confirmed.",
-      "bullets": [
-        "Building contact and access arrangements",
-        "Systems and zones included in the scope",
-        "Tenant or occupant coordination",
-        "Documentation and contractor requirements"
-      ]
-    },
-    {
-      "heading": "Understand what is included",
-      "body": "Ask whether the proposal covers supply ducts, returns, registers, grilles and specific HVAC components. Make sure it identifies inaccessible sections and how additional findings will be handled. Agree on the work and approval process before cleaning begins."
-    },
-    {
-      "heading": "Different properties need different plans",
-      "body": "An office, restaurant, school and hospitality property can have very different occupancy and operational needs. Duct cleaning should be coordinated with the building’s maintenance plan and any applicable facility procedures. A standard cleaning appointment should not be treated as certification of code compliance."
-    },
-    {
-      "heading": "Review the completed work",
-      "body": "Agree in advance on the closeout information your facility needs, such as the completed scope, access limitations and follow-up recommendations. Discuss whether any filters, equipment or damaged duct sections need separate attention. A clear record helps the next maintenance decision."
-    },
-    {
-      "heading": "Commercial duct cleaning estimates in Los Angeles",
-      "body": "System quantity, duct access, building size, contamination and scheduling all affect the work. Request an estimate for your building rather than relying on a residential package. Include the ZIP code, facility type and best site contact when you get in touch."
-    }
+  seoTitle: 'Commercial Air Duct Cleaning Los Angeles | Pure Air CA',
+  seoDescription:
+    'Commercial air duct & HVAC cleaning across Los Angeles County. Site-specific written scopes, COI documentation & off-hours scheduling. Call (213) 792-4145.',
+  path: '/services/commercial-air-duct-cleaning',
+  h1: 'Commercial Air Duct Cleaning Across Los Angeles County',
+  intro:
+    'Keep your building’s HVAC ventilation clean, documented, and well maintained without disrupting tenants or daily operations. From offices, medical clinics, and hotels to retail showrooms and industrial spaces, Pure Air California delivers a building-specific written scope, COI documentation, and confirmed pricing before work begins.',
+  estimateLabel: 'Get a commercial estimate',
+  coverageText:
+    'Commercial service across Los Angeles County—from Downtown LA, Century City, and the Westside to the San Fernando Valley, Pasadena, and the South Bay.',
+  heroReassurance: 'All Los Angeles County · COI-ready · After-hours & weekend scheduling available',
+  serviceName: 'Commercial Air Duct Cleaning',
+  breadcrumbLabel: 'Commercial Air Duct Cleaning',
+  quickFacts: [
+    { label: 'Commercial pricing', value: 'Itemized building-specific written scope' },
+    { label: 'B2B readiness', value: 'COI / vendor docs · Off-hours & phased' },
+    { label: 'Coverage', value: 'All Los Angeles County & Ventura County' },
   ],
-  "faqs": [
+  sections: [
     {
-      "question": "Can the work be scheduled around business operations?",
-      "answer": "Share your operating hours and access restrictions when requesting the estimate. We will discuss availability and an appropriate work plan before confirming an appointment."
+      heading: 'What is included in a commercial ventilation scope',
+      body: 'Commercial HVAC networks often combine rooftop package units, central air handlers, VAV boxes, and long supply/return trunk runs. Every proposal itemizes the exact zones and components included so facility managers and property owners can compare bids accurately.',
+      bullets: [
+        'Supply and return ductwork cleaning for specified air handlers and tenant zones',
+        'Diffuser, register, and return grille removal, cleaning, and reinstallation',
+        'Negative-pressure containment and workspace protection for occupied interiors',
+        'Optional itemized add-ons: accessible air handlers, plenums, blower assemblies, evaporator coils, and filter banks',
+        'Clear documentation of completed zones, access limitations, and follow-up maintenance notes',
+      ],
     },
     {
-      "question": "Do you work with property managers and HOAs?",
-      "answer": "Yes. We offer service options for managed and shared properties. Confirm which systems serve individual units and which are common-area responsibilities so approvals and access can be coordinated."
+      heading: 'Signs your Los Angeles facility needs a ventilation inspection',
+      body: 'Commercial spaces experience heavier occupancy, tenant build-outs, and continuous HVAC runtime than residential homes. Schedule an assessment when building conditions point to duct or component buildup.',
+      bullets: [
+        'Recent tenant improvements (TI), drywall work, ceiling grid modifications, or floor resurfacing',
+        'Visible dark dust streaks around ceiling diffusers or heavy lint/debris loading on return grilles',
+        'Long-running rooftop package units or multi-tenant air handlers with no documented cleaning history',
+        'Wildfire smoke infiltration, musty odors near air handlers, or uneven zone comfort complaints',
+        'Preparing a commercial suite, clinic, or hospitality space for new occupancy or seasonal turnover',
+      ],
     },
     {
-      "question": "Does the estimate include HVAC equipment cleaning?",
-      "answer": "It depends on the agreed scope. Ask which components are included and which would be quoted separately. Duct cleaning, equipment maintenance and repairs are related but distinct tasks."
-    }
+      heading: 'Coordinating tenants, access & COI documentation in LA',
+      body: 'Smooth commercial work starts with logistics. Before dispatch, we align with building engineers, property managers, and security teams on loading zones, freight elevators, roof hatches, after-hours entry, and vendor insurance certificates.',
+      bullets: [
+        'Certificate of Insurance (COI) and additional-insured paperwork coordinated prior to scheduling',
+        'After-hours, early-morning, weekend, or phased floor-by-floor scheduling options',
+        'Clear separation between landlord-controlled central systems and tenant-controlled units',
+        'Honest boundary: duct cleaning is a defined maintenance task—not mechanical repair, air balancing, or code certification',
+      ],
+    },
+    {
+      heading: 'What shapes a commercial duct cleaning estimate',
+      body: 'Residential flat-rate packages do not apply to commercial buildings. Your written estimate reflects unit count, ceiling height and lift requirements, duct configuration, contamination level, off-hours access constraints, and closeout reporting expectations.',
+      bullets: [
+        'Number and type of air handlers, rooftop package units, or fan-coil units',
+        'Duct access (drop-tile ceilings, exposed spiral duct, mechanical rooms, or high-bay roofs)',
+        'Phased or overnight scheduling requirements and escort logistics',
+        'Closeout deliverables such as per-zone notes and before-and-after photography',
+      ],
+    },
+    {
+      heading: 'Industry-specific ventilation planning across LA County',
+      body: 'An outpatient clinic, a hotel floor, a dining room, and a warehouse have completely different occupancy rules and air-system boundaries. For food-service properties, comfort HVAC ducts are scoped separately from kitchen grease hoods; for healthcare sites, work is coordinated with facility and infection-prevention staff.',
+    },
+    {
+      heading: 'Closeout records that help your next maintenance cycle',
+      body: 'Before closeout, we verify the agreed checklist with your site contact and flag inaccessible duct segments, worn filter frames, or mechanical issues that warrant an HVAC contractor. Organized per-unit records make future budgeting and vendor comparisons straightforward.',
+    },
   ],
-  "relatedLinks": [
+  faqs: [
     {
-      "label": "Industries we serve",
-      "path": "/industries/"
+      question: 'Can commercial air duct cleaning be scheduled after hours or on weekends?',
+      answer:
+        'Yes. Share your building’s operating hours, quiet-hour policies, and security/escort requirements when requesting a quote. We confirm after-hours, early-morning, weekend, or phased availability before booking.',
     },
     {
-      "label": "Property managers and HOAs",
-      "path": "/property-managers/"
+      question: 'Do you provide Certificates of Insurance (COI) for LA commercial buildings?',
+      answer:
+        'Send your property management company’s vendor and COI wording requirements before approving the scope. We coordinate standard insurance documentation ahead of your scheduled work window.',
     },
     {
-      "label": "HVAC system cleaning",
-      "path": "/services/hvac-system-cleaning/"
+      question: 'Do you work with property managers, HOA boards, and multi-building portfolios?',
+      answer:
+        'Yes. We serve commercial offices, retail centers, hotels, schools, and multifamily HOA communities across Los Angeles County, separating common-area systems from individual tenant or resident units clearly in writing.',
     },
     {
-      "label": "Commercial dryer vent cleaning",
-      "path": "/services/commercial-dryer-vent-cleaning/"
+      question: 'Does a commercial duct quote automatically include coils, blowers, or kitchen hoods?',
+      answer:
+        'No—each component is listed explicitly so you know exactly what you are paying for. Supply/return ductwork, air handlers/coils/blowers, commercial dryer vents, and filter programs are itemized clearly, and kitchen grease-hood certification is outside routine comfort-HVAC duct cleaning.',
     },
     {
-      "label": "Los Angeles service coverage",
-      "path": "/locations/los-angeles/"
-    }
-  ]
+      question: 'What details speed up an accurate commercial estimate?',
+      answer:
+        'Share your property city/ZIP, building type, approximate HVAC unit or zone count, ceiling/roof access notes, desired work window, and any closeout photo or documentation requirements.',
+    },
+  ],
+  relatedLinks: [
+    {
+      label: 'Commercial & HOA air duct + dryer vent programs',
+      path: '/services/commercial-hoa-air-duct-dryer-vent-cleaning-los-angeles/',
+    },
+    {
+      label: 'Commercial dryer vent cleaning',
+      path: '/services/commercial-dryer-vent-cleaning/',
+    },
+    {
+      label: 'Property managers & HOA services',
+      path: '/property-managers/',
+    },
+    {
+      label: 'Commercial industries we serve',
+      path: '/industries/',
+    },
+    {
+      label: 'Documented LA commercial project stories',
+      path: '/project-stories/',
+    },
+    {
+      label: 'Complete HVAC system & coil cleaning',
+      path: '/services/hvac-system-cleaning/',
+    },
+  ],
 };
 
 export default function CommercialAirDuctCleaning() {
-  return <ServiceDetailLayout {...content} />;
+  return (
+    <ServiceDetailLayout {...content}>
+      <section className="pac-section pac-container" aria-labelledby="commercial-project-heading">
+        <div className="pac-section-heading">
+          <div>
+            <span className="pac-eyebrow">BUILT AROUND YOUR OPERATIONS</span>
+            <h2 id="commercial-project-heading">
+              Clear scope.
+              <br />
+              <em>Confident decisions.</em>
+            </h2>
+          </div>
+          <p>Give your facilities team a practical plan for the work, the people, and the property.</p>
+        </div>
+        <div className="grid gap-8 md:grid-cols-3">
+          <article>
+            <h3 className="text-xl font-semibold mb-3">Know what you are approving</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Identify the air handlers, supply and return ducts, accessible components, and exclusions in a written estimate. Approve the scope and price before cleaning starts.
+            </p>
+          </article>
+          <article>
+            <h3 className="text-xl font-semibold mb-3">Coordinate occupied spaces</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Plan work areas, tenant notices, COI requirements, equipment access, and off-hours work windows with your site contact before setting the schedule.
+            </p>
+          </article>
+          <article>
+            <h3 className="text-xl font-semibold mb-3">Make the handoff useful</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Agree on the completion records your team needs, including serviced areas, access limitations, and findings requiring a separate trade decision.
+            </p>
+          </article>
+        </div>
+        <div className="mt-10 border-t border-gray-200 pt-8">
+          <h3 className="text-xl font-semibold mb-3">See how a real Los Angeles office scope was documented</h3>
+          <p className="text-gray-600 leading-relaxed">
+            PAC’s 2026 West Hollywood Community Housing Corporation office record covers four HVAC systems across 3,137 square feet scheduled over a weekend window. Review the recorded components and access planning when preparing your building’s system list.
+          </p>
+          <Link className="pac-text-link" to="/case-studies/nonprofit-housing-office-hvac/">
+            Explore the four-system West Hollywood office project ↗
+          </Link>
+        </div>
+      </section>
+    </ServiceDetailLayout>
+  );
 }

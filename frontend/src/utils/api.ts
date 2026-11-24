@@ -3,12 +3,16 @@
  * Centralized API client for Pure Air California backend
  * Uses JWT Bearer token authentication for admin operations
  */
+import { acceptedReceipt, newSubmissionId } from './leadMeasurement.mjs';
+import { readAttribution, sanitizeAttribution } from './attribution.mjs';
+import { advertisingAllowed } from './privacy.mjs';
 
 // Auto-detect: always use relative /api on localhost (goes through Vite proxy),
 // only use the full URL in production
 const isLocalhost = typeof window !== 'undefined' && (
     window.location.hostname === 'localhost' ||
-    window.location.hostname === '127.0.0.1'
+    window.location.hostname === '127.0.0.1' ||
+    window.location.hostname === '[::1]'
 );
 export const API_BASE_URL = isLocalhost ? '/api' : (import.meta.env.VITE_API_BASE_URL || '/api');
 
@@ -18,6 +22,10 @@ export type LeadStatus = 'new' | 'contacted' | 'quoted' | 'scheduled' | 'complet
 export type LeadSource = 'contact_form' | 'quote_form' | 'phone' | 'referral' | 'google_maps' | 'outreach' | 'other';
 
 export interface LeadCreate {
+    submission_id?: string;
+    attribution?: { landing_path: string; captured_at: string; ad_measurement_consent: boolean;
+        utm_source?: string; utm_medium?: string; utm_campaign?: string; utm_term?: string; utm_content?: string;
+        gclid?: string; gbraid?: string; wbraid?: string };
     name: string;
     email: string;
     phone: string;
@@ -29,6 +37,17 @@ export interface LeadCreate {
     preferred_date?: string;
     source?: LeadSource;
     estimated_price?: number;
+}
+export interface LeadReceipt { accepted: true; submission_id: string; id: string }
+export type SubmissionResult = { success: boolean; submission_id?: string; delivery_channel?: 'backend'; acceptance_unknown?: boolean; lead?: LeadReceipt; error?: string };
+export type SubmissionDraft = { fingerprint: string; payload: LeadCreate };
+export function prepareSubmission(data: LeadCreate, previous?: SubmissionDraft | null): SubmissionDraft {
+    const fingerprint = JSON.stringify(data);
+    if (previous?.fingerprint === fingerprint) return previous;
+    return { fingerprint, payload: { ...data, submission_id: newSubmissionId(), attribution: readAttribution() } };
+}
+class LeadDeliveryError extends Error {
+    constructor(message: string, public status?: number, public unverifiedReceipt = false) { super(message); }
 }
 
 export interface Lead extends LeadCreate {
@@ -136,19 +155,23 @@ export async function registerUser(data: { email: string; password: string; firs
 /**
  * Create a new lead from form submission (PUBLIC — no auth required)
  */
-export async function createLead(leadData: LeadCreate): Promise<Lead> {
+export async function createLead(leadData: LeadCreate, timeoutMs = 12000): Promise<LeadReceipt> {
     const response = await fetch(`${API_BASE_URL}/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(leadData),
+        // Bound each receipt attempt; uncertain persistence never triggers another provider.
+        signal: AbortSignal.timeout(timeoutMs),
     });
 
     if (!response.ok) {
         const error: ApiError = await response.json().catch(() => ({ detail: 'Network error' }));
-        throw new Error(error.detail || `HTTP error! status: ${response.status}`);
+        throw new LeadDeliveryError(typeof error.detail === 'string' ? error.detail : 'Your request could not be accepted.', response.status);
     }
 
-    return response.json();
+    const receipt = await response.json().catch(() => null);
+    if (!acceptedReceipt(receipt, leadData.submission_id)) throw new LeadDeliveryError('We could not confirm your request. Please call PAC before submitting again.', undefined, true);
+    return receipt;
 }
 
 /**
@@ -348,60 +371,32 @@ export async function checkApiHealth(): Promise<boolean> {
 
 export async function submitFormWithBackend(
     formData: LeadCreate,
-    options?: { silent?: boolean }
-): Promise<{ success: boolean; lead?: Lead; error?: string }> {
-    try {
-        let lead: Lead | undefined;
-        let emailDelivered = false;
+    _options?: { silent?: boolean }
+): Promise<SubmissionResult> {
+    const payload = { ...formData, submission_id: formData.submission_id || newSubmissionId(),
+        attribution: advertisingAllowed() ? sanitizeAttribution(formData.attribution) : undefined };
+    const uncertain = (): SubmissionResult => ({ success: false, acceptance_unknown: true,
+        submission_id: payload.submission_id,
+        error: 'We could not confirm receipt. Your request may already be saved. Please call PAC to confirm before sending another request.' });
+    // Reconcile a lost acknowledgement by replaying the same UUID and payload once.
+    // A separate email provider cannot establish whether this request was already saved.
+    // Never automatically duplicate an uncertain request across providers.
+    for (let attempt = 0; attempt < 2; attempt++) {
+        // Withdrawal stops replay of previously consented attribution. Changing the
+        // payload here would break the backend's same-UUID fingerprint contract.
+        if (attempt > 0 && payload.attribution && !advertisingAllowed()) return uncertain();
         try {
-            lead = await createLead(formData);
-        } catch (dbError) {
-            console.warn('Backend DB submission failed:', dbError);
+            const lead = await createLead(payload, attempt === 0 ? 12000 : 8000);
+            return { success: true, lead, submission_id: payload.submission_id, delivery_channel: 'backend' };
+        } catch (error) {
+            if (error instanceof LeadDeliveryError) {
+                if (error.unverifiedReceipt || error.status === 409) return uncertain();
+                // A rate limit or rejection on replay cannot disprove persistence of attempt one.
+                if (error.status && error.status < 500) return attempt > 0 ? uncertain() : { success: false, submission_id: payload.submission_id, error: error.message };
+            }
         }
-
-        // FormSubmit fallback for email notifications
-        try {
-            const emailResponse = await fetch('https://formsubmit.co/ajax/lou@pureaircalifornia.com', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    Name: formData.name,
-                    Email: formData.email,
-                    Phone: formData.phone,
-                    Service: formData.service || 'Not specified',
-                    Property_Type: formData.property_type || 'Not specified',
-                    Square_Footage: formData.square_footage || 'Not specified',
-                    Estimated_Price: formData.estimated_price ? `$${formData.estimated_price.toFixed(2)}` : 'Not generated yet',
-                    Address: formData.address || 'Not specified',
-                    Preferred_Date: formData.preferred_date || 'Not specified',
-                    Message: formData.message || 'No message provided',
-                    Source: formData.source || 'Website Form',
-                    _subject: `[Pure Air] New Lead: ${formData.source || 'Form'} - ${formData.name}`,
-                    _template: "table",
-                    _replyto: formData.email,
-                    _captcha: "false"
-                })
-            });
-            const emailResult = await emailResponse.json().catch(() => null);
-            emailDelivered = emailResponse.ok && (emailResult?.success === true || emailResult?.success === 'true');
-        } catch (emailErr) {
-            console.warn('FormSubmit notification failed:', emailErr);
-        }
-
-        if (!lead && !emailDelivered) {
-            return { success: false, error: 'Your request could not be delivered. Please try again or call us.' };
-        }
-        return { success: true, lead };
-    } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        if (!options?.silent) {
-            console.warn('Backend submission failed:', errorMessage);
-        }
-        return { success: false, error: errorMessage };
     }
+    return uncertain();
 }
 
 // ── Estimates ────────────────────────────────────────────────────────

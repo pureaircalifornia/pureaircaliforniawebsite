@@ -1,326 +1,149 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Loader2, Home, Building2, User, Mail, Phone, CheckCircle } from 'lucide-react';
-import { submitFormWithBackend } from '@/utils/api';
+import { useState } from 'react';
+import { ArrowRight, Building2, Check, Home, Phone, ShieldCheck, Wind } from 'lucide-react';
+import { Link } from '@/components/CanonicalLink';
+import { business } from '@/config/business';
+import { quoteLink } from '@/utils/quoteContext.mjs';
+import {
+  estimatePlanningGuide,
+  type EstimateProperty,
+  type EstimateService,
+} from '@/utils/estimate';
 
-type ServiceType = 'residential-air-duct' | 'commercial-air-duct' | 'dryer-vent' | 'electrostatic-filter' | '';
+const serviceOptions: { id: EstimateService; label: string; cue: string; icon: typeof Home }[] = [
+  { id: 'air-duct', label: 'Air Duct Cleaning', cue: 'From $299 residential', icon: Home },
+  { id: 'dryer-vent', label: 'Dryer Vent Cleaning', cue: 'From $149 residential', icon: Wind },
+  { id: 'filter', label: 'Electrostatic Filter Care', cue: 'Written scope', icon: ShieldCheck },
+  { id: 'other', label: 'Commercial / HVAC Scope', cue: 'Written proposal', icon: Building2 },
+];
 
+const propertyOptions: { key: 'home' | 'estate' | 'managed' | 'commercial'; label: EstimateProperty }[] = [
+  { key: 'home', label: 'Home / apartment' },
+  { key: 'estate', label: 'Private home / estate' },
+  { key: 'managed', label: 'Managed property / HOA' },
+  { key: 'commercial', label: 'Business / commercial' },
+];
+
+/**
+ * Transparent LA planning guide widget.
+ * Never manufactures binding prices or submits fake estimated_price values; routes straight into
+ * /quote/#estimate-builder with the user's selected service and property type.
+ */
 const PricingEstimator = () => {
-  const [service, setService] = useState<ServiceType | ''>('');
-  const [squareFootage, setSquareFootage] = useState('');
-  const [contactInfo, setContactInfo] = useState({ name: '', email: '', phone: '' });
-  const [stepTwoInfo, setStepTwoInfo] = useState({ address: '', preferredDate: '' });
-  const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
-  const [isStepTwoSubmitted, setIsStepTwoSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isStepTwoLoading, setIsStepTwoLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [service, setService] = useState<EstimateService>('air-duct');
+  const [propertyKey, setPropertyKey] = useState<'home' | 'estate' | 'managed' | 'commercial'>('home');
+  const [systems, setSystems] = useState('1');
 
-  const services = [
-    { id: 'commercial-air-duct', label: 'Commercial Air Duct Cleaning', icon: Building2 },
-    { id: 'residential-air-duct', label: 'Residential Air Duct Cleaning', icon: Home },
-    { id: 'dryer-vent', label: 'Dryer Vent Cleaning', icon: Home },
-    { id: 'electrostatic-filter', label: 'Electrostatic Filter Service', icon: Home },
-  ];
+  const propertyLabel =
+    propertyOptions.find((item) => item.key === propertyKey)?.label || 'Home / apartment';
+  const guide = estimatePlanningGuide({
+    property: propertyLabel,
+    service,
+    systems,
+    sqft: '',
+    unsure: true,
+    access: '',
+    addons: [],
+  });
 
-  const calculatePrice = (serviceType: ServiceType, sqft: number): number => {
-    // Consistent pricing logic matching EnhancedQuoteForm.tsx
-    switch (serviceType) {
-      case 'residential-air-duct':
-        return Math.max(299, sqft - 500);
-      case 'commercial-air-duct':
-        return Math.max(499, (sqft - 500) * 1.5);
-      case 'dryer-vent':
-        return 149;
-      case 'electrostatic-filter':
-        return 249;
-      default:
-        return 0;
-    }
-  };
-
-  const handleEstimate = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!service) {
-      setError('Please select a service type.');
-      return;
-    }
-
-    const sqft = parseInt(squareFootage) || 0;
-    if (sqft < 100) {
-      setError('Please enter a valid square footage (minimum 100).');
-      return;
-    }
-
-    if (!contactInfo.name || !contactInfo.email || !contactInfo.phone) {
-      setError('Please provide your name, email, and phone number.');
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-
-    const price = calculatePrice(service as ServiceType, sqft);
-    const formattedPrice = Math.round(price * 100) / 100;
-
-    try {
-    const result = await submitFormWithBackend({
-      name: contactInfo.name,
-      email: contactInfo.email,
-      phone: contactInfo.phone,
-      service: services.find(s => s.id === service)?.label || 'Unknown',
-      square_footage: squareFootage,
-      estimated_price: formattedPrice,
-      source: 'quote_form',
-      message: `User specifically requested an instant estimate for ${squareFootage} sqft.`
-    });
-
-    if (!result.success) throw new Error(result.error);
-    setEstimatedPrice(formattedPrice);
-    setIsStepTwoSubmitted(false);
-    } catch {
-      setError('We could not send your request. Please try again or call (213) 792-4145.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleStepTwoSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!stepTwoInfo.address || !stepTwoInfo.preferredDate) {
-      setError('Please provide your service address and preferred date.');
-      return;
-    }
-
-    setIsStepTwoLoading(true);
-    setError(null);
-
-    try {
-    const result = await submitFormWithBackend({
-      name: contactInfo.name,
-      email: contactInfo.email,
-      phone: contactInfo.phone,
-      service: services.find(s => s.id === service)?.label || 'Unknown',
-      square_footage: squareFootage,
-      estimated_price: estimatedPrice || 0,
-      address: stepTwoInfo.address,
-      preferred_date: stepTwoInfo.preferredDate,
-      source: 'quote_form',
-      message: `[STEP 2: BOOKING] Lead has completed the funnel and is ready to schedule! They saw the estimate of $${estimatedPrice}.`
-    });
-
-    if (!result.success) throw new Error(result.error);
-    setIsStepTwoSubmitted(true);
-    } catch {
-      setError('We could not send these details. Please try again or call (213) 792-4145.');
-    } finally {
-      setIsStepTwoLoading(false);
-    }
-  };
+  const estimateHref = quoteLink('/pricing/', '', { service, property: propertyKey });
 
   return (
-    <div className="max-w-2xl mx-auto p-8 border rounded-lg shadow-lg bg-white">
-      <h2 className="text-3xl font-bold mb-6 text-center">Instant Price Estimator</h2>
-      <form onSubmit={handleEstimate}>
-        <fieldset className="mb-6">
-          <legend className="block text-sm font-medium text-gray-700 mb-2">
-            Select Service Type:
-          </legend>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {services.map((s) => {
-              const Icon = s.icon;
-              return (
-                <label
-                  key={s.id}
-                  className={`border rounded-md p-3 cursor-pointer transition-all ${service === s.id
-                    ? 'border-brand-600 bg-brand-50 shadow-sm'
-                    : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                >
-                  <div className="flex items-center">
-                    <input type="radio" name="estimate-service" value={s.id} checked={service === s.id} onChange={() => setService(s.id as ServiceType)} required className="mr-2 accent-emerald-800" />
-                    <Icon className="mr-2 h-5 w-5 text-brand-600" />
-                    <span className="text-gray-700 text-sm">{s.label}</span>
-                  </div>
-                </label>
-              );
-            })}
-          </div>
-        </fieldset>
+    <div className="max-w-2xl mx-auto p-6 sm:p-8 border border-slate-200 rounded-2xl shadow-lg bg-white">
+      <span className="pac-eyebrow">TRANSPARENT LA STARTING GUIDE</span>
+      <h2 className="text-2xl sm:text-3xl font-bold mt-2 mb-6 text-slate-900">
+        Explore Your Starting Scope
+      </h2>
 
-        <div className="mb-6">
-          <label htmlFor="squareFootage" className="block text-sm font-medium text-gray-700 mb-1">
-            Approximate Square Footage:
-          </label>
-          <Input
-            id="squareFootage"
-            type="number"
-            value={squareFootage}
-            onChange={(e) => setSquareFootage(e.target.value)}
-            placeholder="e.g., 2000"
-            min="100"
-            required
-            className="w-full"
-          />
+      <fieldset className="mb-5">
+        <legend className="text-sm font-semibold text-slate-700 mb-2">Property type</legend>
+        <div className="grid grid-cols-2 gap-2">
+          {propertyOptions.map((opt) => (
+            <button
+              key={opt.key}
+              type="button"
+              aria-pressed={propertyKey === opt.key}
+              onClick={() => setPropertyKey(opt.key)}
+              className={`px-3 py-2.5 rounded-lg border text-sm font-semibold text-left transition-colors ${
+                propertyKey === opt.key
+                  ? 'border-brand-600 bg-brand-50 text-brand-800'
+                  : 'border-slate-200 text-slate-700 hover:border-slate-300'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
         </div>
+      </fieldset>
 
-        {/* Lead Capture Fields */}
-        <div className="space-y-4 mb-8 pt-4 border-t border-gray-100">
-          <h3 className="text-md font-semibold text-slate-800">Your contact details</h3>
-          <div>
-            <label htmlFor="estimate-name" className="block text-sm font-medium mb-1">Full name</label>
-            <div className="relative">
-              <Input
-                id="estimate-name" autoComplete="name"
-                type="text"
-                value={contactInfo.name}
-                onChange={(e) => setContactInfo(prev => ({ ...prev, name: e.target.value }))}
-                placeholder="Full Name"
-                required
-                className="pl-10"
-              />
-              <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="estimate-email" className="block text-sm font-medium mb-1">Email address</label>
-            <div className="relative">
-              <Input
-                id="estimate-email" autoComplete="email"
-                type="email"
-                value={contactInfo.email}
-                onChange={(e) => setContactInfo(prev => ({ ...prev, email: e.target.value }))}
-                placeholder="Email Address"
-                required
-                className="pl-10"
-              />
-              <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="estimate-tel" className="block text-sm font-medium mb-1">Phone number</label>
-            <div className="relative">
-              <Input
-                id="estimate-tel" autoComplete="tel"
-                type="tel"
-                value={contactInfo.phone}
-                onChange={(e) => setContactInfo(prev => ({ ...prev, phone: e.target.value }))}
-                placeholder="Phone Number"
-                required
-                className="pl-10"
-              />
-              <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-            </div>
-          </div>
-        </div>
-
-        <Button type="submit" className="w-full bg-brand-600 hover:bg-brand-700" disabled={isLoading}>
-          {isLoading ? (
-            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Calculating...</>
-          ) : (
-            'Get My Estimate'
-          )}
-        </Button>
-      </form>
-
-      {error && <div role="alert" className="mt-4 text-red-700 text-center text-sm">{error}</div>}
-
-      {estimatedPrice !== null && !isStepTwoSubmitted && (
-        <div className="mt-8 p-6 bg-brand-50 rounded-lg border border-brand-100 relative overflow-hidden shadow-inner">
-          <div className="text-center mb-8">
-            <h3 className="text-xl font-semibold mb-2 text-slate-800">Your Estimated Price:</h3>
-            <p className="text-5xl font-black text-brand-600 mb-2">${estimatedPrice.toFixed(2)}</p>
-            <p className="text-sm text-gray-600">
-              For {services.find(s => s.id === service)?.label} ({parseInt(squareFootage).toLocaleString()} sq. ft.)
-            </p>
-            <p className="text-sm text-green-700 font-bold mt-4 inline-flex items-center justify-center gap-1 bg-green-100 px-4 py-2 rounded-full shadow-sm border border-green-200">
-              <CheckCircle className="w-4 h-4" />
-              Initial Request Received
-            </p>
-            <p className="text-xs text-gray-500 mt-3 max-w-sm mx-auto">
-              *This is an estimate only. Final pricing may vary based on an on-site professional inspection.
-            </p>
-          </div>
-
-          <form onSubmit={handleStepTwoSubmit} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-            <div className="text-center mb-6">
-              <h4 className="font-bold text-lg text-slate-800 mb-1">Ready to book this service?</h4>
-              <p className="text-sm text-slate-500">Share your address and preferred date. Our team will confirm availability and the final scope.</p>
-            </div>
-
-            <div className="space-y-4 mb-6">
-              <div>
-                <label htmlFor="estimate-address" className="block text-sm font-medium text-gray-700 mb-1">
-                  Service Address
-                </label>
-                <Input
-                  id="estimate-address" autoComplete="street-address"
-                  type="text"
-                  value={stepTwoInfo.address}
-                  onChange={(e) => setStepTwoInfo(prev => ({ ...prev, address: e.target.value }))}
-                  placeholder="Street Address, City, Zip"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="estimate-date" className="block text-sm font-medium text-gray-700 mb-1">
-                  Preferred Date
-                </label>
-                <Input
-                  id="estimate-date"
-                  type="date"
-                  value={stepTwoInfo.preferredDate}
-                  onChange={(e) => setStepTwoInfo(prev => ({ ...prev, preferredDate: e.target.value }))}
-                  min={new Date().toISOString().split('T')[0]}
-                  required
-                />
-              </div>
-            </div>
-
-
-
-            <div className="flex flex-col sm:flex-row gap-3 mt-6">
-              <Button asChild variant="outline" className="flex-1 bg-white hover:bg-gray-50 text-slate-700">
-                <a href="tel:2137924145" className="flex items-center justify-center font-bold">
-                  <Phone className="w-4 h-4 mr-2" />
-                  Call to Discuss
-                </a>
-              </Button>
-              <Button
-                type="submit"
-                disabled={isStepTwoLoading}
-                className="flex-1 bg-brand-600 hover:bg-brand-700 shadow-md transform transition hover:-translate-y-0.5"
+      <fieldset className="mb-5">
+        <legend className="text-sm font-semibold text-slate-700 mb-2">Service</legend>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          {serviceOptions.map((opt) => {
+            const Icon = opt.icon;
+            const selected = service === opt.id;
+            return (
+              <button
+                key={opt.id}
+                type="button"
+                aria-pressed={selected}
+                onClick={() => setService(opt.id)}
+                className={`p-3.5 rounded-xl border text-left flex items-start gap-3 transition-colors ${
+                  selected
+                    ? 'border-brand-600 bg-brand-50 text-brand-800'
+                    : 'border-slate-200 text-slate-700 hover:border-slate-300'
+                }`}
               >
-                {isStepTwoLoading ? (
-                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Finalizing...</>
-                ) : (
-                  'Finalize Quote Request'
-                )}
-              </Button>
-            </div>
-          </form>
+                <Icon className="w-5 h-5 text-brand-600 shrink-0 mt-0.5" aria-hidden="true" />
+                <span>
+                  <strong className="block text-sm">{opt.label}</strong>
+                  <small className="text-xs text-slate-500">{opt.cue}</small>
+                </span>
+              </button>
+            );
+          })}
         </div>
-      )}
+      </fieldset>
 
-      {isStepTwoSubmitted && (
-        <div role="status" className="mt-8 p-8 bg-green-50 rounded-xl text-center border border-green-200 shadow-sm animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 scale-110">
-            <CheckCircle className="h-8 w-8" />
-          </div>
-          <h3 className="text-2xl font-bold text-slate-800 mb-2">Quote Request Finalized!</h3>
-          <p className="text-slate-600 mb-6 max-w-md mx-auto">
-            Thank you for providing those details. Our team operates efficiently and will contact you shortly to confirm your {stepTwoInfo.preferredDate ? `preferred date of ${stepTwoInfo.preferredDate}` : 'appointment'}.
-          </p>
-          <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white font-bold px-8 shadow-md">
-            <a href="tel:2137924145" className="flex items-center">
-              <Phone className="w-5 h-5 mr-no2 text-green-200 mr-2" />
-              (213) 792-4145
-            </a>
-          </Button>
-        </div>
-      )}
+      <div className="mb-6">
+        <label htmlFor="pricing-estimator-systems" className="block text-sm font-semibold text-slate-700 mb-1.5">
+          Approximate HVAC systems / units
+        </label>
+        <select
+          id="pricing-estimator-systems"
+          value={systems}
+          onChange={(e) => setSystems(e.target.value)}
+          className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-slate-900 bg-white"
+        >
+          <option value="1">1 system</option>
+          <option value="2">2 systems</option>
+          <option value="3–5">3–5 systems</option>
+          <option value="6 or more">6 or more / multi-unit</option>
+          <option value="">Not sure</option>
+        </select>
+      </div>
+
+      <div className="p-5 rounded-xl bg-brand-50 border border-brand-100 mb-6">
+        <span className="text-xs font-bold uppercase tracking-wider text-brand-700">{guide.badge}</span>
+        <p className="text-2xl font-bold text-slate-900 mt-1 mb-2">{guide.headline}</p>
+        <p className="text-sm text-slate-600 mb-4">{guide.subline}</p>
+        <ul className="space-y-1.5 text-sm text-slate-700">
+          {guide.included.slice(0, 3).map((item) => (
+            <li key={item} className="flex items-start gap-2">
+              <Check className="w-4 h-4 text-brand-600 shrink-0 mt-0.5" aria-hidden="true" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="flex flex-col sm:flex-row gap-3">
+        <Link className="pac-button flex-1 justify-center" to={estimateHref}>
+          Continue in Estimate Builder <ArrowRight size={17} aria-hidden="true" />
+        </Link>
+        <a className="pac-text-link justify-center" href={business.phoneHref}>
+          <Phone size={16} aria-hidden="true" /> {business.phone}
+        </a>
+      </div>
     </div>
   );
 };

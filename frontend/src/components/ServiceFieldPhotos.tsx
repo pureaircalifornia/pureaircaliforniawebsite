@@ -1,22 +1,49 @@
-import { Phone } from 'lucide-react';
+import { Phone, ArrowUpRight } from 'lucide-react';
+import { Link } from '@/components/CanonicalLink';
 import { business } from '@/config/business';
 
 export default function ServiceFieldPhotos() {
   return (
     <aside className="pac-field-photos" aria-label="A closer look at PAC field work">
-      <span className="pac-eyebrow">FROM THE PAC PHOTO LIBRARY</span>
-      <h3>A closer look. A clearer plan.</h3>
+      <span className="pac-eyebrow">INSIDE THE DUCTWORK</span>
+      <h3>See what negative-pressure source removal addresses.</h3>
       <div className="pac-field-photo-grid">
         <figure>
-          <img src="/images/pac/realInspection.webp" alt="PAC field photograph looking inside a ventilation opening" width="600" height="450" loading="lazy" />
-          <figcaption><strong>Look beyond the grille.</strong>The inside of your system helps us understand what needs attention.</figcaption>
+          <img
+            src="/images/pac/dirtyDuct.webp"
+            alt="Accumulated dust and debris inside a galvanized air duct prior to negative-pressure source removal"
+            width={600}
+            height={450}
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            <strong>Before cleaning: inspect beyond the room grille.</strong> Looking inside accessible supply and return trunk lines confirms what has actually settled in the ductwork.
+          </figcaption>
         </figure>
         <figure>
-          <img src="/images/pac/realEquipment.webp" alt="Air-system cleaning equipment with hoses from the PAC project library" width="600" height="450" loading="lazy" />
-          <figcaption><strong>Prepare for your space.</strong>Access, duct material and system condition help shape the cleaning plan.</figcaption>
+          <img
+            src="/images/pac/duct-interior-clean-v2.webp"
+            alt="Clean galvanized sheet-metal air duct interior after negative-pressure extraction"
+            width={600}
+            height={450}
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            <strong>After source removal: cleared air pathways.</strong> Mechanical agitation paired with negative-pressure containment extracts loose particulate from accessible runs.
+          </figcaption>
         </figure>
       </div>
-      <a href={business.phoneHref}><Phone size={18} aria-hidden="true" />Talk through your project with PAC</a>
+      <div className="flex flex-wrap items-center gap-5 mt-4">
+        <a href={business.phoneHref} className="inline-flex items-center gap-2">
+          <Phone size={18} aria-hidden="true" />
+          Talk through your system with PAC: {business.phone}
+        </a>
+        <Link to="/pricing/" className="inline-flex items-center gap-1.5 font-semibold text-brand-700 hover:underline">
+          See starting prices &amp; scope details <ArrowUpRight size={16} aria-hidden="true" />
+        </Link>
+      </div>
     </aside>
   );
 }

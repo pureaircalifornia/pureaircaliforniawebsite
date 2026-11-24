@@ -3,7 +3,8 @@
  * Main layout component for the admin section with sidebar navigation
  */
 import React, { useState } from 'react';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 import {
     LayoutDashboard,
     Users,

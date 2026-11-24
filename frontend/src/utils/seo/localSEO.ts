@@ -1,327 +1,131 @@
-export const localSEO = {
-  // Local Business Information
-  business: {
-    name: 'Pure Air California',
-    address: {
-      streetAddress: '1550 N Poinsettia Pl',
-      addressLocality: 'Los Angeles',
-      addressRegion: 'CA',
-      postalCode: '90046',
-      addressCountry: 'US'
-    },
-    telephone: '+12137924145',
-    email: 'lou@pureaircalifornia.com',
-    openingHours: {
-      monday: ['08:00-20:00'],
-      tuesday: ['08:00-20:00'],
-      wednesday: ['08:00-20:00'],
-      thursday: ['08:00-20:00'],
-      friday: ['08:00-20:00'],
-      saturday: ['09:00-17:00'],
-      sunday: ['09:00-17:00']
-    },
-    emergencyHours: {
-      available: true,
-      description: '24/7 emergency service available'
-    },
-    geo: {
-      latitude: 34.0522,
-      longitude: -118.2437
-    },
-    serviceRadius: {
-      miles: 30,
-      description: 'We serve all of Los Angeles County and surrounding areas'
-    }
-  },
+import { business } from '@/config/business';
 
-  // Detailed Neighborhood Targeting
-  neighborhoods: {
-    losAngeles: {
-      name: 'Los Angeles',
-      neighborhoods: [
-        {
-          name: 'Downtown Los Angeles',
-          keywords: [
-            'downtown los angeles air duct cleaning',
-            'commercial hvac maintenance downtown',
-            'los angeles business district air quality'
-          ],
-          services: [
-            'Commercial Air Duct Cleaning',
-            'Office Building HVAC Maintenance',
-            'Large Building Air Quality Solutions'
-          ]
-        },
-        {
-          name: 'Hollywood',
-          keywords: [
-            'hollywood air duct cleaning',
-            'hollywood hills hvac maintenance',
-            'entertainment industry air quality'
-          ],
-          services: [
-            'Residential Air Duct Cleaning',
-            'Luxury Home HVAC Maintenance',
-            'Entertainment Industry Air Quality Solutions'
-          ]
-        },
-        {
-          name: 'Beverly Hills',
-          keywords: [
-            'beverly hills air duct cleaning',
-            'luxury home hvac maintenance',
-            'high-end property air quality'
-          ],
-          services: [
-            'Luxury Home Air Duct Cleaning',
-            'High-End Property HVAC Maintenance',
-            'Luxury Property Air Quality Solutions'
-          ]
-        }
-      ]
-    },
-    orangeCounty: {
-      name: 'Orange County',
-      cities: [
-        {
-          name: 'Irvine',
-          keywords: [
-            'irvine air duct cleaning',
-            'business park hvac maintenance',
-            'corporate office air quality'
-          ],
-          services: [
-            'Corporate Air Duct Cleaning',
-            'Business Park HVAC Maintenance',
-            'Corporate Office Air Quality Solutions'
-          ]
-        },
-        {
-          name: 'Newport Beach',
-          keywords: [
-            'newport beach air duct cleaning',
-            'coastal property hvac maintenance',
-            'beachfront property air quality'
-          ],
-          services: [
-            'Coastal Property Air Duct Cleaning',
-            'Beachfront Property HVAC Maintenance',
-            'Coastal Air Quality Solutions'
-          ]
-        }
-      ]
-    }
-  },
+/**
+ * Verified Greater Los Angeles geographic entities with live-verified Wikidata identifiers.
+ * Shared across HVACBusiness, Service, and local SEO structured data.
+ * Never add unverified street addresses, branch offices, or unverified Q-IDs.
+ */
+export interface WikidataArea {
+  '@type': 'AdministrativeArea' | 'City' | 'Place';
+  name: string;
+  sameAs?: string;
+  containedInPlace?: {
+    '@type': 'AdministrativeArea' | 'City' | 'State';
+    name: string;
+    sameAs?: string;
+  };
+}
 
-  // Flattened Service Areas for Schema
-  serviceAreas: [
-    { name: 'Los Angeles' },
-    { name: 'Beverly Hills' },
-    { name: 'Santa Monica' },
-    { name: 'Pasadena' },
-    { name: 'Glendale' },
-    { name: 'Burbank' },
-    { name: 'West Hollywood' },
-    { name: 'Culver City' },
-    { name: 'North Hollywood' },
-    { name: 'Sherman Oaks' },
-    { name: 'Encino' },
-    { name: 'Studio City' },
-    { name: 'Van Nuys' },
-    { name: 'Woodland Hills' }
-  ],
-
-  // Enhanced Local Citations
-  // Note: Set these IDs in your .env file (VITE_GMB_ID, VITE_YELP_ID, etc.)
-  citations: {
-    googleMyBusiness: {
-      id: import.meta.env.VITE_GMB_ID || '',
-      url: 'https://g.page/pureaircalifornia',
-      categories: [
-        'Home Services',
-        'HVAC Services',
-        'Air Duct Cleaning'
-      ],
-      attributes: {
-        '24_hour_service': true,
-        'emergency_service': true,
-        'local_business': true
-      }
-    },
-    yelp: {
-      id: import.meta.env.VITE_YELP_ID || '',
-      url: 'https://www.yelp.com/biz/pure-air-california',
-      categories: [
-        'Home Services',
-        'HVAC Services',
-        'Air Duct Cleaning'
-      ]
-    },
-    bbb: {
-      id: import.meta.env.VITE_BBB_ID || '',
-      url: 'https://www.bbb.org/pureaircalifornia',
-      accreditation: true,
-      rating: 'A+'
-    },
-    angiesList: {
-      id: import.meta.env.VITE_ANGIES_LIST_ID || '',
-      url: 'https://www.angieslist.com/pureaircalifornia',
-      categories: [
-        'Home Services',
-        'HVAC Services',
-        'Air Duct Cleaning'
-      ]
-    },
-    localChambers: [
-      {
-        name: 'Los Angeles Chamber of Commerce',
-        url: 'https://www.lachamber.com/pureaircalifornia'
-      },
-      {
-        name: 'Orange County Chamber of Commerce',
-        url: 'https://www.occhamber.com/pureaircalifornia'
-      }
-    ]
-  },
-
-  // Enhanced Local SEO Keywords
-  keywords: {
-    byNeighborhood: {
-      'Downtown Los Angeles': [
-        'downtown los angeles air duct cleaning',
-        'commercial hvac maintenance downtown los angeles',
-        'los angeles business district air quality',
-        'downtown la air duct cleaning company',
-        'business district hvac maintenance'
-      ],
-      'Hollywood': [
-        'hollywood air duct cleaning',
-        'hollywood hills hvac maintenance',
-        'entertainment industry air quality',
-        'hollywood air duct cleaning services',
-        'hollywood hills air quality solutions'
-      ],
-      'Beverly Hills': [
-        'beverly hills air duct cleaning',
-        'luxury home hvac maintenance',
-        'high-end property air quality',
-        'beverly hills air duct cleaning company',
-        'luxury property hvac maintenance services'
-      ]
-    },
-    byService: {
-      'Air Duct Cleaning': [
-        'professional air duct cleaning los angeles',
-        'commercial air duct cleaning services',
-        'industrial air duct cleaning',
-        'los angeles air duct cleaning company',
-        'southern california air duct cleaning services'
-      ],
-      'Dryer Vent Cleaning': [
-        'professional dryer vent cleaning',
-        'fire prevention services',
-        'laundry room maintenance',
-        'los angeles dryer vent cleaning services',
-        'southern california dryer vent maintenance'
-      ],
-      'Mold Removal': [
-        'mold remediation services',
-        'mold inspection los angeles',
-        'indoor air quality testing',
-        'los angeles mold removal services',
-        'southern california mold remediation'
-      ]
-    }
-  },
-
-  // Enhanced Content Strategy
-  content: {
-    blogPosts: {
-      monthly: 6,
-      topics: [
-        'Seasonal HVAC Maintenance Tips',
-        'Common Air Quality Issues in Los Angeles',
-        'DIY vs Professional Air Duct Cleaning',
-        'Signs Your Air Ducts Need Cleaning',
-        'Benefits of Regular HVAC Maintenance',
-        'Neighborhood-Specific Air Quality Reports'
-      ]
-    },
-    neighborhoodGuides: {
-      monthly: 3,
-      topics: [
-        'Air Quality in Los Angeles Neighborhoods',
-        'HVAC Maintenance Tips for Specific Areas',
-        'Local Air Quality Regulations',
-        'Neighborhood-Specific HVAC Maintenance Tips',
-        'Local Air Quality Improvement Strategies'
-      ]
-    },
-    localBusinessGuides: {
-      monthly: 2,
-      topics: [
-        'Los Angeles Business HVAC Maintenance',
-        'Commercial Air Quality Solutions',
-        'Business District HVAC Maintenance Tips',
-        'Corporate Office Air Quality Solutions',
-        'Business Park HVAC Maintenance Best Practices'
-      ]
-    }
-  },
-
-  // Enhanced Local SEO Tracking
-  metrics: {
-    googleMyBusiness: {
-      reviews: {
-        target: 1000,
-        averageRating: 4.9,
-        monthlyReviews: 50
-      },
-      posts: {
-        monthly: 8,
-        engagementRate: 0.10,
-        postTypes: [
-          'Service Updates',
-          'Customer Reviews',
-          'Local Events',
-          'Neighborhood News',
-          'Special Offers'
-        ]
-      },
-      localSearch: {
-        impressions: {
-          monthly: 20000,
-          clickThroughRate: 0.20,
-          neighborhoodImpressions: true
-        },
-        searchTerms: [
-          'air duct cleaning near me',
-          'los angeles air duct cleaning',
-          'hollywood air duct cleaning',
-          'beverly hills air duct cleaning',
-          'orange county air duct cleaning'
-        ]
-      }
-    },
-    localRanking: {
-      googleMaps: {
-        ranking: 'Top 3',
-        reviews: 1000,
-        photos: 200,
-        posts: 100
-      },
-      yelp: {
-        ranking: 'Top 5',
-        reviews: 500,
-        photos: 100,
-        checkins: 500
-      },
-      bbb: {
-        rating: 'A+',
-        accredited: true,
-        complaints: 0,
-        reviews: 200
-      }
-    }
-  }
+const LA_CITY_REF = {
+  '@type': 'City' as const,
+  name: 'Los Angeles',
+  sameAs: 'https://www.wikidata.org/wiki/Q65',
 };
+
+const CA_STATE_REF = {
+  '@type': 'State' as const,
+  name: 'California',
+  sameAs: 'https://www.wikidata.org/wiki/Q99',
+};
+
+export const LA_WIKIDATA_AREAS: readonly WikidataArea[] = [
+  {
+    '@type': 'AdministrativeArea',
+    name: 'Los Angeles County',
+    sameAs: 'https://www.wikidata.org/wiki/Q104994',
+    containedInPlace: CA_STATE_REF,
+  },
+  { '@type': 'City', name: 'Los Angeles', sameAs: 'https://www.wikidata.org/wiki/Q65', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'Beverly Hills', sameAs: 'https://www.wikidata.org/wiki/Q127856', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'Santa Monica', sameAs: 'https://www.wikidata.org/wiki/Q47164', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'Culver City', sameAs: 'https://www.wikidata.org/wiki/Q493378', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'Malibu', sameAs: 'https://www.wikidata.org/wiki/Q387047', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'Pasadena', sameAs: 'https://www.wikidata.org/wiki/Q485176', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'Glendale', sameAs: 'https://www.wikidata.org/wiki/Q485716', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'Burbank', sameAs: 'https://www.wikidata.org/wiki/Q39561', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'West Hollywood', sameAs: 'https://www.wikidata.org/wiki/Q846421', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'Torrance', sameAs: 'https://www.wikidata.org/wiki/Q489197', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'Long Beach', sameAs: 'https://www.wikidata.org/wiki/Q16739', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'Calabasas', sameAs: 'https://www.wikidata.org/wiki/Q629088', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'Hidden Hills', sameAs: 'https://www.wikidata.org/wiki/Q913346', containedInPlace: CA_STATE_REF },
+  { '@type': 'City', name: 'Ventura', sameAs: 'https://www.wikidata.org/wiki/Q490434', containedInPlace: CA_STATE_REF },
+  { '@type': 'Place', name: 'Brentwood, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q909975', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Century City, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q1054483', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Westwood, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q1199774', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Pacific Palisades, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q1370207', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Hollywood, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q34006', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Los Feliz, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q6682727', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Downtown Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q995043', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Koreatown, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q872664', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Sherman Oaks, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q1015874', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Encino, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q1190590', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Woodland Hills, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q1337818', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Van Nuys, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q769446', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'North Hollywood, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q1319697', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Studio City, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q3143067', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'West Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q2543669', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Sawtelle, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q7428691', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Mid-Wilshire, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q3312605', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Valley Village, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q7912296', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Canoga Park, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q2457268', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Chatsworth, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q1020942', containedInPlace: LA_CITY_REF },
+  { '@type': 'Place', name: 'Northridge, Los Angeles, CA', sameAs: 'https://www.wikidata.org/wiki/Q2050326', containedInPlace: LA_CITY_REF },
+] as const;
+
+/**
+ * Truthful Greater Los Angeles local SEO configuration derived solely from
+ * verified business identity in `@/config/business`.
+ * Service-area business: no public storefront street address, no unverified
+ * 24/7 hours, and no fabricated ratings or directory accreditations.
+ */
+export const localSEO = {
+  business: {
+    name: business.legalName,
+    url: business.url,
+    telephone: business.phoneE164,
+    phoneDisplay: business.phone,
+    email: business.email,
+    address: {
+      addressLocality: business.address.addressLocality,
+      addressRegion: business.address.addressRegion,
+      addressCountry: business.address.addressCountry,
+    },
+    availabilityNote: 'Confirm appointment availability and service coverage directly by phone or online estimate request.',
+    serviceRegion: 'Greater Los Angeles, Los Angeles County, and parts of Ventura County, California',
+  },
+
+  serviceAreas: LA_WIKIDATA_AREAS.map(({ name, sameAs }) => ({
+    name,
+    ...(sameAs ? { sameAs } : {}),
+  })),
+
+  /** Verified public profiles matching `business.sameAs`. */
+  citations: {
+    googleBusinessProfile: {
+      url: business.googleProfileUrl,
+      reviewUrl: business.googleReviewUrl,
+      categories: [...business.categories],
+    },
+    sameAs: [...business.sameAs],
+  },
+
+  /** Regional Los Angeles topic clusters for internal planning and copy alignment. */
+  regions: {
+    westsideAndCoastal: {
+      label: 'Westside & Coastal',
+      areas: ['Santa Monica', 'Beverly Hills', 'Brentwood', 'Pacific Palisades', 'Malibu', 'Culver City', 'Century City', 'Westwood', 'West LA', 'Sawtelle'],
+    },
+    centralAndMetro: {
+      label: 'Central & Metro Los Angeles',
+      areas: ['Downtown LA', 'Hollywood', 'West Hollywood', 'Los Feliz', 'Koreatown', 'Mid-Wilshire', 'Larchmont', 'Fairfax', 'Laurel Canyon', 'Central LA'],
+    },
+    sanFernandoValley: {
+      label: 'San Fernando Valley',
+      areas: ['Sherman Oaks', 'Studio City', 'Encino', 'Burbank', 'Glendale', 'Woodland Hills', 'Calabasas', 'Valley Village', 'North Hollywood', 'Van Nuys', 'Northridge', 'Tarzana', 'Reseda', 'Canoga Park', 'Chatsworth', 'Porter Ranch', 'Granada Hills', 'Toluca Lake', 'Hidden Hills'],
+    },
+    foothillsAndVentura: {
+      label: 'San Gabriel Foothills & Ventura',
+      areas: ['Pasadena', 'Ventura'],
+    },
+  },
+} as const;

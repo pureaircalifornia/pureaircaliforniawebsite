@@ -1,117 +1,150 @@
-import React, { useState, useRef, useEffect, MouseEvent, TouchEvent } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import { MoveHorizontal } from 'lucide-react';
 
 interface BeforeAfterSliderProps {
   beforeImage: string;
   afterImage: string;
+  beforeSrcSet?: string;
+  afterSrcSet?: string;
+  sizes?: string;
   beforeLabel?: string;
   afterLabel?: string;
+  beforeAlt?: string;
+  afterAlt?: string;
+  caption?: string;
+  initialPosition?: number;
 }
 
 const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
   beforeImage,
   afterImage,
-  beforeLabel = "Before",
-  afterLabel = "After"
+  beforeSrcSet,
+  afterSrcSet,
+  sizes = '(max-width: 760px) 100vw, 960px',
+  beforeLabel = 'Buildup before cleaning',
+  afterLabel = 'Clean metal air path',
+  beforeAlt,
+  afterAlt,
+  caption,
+  initialPosition = 50,
 }) => {
-  const [sliderPosition, setSliderPosition] = useState(50);
+  const [sliderPosition, setSliderPosition] = useState(initialPosition);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleDrag = (clientX: number) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
+  const updateFromClientX = useCallback((clientX: number) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    if (!rect.width) return;
     const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
-    const percentage = (x / rect.width) * 100;
-    setSliderPosition(percentage);
-  };
+    setSliderPosition((x / rect.width) * 100);
+  }, []);
 
-  const onMouseDown = (e: MouseEvent) => {
+  const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.button !== 0 && event.pointerType === 'mouse') return;
+    event.currentTarget.setPointerCapture(event.pointerId);
     setIsDragging(true);
-    handleDrag(e.clientX);
+    updateFromClientX(event.clientX);
   };
 
-  const onTouchStart = (e: TouchEvent) => {
-    setIsDragging(true);
-    handleDrag(e.touches[0].clientX);
+  const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    updateFromClientX(event.clientX);
   };
 
-  useEffect(() => {
-    const onMouseUp = () => setIsDragging(false);
-    const onMouseMove = (e: globalThis.MouseEvent) => {
-      if (isDragging) handleDrag(e.clientX);
-    };
-    const onTouchMove = (e: globalThis.TouchEvent) => {
-      if (isDragging) handleDrag(e.touches[0].clientX);
-    };
-
-    if (isDragging) {
-      window.addEventListener('mousemove', onMouseMove);
-      window.addEventListener('mouseup', onMouseUp);
-      window.addEventListener('touchmove', onTouchMove);
-      window.addEventListener('touchend', onMouseUp);
+  const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
     }
+    setIsDragging(false);
+  };
 
-    return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
-      window.removeEventListener('touchmove', onTouchMove);
-      window.removeEventListener('touchend', onMouseUp);
-    };
-  }, [isDragging]);
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const step = event.shiftKey ? 15 : 5;
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      setSliderPosition((pos) => Math.max(0, pos - step));
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      setSliderPosition((pos) => Math.min(100, pos + step));
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      setSliderPosition(0);
+    } else if (event.key === 'End') {
+      event.preventDefault();
+      setSliderPosition(100);
+    }
+  };
+
+  const rounded = Math.round(sliderPosition);
 
   return (
-    <div 
-      className="relative w-full aspect-video rounded-2xl overflow-hidden cursor-ew-resize shadow-2xl border-4 border-white"
-      ref={containerRef}
-      onMouseDown={onMouseDown}
-      onTouchStart={onTouchStart}
-    >
-      {/* After Image (Background) */}
-      <img 
-        src={afterImage} 
-        alt={afterLabel} 
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
-        width={1200}
-        height={800}
-      />
-      <div className="absolute top-4 right-4 bg-brand-600 text-white font-bold px-4 py-1 rounded-full shadow-lg z-10 text-sm">
-        {afterLabel}
-      </div>
-
-      {/* Before Image (Clipped overlay) */}
-      <div 
-        className="absolute inset-0 w-full h-full pb-0 pointer-events-none"
-        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+    <figure className="pac-ba-figure">
+      <div
+        ref={containerRef}
+        className={'pac-ba-stage' + (isDragging ? ' is-dragging' : '')}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
       >
-        <img 
-          src={beforeImage} 
-          alt={beforeLabel} 
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+        <img
+          src={afterImage}
+          srcSet={afterSrcSet}
+          sizes={afterSrcSet ? sizes : undefined}
+          alt={afterAlt || afterLabel}
+          className="pac-ba-img"
           width={1200}
           height={800}
+          loading="lazy"
+          decoding="async"
+          draggable={false}
         />
-        <div className="absolute top-4 left-4 bg-red-600 text-white font-bold px-4 py-1 rounded-full shadow-lg z-10 text-sm">
-          {beforeLabel}
-        </div>
-      </div>
+        <span className="pac-ba-badge pac-ba-badge--after" aria-hidden="true">
+          {afterLabel}
+        </span>
 
-      {/* Slider Handle */}
-      <div 
-        className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize z-20 pointer-events-none drop-shadow-xl"
-        style={{ left: `${sliderPosition}%` }}
-      >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-xl flex items-center justify-center pointer-events-auto">
-          <div className="flex gap-1">
-            <svg width="8" height="12" viewBox="0 0 8 12" fill="none" className="text-gray-400">
-              <path d="M7 1L2 6L7 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <svg width="8" height="12" viewBox="0 0 8 12" fill="none" className="text-gray-400">
-              <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
+        <div
+          className="pac-ba-before-layer"
+          style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+        >
+          <img
+            src={beforeImage}
+            srcSet={beforeSrcSet}
+            sizes={beforeSrcSet ? sizes : undefined}
+            alt={beforeAlt || beforeLabel}
+            className="pac-ba-img"
+            width={1200}
+            height={800}
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+          />
+          <span className="pac-ba-badge pac-ba-badge--before" aria-hidden="true">
+            {beforeLabel}
+          </span>
+        </div>
+
+        <div
+          className="pac-ba-divider"
+          style={{ left: `${sliderPosition}%` }}
+          role="slider"
+          tabIndex={0}
+          aria-label={`Compare ${beforeLabel} and ${afterLabel}`}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={rounded}
+          aria-valuetext={`${rounded}% showing ${beforeLabel}, ${100 - rounded}% showing ${afterLabel}`}
+          onKeyDown={onKeyDown}
+        >
+          <span className="pac-ba-knob" aria-hidden="true">
+            <MoveHorizontal size={18} strokeWidth={2.2} />
+          </span>
         </div>
       </div>
-    </div>
+      {caption && <figcaption className="pac-ba-caption">{caption}</figcaption>}
+    </figure>
   );
 };
 

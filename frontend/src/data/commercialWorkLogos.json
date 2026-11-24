@@ -1,0 +1,272 @@
+[
+  {
+    "name": "Four Seasons Hotel Los Angeles at Beverly Hills",
+    "src": "/brand/clients/four-seasons.svg",
+    "inverse": false,
+    "art": "four-seasons.svg"
+  },
+  {
+    "name": "Sheraton Gateway Hotel Los Angeles",
+    "src": "/brand/clients/sheraton.webp",
+    "inverse": false,
+    "art": "sheraton.webp"
+  },
+  {
+    "name": "Panera Bread, Pasadena",
+    "src": "/brand/clients/panera-bread.png",
+    "inverse": false,
+    "art": "panera-bread.png"
+  },
+  {
+    "name": "The Groundlings",
+    "src": "/brand/clients/groundlings.webp",
+    "inverse": false,
+    "art": "groundlings.webp"
+  },
+  {
+    "name": "SoulCycle, Westside studios",
+    "src": "/brand/clients/soulcycle.svg",
+    "inverse": false,
+    "art": "soulcycle.svg"
+  },
+  {
+    "name": "Westchester Family YMCA",
+    "src": "/brand/clients/ymca.png",
+    "inverse": false,
+    "art": "ymca.png"
+  },
+  {
+    "name": "Tender Greens, Century City",
+    "src": "/brand/clients/tender-greens.webp",
+    "inverse": false,
+    "art": "tender-greens.webp"
+  },
+  {
+    "name": "Sunset Bronson Studios",
+    "src": "/brand/clients/sunset-bronson.webp",
+    "inverse": false,
+    "art": "sunset-bronson.webp"
+  },
+  {
+    "name": "Wag Hotels, Carson",
+    "src": "/brand/clients/wag-hotels.png",
+    "inverse": true,
+    "art": "wag-hotels.png"
+  },
+  {
+    "name": "Bassett Furniture, Torrance",
+    "src": "/brand/clients/bassett.svg",
+    "inverse": false,
+    "art": "bassett.svg"
+  },
+  {
+    "name": "Alcoholism Center for Women",
+    "src": "/brand/clients/commercial-work/acw.svg",
+    "inverse": false,
+    "art": "acw.svg"
+  },
+  {
+    "name": "American Integrated Services",
+    "src": "/brand/clients/commercial-work/american-integrated.png",
+    "inverse": false,
+    "art": "american-integrated.png"
+  },
+  {
+    "name": "Americana Simi Valley",
+    "src": "/brand/clients/commercial-work/americana.png",
+    "inverse": true,
+    "art": "americana.png"
+  },
+  {
+    "name": "California Specialty Farms",
+    "src": "/brand/clients/commercial-work/california-specialty.png",
+    "inverse": false,
+    "art": "california-specialty.png"
+  },
+  {
+    "name": "Clint Lukens Realty",
+    "src": "/brand/clients/commercial-work/clint-lukens.png",
+    "inverse": false,
+    "art": "clint-lukens.png"
+  },
+  {
+    "name": "Cutaway Hair Salon",
+    "src": "/brand/clients/commercial-work/cutaway.jpg",
+    "inverse": false,
+    "art": "cutaway.jpg"
+  },
+  {
+    "name": "Division 15 Technologies",
+    "src": "/brand/clients/commercial-work/division15.png",
+    "inverse": false,
+    "art": "division15.png"
+  },
+  {
+    "name": "Earnest Homes",
+    "src": "/brand/clients/commercial-work/earnest.jpg",
+    "inverse": false,
+    "art": "earnest.jpg"
+  },
+  {
+    "name": "Felbro Food Products",
+    "src": "/brand/clients/commercial-work/felbro.png",
+    "inverse": false,
+    "art": "felbro.png"
+  },
+  {
+    "name": "Figure8 Realty / Figure8 PM",
+    "src": "/brand/clients/commercial-work/figure8.png",
+    "inverse": true,
+    "art": "figure8.png"
+  },
+  {
+    "name": "Hollyway Cleaners",
+    "src": "/brand/clients/commercial-work/hollyway.webp",
+    "inverse": false,
+    "art": "hollyway.jpg"
+  },
+  {
+    "name": "Hollywood Place Apartments / Hollywood Apartments",
+    "src": "/brand/clients/commercial-work/hollywood-place.png",
+    "inverse": false,
+    "art": "hollywood-place.png"
+  },
+  {
+    "name": "Ione Real Estate",
+    "src": "/brand/clients/commercial-work/ione.jpg",
+    "inverse": false,
+    "art": "ione.jpg"
+  },
+  {
+    "name": "Kelsey National Corporation",
+    "src": "/brand/clients/commercial-work/kelsey.gif",
+    "inverse": false,
+    "art": "kelsey.gif"
+  },
+  {
+    "name": "LB Property Management (LBPM)",
+    "src": "/brand/clients/commercial-work/lbpm.png",
+    "inverse": false,
+    "art": "lbpm.png"
+  },
+  {
+    "name": "Level Furnished Living",
+    "src": "/brand/clients/commercial-work/level.png",
+    "inverse": true,
+    "art": "level.png"
+  },
+  {
+    "name": "Mayekawa USA",
+    "src": "/brand/clients/commercial-work/mayekawa.png",
+    "inverse": false,
+    "art": "mayekawa.png"
+  },
+  {
+    "name": "McCormack Baron Management",
+    "src": "/brand/clients/commercial-work/mccormack-baron.webp",
+    "inverse": false,
+    "art": "mccormack-baron.jpg"
+  },
+  {
+    "name": "Montgomery High School / Santa Rosa City Schools",
+    "src": "/brand/clients/commercial-work/montgomery.png",
+    "inverse": false,
+    "art": "montgomery.png"
+  },
+  {
+    "name": "Pacific Ocean Management",
+    "src": "/brand/clients/commercial-work/pacific-ocean.png",
+    "inverse": false,
+    "art": "pacific-ocean.png"
+  },
+  {
+    "name": "Patton Air Conditioning",
+    "src": "/brand/clients/commercial-work/patton.webp",
+    "inverse": false,
+    "art": "patton.png"
+  },
+  {
+    "name": "Pieology Pizzeria",
+    "src": "/brand/clients/commercial-work/pieology.webp",
+    "inverse": false,
+    "art": "pieology.webp"
+  },
+  {
+    "name": "Realty Center Management (RCMI)",
+    "src": "/brand/clients/commercial-work/rcmi.png",
+    "inverse": true,
+    "art": "rcmi.png"
+  },
+  {
+    "name": "Related",
+    "src": "/brand/clients/commercial-work/related.svg",
+    "inverse": true,
+    "art": "related.svg"
+  },
+  {
+    "name": "Shawmut Design and Construction",
+    "src": "/brand/clients/commercial-work/shawmut.png",
+    "inverse": false,
+    "art": "shawmut.png"
+  },
+  {
+    "name": "Sterling Pacific Meat Company",
+    "src": "/brand/clients/commercial-work/sterling-pacific.svg",
+    "inverse": false,
+    "art": "sterling-pacific.svg"
+  },
+  {
+    "name": "Sunshine Realty Group",
+    "src": "/brand/clients/commercial-work/sunshine.png",
+    "inverse": true,
+    "art": "sunshine.png"
+  },
+  {
+    "name": "Swami International",
+    "src": "/brand/clients/commercial-work/swami.png",
+    "inverse": true,
+    "art": "swami.png"
+  },
+  {
+    "name": "Two Rodeo Drive",
+    "src": "/brand/clients/commercial-work/two-rodeo.png",
+    "inverse": false,
+    "art": "two-rodeo.png"
+  },
+  {
+    "name": "Unified Real Estate",
+    "src": "/brand/clients/commercial-work/unified.webp",
+    "inverse": false,
+    "art": "unified.webp"
+  },
+  {
+    "name": "Velox Construction",
+    "src": "/brand/clients/commercial-work/velox.jpg",
+    "inverse": false,
+    "art": "velox.jpg"
+  },
+  {
+    "name": "Vilebrequin",
+    "src": "/brand/clients/commercial-work/vilebrequin.svg",
+    "inverse": false,
+    "art": "vilebrequin.svg"
+  },
+  {
+    "name": "Westfield Century City",
+    "src": "/brand/clients/commercial-work/westfield-century-city.svg",
+    "inverse": true,
+    "art": "westfield-century-city.svg"
+  },
+  {
+    "name": "Wiseman Development / Wiseman Residential",
+    "src": "/brand/clients/commercial-work/wiseman.png",
+    "inverse": false,
+    "art": "wiseman.png"
+  },
+  {
+    "name": "YU+CO",
+    "src": "/brand/clients/commercial-work/yuco.svg",
+    "inverse": true,
+    "art": "yuco.svg"
+  }
+]

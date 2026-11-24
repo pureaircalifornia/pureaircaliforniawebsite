@@ -1,0 +1,41 @@
+/* Coastal refinement v1: same story, a clearer palette and quieter details. */
+.pac-site {
+  --pac-ink: #172e46;
+  --pac-paper: #f8f9fa;
+  --pac-muted: #52626a;
+  --pac-line: #d9e1e4;
+  --primary: 210 70% 26%;
+  --ring: 210 70% 26%;
+}
+.pac-site .pac-header { background: #fcfdfd; backdrop-filter: none; border-color: var(--pac-line); }
+.pac-site .pac-button { border-radius: 6px; box-shadow: none; gap: 14px; font-weight: 500; }
+.pac-site .pac-button:hover { background: #244465; }
+.pac-site .pac-text-link:hover { color: #284c70; }
+.pac-site .pac-eyebrow { letter-spacing: .15em; }
+.pac-site .pac-seo-line { color: #315d66; font-size: 13px; letter-spacing: .025em; }
+.pac-site .pac-proof-strip { background: #edf2f4; border-color: var(--pac-line); color: var(--pac-ink); }
+.pac-site .pac-breath-mission { background: #eef2f4; color: var(--pac-ink); }
+.pac-site .pac-everyday-air { background: var(--pac-paper); color: var(--pac-ink); }
+.pac-site :is(.pac-breath-mission, .pac-everyday-air) h2 { color: var(--pac-ink); letter-spacing: -.045em; }
+.pac-breath-portrait { border-radius: 16px; }
+.pac-site .pac-breath-mission-copy > p, .pac-everyday-heading > p { color: var(--pac-muted); }
+.pac-site :is(.pac-directory-card, .pac-market-grid > a, .pac-client-card, .pac-related-links a) {
+  border-color: var(--pac-line); border-radius: 10px; box-shadow: none;
+}
+.pac-site :is(.pac-directory-card h3, .pac-directory-card li a strong, .pac-market-grid strong, .pac-market-heading h3) { color: var(--pac-ink); }
+.pac-site :is(.pac-directory-help, .pac-service-shortcuts a) { background: #edf2f4; border-color: var(--pac-line); }
+.pac-site .pac-process-section { background: #edf2f4; }
+.pac-site .pac-step-number { color: #315d66; }
+.pac-site .pac-footer { background: #13283e; }
+.pac-site .pac-footer em { color: #cfe2eb; }
+.pac-contact-dock { border-color: #d9e1e4; border-radius: 10px; box-shadow: 0 5px 22px #172e4614; }
+.pac-contact-dock a { color: #172e46; border-color: #172e46; border-radius: 5px; }
+.pac-contact-dock a:first-child { background: #172e46; }
+@media (min-width: 901px) {
+  /* The fixed header already provides both contact actions on desktop. */
+  .pac-contact-dock { display: none; }
+}
+@media (max-width: 700px) {
+  .pac-breath-portrait { border-radius: 12px; }
+  .pac-contact-dock { border-radius: 0; }
+}

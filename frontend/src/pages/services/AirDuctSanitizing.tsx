@@ -1,82 +1,95 @@
-import React from 'react';
 import ServiceDetailLayout from '@/components/ServiceDetailLayout';
 
 const AirDuctSanitizing = () => (
   <ServiceDetailLayout
-    seoTitle="Air Duct Sanitizing Los Angeles"
-    seoDescription="EPA-registered antimicrobial air duct sanitizing in Los Angeles, applied after a full clean. Targets mold, bacteria and lingering odors. Call (213) 792-4145."
+    seoTitle="Air Duct Sanitizing Assessment Los Angeles | Pure Air CA"
+    seoDescription="Inspection-first air duct sanitizing & odor assessment in Los Angeles. EPA-aligned material checks, product labels & written scopes. Call (213) 792-4145."
     path="/services/air-duct-sanitizing"
     breadcrumbLabel="Air Duct Sanitizing"
-    serviceName="Air Duct Sanitizing"
-    h1="Air Duct Sanitizing in Los Angeles"
-    intro="An antimicrobial treatment applied after the ductwork has been properly cleaned — for systems with mold growth, persistent odors, or a history of moisture."
+    serviceName="Air Duct Sanitizing Assessment"
+    h1="Air Duct Sanitizing & Odor Assessment in Los Angeles"
+    intro="Start with an honest, inspection-first evaluation of your ductwork before considering any antimicrobial or odor-control treatment. Pure Air California prioritizes mechanical source removal first, checks duct material compatibility, and shares EPA-registered product labels and clear limitations before anything is applied."
+    estimateLabel="Request a sanitizing assessment"
+    heroReassurance="Inspection-first · Mechanical cleaning before treatments · EPA-aligned material checks across LA"
+    coverageText="Inspection-led duct assessment across Los Angeles, Santa Monica, Glendale, Los Feliz, Calabasas, and surrounding communities."
+    quickFacts={[
+      { label: 'EPA-aligned policy', value: 'Never bundled automatically; label-verified' },
+      { label: 'First step', value: 'Source removal & moisture-source check' },
+      { label: 'Written breakdown', value: 'Inspection, cleaning & options itemized' },
+    ]}
     sections={[
       {
-        heading: 'Sanitizing is a second step, not a substitute for cleaning',
-        body:
-          'This is the part most people get wrong, and it is worth being direct about. Applying an antimicrobial to ductwork that is still full of dust accomplishes very little: the treatment coats the debris rather than the duct surface, and the debris is what the growth is living on. Sanitizing works as a follow-up to a thorough mechanical clean, never in place of one. If a company offers to sanitize without cleaning first, that is a reason to ask questions.',
+        heading: 'A treatment needs a documented reason—never an automatic upsell',
+        body: 'Sanitizing should never be forced into a routine duct cleaning visit. The EPA notes that the benefits and potential adverse effects of applying chemical biocides inside residential air ducts have not been fully established. A musty smell, a recent move, or an allergy concern alone does not automatically justify chemical fogging.',
         bullets: [
-          'Mechanical cleaning first — brushing and HEPA-filtered vacuum extraction',
-          'Inspection to confirm the ductwork is genuinely clean before treatment',
-          'Antimicrobial applied to the duct surface itself',
-          'Any moisture source identified, because sanitizing does not fix a leak',
+          'Share the exact odor, moisture history, or event prompting your request',
+          'Ask what was actually observed inside the system, where it is located, and which duct surface is affected',
+          'Prioritize physical source removal, moisture correction, or component replacement before considering any treatment',
         ],
       },
       {
-        heading: 'When sanitizing is worth doing',
-        body:
-          'Not every system needs it. A reasonably maintained home with no moisture history and no odor complaint generally does not. It earns its place when there is an identified reason.',
+        heading: 'Verify duct material compatibility & EPA product labels',
+        body: 'EPA registration of a product does not authorize its use inside every HVAC system. Any proposed application must match the exact EPA product label, surface type (bare sheet metal vs. lined duct), and ventilation/re-entry instructions. EPA guidance specifically states that no chemical biocides are registered for use on internally insulated (fiberglass-lined) air ducts.',
         bullets: [
-          'Visible mold growth confirmed inside the ductwork during inspection',
-          'A water event — leak, flood, or a failed condensate line — that reached the system',
-          'Persistent musty odor that returns after cleaning',
-          'Coastal or high-humidity properties where duct interiors stay damp',
-          'After a property has stood vacant, or before a new occupant moves in',
-          'Allergy or asthma sufferers in the household seeking every available reduction',
+          'Request the exact product name, EPA registration number, and written label directions',
+          'Verify whether your ductwork is bare galvanized sheet metal, flexible duct, or internally insulated duct board',
+          'Confirm required ventilation times, occupancy precautions for sensitive individuals/pets, and exclusions in writing',
         ],
       },
       {
-        heading: 'What we use and why it matters',
-        body:
-          'We use EPA-registered antimicrobial products rated for use in HVAC systems, applied according to their label directions. That last part matters more than the brand: an HVAC-rated product used outside its labelled application is neither safe nor effective. We will tell you what is being applied and why before we apply it.',
+        heading: 'Coastal marine moisture, condensation & suspected mold in LA',
+        body: 'In coastal Los Angeles communities (Santa Monica, Venice, Malibu, South Bay) or homes with poorly insulated attic plenums and clogged AC condensate drains, excess moisture is often the real driver behind musty HVAC odors. Neither cleaning nor chemical spraying can fix an active water leak or condensation issue.',
+        bullets: [
+          'Identify and repair condensate drain clogs, roof leaks, or sweating plenum insulation first',
+          'Understand that wet or visibly contaminated porous insulation typically requires replacement rather than spraying',
+          'Involve a qualified environmental assessor or mold remediation specialist when widespread moisture damage is suspected',
+        ],
       },
       {
-        heading: 'Addressing the cause, not just the symptom',
-        body:
-          'Mold needs moisture. If the moisture source is still there — a leaking condensate pan, an uninsulated duct sweating in a hot attic, a marine-layer property with poor drainage — growth returns regardless of what was applied. Part of the inspection is identifying where the water is coming from, so you can address it rather than repeat the treatment every year.',
+        heading: 'Transparent pricing & separate written line items',
+        body: 'We price inspection, mechanical air duct cleaning (starting at $299 for eligible residential scopes), and any separately discussed odor or surface treatment as distinct line items. You review every option, ask questions, and approve only the work that makes technical sense for your property.',
       },
     ]}
     faqs={[
       {
-        question: 'Is duct sanitizing safe for children and pets?',
+        question: 'Is air duct sanitizing necessary with every air duct cleaning?',
         answer:
-          'The products we use are EPA-registered for HVAC application and are safe when applied to label directions. We advise keeping the property clear during application and for the dwell time stated on the label, after which normal occupancy resumes.',
+          'No. Sanitizing should never be an automatic add-on. Mechanical source removal clears loose dust and debris; any antimicrobial or odor product should only be discussed when a specific, compatible bare-metal condition warrants it.',
       },
       {
-        question: 'Do I need sanitizing, or just cleaning?',
+        question: 'Can you spray sanitizer inside flexible ducts or fiberglass-lined plenums?',
         answer:
-          'Most systems need cleaning alone. Sanitizing is warranted when there is an identified reason — confirmed mold, a water event, or a recurring odor. We will tell you honestly which applies after inspecting your system, and we do not add it by default.',
+          'EPA guidance states that no chemical biocides are registered for use on internally insulated air ducts. We verify duct material first—wet or contaminated insulation generally needs replacement rather than chemical treatment.',
       },
       {
-        question: 'How long does the treatment last?',
+        question: 'Can you guarantee a treatment is safe for children, pets, or chemical sensitivities?',
         answer:
-          'That depends entirely on whether the underlying moisture source was resolved. Treat the cause and the result holds for years. Leave a leak or a chronic humidity problem in place and growth will return, which is why we look for the source rather than only treating the surface.',
+          'No contractor should make a blanket safety promise. Required precautions, ventilation periods, and re-entry steps depend on the specific product label. Always review the label beforehand and consult a physician for individual health sensitivities.',
       },
       {
-        question: 'Will it get rid of the smell in my house?',
+        question: 'Will air duct sanitizing cure allergies, asthma, or permanently remove odors?',
         answer:
-          'If the odor originates in the ductwork — musty smells from growth, or odors absorbed into accumulated debris — then cleaning followed by sanitizing addresses the source. If the smell comes from elsewhere in the building, it will not, and we would rather establish that before you pay for the work.',
+          'No. Duct sanitizing is not medical treatment and cannot promise symptom relief or permanent odor removal. Odors often originate from condensate drains, damp building materials, pets, or smoke-soaked furnishings outside the ducts.',
       },
       {
-        question: 'How much does air duct sanitizing cost in Los Angeles?',
+        question: 'How is an air duct sanitizing assessment priced in Los Angeles?',
         answer:
-          'It is quoted as an addition to the duct cleaning, priced on the size of the system and the extent of treatment required. You get a fixed price agreed before work begins. Call (213) 792-4145 for an estimate.',
+          'Your written estimate breaks out mechanical duct cleaning (from $299 for eligible residential systems), any HVAC coil/drain-pan cleaning, and any separately evaluated treatment clearly before work starts. Call (213) 792-4145 to talk through your system.',
+      },
+    ]}
+    sources={[
+      {
+        label: 'EPA: Should You Have the Air Ducts in Your Home Cleaned?',
+        url: 'https://www.epa.gov/indoor-air-quality-iaq/should-you-have-air-ducts-your-home-cleaned',
       },
     ]}
     relatedLinks={[
-      { label: 'Residential air duct cleaning', path: '/services/residential-air-duct-cleaning' },
-      { label: 'HVAC system cleaning', path: '/services/hvac-system-cleaning' },
-      { label: 'Health benefits of clean air ducts', path: '/health-benefits' },
+      { label: 'Residential air duct cleaning (from $299)', path: '/services/residential-air-duct-cleaning/' },
+      { label: 'HVAC system & coil cleaning', path: '/services/hvac-system-cleaning/' },
+      { label: 'Wildfire smoke & hillside duct assessment', path: '/services/wildfire-smoke-hillside-air-duct-cleaning-los-angeles/' },
+      { label: 'Air duct cleaning & indoor air quality', path: '/health-benefits/' },
+      { label: 'How to avoid vague duct-cleaning quotes in LA', path: '/blog/avoid-air-duct-cleaning-scams-los-angeles/' },
+      { label: 'Pricing & written estimate guide', path: '/pricing/' },
     ]}
   />
 );

@@ -1,0 +1,267 @@
+/* Native tracked booking links share PAC's navy and soft aqua palette. */
+.pac-site .pac-nav-booking { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 9px 12px; border: 1px solid #91c9d3; border-radius: 9px; background: #edf7f7; color: #0a3d7c; white-space: nowrap; }
+.pac-site .pac-nav-booking:hover { background: #d8f1f5; }
+.pac-site .pac-mobile-booking { display: flex; justify-content: center; gap: 10px; min-height: 48px; margin-bottom: 20px; padding: 13px 18px; border-radius: 10px; background: #0a3d7c; color: #fff; font-weight: 600; }
+.pac-contact-dock .pac-dock-booking { background: #d8f1f5; color: #0a3d7c; }
+.pac-booking-band-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.pac-site [data-pac-booking]:focus-visible, .pac-booking-thanks :is(a,button):focus-visible { outline: 3px solid #267c8b; outline-offset: 4px; }
+.pac-booking-thanks { background: linear-gradient(145deg, #f7fbfd, #eaf6f6 75%, #fff); color: #0a3d7c; padding: 155px 0 75px; }
+.pac-booking-welcome { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
+.pac-booking-welcome h1 { font-size: clamp(42px, 4.8vw, 67px); line-height: 1.08; letter-spacing: -.045em; margin: 20px 0 26px; }
+.pac-booking-welcome h1 em { font-family: Georgia, serif; font-weight: 400; color: #267482; }
+.pac-booking-welcome p { max-width: 560px; font-size: 16px; line-height: 1.8; color: #425f70; margin: 0 0 20px; }
+.pac-booking-welcome .pac-booking-lead { font-size: 18px; }
+.pac-booking-welcome-copy > a { margin-top: 9px; }
+.pac-booking-thanks-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 12px; }
+.pac-booking-pause { text-align: center; border: 1px solid #c6e1e6; border-radius: 30px; background: #ffffffa8; padding: 32px; box-shadow: 0 18px 60px #0a3d7c08; }
+.pac-booking-pause h2 { font-size: 25px; letter-spacing: -.025em; margin-bottom: 12px; }
+.pac-booking-pause p { font-size: 15px; }
+.pac-booking-pause small { display: block; margin-top: 17px; color: #506d79; font-size: 12px; }
+.pac-booking-orbit { position: relative; display: grid; place-items: center; width: 190px; height: 190px; margin: 0 auto 24px; color: #267482; }
+.pac-booking-orbit span { position: absolute; inset: 16px; border: 1px solid #91c9d3; border-radius: 50%; background: #d8f1f540; transform: scale(.88); }
+.pac-booking-orbit span:nth-child(2) { inset: 0; background: transparent; }
+.pac-booking-orbit svg { position: relative; }
+.pac-booking-pause[data-running="true"] .pac-booking-orbit span { animation: none; }
+@keyframes pac-booking-breathe { 0%,100% { transform: scale(.88); } 45% { transform: scale(1.04); } }
+.pac-booking-prep { margin-top: 56px; padding: 32px; border: 1px solid #c6dce3; border-radius: 20px; background: #ffffffd9; }
+.pac-booking-prep-head { max-width: 680px; margin-bottom: 24px; }
+.pac-booking-prep-head h2 { font-size: clamp(24px, 3vw, 32px); letter-spacing: -.03em; margin: 8px 0 10px; color: #0a3d7c; }
+.pac-booking-prep-head p { font-size: 15px; color: #425f70; margin: 0; line-height: 1.7; }
+.pac-booking-prep-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; list-style: none; padding: 0; margin: 0; }
+.pac-booking-prep-grid li { padding: 20px; border: 1px solid #d4e5ec; border-radius: 14px; background: #f7fbfd; }
+.pac-booking-prep-top { display: flex; align-items: center; justify-content: space-between; color: #197392; font-size: 12px; font-weight: 700; margin-bottom: 10px; }
+.pac-booking-prep-grid h3 { font-size: 16px; font-weight: 600; color: #0a3d7c; margin: 0 0 8px; line-height: 1.35; }
+.pac-booking-prep-grid p { font-size: 14px; color: #425f70; line-height: 1.65; margin: 0; }
+.pac-inspection-points { list-style: none; padding: 0; margin: 22px 0; display: grid; gap: 10px; }
+.pac-inspection-points li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: #123b56; font-weight: 500; line-height: 1.55; }
+.pac-inspection-points li svg { color: #17789a; flex-shrink: 0; margin-top: 3px; }
+.pac-booking-next { display: grid; grid-template-columns: 1fr 1fr; gap: 55px; border-top: 1px solid #c6dce3; margin-top: 56px; padding-top: 40px; }
+.pac-booking-next h2,.pac-booking-next h3 { font-size: 23px; letter-spacing: -.025em; margin: 10px 0 12px; }
+.pac-booking-next p { font-size: 15px; color: #425f70; line-height: 1.8; margin-bottom: 20px; }
+.pac-booking-return { margin-top: 38px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px; font-size: 13px; color: #425f70; }
+.pac-booking-return a { text-decoration: underline; text-underline-offset: 4px; font-weight: 600; }
+@media(max-width:900px) { .pac-booking-welcome { gap: 35px; } .pac-booking-thanks { padding-top: 125px; } .pac-booking-prep-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media(max-width:650px) {
+  .pac-contact-dock a, .pac-contact-dock a:first-child { flex: 1; min-width: 0; padding: 11px 6px; font-size: 12px; gap: 5px; }
+  .pac-contact-dock a svg { width: 15px; flex-shrink: 0; }
+  .pac-booking-welcome,.pac-booking-next,.pac-booking-prep-grid { grid-template-columns: 1fr; gap: 24px; }
+  .pac-booking-thanks { padding-top: 114px; padding-bottom: 50px; }
+  .pac-booking-welcome h1 { font-size: 42px; }
+  .pac-booking-welcome .pac-booking-lead { font-size: 16px; }
+  .pac-booking-pause { padding: 25px 20px; border-radius: 22px; }
+  .pac-booking-prep { padding: 22px 18px; margin-top: 36px; }
+  .pac-booking-next { margin-top: 40px; padding-top: 28px; }
+  .pac-booking-return { margin-top: 28px; }
+}
+@media(max-width:360px) { .pac-contact-dock { gap: 5px; padding-inline: 8px; } .pac-contact-dock a svg { display: none; } .pac-booking-welcome h1 { font-size: 36px; } }
+@media(prefers-reduced-motion:reduce) { .pac-booking-pause[data-running="true"] .pac-booking-orbit span { animation: none; } }
+
+/* Customer self-service stays distinct from new bookings. */
+.pac-site .pac-desktop-nav .pac-nav-portal { display:inline-flex; align-items:center; gap:5px; min-height:44px; white-space:nowrap; }
+.pac-site .pac-mobile-portal { display:flex; align-items:center; justify-content:center; gap:8px; min-height:48px; margin:-8px 0 20px; padding:12px 18px; border:1px solid #91c9d3; border-radius:10px; color:#0a3d7c; background:#f3fafb; font-weight:600; }
+.pac-site .pac-footer-self-service { display:flex; flex-direction:column; align-items:flex-start; gap:4px; margin:15px 0; }
+.pac-site .pac-footer-self-service a { display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:8px 12px; border:1px solid #92c9d366; border-radius:8px; color:#fff; }
+.pac-site [data-pac-portal]:focus-visible { outline:3px solid #4aafbb; outline-offset:4px; }
+@media(min-width:901px) and (max-width:1199px) { .pac-site .pac-desktop-nav > .pac-nav-audience { display:none; } }
+
+/* Request-first routing: native disclosure keeps the desktop header compact. */
+.pac-request-menu { position: relative; }
+.pac-request-menu > summary { cursor: pointer; list-style: none; font-size: 12px; font-weight: 600; }
+.pac-request-menu > summary::-webkit-details-marker { display: none; }
+.pac-request-menu[open] > summary { background: #d8f1f5; }
+.pac-request-options { position: absolute; top: calc(100% + 10px); right: 0; width: 285px; padding: 10px; border: 1px solid #c6e1e6; border-radius: 12px; background: #fff; box-shadow: 0 16px 40px #0a3d7c20; }
+.pac-request-options .pac-request-option { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 12px; border-radius: 7px; color: #0a3d7c; font-size: 13px; }
+.pac-request-options .pac-request-option:hover { background: #edf7f7; }
+.pac-request-menu > summary:focus-visible { outline: 3px solid #267c8b; outline-offset: 4px; }
+.pac-mobile-requests { display: grid; gap: 10px; margin-bottom: 20px; }
+.pac-site .pac-mobile-requests .pac-mobile-booking { margin: 0; }
+.pac-site .pac-mobile-requests .pac-commercial-request { color: #0a3d7c; background: #edf7f7; border: 1px solid #91c9d3; }
+.pac-contact-dock .pac-dock-booking span { white-space: normal; line-height: 1.2; text-align: center; }
+.pac-footer-self-service a span { min-width: 0; }
+
+/* Compact hero action row for high-intent form pages (/quote/ and /contact/) */
+.pac-page-hero.is-compact { min-height: 340px; padding: 128px 0 44px; }
+.pac-hero-compact-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 6px; }
+.pac-hero-compact-secondary { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 11px 16px; border: 1px solid #ffffff80; border-radius: 8px; color: #fff; font-weight: 600; font-size: 14px; background: #0c324d66; }
+.pac-hero-compact-secondary:hover { background: #ffffff24; }
+@media(max-width:700px) {
+  .pac-page-hero.is-compact { min-height: 310px; padding: 112px 0 36px; }
+}
+
+/* EstimateBuilder & Quote Page Enhancements */
+.pac-quote-trust-bar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 1240px; margin: 0 auto 28px; }
+.pac-quote-trust-bar > div { display: flex; align-items: center; gap: 10px; padding: 13px 16px; background: #fff; border: 1px solid #d3e2e9; border-radius: 12px; color: #123b56; font-size: 13.5px; font-weight: 600; line-height: 1.4; }
+.pac-quote-trust-bar svg { color: #167a9b; flex-shrink: 0; }
+.pac-estimate-context-chip { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 8px 14px; background: #e6f5fa; border: 1px solid #91c9d3; border-radius: 100px; color: #0a3d7c; font-size: 13px; }
+.pac-estimate-context-chip button { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border: 0; border-radius: 50%; background: #ffffffb3; color: #0a3d7c; cursor: pointer; }
+.pac-estimate-context-chip button:hover { background: #fff; }
+.pac-service-choice-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; line-height: 1.3; }
+.pac-service-choice-copy strong { font-size: 13.5px; color: #123b56; }
+.pac-service-choice-copy small { font-size: 11.5px; font-weight: 500; color: #187291; }
+.pac-estimate-pills-group { margin-bottom: 22px; }
+.pac-estimate-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pac-estimate-pill { min-height: 42px; padding: 9px 14px; border: 1px solid #bcd1dc; border-radius: 8px; background: #fff; color: #123b56; font-size: 13px; font-weight: 600; cursor: pointer; transition: background-color .15s, border-color .15s; }
+.pac-estimate-pill:hover { background: #f2f9fc; }
+.pac-estimate-pill.is-active { background: #e6f5fa; border-color: #1681a3; color: #0a3d7c; }
+.pac-sqft-presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pac-mini-chip { padding: 5px 10px; border: 1px solid #c6dce6; border-radius: 6px; background: #f7fbfd; color: #164d69; font-size: 11.5px; font-weight: 600; cursor: pointer; }
+.pac-mini-chip:hover, .pac-mini-chip.is-active { background: #dff1f7; border-color: #1681a3; color: #0a3d7c; }
+.pac-estimate-addons { margin-top: 22px !important; }
+.pac-estimate-addons legend span { font-weight: 400; font-size: 12px; color: #536b79; margin-left: 6px; }
+.pac-addon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pac-addon-chip { display: flex; align-items: flex-start; gap: 10px; padding: 12px 13px; border: 1px solid #c6dbe5; border-radius: 10px; background: #f9fcfd; color: #123b56; text-align: left; cursor: pointer; transition: border-color .15s, background-color .15s; }
+.pac-addon-chip:hover { border-color: #7ab7cb; background: #f0f9fc; }
+.pac-addon-chip.is-active { border-color: #1681a3; background: #e6f5fa; }
+.pac-addon-check { width: 18px; height: 18px; border: 1.5px solid #8ab4c4; border-radius: 5px; background: #fff; display: grid; place-items: center; flex-shrink: 0; margin-top: 2px; color: #0a3d7c; }
+.pac-addon-chip.is-active .pac-addon-check { background: #12486a; border-color: #12486a; color: #fff; }
+.pac-addon-chip strong { display: block; font-size: 13px; font-weight: 600; line-height: 1.35; }
+.pac-addon-chip small { display: block; font-size: 11.5px; color: #536b79; line-height: 1.45; margin-top: 2px; }
+.pac-field-error { display: block; margin-top: 6px; font-size: 12.5px; font-weight: 600; color: #9b2634; }
+.pac-estimate-live-guide { padding: 24px; background: #fff; border: 1px solid #c9dfe8; border-radius: 16px; margin-bottom: 16px; }
+.pac-guide-headline { display: block; font-size: clamp(22px, 2.4vw, 28px); font-weight: 650; letter-spacing: -.03em; color: #0a3d7c; margin: 8px 0 10px; line-height: 1.2; }
+.pac-guide-subline { font-size: 13.5px !important; line-height: 1.65 !important; color: #476273 !important; margin: 0 0 18px; }
+.pac-guide-section { border-top: 1px solid #e1edf2; padding-top: 14px; margin-top: 14px; }
+.pac-guide-section h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #165a7a; margin: 0 0 10px; }
+.pac-guide-section ul { list-style: disc; padding-left: 18px; margin: 0; display: grid; gap: 7px; font-size: 13px; line-height: 1.5; color: #365263; }
+.pac-guide-checks { list-style: none !important; padding-left: 0 !important; }
+.pac-guide-checks li { display: flex; align-items: flex-start; gap: 8px; }
+.pac-guide-checks svg { color: #157a9c; flex-shrink: 0; margin-top: 2px; }
+.pac-guide-guarantee { display: flex; align-items: center; gap: 8px; margin: 16px 0 0 !important; padding: 10px 12px; border-radius: 9px; background: #eaf6fa; color: #0a3d7c !important; font-size: 12.5px !important; font-weight: 600; line-height: 1.4 !important; }
+.pac-guide-guarantee svg { flex-shrink: 0; color: #157a9c; }
+.pac-estimate-talk { padding: 22px 24px; background: #e8f3f7; border-radius: 16px; }
+.pac-estimate-aside { background: transparent !important; border-radius: 0 !important; overflow: visible !important; }
+.pac-estimate-aside > div { padding: 22px 24px; }
+.pac-estimate-phone-link { display: inline-flex !important; align-items: center; gap: 10px; min-height: 48px; padding: 10px 16px; border-radius: 10px; background: #12486a; color: #fff !important; font-size: 17px !important; font-weight: 600; margin-top: 12px !important; text-decoration: none; }
+.pac-estimate-phone-link:hover { background: #0a3d7c; }
+.pac-estimate-alt-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.pac-estimate-sms-link, .pac-estimate-hcp-link { display: inline-flex !important; align-items: center; gap: 7px; min-height: 40px !important; padding: 8px 12px; border: 1px solid #91c9d3; border-radius: 8px; background: #fff; color: #0a3d7c !important; font-size: 13px !important; font-weight: 600; margin-top: 0 !important; text-decoration: none; }
+.pac-estimate-sms-link:hover, .pac-estimate-hcp-link:hover { background: #d8f1f5; }
+.pac-estimate-next-list { list-style: none; padding: 0; margin: 18px 0 24px; display: grid; gap: 10px; }
+.pac-estimate-next-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: #123b56; }
+.pac-estimate-next-list svg { color: #167a9c; flex-shrink: 0; margin-top: 3px; }
+.pac-estimate-success-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.pac-quote-post-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; max-width: 1240px; margin: 56px auto 0; align-items: start; }
+.pac-quote-steps, .pac-quote-faq { background: #fff; border: 1px solid #d3e2e9; border-radius: 18px; padding: 32px; }
+.pac-quote-steps h2, .pac-quote-faq h2 { font-size: clamp(24px, 2.6vw, 32px); font-weight: 600; color: #123b56; margin: 10px 0 22px; line-height: 1.2; }
+.pac-quote-steps ol { list-style: none; padding: 0; margin: 0; display: grid; gap: 18px; }
+.pac-quote-steps li { display: flex; gap: 16px; align-items: flex-start; padding-bottom: 18px; border-bottom: 1px solid #e4eef3; }
+.pac-quote-steps li:last-child { border-bottom: 0; padding-bottom: 0; }
+.pac-quote-step-num { width: 34px; height: 34px; border-radius: 50%; background: #e6f5fa; color: #0a3d7c; font-size: 12px; font-weight: 700; display: grid; place-items: center; flex-shrink: 0; }
+.pac-quote-steps h3 { font-size: 17px; font-weight: 600; color: #123b56; margin: 0 0 5px; }
+.pac-quote-steps p { font-size: 14.5px; line-height: 1.65; color: #536b79; margin: 0; }
+.pac-quote-faq-cta { margin-top: 22px; padding-top: 16px; border-top: 1px solid #e1edf2; font-size: 14px; color: #476273; }
+.pac-quote-faq-cta a { color: #0a3d7c; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; gap: 4px; }
+
+/* Pricing Page 3-Tier Cards, Presets & LA Cost Factors */
+.pac-pricing-tiers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 10px; }
+.pac-pricing-card { display: flex; flex-direction: column; background: #fff; border: 1px solid #cde0e8; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 28px #1037520a; }
+.pac-pricing-card-media { position: relative; height: 185px; overflow: hidden; }
+.pac-pricing-card-media img { width: 100%; height: 100%; object-fit: cover; }
+.pac-pricing-card-badge { position: absolute; left: 16px; bottom: 14px; padding: 5px 11px; border-radius: 100px; background: #0a3d7ce6; color: #fff; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; }
+.pac-pricing-card-body { padding: 26px; display: flex; flex-direction: column; flex: 1; }
+.pac-pricing-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid #e1edf2; margin-bottom: 14px; }
+.pac-pricing-card-head h3 { font-size: 22px; font-weight: 600; color: #123b56; line-height: 1.25; margin: 0; }
+.pac-pricing-card-price { text-align: right; flex-shrink: 0; }
+.pac-pricing-card-price span { display: block; font-size: 11px; color: #536b79; text-transform: uppercase; letter-spacing: .06em; }
+.pac-pricing-card-price strong { font-size: 32px; font-weight: 650; color: #0a3d7c; letter-spacing: -.035em; line-height: 1.1; }
+.pac-pricing-card-note { font-size: 14.5px !important; line-height: 1.65 !important; color: #536b79; margin: 0 0 18px; }
+.pac-pricing-card-list { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 10px; flex: 1; }
+.pac-pricing-card-list li { display: flex; align-items: flex-start; gap: 9px; font-size: 14px; line-height: 1.5; color: #1f455c; }
+.pac-pricing-card-list svg { color: #167a9b; flex-shrink: 0; margin-top: 2px; }
+.pac-pricing-card-actions { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+.pac-pricing-card-actions .pac-button, .pac-pricing-card-actions .pac-text-link { width: 100%; justify-content: center; }
+.pac-pricing-guarantee-strip { display: flex; align-items: flex-start; gap: 14px; margin-top: 28px; padding: 20px 24px; border-radius: 14px; background: #eaf5f9; border: 1px solid #c6dfe9; color: #123b56; }
+.pac-pricing-guarantee-strip svg { color: #147496; flex-shrink: 0; margin-top: 3px; }
+.pac-pricing-guarantee-strip p { font-size: 14.5px !important; line-height: 1.65 !important; margin: 0; }
+.pac-pricing-guarantee-strip a { color: #0a3d7c; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.pac-pricing-presets-section { background: #fff; }
+.pac-preset-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.pac-preset-card { display: flex; align-items: flex-start; gap: 14px; padding: 20px; border: 1px solid #cfe1e9; border-radius: 14px; background: #f8fbfd; color: #123b56; transition: border-color .18s, background-color .18s, transform .18s; }
+.pac-preset-card:hover { border-color: #167a9b; background: #edf7fb; transform: translateY(-2px); }
+.pac-preset-icon { width: 40px; height: 40px; border-radius: 10px; background: #dff1f7; color: #0a3d7c; display: grid; place-items: center; flex-shrink: 0; }
+.pac-preset-card h3 { font-size: 16px; font-weight: 600; color: #123b56; margin: 0 0 5px; line-height: 1.3; }
+.pac-preset-card p { font-size: 13.5px !important; line-height: 1.55 !important; color: #536b79; margin: 0; }
+.pac-preset-arrow { flex-shrink: 0; color: #167a9b; margin-left: auto; margin-top: 4px; }
+.pac-cost-factors-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.pac-cost-factor-card { padding: 24px; background: #fff; border: 1px solid #d2e3eb; border-radius: 16px; }
+.pac-cost-factor-num { display: inline-block; font-size: 12px; font-weight: 700; color: #18789a; margin-bottom: 10px; }
+.pac-cost-factor-card h3 { font-size: 19px; font-weight: 600; color: #123b56; margin: 0 0 10px; line-height: 1.3; }
+.pac-cost-factor-card p { font-size: 14.5px !important; line-height: 1.7 !important; color: #536b79; margin: 0 !important; }
+.pac-price-plan-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+
+/* Interactive LA Air Care Calculator Enhancements */
+.pac-checklist-sub { font-size: 15px !important; color: #536b79; margin-top: -12px; margin-bottom: 24px; }
+.pac-checklist-factors { margin: 36px 0 32px; padding-top: 26px; border-top: 1px solid #d5e4ec; }
+.pac-checklist-factors-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 18px; }
+.pac-checklist-factors-head > span { font-size: 12px; font-weight: 600; color: #367893; padding-top: 5px; }
+.pac-checklist-factors-head h3 { font-size: 20px; font-weight: 600; color: #123b56; margin: 0 0 4px; }
+.pac-checklist-factors-head p { font-size: 14.5px !important; color: #536b79; margin: 0; }
+.pac-factor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pac-factor-card { display: flex; align-items: flex-start; gap: 12px; padding: 15px 16px; border: 1px solid #cfdee6; border-radius: 11px; background: #fff; color: #123b56; text-align: left; cursor: pointer; transition: border-color .15s, background-color .15s; }
+.pac-factor-card:hover { border-color: #6eaec4; background: #f5fbfd; }
+.pac-factor-card.is-active { border-color: #155778; background: #eaf6fb; }
+.pac-factor-check { width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid #8ab2c2; background: #fff; display: grid; place-items: center; flex-shrink: 0; margin-top: 2px; }
+.pac-factor-card.is-active .pac-factor-check { background: #155778; border-color: #155778; color: #fff; }
+.pac-factor-card strong { display: block; font-size: 14.5px; font-weight: 600; line-height: 1.35; }
+.pac-factor-card small { display: block; font-size: 12.5px; color: #536b79; line-height: 1.5; margin-top: 3px; }
+.pac-checklist-recs { margin: 26px 0; }
+.pac-checklist-recs h3, .pac-checklist-priority h3 { font-size: 19px; font-weight: 600; color: #123b56; margin: 0 0 14px; }
+.pac-checklist-rec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.pac-checklist-rec-card { padding: 18px 20px; border: 1px solid #c9dfe8; border-radius: 13px; background: #f7fbfd; }
+.pac-rec-badge { display: inline-block; padding: 3px 9px; border-radius: 100px; background: #dff1f7; color: #0a3d7c; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 8px; }
+.pac-checklist-rec-card h4 { font-size: 16px; font-weight: 600; color: #123b56; margin: 0 0 6px; }
+.pac-checklist-rec-card p { font-size: 14px !important; line-height: 1.6 !important; margin: 0; }
+.pac-checklist-cta-box { margin: 28px 0 22px; padding: 26px 28px; border-radius: 16px; background: #eaf5f9; border: 1px solid #c2dde8; }
+.pac-checklist-cta-box h3 { font-size: 22px; font-weight: 600; color: #123b56; margin: 6px 0 8px; }
+.pac-checklist-cta-box p { font-size: 15px !important; line-height: 1.65 !important; margin: 0 0 18px; }
+.pac-checklist-footer-links { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.pac-checklist-trust-note { display: flex; align-items: flex-start; gap: 14px; padding: 22px 24px; border-radius: 14px; background: #f2f8fb; border: 1px solid #d4e4ec; margin-bottom: 24px; }
+.pac-checklist-trust-note svg { color: #157798; flex-shrink: 0; margin-top: 4px; }
+.pac-checklist-trust-note h2 { font-size: 21px !important; margin: 0 0 8px !important; }
+.pac-checklist-trust-note p { font-size: 14.5px !important; line-height: 1.7 !important; margin: 0 !important; }
+.pac-checklist-guides { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.pac-checklist-guides article { padding: 18px; border: 1px solid #d6e5ec; border-radius: 12px; background: #fff; }
+.pac-checklist-guides svg { color: #157798; margin-bottom: 8px; }
+.pac-checklist-guides h3 { font-size: 16px; font-weight: 600; color: #123b56; margin: 0 0 6px; }
+.pac-checklist-guides p { font-size: 13.5px !important; line-height: 1.6 !important; margin: 0 !important; }
+.pac-checklist-guides a { color: #0a3d7c; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Contact, CallbackForm, PropertyManagers & Campaign Landing Polish */
+.pac-callback-location-pill { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 100px; background: #eaf6fa; border: 1px solid #b8dce8; color: #0a3d7c !important; font-size: 12.5px !important; font-weight: 600; margin-bottom: 18px !important; }
+.pac-contact-quick-tools { margin-top: 28px; padding: 24px; background: #f4f9fc; border: 1px solid #d5e5ed; border-radius: 14px; }
+.pac-contact-quick-tools h2 { font-size: 20px; font-weight: 600; color: #123b56; margin: 0 0 14px; }
+.pac-contact-tool-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.pac-contact-help h2 { display: flex; align-items: center; gap: 9px; }
+.pac-hoa-quick-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.pac-hoa-ops-band { background: #f2f8fb; border-block: 1px solid #d6e5ed; }
+.pac-hoa-ops-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.pac-hoa-ops-card { padding: 24px; background: #fff; border: 1px solid #d3e3eb; border-radius: 16px; }
+.pac-hoa-ops-card svg { color: #157798; margin-bottom: 12px; }
+.pac-hoa-ops-card h3 { font-size: 18px; font-weight: 600; color: #123b56; margin: 0 0 8px; line-height: 1.3; }
+.pac-hoa-ops-card p { font-size: 14px !important; line-height: 1.65 !important; color: #536b79; margin: 0; }
+.pac-hoa-checklist-download { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 22px; padding: 20px 24px; background: #fff; border: 1px solid #c6dfe9; border-radius: 14px; color: #123b56; }
+.pac-hoa-checklist-download svg { color: #157798; flex-shrink: 0; }
+.pac-hoa-checklist-download > div { flex: 1; }
+.pac-hoa-checklist-download strong { display: block; font-size: 16px; margin-bottom: 3px; }
+.pac-hoa-checklist-download span { font-size: 13.5px; color: #536b79; }
+.pac-campaign-price-callout { display: flex; align-items: flex-start; gap: 14px; padding: 18px 20px; border-radius: 14px; background: #eaf5f9; border: 1px solid #c5dfe9; color: #123b56; margin-bottom: 28px; }
+.pac-campaign-price-callout svg { color: #157798; flex-shrink: 0; margin-top: 3px; }
+.pac-campaign-price-callout strong { display: block; font-size: 16px; margin-bottom: 3px; }
+.pac-campaign-price-callout span { font-size: 13.5px; color: #4c6675; }
+.pac-campaign-checklist { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 11px; }
+.pac-campaign-checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 15.5px; line-height: 1.6; color: #24485e; }
+.pac-campaign-checklist svg { color: #157798; flex-shrink: 0; margin-top: 4px; }
+.pac-campaign-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+
+@media(max-width:1000px) {
+  .pac-pricing-tiers, .pac-preset-grid, .pac-cost-factors-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pac-hoa-ops-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pac-quote-post-sections { grid-template-columns: 1fr; gap: 28px; }
+}
+@media(max-width:700px) {
+  .pac-quote-trust-bar, .pac-pricing-tiers, .pac-preset-grid, .pac-cost-factors-grid,
+  .pac-addon-grid, .pac-factor-grid, .pac-checklist-rec-grid, .pac-checklist-guides,
+  .pac-hoa-ops-grid { grid-template-columns: 1fr; }
+  .pac-hoa-checklist-download { flex-direction: column; align-items: flex-start; }
+  .pac-quote-steps, .pac-quote-faq { padding: 22px 18px; }
+}

@@ -3,7 +3,7 @@
  * Displays appointments with dispatch board fetching real data
  */
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/CanonicalLink';
 import {
     Calendar, Plus, Search, ChevronLeft, ChevronRight,
     Clock, MapPin, Phone, MoreVertical, List, Grid,

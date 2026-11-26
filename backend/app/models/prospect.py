@@ -223,3 +223,7 @@ class PlaceSearchResult(BaseModel):
     distance_miles: Optional[float] = None
     fit_score: int = 0
     fit_reasons: List[str] = []
+    # "google", or "openstreetmap" when Google was unavailable and the free
+    # backup answered instead; source_note then says why, for the screen.
+    source: str = "google"
+    source_note: Optional[str] = None

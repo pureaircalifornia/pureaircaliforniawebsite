@@ -56,6 +56,21 @@ EARTH_RADIUS_MILES = 3958.8
 _center_cache: Dict[str, Optional[Tuple[float, float]]] = {}
 
 
+class GoogleUnavailable(HTTPException):
+    """
+    Google could not serve the search at all, as opposed to a bad request.
+    The lead scanner falls back to OpenStreetMap when it sees one of these.
+    """
+    NO_KEY = "no_key"
+    DENIED = "denied"
+    QUOTA = "quota"
+    UNREACHABLE = "unreachable"
+
+    def __init__(self, reason: str, status_code: int, detail: str):
+        super().__init__(status_code=status_code, detail=detail)
+        self.reason = reason
+
+
 def haversine_miles(a: Tuple[float, float], b: Tuple[float, float]) -> float:
     lat1, lng1, lat2, lng2 = map(math.radians, (a[0], a[1], b[0], b[1]))
     h = (math.sin((lat2 - lat1) / 2) ** 2
@@ -87,7 +102,10 @@ def _raise_for_status(data: dict, first_page: bool) -> bool:
     message = data.get("error_message") or status or "Unknown error"
     logger.error("Places API %s: %s", status, message)
     if status == "REQUEST_DENIED":
-        raise HTTPException(status_code=502, detail=f"Google API Error: REQUEST_DENIED. {message}")
+        raise GoogleUnavailable(GoogleUnavailable.DENIED, 502,
+                                f"Google API Error: REQUEST_DENIED. {message}")
+    if status == "OVER_QUERY_LIMIT" and first_page:
+        raise GoogleUnavailable(GoogleUnavailable.QUOTA, 502, f"Google API Error: {message}")
     if first_page:
         code = 400 if status == "INVALID_REQUEST" else 502
         raise HTTPException(status_code=code, detail=f"Google API Error: {message}")
@@ -193,9 +211,9 @@ async def search_places(
     api_key = get_settings().GOOGLE_PLACES_API_KEY
     if not api_key:
         logger.error("GOOGLE_PLACES_API_KEY not configured")
-        raise HTTPException(
-            status_code=500,
-            detail="Google Places API Key is not configured in the backend environment.",
+        raise GoogleUnavailable(
+            GoogleUnavailable.NO_KEY, 500,
+            "Google Places API Key is not configured in the backend environment.",
         )
 
     queries = build_queries(category, location, custom_query, max_results)
@@ -223,8 +241,9 @@ async def search_places(
         except httpx.HTTPError as exc:
             logger.error("HTTP error searching places (%s)", type(exc).__name__)
             if not by_id:
-                raise HTTPException(
-                    status_code=502, detail="Could not reach Google Places. Try again shortly.")
+                raise GoogleUnavailable(
+                    GoogleUnavailable.UNREACHABLE, 502,
+                    "Could not reach Google Places. Try again shortly.")
 
         results = list(by_id.values())[:max_results]
         semaphore = asyncio.Semaphore(DETAILS_CONCURRENCY)

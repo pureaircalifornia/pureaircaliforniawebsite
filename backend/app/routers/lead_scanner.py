@@ -20,7 +20,7 @@ from ..models.prospect import (
     SEQUENCE_STOP_STATUSES, SUPPRESSED_STATUSES,
 )
 from ..services.email_finder import find_emails_for_business
-from ..services.google_places import search_places
+from ..services.lead_search import search_businesses as search_with_fallback
 from ..services.outreach_sequence import suppress
 from ..services.prospect_quality import score_prospect
 
@@ -61,8 +61,11 @@ async def search_businesses(
     request: PlaceSearchRequest,
     current_user: dict = Depends(get_current_user),
 ):
-    """Search Google Maps for businesses, ranked by how good a prospect each is."""
-    return await search_places(
+    """
+    Search for businesses, ranked by how good a prospect each is. Uses Google
+    Maps, or OpenStreetMap when Google is unavailable.
+    """
+    return await search_with_fallback(
         category=request.category,
         location=request.location,
         radius_miles=request.radius_miles,

@@ -1,12 +1,13 @@
 /**
  * Lead Scanner
- * Search Google Maps for businesses, ranked by how good a prospect each one is,
- * and save the best ones to the Prospects pipeline in bulk.
+ * Search Google Maps (or OpenStreetMap, when Google is unavailable) for
+ * businesses, ranked by how good a prospect each one is, and save the best
+ * ones to the Prospects pipeline in bulk.
  */
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-    ArrowRight, Building2, CheckCircle, Globe, Loader2, MapPin, Phone, Save, Search, Star,
+    AlertTriangle, ArrowRight, Building2, CheckCircle, Globe, Loader2, MapPin, Phone, Save, Search, Star,
 } from 'lucide-react';
 import {
     checkProspectStatus, safeUrl, saveProspectsBulk, searchBusinesses,
@@ -40,6 +41,7 @@ export default function LeadScanner() {
         () => (websiteOnly ? results.filter((r) => r.website) : results),
         [results, websiteOnly],
     );
+    const backupNote = results.find((r) => r.source === 'openstreetmap')?.source_note;
     const selectable = visible.filter((r) => !saved[r.place_id]);
     const allSelected = selectable.length > 0 && selectable.every((r) => selected.has(r.place_id));
 
@@ -140,6 +142,7 @@ export default function LeadScanner() {
                 <h1 className="text-2xl font-bold text-gray-900">Lead Scanner</h1>
                 <p className="text-sm text-gray-500 mt-1">
                     Find businesses on Google Maps, ranked by fit. Save the good ones and their contact details are looked up automatically.
+                    If Google is unavailable, the free OpenStreetMap map is searched instead.
                 </p>
             </div>
 
@@ -186,10 +189,13 @@ export default function LeadScanner() {
                     <button type="submit" disabled={loading}
                         className="flex items-center gap-2 px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50">
                         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
-                        {loading ? 'Searching Google Maps…' : 'Search'}
+                        {loading ? 'Searching…' : 'Search'}
                     </button>
-                    {loading && maxResults > 20 && (
-                        <span className="text-xs text-gray-500">Larger searches run several queries and can take 20–30 seconds.</span>
+                    {loading && (
+                        <span className="text-xs text-gray-500">
+                            {maxResults > 20 ? 'Larger searches run several queries and can take 20–30 seconds. ' : ''}
+                            If Google is off, the backup map can take a minute or more.
+                        </span>
                     )}
                 </div>
             </form>
@@ -201,6 +207,13 @@ export default function LeadScanner() {
                     <Link to="/admin/prospects" className="inline-flex items-center gap-1 font-medium text-emerald-800 underline">
                         Go to Prospects <ArrowRight className="w-4 h-4" />
                     </Link>
+                </div>
+            )}
+
+            {backupNote && (
+                <div role="status" className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-amber-900 text-sm flex items-start gap-3">
+                    <AlertTriangle className="w-5 h-5 flex-shrink-0 text-amber-500" aria-hidden="true" />
+                    <span>{backupNote}</span>
                 </div>
             )}
 
@@ -289,7 +302,7 @@ export default function LeadScanner() {
                                             <td className="px-4 py-4 text-sm">
                                                 {result.rating
                                                     ? <span className="inline-flex items-center gap-1"><Star className="w-4 h-4 text-amber-400 fill-amber-400" aria-hidden="true" />{result.rating}<span className="text-xs text-gray-400">({result.total_ratings})</span></span>
-                                                    : <span className="text-gray-400">None</span>}
+                                                    : <span className="text-gray-400">{result.source === 'openstreetmap' ? 'Not listed' : 'None'}</span>}
                                             </td>
                                             <td className="px-4 py-4">
                                                 {info && <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${info.className}`}>Saved · {info.label}</span>}

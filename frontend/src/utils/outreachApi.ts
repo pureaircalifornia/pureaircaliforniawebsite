@@ -73,6 +73,10 @@ export interface PlaceSearchResult {
     distance_miles?: number;
     fit_score: number;
     fit_reasons: string[];
+    /** 'openstreetmap' when Google was unavailable and the free backup answered. */
+    source?: 'google' | 'openstreetmap';
+    /** Why the backup was used; set on backup results only. */
+    source_note?: string;
 }
 
 export interface ProspectStatusInfo {
